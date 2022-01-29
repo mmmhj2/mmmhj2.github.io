@@ -40,6 +40,9 @@ plugins:
 domain: mmmhj2.github.io
 url: https://mmmhj2.github.io
 
+markdown: kramdown
+highlighter: rouge
+
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
