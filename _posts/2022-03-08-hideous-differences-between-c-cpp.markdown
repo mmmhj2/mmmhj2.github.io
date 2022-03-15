@@ -68,3 +68,23 @@ void func();	/* C 语言中的 K&R 声明 */
 ```
 
 注：C23标准中已经弃用K&R声明。
+
+### const 类型限定符
+
+在 C 语言中，虽然从 C++ 里引入了`const`类型限定符，但是被其限定的变量并不是常量。
+具体地说，被其限定的变量不能用作`case`的标号，且其声明的数组是变长度数组。
+```cpp
+/*
+ * gcc -xc 编译不通过
+ * gcc -xc++ 编译通过
+ */
+const int const_x = 5;
+int x[const_x];     // C 语言中为变长数组
+
+switch(x[0])
+{
+case const_x:
+  puts("Successful");  
+}
+```
+
