@@ -39,6 +39,9 @@ domain: mmmhj2.github.io
 url: https://mmmhj2.github.io
 
 markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  
 highlighter: rouge
 
 # Exclude from processing.
