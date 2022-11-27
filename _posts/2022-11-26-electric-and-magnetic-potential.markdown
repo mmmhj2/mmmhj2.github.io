@@ -77,6 +77,13 @@ $$
 我们仍然希望电标势可以满足库仑方程，因此我们要求$\nabla \cdot \vec A (M, t) = 0$。
 这一要求就是**库仑规范**。
 
+若磁矢势满足：
+$$
+\nabla \cdot \vec E (M,t) = \frac{\rho(M)}{\epsilon_0}
+$$
+则称其满足库仑规范。
+{: .proposition}
+
 ### 达朗贝尔方程
 
 洛伦茨规范与电磁波的传导密切相关，因此我们先来研究真空中电磁波的传导问题。
@@ -98,7 +105,7 @@ $$
 $$
 对磁场故技重施，可得：
 $$
-\nabla \vec B - \mu_0 \epsilon_0 \frac{\partial^2 \vec B}{\partial t^2} = 0
+\Delta \vec B - \mu_0 \epsilon_0 \frac{\partial^2 \vec B}{\partial t^2} = 0
 $$
 
 以上两个方程叫做达朗贝尔方程。
@@ -140,6 +147,13 @@ $$
 $$
 这个规范就叫**洛伦茨（Lorenz）规范**。
 注意不是洛伦兹（Lorentz）规范。
+
+若电标势和磁矢势满足：
+$$
+\nabla \cdot \vec A + \mu_0 \epsilon_0 \frac{\partial V}{\partial t} = 0
+$$
+则称其满足洛伦茨规范。
+{: .proposition}
 
 ## 推迟势与准静态假设
 
@@ -230,6 +244,8 @@ $$
 \nabla \times \vec B (M, t) & = \mu_0 \vec j (M, t) + \mu_0 \epsilon_0 \frac{\partial \vec E}{\partial t}(M, t)
 \end{aligned}
 $$
+{: .proposition}
+
 且电标势不再有关于磁矢势那一项。
 注意第三项方程的变化，这表明在电准静态下，我们忽略了电磁感应效应。
 电磁感应效率非常重要，因此我们通常不使用电准静态条件。
@@ -243,6 +259,8 @@ $$
 \nabla \times \vec B (M, t) & = \mu_0 \vec j (M, t)
 \end{aligned}
 $$
+{: .proposition}
+
 注意第四项方程的变化。
 我们注意到，旋度的散度为零，因此在此条件下，$\nabla \cdot \vec j = 0$。
 特别的，在此条件下，可以使用毕奥-萨伐尔定律和安培环路定理。
