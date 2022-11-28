@@ -147,3 +147,20 @@ $$
 从而只有$r \le 1$时$a_{\nu(n)} r^{\nu(n)}$才可能有界。
 因此其收敛半径为1。
 {: .exampl}
+
+### 与其他级数比较
+
+如果已知一个类似级数的收敛半径，则可以将二者比较来求解。
+
+已知$\sum c_n z^n$的收敛半径为$R$，求$\sum n^p c_n z^n$的收敛半径：
+设$0 \le r < R$，取$r < r^\prime < R$，则
+$$
+n^p c_n r^n = \underbrace{n^p (r / r^\prime)^n}_{\to 0} \cdot \underbrace{c_n r^{\prime n}}_{\le M} \to 0
+$$
+从而$R^\prime \ge R$；
+设$0 \le r < R^\prime$，取$r < r^\prime < R^\prime$，则
+$$
+c_n r^n = \underbrace{n^{-p} (r / r^\prime)^n}_{\to 0} \cdot \underbrace{n^p c_n r^{\prime n}}_{\le M} \to 0
+$$
+从而$R \ge R^\prime$，因此$R = R^\prime$
+{: .exampl}
