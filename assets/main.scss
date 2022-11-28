@@ -110,6 +110,8 @@
 .proof:before {
     content: "证明";
     font-style: italic;
+	display: inline-block;
+	margin-right: 10px;
 }
 
 .definition {
