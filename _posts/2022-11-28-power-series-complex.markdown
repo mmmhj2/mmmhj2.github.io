@@ -1,0 +1,108 @@
+---
+layout: post
+title: "复数域下的幂级数"
+categories: analysis
+date: 2022-11-28 13:20:00 +0800
+--- 
+
+此文中，我们定义复数域下的开圆盘$D$和闭圆盘$\overline{D}$：
+$$
+D(z_0,r) = \{ z \in \mathbb C | \left| z - z_0 \right| < r \},
+\overline{D}(z_0, r) = \{ z \in \mathbb C | \left| z - z_0 \right| \leq r \}
+$$
+
+首先，我们给出幂级数的定义，再研究其性质。
+
+将所有形如$\sum a_n z^n$的级数称为**幂级数**。
+其中$(a_n)_{n \in \mathbb N} \in \mathbb C^N$称为幂级数的**系数**
+{: .definition}
+
+## 收敛半径
+
+定义幂级数的收敛半径：
+
+设$R \in \mathbb R_+ \cup \\{ +\infty \\}$，若对于幂级数$\sum a_n z^n$满足：
+$$
+R = \mathrm{sup} \{ r \in R_+ | \exists M > 0, \forall n, \left| a_n \right| r^n \leq M \}
+$$
+则称$R$为该幂级数的**收敛半径**。
+圆盘$D(0, R)$称为该幂级数的收敛盘。
+{: .definition}
+
+若两个幂级数满足$a_n = O(b_n)$，则$R_a \ge R_b$；若满足$a_n \sim b_n$，则$R_a = R_b$。
+
+这个数之所以被称作收敛半径，是因为以下重要性质：
+
+若$z < R$，则该级数绝对收敛；若$z > R$，则该级数极大发散；若$z = R$，则该级数可能收敛，可能发散。
+{: .proposition}
+
+对收敛半径还有以下性质：
+
+级数$\sum a_n z^n$在$D(0,R)$中的任何一个紧密集上正常连续（$\left\| a_n z^n \right\| \leq c_n, \sum c_n < \infty$），从而一致连续。
+{: .proposition}
+
+可以推知：$f(z) = \sum u_n = \sum a_n z^n$在$D(0, R)$上连续。
+注意$D(0,R)$并不是紧密的，因此$f(z)$并不一定在其上有界。
+实际上，若$f(z)$在$D(0,a)$上连续但是无界，那么$a$一定是其收敛半径。
+
+我们假设$1 / 0 = \infty$，$1 / \infty = 0$，从而达朗贝尔审敛法也可应用在求收敛半径上。
+
+设$\sum a_n z^n$为一自某项起非零的幂级数，则其收敛半径可由以下方式求得：
+$$
+l = \lim_{n \to \infty} \frac{|a_n+1|}{|a_n|}
+$$
+若$l$存在，则收敛半径$R = 1/l$
+{: .proposition}
+
+此外，幂级数的收敛半径还有以下性质：
+- 两幂级数各项分别相加，新幂级数的收敛半径大于等于两者中较小的；
+  + 特别地，若两级数的收敛半径不同，新幂级数的收敛半径等于两者中较小的；
+- 两幂级数的柯西积（卷积）的收敛半径大于等于两者中较小的；
+- 幂级数的导数列$\sum n a_n z^{n-1}$的收敛半径等于原数列的。
+
+假设一幂级数的收敛半径非零，则根据在零的邻域之内其和$f(z)$的值，可以计算出整个幂级数的系数。
+$$
+\forall r \in (0, R), a_n = \frac{1}{2 \pi r^n} \int_0^{2\pi} f(r e^{i \theta}) e^{-in\theta} \mathrm d \theta
+$$
+这可导出以下性质：若幂级数的收敛半径非零，且其和$f(z)$在一个含零的开集内取值为零，则其各项系数一定为零，$f(z) = 0$。
+
+## 常见函数的幂级数表示
+
+为研究函数的幂级数表示，我们首先需要知道哪些函数可以写成幂级数的形式，为此，我们定义：
+
+设一定义在开集$U \in \mathbb C$的复值函数$f$和其定义域内一点$z_0$。
+若存在一实数$r > 0$和一收敛半径大于等于$r$的幂级数$\sum a_n z^n$满足：
+$$
+\forall z \in D(z_0, r) \cup U, f(z) = \sum_{n=0}^{\infty} a_n (z-z_0)^n
+$$
+则称$f$是在$z_0$处可幂级数展开的。
+{: .definition}
+
+可以看出，这个展开的形式和泰勒展开比较相似。
+实际上，我们可以证明（在实数域上）如果存在幂级数展开，则泰勒展开一定和幂级数展开相同，但泰勒展开不一定和幂级数展开相同。
+
+根据上一节末尾所讲的内容，函数的幂级数展开（如果存在）是唯一确定的。
+
+特别地，设$D=D(z_0, r) \in \mathbb C, r > 0$，则在$D$上可幂级数展开的函数构成了复数域上连续函数代数的一个子代数。
+
+下面给出一些常见函数的幂级数展开：
+$$
+\begin{aligned}
+e^z &= \sum_0^\infty \frac{z^n}{n!} \\
+\cosh (z) &= \frac{1}{2} (e^z + e^{-z}) = \sum_0^\infty \frac{z^{2n}}{(2n)!} \\
+\sinh (z) &= \frac{1}{2} (e^z - e^{-z}) = \sum_0^\infty \frac{z^{2n+1}}{(2n+1)!} \\
+\cos (z) &= \frac{1}{2} (e^{iz} + e^{-iz}) = \sum_0^\infty (-1)^n \frac{z^{2n}}{(2n)!} \\
+\sin (z) &= \frac{1}{2} (e^{iz} + e^{-iz}) = \sum_0^\infty (-1)^n \frac{z^{2n+1}}{(2n+1)!} \\
+\end{aligned}
+$$
+有：
+$$
+\cosh iz = \cos z , \sinh iz = i \sin z , \cos iz = \cosh z , \sin iz = i \sinh z
+$$
+
+对分式型函数，有：
+$$
+\forall z \in D(0,1) \quad \frac{1}{(1-z)^{n+1}} = \sum_{k=0}^\infty
+\binom {n+k}{k}
+z^k
+$$
