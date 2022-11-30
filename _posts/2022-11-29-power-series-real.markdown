@@ -121,6 +121,7 @@ $$
 \forall x \in (-1, 1) \quad
 (1+x)^s = \sum_{n=0}^{\infty} \binom{s}{n} x^n
 $$
+这一定理也叫做广义二项式定理，其中$\binom{s}{n}$为广义二项式系数，$n=0$时值为1，否则为$\frac{s(s-1) \cdots (s-n+1)}{n!}$。
 
 这可由柯西问题：
 $$

@@ -239,7 +239,8 @@ $$
 
 特征值的指数和其对应变换的指数相同，即
 $$
-\forall k = 1, 2, \dots , r ~ r(\lambda_k) = r^\prime(\lambda_k)
+\forall k = 1, 2, \dots , r \quad
+r(\lambda_k) = r^\prime(\lambda_k)
 $$
 {: .proposition}
 
@@ -248,6 +249,7 @@ $\mathrm{Ker}((u - \lambda_k \mathrm{Id}_E)^{r(\lambda_k)}) = \mathrm{Ker}((u - 
 
 根子空间的维数和其代数重数相同，即
 $$
-\forall k = 1, 2, \dots , r ~ \mathrm{dim}(F_{\lambda_k}(u)) = \mathrm{dim}(\mathrm{Ker}((u - \lambda_k \mathrm{Id}_E)^{r(\lambda_k)})) = m(\lambda_k)
+\forall k = 1, 2, \dots , r \quad
+\mathrm{dim}(F_{\lambda_k}(u)) = \mathrm{dim}(\mathrm{Ker}((u - \lambda_k \mathrm{Id}_E)^{r(\lambda_k)})) = m(\lambda_k)
 $$
 {: .proposition}

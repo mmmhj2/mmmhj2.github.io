@@ -21,11 +21,11 @@ $$
 显然，现实当中电磁波并非总是在真空中传播。
 日常生活中，无论是光、手机的蜂窝网络信号还是微波炉里的微波，都是在空气中传播的。
 更特殊地，光在两种不同的介质之间传播时，还会发生散射现象。
-这些现象显然并不能都由正空中的麦克斯韦方程组解释，因此我们需要研究不同介质中的麦克斯韦方程。
+这些现象显然并不能都由真空中的麦克斯韦方程组解释，因此我们需要研究不同介质中的麦克斯韦方程。
 
 ## 电介质对电磁场的响应
 
-我们使用一个简单的模型，即极化模型，来描述电解质对电磁场的响应。
+我们使用一个简单的模型，即极化模型，来描述电介质对电磁场的响应。
 
 假设真空中有两块相对放置的电极板，分别带正负电，我们可以测量两者之间的电势差。
 现在，向两块电极板之间插入一块玻璃，可以观察到两者的电势差下降了。
@@ -222,10 +222,10 @@ $\underline{\epsilon_r}$为相对介电常数，$\underline n$为（复）折射
 $$
 \begin{aligned}
 \underline {\vec E} 
-&= \underline {\vec E_0} \cdot \mathrm{exp} \left[ j \left( \omega t - k^\prime \vec{u} \vec{r} - j k^{\prime \prime} \vec{u} \vec{r} \right) \right] \\
+&= \underline {\vec E_0} \cdot \mathrm{exp} \left[ j \left( \omega t - k^\prime \vec{u} \cdot \vec{r} - j k^{\prime \prime} \vec{u} \cdot \vec{r} \right) \right] \\
 &= \underline {\vec E_0} 
-\cdot \mathrm{exp} \underbrace{\left[ j \left( \omega t - k^\prime \vec{u} \vec{r} \right) \right]}_{\in \mathbb C}
-\cdot \mathrm{exp} \underbrace{\left[ k^{\prime \prime} \vec u \vec r \right]}_{\in \mathbb R}
+\cdot \mathrm{exp} \underbrace{\left[ j \left( \omega t - k^\prime \vec{u} \cdot \vec{r} \right) \right]}_{\in \mathbb C}
+\cdot \mathrm{exp} \underbrace{\left[ k^{\prime \prime} \vec u \cdot \vec r \right]}_{\in \mathbb R}
 \end{aligned}
 $$
 可以看出，在$\Im (k) = 0$时这个波形式的解相当于一个平面谐波，但是其色散关系和真空中的不同。
@@ -277,7 +277,7 @@ $$
 虚部很小时，称$\omega$处在“透明区”，此时几乎不发生吸收；
 否则称为“吸收区”。
 
-### 柯西定律
+### 柯西色散公式
 
 我们考虑稀疏电介质的透明区，此时$\Im(\underline n) = 0, n = \Re(\underline n) = 1 + \frac{1}{2} \chi_e$。
 只考虑可见光区，即$\omega \ll \omega_0$。
@@ -293,7 +293,7 @@ n
 &= A + \frac{B}{\lambda^2}
 \end{aligned}
 $$
-这一定理叫做柯西定律。
+这一定理叫做柯西色散公式。
 注意式子中的$\lambda$是真空中的。
 
 当$\omega \ll \omega_0$时，折射率与真空波长满足以下关系：
@@ -303,6 +303,8 @@ $$
 其中，$A,B$为两个与材料有关的常数。
 {: .proposition}
 
+注意到该公式使用的模型（即前述模型）其实并不准确，这个公式只是经验公式。
+如果使用更加精确的级数展开，还能得到更高次数的公式，但一般情况下二次已经足够。
 
 ### 斯涅耳折射定律
 
