@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "线性时不变一阶与二阶系统"
+date: 2022-12-01 15:30:00 +0800
 categories:
 --- 
 
@@ -215,4 +216,122 @@ $$
 
 ### 图像表示
 
+和阶跃响应相同，我们也要按照阻尼系数来分类讨论。
+有：
+$$
+H(p) = K (1 + \frac{2\xi}{\omega_0} p + \frac{1}{\omega_0^2} p^2)^{-1} 
+\implies
+H(j\omega) = K (1 - \frac{\omega^2}{\omega_0^2} + 2 j \frac{\xi \omega}{\omega_0})^{-1}
+$$
+从而
+$$
+\left\{
+\begin{aligned}
+A(\omega) &= \frac{K}{\sqrt{(1 - \frac{\omega^2}{\omega_0^2})^2 + 4 \frac{\xi^2 \omega^2}{\omega_0^2}}} \\
+\varphi(\omega) &= - \arg \left[ 1 - \frac{\omega^2}{\omega_0^2} + 2 j \frac{\xi \omega}{\omega_0} \right]
+\end{aligned}
+\right.
+$$
 
+---
+
+先来看辐角。
+对于辐角来说，一个重要的问题是这个复数的实部的符号是不确定的，从而反三角函数$\arctan$的计算比较困难。
+我们把这个复数乘以虚数单位$j$，相当于旋转了$90^\circ$，同时把不确定符号的实部变为虚部，而恒正的虚部变为实部。
+从而我们有：
+$$
+\varphi(\omega) = - \frac{\pi}{2} + \arctan \left( \frac{\omega_0^2 - \omega^2}{2 \xi \omega \omega_0} \right)
+$$
+
+---
+
+再来看增益。
+我们有：
+$$
+\begin{aligned}
+G_{dB} (\omega) 
+&= 20 \log A \\
+&= 20 \log K - 10 \log 
+\left[
+\left( 1 - \frac{\omega^2}{\omega_0^2} \right)^2 + 4 \frac{\xi^2 \omega^2}{\omega_0^2}
+\right] \\
+\end{aligned}
+$$
+$\omega = \omega_0$时：
+$$
+G_db (\omega_0) = 20 \log K - 20 \log \frac{1}{2 \xi}
+$$
+我们记$Q = \frac{1}{2 \xi}$，称为**品质因数**。
+
+我们继续研究增益的极值。
+对于一阶系统，增益是单调的，但是对二阶系统，其可能出现极大值。
+我们令$f(\omega) = (1 - \frac{\omega^2}{\omega_0^2})^2 + 4 \frac{\xi^2 \omega^2}{\omega_0^2}$。
+这个函数是增益的分母，从而我们需要知道它的极小值。
+求导可得：
+$$
+f^\prime (\omega) = 4 \frac{\omega}{\omega_0} (-1 + \frac{\omega^2}{\omega_0^2} + 2\xi^2)
+$$
+从而其在$\omega = \omega_0 \sqrt{1 - 2 \xi^2}$处取最小值。
+
+如果$\xi < \frac{\sqrt{2}}{2}$，则其存在共振现象，**共振频率**为$\omega_r = \omega_0 \sqrt{1 - 2 \xi^2}$。
+此时其增益为
+$$
+G_{dB} = 20 \log K - 10 \log \left[ 4\xi^2 + 4\xi^2 (1 - 2\xi^2) \right] = 20 \log K + 20 \log \frac{1}{2\xi \sqrt{1 - \xi^2}}
+$$
+我们定义$Q_S = \frac{1}{2\xi \sqrt{1 - \xi^2}}$，称为**共振因子**。
+
+---
+
+最后，我们研究一下渐近线。
+渐近线的研究方法和一阶系统相同。
+
+- $\omega \to 0$时，增益为一根水平直线，值为$20 \log K$。$\varphi(\omega) = 0$。
+- $\omega \to \infty$时，增益为一根斜率为$-40$的直线。$\varphi(\omega) = - \pi$。
+- 两根渐近线相交于$\omega_0$，$\varphi(\omega_0) = -\frac{\pi}{2}$。
+
+---
+
+总结一下要点：
+- 波德图：
+  + 渐近线见上；
+  + $\omega_0$处，增益值为$20 \log K + 20 \log Q$，辅角为$\varphi(\omega_0) = -\frac{\pi}{2}$；
+  + 如果$\xi < \frac{\sqrt{2}}{2}$，则存在共振，此时波德图上有极大值点：$(\omega_0 \sqrt{1 - 2 \xi^2}, 20 \log K + 20 \log Q_S)$。
+- 尼柯尔斯图：
+  + 通过两个点：共振频率（共振频率小于截止频率，其辐角大于$- \frac{\pi}{2}$）、截止频率；
+  + 两条渐近线：$\omega \to 0, \varphi = 0, G_{dB} = 20 \log K$，$\omega \to +\infty, \varphi = - \pi, G_{dB} = - \infty$。
+- 奈奎斯特图：
+  + 通过两个点：共振频率（第四象限，模长大于$K$）、截止频率（交于虚轴负半轴，交点为$(KQ,0)$）；
+  + 起止点：从$\omega \to 0, (K, 0)$出发，至$\omega \to \infty, (0, 0)$结束
+
+#### $0 < \xi < \frac{1}{2}$
+
+![](/assets/system/2-order-0.33-bode.png)
+![](/assets/system/2-order-0.33-nichols.png)
+![](/assets/system/2-order-0.33-nyquist.png)
+
+#### $\xi = \frac{1}{2}$
+
+![](/assets/system/2-order-0.5-bode.png)
+![](/assets/system/2-order-0.5-nichols.png)
+![](/assets/system/2-order-0.5-nyquist.png)
+
+#### $\frac{1}{2} < \xi < \frac{\sqrt{2}}{2}$
+
+![](/assets/system/2-order-0.66-bode.png)
+![](/assets/system/2-order-0.66-nichols.png)
+![](/assets/system/2-order-0.66-nyquist.png)
+
+#### $\frac{\sqrt{2}}{2} < \xi < 1$
+
+![](/assets/system/2-order-0.8-bode.png)
+![](/assets/system/2-order-0.8-nichols.png)
+![](/assets/system/2-order-0.8-nyquist.png)
+
+#### $1 < \xi$
+
+![](/assets/system/2-order-1.5-bode.png)
+![](/assets/system/2-order-1.5-nichols.png)
+![](/assets/system/2-order-1.5-nyquist.png)
+
+特别注意，在此情况下，该二阶传递函数可被分解成两个一阶的传递函数，从而有三条渐近线：
+一条水平直线；一条斜率为-20的直线，这是一阶系统的渐近线；一条斜率为-40的直线。
