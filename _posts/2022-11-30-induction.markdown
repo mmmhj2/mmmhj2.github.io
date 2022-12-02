@@ -153,10 +153,10 @@ $$
 我们直接利用定义计算电动势：
 $$
 \begin{aligned}
-W_e &= \oint q \vec E_2 \mathrm d \vec l = q \oint \vec E_2 \mathrm d \vec l \\
-&= q \oint \left( \vec E_1 + \vec v_e \times \vec B \right) \mathrm d \vec l \\
-&= q \left( \underbrace{\oint \vec E_1 \mathrm d \vec l}_{保守场环路积分为零} + \oint \vec v_e \times \vec B \mathrm d \vec l \right) \\ 
-&= q \oint \vec v_e \times \vec B \mathrm d \vec l \\
+W_e &= \oint q \vec E_2 \cdot \mathrm d \vec l = q \oint \vec E_2 \cdot \mathrm d \vec l \\
+&= q \oint \left( \vec E_1 + \vec v_e \times \vec B \right) \cdot \mathrm d \vec l \\
+&= q \left( \underbrace{\oint \vec E_1 \cdot \mathrm d \vec l}_{保守场环路积分为零} + \oint \left( \vec v_e \times \vec B \right) \cdot \mathrm d \vec l \right) \\ 
+&= q \oint \left( \vec v_e \times \vec B \right) \cdot \mathrm d \vec l \\
 &= q e_L
 \end{aligned}
 $$

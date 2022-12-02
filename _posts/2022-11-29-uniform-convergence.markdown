@@ -186,7 +186,7 @@ $$
 且$(f_n^{(k)})$在$I$的所有闭区间上一致收敛。
 则$(f_n)$的极限k阶可导，且
 $$
-\forall i = 1, 2, \dots, k \quad (\lim_{n \to \infty} f_n)^{(i)} = lim_{n \to \infty} f_n^{(i)}
+\forall i = 1, 2, \dots, k \quad (\lim_{n \to \infty} f_n)^{(i)} = \lim_{n \to \infty} f_n^{(i)}
 $$
 同理，对于级数，有
 若$u_n$k阶可导，且导函数连续；
