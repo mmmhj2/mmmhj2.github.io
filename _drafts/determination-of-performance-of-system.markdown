@@ -1,0 +1,121 @@
+---
+layout: post
+title: "用代数方法确定系统的性能"
+categories: 
+--- 
+
+此前，我们已经知道线性时不变系统的性能可由几个物理量描述。
+现在，我们希望通过某些方法确定系统的具体性能。
+
+## 稳定性
+
+我们知道，线性系统的稳定性通常指的是**有界输入有界输出稳定性**，通常简写为BIBO稳定性。
+这就是说，线性系统对于任何有界的输入，其输出也应该是有界的。
+我们以阶跃输入为例，来研究线性系统的稳定性。
+
+### 极点条件
+
+我们知道，线性是不变系统的函数可写为：
+$$
+\begin{aligned}
+H(p) 
+&= \frac{K \exp (-\tau p)}{p^\alpha} \frac{1 + b_1 p + \cdots + b_m p^m}{1 + a_{\alpha+1} p + \cdots a_n p^(n-\alpha)} \\
+&= \frac{K \exp (-\tau p)}{p^\alpha} \frac{b_m \prod (p - z_i)}{a_n \prod (p - p_i)}
+\end{aligned}
+$$
+如果输入为Heaviside阶跃函数，即$E(p) = 1/p$，那么输出可写为：
+$$
+\begin{aligned}
+S(p) &= E(p) \times H(p) \\
+&= \frac{K \exp (-\tau p)}{p^{\alpha+1}} \frac{b_m \prod (p - z_i)}{a_n \prod (p - p_i)}
+\end{aligned}
+$$
+我们假设系统的延时$\tau = 0$，并且没有重根，那么为了进行拉普拉斯逆变换可将有理分式裂项：
+$$
+\begin{aligned}
+S(p) 
+&= \frac{A_1}{p} + \frac{A_2}{p^2} + \cdots + \frac{A_{\alpha+1}}{p^{\alpha+1}} + 
+\frac{B_1}{p - p_1} + \cdots + \frac{B_{n-\alpha}}{p - p_{n-\alpha}} \\
+&= \sum_{i=0}^\alpha \frac{A_{i+1}}{p^{i+1}} + \sum_{j=1}^{n - \alpha} \frac{B_j}{p - p_j}
+\end{aligned}
+$$
+进行拉普拉斯逆变换（略去逆变换中的Heaviside函数）：
+$$
+s(t) = \sum_{i=0}^\alpha \frac{A_{i+1}}{i !} t^i + 
+\sum_{p_j \in \mathbb R} B_j e^{p_j t} + 
+\sum_{p_k \in \mathbb C} \left( B_k e^{p_k t} + \overline{B_k} e^{\overline{p_k} t} \right)
+$$
+这里需要注意，多项式要么有实根要么有共轭的虚根，因此我们将实根和虚根分开讨论。
+
+对于虚根，我们设$p_k = \alpha_k + j \beta_k, \; B_k = a_k + j b_k$，从而有：
+$$
+\begin{aligned}
+B_k e^{p_kt} + \overline{B_k} e^{\overline{p_k} t}
+&= 2 e^{\alpha_n t} \left[ a_k \cos \beta_k t - b_k \sin \beta_k t \right] \\
+&= 2 \left| B_k \right| e^{\alpha_k t} 
+\left[ \frac{a_k}{\sqrt{a_k^2 + b_k^2}} \cos \beta_k t + \frac{b_k}{\sqrt{a_k^2 + b_k^2}} \sin \beta_k t \right] \\
+&= 2 \left| B_k \right| e^{\alpha_k t}  \cos \left( \beta_k t + \varphi_k \right) 
+\end{aligned}
+$$
+代入原式即可得到：
+$$
+s(t) = \sum \frac{A_{i+1}}{i!} t^i + \sum B_j e^{p_j t} + 2 \sum \left| B_k \right| e^{\alpha_k t}  \cos \left( \beta_k t + \varphi_k \right)
+$$
+
+现在我们要求输出在$\[0, \infty)$上有界，这就要求：
+- $i < 1$
+- $p_j < 0$
+- $\alpha_k < 0$
+
+现在我们尝试消去一些假设，看看这个判据能否广泛使用。
+
+- $\tau > 0$：我们知道，系统的延迟对其稳定性没有影响，因此这个假设可以消去；
+- 重根； 如果出现重根，则裂项后的会出现形如$\frac{B_l}{(p - p_l)^n}$的项，而不止一次项。
+  这种项的拉普拉斯逆变换的结果为$B_k t^n e^{p_l t}$，以上结论仍然适用。
+
+从而，我们得出以下结论：
+
+线性系统稳定当且仅当其所有极点的实部小于零。
+{: .theorem}
+
+### 系数条件
+
+通过极点判断线性系统的稳定性形式简单而优美，但是现实中的系统往往难以用这种方式进行判断，因为不借助计算机求解高次多项式的零点非常困难。
+为此，我们来学习**劳斯–赫尔维茨稳定性判据**：
+
+线性系统稳定当且仅当其特征多项式的所有系数同号，且劳斯表中主列的所有系数同号。
+{: .theorem}
+
+特征多项式就是传递函数分母上的多项式。
+
+劳斯表是这样一张表：
+
+|-----|-----|-----|-----|-----|
+|$p^n$|$a_n$|$a_{n-2}$|$a_{n-4}$|$\cdots$|
+|$p^{n-1}$|$a_{n-1}$|$a_{n-3}$|$a_{n-5}$|$\cdots$|
+|$p^{n-2}$|$x_{3,1}$|$x_{3,2}$|$x_{3,3}$|$\cdots$|
+|$\vdots$|$\vdots$|$\vdots$|$\vdots$|$\vdots$|
+|$p^0$|$x_{n+1,1}$|$x_{n+1,2}$|$x_{n+1,3}$|$\cdots$|
+
+其中每个未知元素可用以下公式求出
+$$
+x_{i,j} = - \frac{1}{x_{i-1, 1}} 
+\begin{vmatrix}
+x_{i-2,1} & x_{i-2, j+1} \\
+x_{i-1,1} & x_{i-1, j+1}
+\end{vmatrix}
+$$
+出界的元素视为0。
+
+其主列就是除表头外的第一列，这一列的如果同号，则系统稳定；如果不同号，则其符号变换的次数等于不稳定极点的个数。
+
+#### 主列含有零的处理办法
+
+如果主列含有零的一行其他系数，那么可以采用一些简单的办法求解：
+- 在原传递函数前加一个比例系数，然后构造闭环系统，研究新传递函数$H^\prime(p) = \frac{KH(p)}{1+KH(p)}$的稳定性；
+- 在原特征多项式前乘一个根的实部为零多项式，如$R(X)=X+1$，然后研究新的特征多项式；
+- 最常用的办法是把主列的零替换为微小量$\varepsilon$，算出其他值后取$0^+$或$0^-$。
+
+如果劳斯表上存在一行全部为零，则其处理较为复杂。
+比较简单的方法是构造一个辅助多项式然后求导，但是这一方法存在一些局限性。
+
