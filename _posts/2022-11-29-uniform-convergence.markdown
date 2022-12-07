@@ -198,3 +198,19 @@ $$
 (\sum_{n = 0}^{\infty} u_n)^{(i)} = \sum_{n=0}^{\infty} u_n^{(i)}
 $$
 {: .proposition}
+
+## 维尔斯特拉斯逼近
+
+如果一个函数在某个闭区间上连续，那么我们一定可以用某个多项式逼近它，这个定理叫做维尔斯特拉斯逼近定理。
+
+设$f: [a,b] \to V$为一连续函数，对所有$\varepsilon > 0$，都存在一多项式$\psi:[a,b] \to V$，满足：
+$$
+\forall t \in [a, b] \quad \left| f(t) - \psi(t) \right| < \varepsilon
+$$
+{: .proposition}
+
+如果我们为向量空间$\mathcal C \left( [a,b]; V \right)$加上一致收敛范数$\Vert \cdot \Vert_\infty$（值为区间上像的范数的上确界），
+那么这个定理等价于由多项式组成的该空间的子空间是稠密的。
+
+维尔斯特拉斯逼近还有一条定理与三角多项式，而非常规意义下的多项式有关。
+那条定理会在研究傅里叶级数时提到。
