@@ -2,6 +2,7 @@
 layout: post
 title: "傅里叶级数——收敛行为"
 categories: analysis
+date: 2022-12-08 21:00:00 +0800
 ---
 
 $$
