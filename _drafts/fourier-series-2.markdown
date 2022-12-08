@@ -151,4 +151,140 @@ $$
 
 ## 一致收敛与泊松核
 
-## 二次收敛
+此节研究的是一个与傅里叶级数密切相关的幂级数的一致收敛，而不是傅里叶级数本身的一致收敛。
+{: .remark}
+
+设$\sum c_n r^n$为一幂级数，其中$c_n$有界，因此该幂级数的收敛半径大于等于一。
+若$(c_n)$绝对收敛，则$\sum c_n r^n$在$[0,1]$上正规收敛，从而在$[0,1]$上连续。
+我们有：
+$$
+\lim_{r \to 1-} \sum_{n=0}^{\infty} c_n r^n = \sum_{n=0}^{\infty} c_n
+$$
+若$(c_n)$收敛，但不绝对收敛，利用分部求和公式，上述等式仍成立。
+
+如果等式左边存在极限，那么我们称$\sum c_n$**阿贝尔收敛**至这个极限。
+上一段的叙述说明，如果等式右边收敛，则左边的极限一定等于右边。
+从而，如果一个数列收敛，那么它一定阿贝尔收敛，且收敛至同一个数。
+
+级数$1-1+1-1+\cdots$在通常意义下不收敛，但阿贝尔收敛至$\frac{1}{2}$。
+{: .exampl}
+
+在上一章中，我们证明了，只有左右可导时函数的傅里叶级数才逐点收敛至原函数。
+这一章中，我们将说明，只要原函数连续，那么其傅里叶级数在阿贝尔收敛的意义下一定收敛至原函数。
+
+设：
+$$
+A_r (f)(x) = \sum_{n=-\infty}^{\infty} r^{|n|} c_n(f) e^{inx} = c_0(f) + 
+\sum_{n=1}^{\infty} r^n \left( c_n(f) e^{inx} + c_{-n}(f) e^{-inx} \right)
+$$
+此章我们将研究这个函数与原函数的关系。
+
+类比上一章中的狄利克雷核，我们定义泊松核为一组函数：
+$$
+\forall r \in [0, 1) \quad \forall x \in \RR \quad
+P_r(x) = \sum_{n=-\infty}^{\infty} r^{|n|}e^{inx} = 1 + 2 \sum_{n=1}^{\infty}r^n \cos nx
+$$
+{: .definition}
+
+我们也对它求个和：
+$$
+\begin{aligned}
+P_r(x) 
+&= \sum_{n=-\infty}^{\infty} r^{|n|}e^{inx} \\
+&= 1 + \sum_{n=1}^{\infty} (r e^{ix})^n + \sum_{n=1}^{\infty} (r e^{-ix})^n \\
+&= 1 + \frac{re^{ix}}{1-re^{ix}} + \frac{re^{-ix}}{1-re^{-ix}} \\
+&= \frac{1-r^2}{1-2r\cos x + r^2}
+\end{aligned}
+$$
+
+这一组函数有几个有趣的性质：
+
+$\forall r \in \[0, 1)$
+函数$P_r$是偶函数，周期为$2\pi$，恒正，满足$\int_0^{2\pi} P_r = 2\pi$，且
+$\forall \delta \in (0, \pi)$，其在闭区间$[\delta, 2\pi - \delta]$上关于$r$一致收敛至零，即
+$$
+\forall \varepsilon > 0 \; \exists \rho \in [0, 1) \; \forall r \in [0, 1) \; \forall x \in [\delta, 2\pi-\delta] \quad
+r \ge \rho \implies P_r(x) \le \varepsilon
+$$
+{: .proposition}
+
+我们重点证明最后一个命题。
+设$r \in \[\frac{1}{2}, 1)$，有：
+$$
+1 - 2r \cos x + r^2 = (1-r)^2 + 2r(1-\cos x) \ge 1 - \cos x
+$$
+从而有：
+$$
+\forall x \in [\delta, \pi] \quad 0 \le P_r(x) \le \frac{1-r^2}{1-\cos \delta} \le \frac{2(1-r)}{1-\cos \delta}
+$$
+设$\rho = 1 - \frac{1}{2} \min (\varepsilon(1-\cos\delta), 1)$，有：
+$$
+\forall r \in [\rho, 1) \quad \forall x \in [\delta, \pi] \quad 0 \le P_r(x) \le \varepsilon
+$$
+{: .proof}
+
+这个函数关于$r$在几乎任何闭区间上收敛至零函数，但是其积分始终为一固定常数。
+这一独特性质允许我们利用它来证明下述定理。
+
+设$f \in \mathcal C (\TT)$，$f$的傅里叶级数阿贝尔收敛至$f$，且该收敛是一致收敛，即：
+$$
+\forall \varepsilon > 0 \quad \exists \rho \in [0,1) \quad r \in [0, 1) \quad r \in \RR \quad
+r \ge \rho \implies \left| A_r(f)(x) - f(x) \right| \le \varepsilon
+$$
+{: .proposition}
+
+$$
+A_r (f)(x) - f(x) = \frac{1}{2\pi} \int_0^{2\pi} P_r(t) f(x-t) \d t - f(x) = \frac{1}{2\pi} \int_0^{2\pi} P_r(t) (f(x-t)-f(x)) \d t
+$$
+我们知道，$g(t) = f(x-t)-f(x)$在$[0, 2\pi]$这一紧密集上连续，从而一致连续，
+因此对任何$x \in \RR, \delta > 0$，总存在一个$\varepsilon$，满足$\forall t \in \[x - \delta, x+\delta\], \left\| f(x-t) - f(x) \right\| \le \varepsilon$。
+我们可以把$[0, 2\pi]$上的积分利用$\delta$拆成两个部分：
+$$
+\begin{aligned}
+\left| A_r(f)(x) - f(x) \right|
+&\le \frac{1}{2\pi} \int_0^{2\pi} P_r(t) \left| f(x-t)-f(x) \right| \d t \\
+&= \frac{1}{2\pi} \int_{-\delta}^{\delta} P_r(t) \left| f(x-t)-f(x) \right| \d t +
+\frac{1}{2\pi} \int_{\delta}^{2\pi - \delta} P_r(t) \left| f(x-t)-f(x) \right| \d t \\
+&\le \varepsilon \frac{1}{2\pi} \int_{-\delta}^{\delta} P_r(t) \d t + \frac{2 \sup |f|}{2 \pi} \int_{\delta}^{2\pi-\delta} P_r(t) \d t
+\end{aligned}
+$$
+我们记$M = \sup\|f\|$。
+又考虑到$P_r(t) > 0$，从而其在一个长度小于$2\pi$的区间上，积分一定小于$2\pi$，因此有：
+$$
+\left| A_r(f)(x) - f(x) \right|
+\le \varepsilon + 2M \frac{1}{2\pi}\int_{\delta}^{2\pi-\delta} P_r(t) \d t
+$$
+我们再利用$P_r(t)$在任意闭区间$\[\delta, 2\pi - \delta\]$上一致收敛至零的结论，取$\rho$使$P_r(x) \le \varepsilon$。
+根据一致收敛的定义，$\rho$一定存在。从而我们证明了：
+$$
+\left| A_r(f)(x) - f(x) \right|
+\le 2 \varepsilon
+$$
+这和原命题等价。
+{: .proof}
+
+利用这个定理，我们可以证明维尔斯特拉斯逼近的三角多项式形式：
+
+设$f \in \mathcal C(\TT)$，对所有$\varepsilon > 0$，都存在三角多项式$\Phi \in P(\TT)$，使：
+$$
+\left\Vert f - \Phi \right\Vert_\infty = \sup \left| f - \Phi \right| < \varepsilon
+$$
+{: .proposition}
+
+由一致收敛，对所有$\varepsilon > 0$，都存在$r \in \[0, 1)$，使得：
+$$
+\forall x \in \RR \quad \left| A_r(f)(x) - f(x) \right| < \varepsilon
+$$
+又有级数
+$$
+\sum_{n=-\infty}^{\infty} r^{|n|} \hat f (x) e^{inx} = 
+\hat f(0) + \sum_{n=1}^{\infty} r^n \left( \hat f (n) e^{inx} + \hat f(-n) e^{-inx} \right)
+$$
+正规收敛，因为$r < 1$，且$\hat f(n)$有界。
+从而此级数一致收敛，因此对足够大的$N$，其部分和与和的差足够小：
+$$
+\forall x \in \RR \quad
+\left| A_r(f)(x) - \sum_{n = -N}^{N}r^{|n|} \hat f(n) e^{inx} \right| < \varepsilon
+$$
+应用三角不等式即可得证。
+{: .proof}
