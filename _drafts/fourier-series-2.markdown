@@ -70,9 +70,84 @@ $$
 \lim_{x \to x_0+} \frac{f(x) - f(x_0+)}{x - x_0}
 $$
 存在，则傅里叶级数在该点收敛至$f(x_0)$。
-{: .proposition}
+{: .theorem}
 
 始终注意我们要求这个函数是正规化的，即$f(x) = \frac{1}{2} \left( f(x-) + f(x+) \right)$。
+
+为了证明这个定理，我们尝试计算一下傅里叶级数的部分和：
+$$
+\begin{aligned}
+S_n (f) (x) 
+&= \sum_{k=-n}^{n} \hat f (k) e^{ikx} \\
+&= \frac{1}{2\pi} \sum_{k=-n}^{n} \int_0^{2\pi} f(t) e^{-ikt} \d t e^{ikx} \\
+&= \frac{1}{2\pi} \int_0^{2\pi} f(t) \sum_{k=-n}^{n} e^{ik(x-t)} \d t
+&= \frac{1}{2\pi} \int_0^{2\pi} f(x-t) \sum_{k=-n}^{n} e^{ik(t)} \d t
+\end{aligned}
+$$
+这个求和是有限的，从而总可以和积分交换。
+我们注意到，似乎这个求和变成了原函数和一个级数卷积的形式。
+我们把这个级数称为**狄利克雷核**，记为：
+$$
+D_n(x) = \sum_{k=-n}^{n}e^{ikx} = 1 + 2 \sum_{k=1}^{n} \cos kx
+$$
+这个级数具有一些性质，可以帮助我们证明狄利克雷定理。
+
+我们有：
+$$
+\begin{aligned}
+& S_n(f)(t) - \frac{1}{2} \left( f(x_0+) + f(x_0-) \right) \\
+&= \frac{1}{2\pi} \int_{-\pi}^{\pi} D_n(t) f(x_0 - t) \d t - \frac{1}{2} \left( f(x_0+) + f(x_0-) \right) \\
+&= \frac{1}{2\pi} \int_{-\pi}^{0} D_n(t) \left[f(x_0 - t) - f(x_0+)\right] \d t +
+\frac{1}{2\pi} \int_{0}^{\pi} D_n(t) \left[f(x_0 - t) - f(x_0-)\right] \d t
+\end{aligned}
+$$
+我们先研究其中一个积分，在利用相同的办法证明另一个积分。
+尝试计算一下$D_n(x)$的值：
+$$
+\begin{aligned}
+D_n(x) 
+&= \sum_{k=-n}^{n}e^{ikx} = e^{-ikn} \frac{1 - e^{i(2n+1)x}}{1 - e^{ix}} \\
+&= \frac{e^{-i(n+1/2)x} + e^{i(n+1/2)x}}{e^{-ix/2} - e^{ix/2}} \\
+&= \frac{\sin (n + \frac{1}{2}) x}{\sin \frac{1}{2} x} \\
+&= \cos nx + \sin nx \cot \frac{1}{2} x
+\end{aligned}
+$$
+带入第二个积分中：
+$$
+\begin{aligned}
+& \; \int_{0}^{\pi} D_n(t) \left[f(x_0 - t) - f(x_0-)\right] \d t \\
+&= \int_{0}^{\pi} \left( \cos nx + \sin nx \cot \frac{1}{2} x \right) \left[f(x_0 - t) - f(x_0-)\right] \d t \\
+&= \int_{0}^{\pi} \cos nx \left[f(x_0 - t) - f(x_0-)\right] \d t + \int_{0}^{\pi} \sin nx \cot \frac{1}{2} x \left[f(x_0 - t) - f(x_0-)\right] \d x
+\end{aligned}
+$$
+我们设一个函数$u(x)$：
+$$
+u(x) = \left\{
+\begin{aligned}
+&f(x_0 - t) - f(x_0-) &\quad x \in (0, \pi] \\
+&0 &\quad x = 0 \\
+&u(-x) &\quad x \in [-\pi,0)
+\end{aligned}
+\right.
+$$
+可以看出，这个函数是一个周期为$2\pi$的偶函数。
+上述积分的第一部分可看作是这个函数的傅里叶系数。
+再设一个函数$v(x)$:
+$$
+v(x) = \left\{
+\begin{aligned}
+&[f(x_0 - t) - f(x_0-)] \cot \frac{1}{2} x &\quad x \in (0, \pi] \\
+&0 &\quad x = 0 \\
+&-v(-x) &\quad x \in [-\pi,0)
+\end{aligned}
+\right.
+$$
+可以看出，这个函数是一个周期为$2\pi$的奇函数。
+上述积分的第二部分可看作是这个函数的傅里叶系数。
+显然，这两个函数满足本文开头的命题的前提条件，因此它们的傅里叶系数趋于零。
+所以，整个积分趋于零。
+因此，$S_n(f)(t) - \frac{1}{2} \left( f(x_0+) + f(x_0-) \right)$趋于零，从而定理得证。
+{: .proof}
 
 ## 一致收敛与泊松核
 
