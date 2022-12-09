@@ -9,6 +9,7 @@ $$
 \newcommand{Id}{\mathrm{Id}}
 \newcommand{\endrospace}{\mathcal{L}(\mathbb{K})}
 \newcommand{\NN}{\mathbb{N}}
+\newcommand{\Mat}{\mathrm{Mat}}
 $$
 
 ## 丹佛分解
@@ -102,3 +103,124 @@ $$
 {: .exampl}
 
 ## 若尔当标准型
+
+丹佛分解的结果已经足够优秀，但是幂零矩阵仍然给这个分解赋予极大的不确定性。
+我们寻求进一步地将这个矩阵标准化，为此，我们引入若尔当块。
+
+形如
+$$
+J_n(\lambda) = 
+\begin{pmatrix}
+\lambda & 1 & 0 & \cdots & 0 & 0 \\
+0 & \lambda & 1 & \cdots & 0 & 0 \\
+\vdots & \vdots & \ddots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & \cdots & \lambda & 1 \\
+0 & 0 & 0 & \cdots & 0 & \lambda
+\end{pmatrix}
+$$
+的矩阵称为$n$阶**若尔当块**。
+$n=1$时约定$J_1(\lambda) = \begin{pmatrix} \lambda \end{pmatrix}$。
+{: .definition}
+
+不难发现，每个若尔当块正是一个对角矩阵加上一个幂零矩阵。
+这个矩阵为幂零矩阵当且仅当$\lambda = 0$，且
+设$m \le n$，则$J_n^m(0) = \begin{pmatrix} 0 & I_{n-m} \\\\ 0 & 0 \end{pmatrix}$。
+这个矩阵的特征值只有$\lambda$，其特征多项式和最小多项式都是$(X - \lambda)^n$且特征值$\lambda$的几何重数为1。
+
+设$u \in \endrospace$，$\lambda$为$u$的一个特征值。设$m \in \NN, \quad m \le r(\lambda)$，$a \in \Ker (u - \lambda \Id_E)^m \backslash \Ker (u - \lambda \Id_E)^{m-1}$，$\alpha_i = (u - \lambda \Id_E)^{m-i} (a)$。
+则$\mathcal B = (\alpha_1, \dots, \alpha_m) = ((u - \lambda \Id_E)^{m-1}(a), \dots, (u - \lambda \Id_E)(a), a)$线性无关，因此构成某个空间的基底。
+我们记$F = \mathrm{Vect} \mathcal B$为这个基底张成的空间，则这个空间为$u$的一个不变子空间，且$\Mat_{\mathcal B}(u_F) = J_m(\lambda)$。
+{: .proposition}
+
+我们设存在一组不全为零的标量$(\lambda_1, \dots, \lambda_m)$使$\sum_{i=1}^{m} \lambda_i \alpha_i = 0$。
+现在我们记$m^\prime$为其中最大的非零量的下标，则$\sum_{i=1}^{m^\prime} \lambda_i \alpha_i = 0$。
+有：
+$$
+0_E = (u - \lambda \Id_E)^{m^\prime-1} \left( \sum_{i=1}^{m^\prime} \lambda_i \alpha_1 \right) = \lambda_{m^\prime} \alpha_1
+$$
+这是因为对这个求和号再做一次$(u - \lambda \Id_E)^{m^\prime-1}$变换后，所有序号大于一的$\alpha_i$的变换的次数都大于等于$m$了。
+我们知道$\alpha_1 = a \neq 0\_E$，从而$\lambda\_{m^\prime} = 0$。
+而这与我们的假设矛盾，从而这组向量线性无关。
+我们知道$\forall i = 2, 3, \dots , m, \quad (u - \lambda \Id_E)(\alpha_i) = \alpha_{i-1}$。
+因此$u(\alpha_i) = \lambda \alpha_i + \alpha_{i-1} \in F$。
+我们又有$(u - \lambda \Id_E) (\alpha_1) = 0$，从而$u(\alpha_1) = \lambda \alpha_1 \in F$。
+这说明$F$确实是一个不变子空间。简单计算即可验证其矩阵确为若尔当块。
+{: .proof}
+
+这个命题已经初步指出了矩阵在根子空间内可化为若尔当块。
+接下来，我们还要说明矩阵在全空间内如何化为若尔当标准型。
+
+设$u \in \endrospace$是一个非零的幂零变换，则全空间可写成若干个循环不变子空间的直和，即存在
+$S_u(x_1), S_u(x_2), \dots , S_u(x_s)$使
+$$
+E = \bigoplus_{i=1}^s S_u (x_i)
+$$
+循环子空间即由变换反复作用在向量上产生的不变子空间：
+$$
+S_u(x) = \mathrm{Vect} \big( x, u(x), u^2(x), \dots , u^p(x) \big)
+$$
+其中$p$是使这组向量线性无关的最大整数。
+{: .proposition}
+
+这个命题的证明较为复杂，此处略过。
+
+我们把这个全空间的基底重新排序一下，则在基底
+$$
+\begin{aligned}
+( &u^{k_1} (x_1), u^{k_1 - 1} (x_1), \dots , u(x_1), x_1, \\
+&u^{k_2} (x_2), u^{k_2 - 1} (x_2), \dots , u(x_2), x_2, \\
+&\cdots , \\
+&u^{k_t} (x_t), u^{k_t - 1} (x_t), \dots , u(x_t), x_t) \\
+\end{aligned}
+$$
+下，这个变换可以写成如下形式：
+$$
+\begin{pmatrix}
+J_{k_1}(0) & & & \\
+& J_{k_2}(0) & & \\
+& & \ddots & \\
+& & & J_{k_t}(0)\\
+\end{pmatrix}
+$$
+
+这个命题可用来导出一下定理：
+
+若$u \in \endrospace$的最小多项式可分至一次项，则总存在一组基底，使这个变换在此基底下可以写成**若尔当标准型**：
+$$
+\Mat(u) = 
+\begin{pmatrix}
+J_{k_1}(\lambda_1) & 0 & \cdots & 0 \\
+0 & J_{k_2}(\lambda_2) & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & J_{k_s}(\lambda_s)
+\end{pmatrix}
+$$
+其中$\lambda_i$是特征值（不要求两两不同）。
+{: .theorem}
+
+我们设$\chi_u(X) = \prod\_{i=1}^r(X-\lambda\_i)^{m\_i}$，其中$\lambda_i$是两两不同的特征值。
+记$F\_i = \Ker \big( (u-\lambda\_i \Id\_E)^{m\_i} \big)$为特征值对应的根子空间。
+记$v\_i = (u-\lambda\_i \Id\_E)\_{F\_i}$，则我们有$v\_i^{m\_i} = 0$，从而其为零幂的。
+根据以上命题，这个变换在某组基底下可以写成$\lambda = 0$的若尔当标准型。
+又因为$u_{F_i} = v_i + \lambda \Id_{F_i}$，从而原变换在这个根子空间下也能写成若尔当标准型，但是对角线上加上特征值。
+因为特征多项式是零化多项式，由核引理，根子空间的直和是原空间，从而在全空间下该矩阵可化为若尔当标准型。
+{: .proof}
+
+虽然我们知道可以将矩阵化为若尔当标准型，但是却难以直接找到对应的矩阵。
+实际上，多数情况下，我们只能先通过各种手段猜出标准型，再去寻找对应的基底。
+为保证结论简洁，我们之后假设所有相同的特征值在一个若尔当块内。
+以下结论可帮助我们寻找若尔当标准型。
+
+若$f \in \endrospace$可分且只有一个特征值$\lambda$，则记
+$\chi_f(X) = (X-\lambda)^n, m_f(X) = (X-\lambda)^\beta, \mathrm{dim} E_\lambda=\gamma$，那么有：
+$$
+\Mat (f) =
+\begin{pmatrix}
+J_{d_1}(\lambda) & & & \\
+& J_{d_2}(\lambda) & & \\
+& & \ddots & \\
+& & & J_{d_\gamma}(\lambda)\\
+\end{pmatrix}
+$$
+其每个若尔当块的最大阶数为$\beta$（因为根子空间的维数为$\beta$），块数为$\gamma$（因为每个若尔当块的几何重数为1）。
+如果有多个特征值，则对每个特征值单独处理，然后拼在对角线上即可。
