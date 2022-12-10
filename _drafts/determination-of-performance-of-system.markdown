@@ -167,5 +167,99 @@ $$
 从而这个系统对有界输入产生了无界输出，因此是不稳定的。
 这是由于$\pm j$处的重根导致的。
 
-现在我们可以得出结论：劳斯表可以判定系统是否稳定，但对于不稳定还是稳定极限，只能通过拉普拉斯逆变换才能保证得出正确结果。
+因此我们可以总结出以下注意事项：
 
+以上判据只能确定系统**是否稳定**，但无法区别系统处于**稳定界限**还是**不稳定**。
+要区别系统处于稳定界限还是不稳定，可以使用拉普拉斯逆变换的方法。
+{: .remark}
+
+## 准确性
+
+我们考虑下面这个典型系统的准确性：
+
+![](/assets/system/block-diagram-precision.svg)
+{: .center-image}
+
+通常我们要求的准确性是指输出于期望的输入指令相同。
+但是一般情况下，输入和输出的物理量并不相同，比如在常见的速度控制杆系统中，输入是杆的位置，而输出是速度。
+因此，我们把思路转换一下，要求$u_a(t)$和$u_r(t)$相同。
+通常来讲，这两个物理量是相同的，因为我们需要这两个物理量做减法来求出误差。
+在电子系统中通常为电势（电压），在液压系统中通常为压力等。
+这两个物理量相同，那么误差自然趋近于零。
+根据拉普拉斯变换的性质，我们有：
+$$
+\lim_{t \to \infty} \varepsilon(t) = \lim_{p \to 0} p \varepsilon(p)
+$$
+
+不考虑微扰$P(t)$，因此其值永远为零。
+我们假设传递函数$A(p)$为常数。
+这个传递函数通常表示传感器等，因此一般可以当作常数。
+接下来计算误差对输入的传递函数：
+$$
+\begin{aligned}
+\varepsilon(p) 
+&= u_a(p) - u_r(p) \\
+&= AE(p) - R(p) \cdot G_2(p) \cdot G_1(p) \cdot C(p) \cdot \varepsilon(p) \\
+\implies
+\varepsilon(p)  
+&= \frac{A}{1 + C(p) \cdot G_1(p) \cdot G_2(p) \cdot R(p)} E(p) \\
+&= \frac{A}{1 + H_{BO}(p)} E(p)
+\end{aligned}
+$$
+我们此前已经指出，反馈环内所有传递函数的积叫做**开环传递函数**，$H_{BO}(p) = C(p) \cdot G_1(p) \cdot G_2(p) \cdot R(p)$。
+现在我们把开环传递函数写成多项式的形式：
+$$
+\begin{aligned}
+H_{BO}(p) 
+&= \frac{b_0 + b_1 p + \cdots + b_m p^m}{a_0 + a_1 p + \cdots + a_n p^n} \\
+&= \frac{K_{BO}}{p^\alpha} 
+\frac{1 + b_1^\prime p + \cdots + b_m^\prime p^m}{1 + a_{\alpha+1}^\prime p + \cdots + a_n^\prime p^{n-\alpha}} \\
+&= \frac{K_{BO}}{p^\alpha} \frac{N_{BO}(p)}{D_{BO}(p)} \qquad N_{BO}(0) = 1 \quad D_{BO}(0) = 1
+\end{aligned}
+$$
+从而我们有：
+$$
+\begin{aligned}
+\varepsilon(p)
+&= \frac{A}{1 + \frac{K_{BO}}{p^\alpha} \frac{N_{BO}(p)}{D_{BO}(p)}} E(p) \\
+&= \frac{A p^\alpha D_{BO}(p)}{p^\alpha D_{BO}(p) + K_{BO} N_{BO}(p)} E(p) \\
+\lim_{p \to 0} p \varepsilon(p)
+&= \lim_{p \to 0} \frac{A p^{\alpha+1} D_{BO}(p)}{p^\alpha D_{BO}(p) + K_{BO} N_{BO}(p)} E(p) \\
+&= \lim_{p \to 0} \frac{A p^{\alpha+1}}{p^\alpha + K_{BO}} E(p)
+\end{aligned}
+$$
+
+不难看出，这个极限到底是否趋于零和输入有很大的关系，因此我们分类讨论一下。
+
+--- 
+
+阶跃输入：$e(t) = e_0 u(t) \iff E(p) = \frac{e_0}{p}$
+$$
+\varepsilon(t = \infty) = \lim_{p \to 0} \frac{A e_0 p^\alpha}{p^\alpha + K_{BO}}
+$$
+当且仅当$\alpha \ge 0$时此极限为零，从而系统准确。
+
+---
+
+斜坡输入：$e(t) = a t u(t) \iff E(p) = \frac{a}{p^2}$
+$$
+\varepsilon(t = \infty) = \lim_{p \to 0} \frac{A a p^{\alpha-1}}{p^\alpha + K_{BO}}
+$$
+当且仅当$\alpha \ge 1$时此极限为零，从而系统准确。
+
+---
+
+二次输入：$e(t) = \gamma \frac{t^2}{2} u(t) \iff E(p) = \frac{\gamma}{p^3}$
+$$
+\varepsilon(t = \infty) = \lim_{p \to 0} \frac{A \gamma p^{\alpha-2}}{p^\alpha + K_{BO}}
+$$
+当且仅当$\alpha \ge 2$时此极限为零，从而系统准确。
+
+---
+
+从而我们可以得出以下结论：
+
+若其反馈环内有$n$次积分，则系统对$n$次（及以下）输入$e(t) = a t^n u(t)$准确。
+{: .proposition}
+
+这条定理说明了为何PID控制系统中，如果缺少积分环节，则会存在稳态误差。
