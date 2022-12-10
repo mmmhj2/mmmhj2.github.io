@@ -150,6 +150,25 @@ $$
 
 不难注意到时域和频域下的变换具有高度的对称性。
 
+---
+
+总结：
+$$
+\begin{aligned} -F^\prime (p) 
+&= \mathcal{L} [t \times f(t)] 	\\
+\int_{p}^{\infty} F(u) \mathrm{d} u 
+&= \mathcal{L} \left[ \frac{f(t)}{t} \right] \\
+F(p+a) 
+&= \mathcal{L} \left[ f(t) e^{-at} \right] \\
+\mathcal{L} \left[ \dot f (t) \right]
+&= pF(p) \\ 
+\mathcal{L} \left[ \int_0^t f(\tau) \mathrm{d} \tau \right]
+&= \frac{F(p)}{p} \\
+\mathcal{L} [f(t - \tau)] 
+&= e^{-\tau p} \mathcal{L} [f(t)] \\
+\end{aligned}
+$$
+
 ### 极限性质
 
 此处不加证明地给出两个极限处的性质。
@@ -170,7 +189,7 @@ $$
 |--------|--------|
 | $\delta(t)$ | $1$ |
 | $u(t)$ | $1/p$ |
-| $t u(t) = ReLU(t)$ | $1/p^2$ |
+| $t u(t) = \mathrm{ReLU}(t)$ | $1/p^2$ |
 | $t^n u(t) $ | $n! / p^n$ |
 | $e^{-at} u(t) $ | $1 / (p+a)$ |
 | $t^n e^{-at} u(t)$ | $n! / (p+a)^{n+1}$ |
