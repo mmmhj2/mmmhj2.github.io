@@ -264,3 +264,5 @@ $$
 {: .proposition}
 
 这条定理说明了为何PID控制系统中，如果缺少积分环节，则会存在稳态误差。
+
+[^1]: 实际上，即使借助计算机求解高次多项式的复数根也相当复杂。参见[Jenkins–Traub算法](https://en.wikipedia.org/wiki/Jenkins%E2%80%93Traub_algorithm)
