@@ -194,3 +194,99 @@ $$
 {: .definition}
 
 ## 泰勒展开
+
+首先介绍一下多元函数的中值定理。
+
+设$f: U \subset E \to F$，$E$、$F$为二赋范向量空间，$U$为一开集。
+设$(a, b) \in U^2$为$U$上两点，满足线段$\[a, b\] = {a+t(b-a), t \in \[0,1\]}$都在$U$上。
+若$f$在$\[a,b\]$上连续，在除端点以外的所有点$(a,b)$可微，且存在$M>0$，满足$\|\|\| \d f_c \|\|\| < M, \forall c \in (a,b)$，那么：
+$$
+\Vert f(b) - f(a) \Vert_F \le M \Vert b - a \Vert_E 
+$$
+{: .theorem}
+
+显然，若$U$为凸集合，那么对其中任意两点，以上定理都成立。
+这个定理也说明，若在$U$上每一点其微分为零，那么这个函数是常函数。
+
+我们为了简单，记$\partial_i = \frac{\partial}{\partial x_i}$。
+
+类比实数的泰勒定理，我们有：
+
+在$n$维空间中的泰勒展开写为：
+$$
+f(x + h) = \sum_{p=0}^\infty \frac{1}{p!} \big( ( \sum_{i=1}^n h_i \partial_i )^p f \big) (x)
+$$
+{: .proposition}
+
+同理，余项也可写成多种形式。
+
+- 拉格朗日余项：（注意：只对实值函数成立）
+$$
+\begin{aligned}
+f(x + h) &= f(x) + \left( \sum_{i=1}^n h_i \partial_i \right) f(x) + \frac{1}{2} \left( \sum_{i=1}^n h_i \partial_i \right)^2 f(x) + 
+\cdots + \frac{1}{(p-1)!} \left( \sum_{i=1}^n h_i \partial_i \right)^{(p-1)} f(x) \\ &+
+\frac{1}{p!} \left( \sum_{i=1}^n h_i \partial_i \right)^{p} f(x + \theta h) , \qquad \theta \in (0,1)
+\end{aligned}
+$$
+- 积分余项：
+$$
+\begin{aligned}
+f(x + h) &= f(x) + \left( \sum_{i=1}^n h_i \partial_i \right) f(x) + \frac{1}{2} \left( \sum_{i=1}^n h_i \partial_i \right)^2 f(x) + 
+\cdots + \frac{1}{(p-1)!} \left( \sum_{i=1}^n h_i \partial_i \right)^{(p-1)} f(x) \\ &+
+\int_0^1 \frac{(1-t)^{p-1}}{(p-1)!} \left( \sum_{i=1}^n h_i \partial_i \right)^{p} f(x + t h) \d t
+\end{aligned}
+$$
+- 皮亚诺余项：
+$$
+\begin{aligned}
+f(x + h) &= f(x) + \left( \sum_{i=1}^n h_i \partial_i \right) f(x) + \frac{1}{2} \left( \sum_{i=1}^n h_i \partial_i \right)^2 f(x) + 
+\cdots + \frac{1}{(p-1)!} \left( \sum_{i=1}^n h_i \partial_i \right)^{(p-1)} f(x) \\ &+
+\mathcal{o} \left( \Vert h \Vert^p \right)
+\end{aligned}
+$$
+
+用两种方法把函数$f(x,y)=e^x \sin x \cos x$在$(0,0)$处二阶展开。
+利用泰勒展开的运算：
+$$
+\begin{aligned}
+f(x,y) 
+&= (1 + x + x^2 + o(x^2)) ( x + o(x^2) ) ( 1 - \frac{y^2}{2} + o(y^2) ) \\
+&= x + x^2 + o (\Vert (x,y) \Vert^2)
+\end{aligned}
+$$
+直接计算：
+$$
+\begin{aligned}
+\partial_x f(x,y) &= e^x (\cos x + \sin x) y \\
+\partial_y f(x,y) &= - e^x \sin x \sin y \\
+\partial_x^2 f(x,y) &= 2 e^x \cos x \cos y \\
+\partial_x \partial_y f(x,y) &= - e^x \sin x \cos x \sin y \\
+\partial_y^2 f(x,y) &= - e^x \sin x \cos y
+\end{aligned}
+$$
+其在$(0,0)$处的值分别为$1,0,2,0,0$，从而
+$$
+f(x,y) = x + x^2 + o (\Vert (x,y) \Vert^2)
+$$
+{: .exampl}
+
+## 极值
+
+若函数$f: U \to \RR$（U为开集）在一点$a \in U$处满足$\d f_a = 0$，则称其为**临界点**。
+若该函数在一点$b \in U$处有极值，则必有：$\d f_b = 0$，即$b$为临界点。
+反之，临界点处不一定为极值。
+{: .proposition}
+
+为了判定临界点的性质，我们提出以下定理：
+
+设$f:U \subset \RR^n \to \RR$为一$\mathcal C^2$函数，且$a \in U$为一临界点，则根据泰勒展开，有：
+$$
+f(a+h) = f(a) + \frac{1}{2} Q(h) + o(\Vert h \Vert^2)
+$$
+其中$Q(h)$为二次型。
+若其在$a$处取极小值，那么二次型为**正**；若二次型为**正定**的，那么其在$a$处取极小值。
+若其在$a$处取极大值，那么二次型为**负**；若二次型为**负定**的，那么其在$a$处取极大值。
+{: .theorem}
+
+二次型为正，是指对所有$h$，$Q(h) \ge 0$；
+二次型为正定，是指对所有$h$，$Q(h) > 0$。
