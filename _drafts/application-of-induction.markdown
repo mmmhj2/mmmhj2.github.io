@@ -156,4 +156,103 @@ $$
 $$
 这是一个带通滤波器。
 
-## 直流电动机
+## 涡旋电流
+
+我们此前一般研究都是一条线上的电磁感应现象，对于一个金属体，其产生的感应电场可以在其体内产生三维的感应电流，因此非常复杂。
+在不施加外电场的情况下，这种感应电流会形成环形，称为涡旋电流（或傅科电流）。
+但是这种电流非常难以用解析的方法求解，因此通常仅限于实验研究。
+
+这一节中，我们用巴洛轮（Barlow's wheel）为例，研究圆形片上的电流。
+
+![](/assets/em/Diagram_of_barlow's_wheel.jpg)
+{: .center-image}
+
+巴洛轮就是如上图所示的实验装置。
+实验进行时，用水银一类液体导体浸泡这个装置的下半部分，从而形成回路，然后以$\omega_0$作为初始角速度转动此轮。
+这个装置的等效电路如下图所示：
+
+![](/assets/em/barlow.svg)
+{: .center-image}
+
+我们约定以圆心为原点，Z轴正方向与磁场方向一致，建立柱坐标系来方便研究。
+
+### 电学部分
+
+我们从盘上任取一条从圆心到接触点之间的连线（不要求为直线），计算其感应电动势：
+$$
+\begin{aligned}
+e
+&= \int_0^L (\vec v_e \times \vec B) \cdot \d \vec l \\
+&= \int_0^L [(r\omega \vec e_\theta) \times (B \vec e_z)] \cdot (\d r \vec e_r + r \d \theta \vec e_\theta) \\
+&= \int_0^L (B r \omega \vec e_r) \cdot (\d r \vec e_r + r \d \theta \vec e_\theta) \\
+&= \int_0^L Br \omega \d r = \frac{1}{2} a^2 \omega B
+\end{aligned}
+$$
+其中$a$为圆盘半径，$\omega$为圆盘角速度。
+可以发现这个电动势和连线的方式没有关系，只要是起点在圆心，终点在接触点，那么电动势就是相同的。
+
+进一步地，我们根据这个等效电路，可以利用基尔霍夫定理写出：
+$$
+e - u_R - u_C = 0 \iff e = RC \frac{\d u_C}{\d t} + u_c
+$$
+
+### 力学部分
+
+我们首先研究安培力：
+$$
+\begin{aligned}
+\d \vec F 
+&= i \d \vec l \times \vec B \\
+&= i ( \d r \vec e_r + r \d \theta \vec e_\theta) \times B \vec e_z \\
+&= (-i \d r \vec e_\theta + i r \d \theta \vec e_r)B
+\end{aligned}
+$$
+圆盘是刚体，且质心被固定，没有位移，因此我们只考虑$\vec e_\theta$方向的力，从而有：
+$$
+\d \vec F = - i \d r \vec e_\theta
+$$
+这与一条直导线的受力相同。
+
+接着我们计算力矩：
+$$
+\Gamma = \int_0^L \vec r \times \d \vec F = \int_0^a -i B r \d r \vec e_r \times \vec e_\theta = - i B \frac{a^2}{2} \vec e_z
+$$
+从而由角动量定理：
+$$
+J \frac{\d \omega}{\d t} = - \frac{i B a^2}{2} = - \frac{C B a^2}{2} \frac{\d u_c}{\d t}
+$$
+两边积分可得：
+$$
+J ( \omega(t) - \omega_0 ) = - \frac{CBa^2}{2} ( u_c(t) - \cancel{u_c(0)})
+$$
+
+### 求解方程
+
+现在问题转化为求微分方程组的解：
+$$
+\left\{
+\begin{aligned}
+J ( \omega(t) - \omega_0 ) = - \frac{CBa^2}{2} u_c(t) \\
+\frac{\d u_c(t)}{\d t} + \frac{u_c(t)}{\tau} = \frac{a B \omega(t)}{2 \tau}
+\end{aligned}
+\right.
+$$
+其中$\tau$为特征时间，即$\frac{1}{RC}$。
+直接带入即可求解，解为：
+$$
+\left\{
+\begin{aligned}
+u_c(t) &= \frac{\omega_0 a B \tau^\prime}{2 \tau} \left( 1 - e^{-\frac{t}{\tau^\prime}} \right) \\
+\omega (t) &= \frac{2 u_c(\infty)}{aB} \left( 1 + \frac{a^3 B^2 C}{2 \tau J} e^{- \frac{t}{\tau^\prime}} \right) 
+\end{aligned}
+\right.
+$$
+其中$\tau^\prime = \frac{1}{\frac{1}{\tau}+\frac{a^3 B^2 C}{2 \tau J}}$，$u_c(\infty) = \frac{\omega_0 a B \tau^\prime}{2 \tau}$。
+
+### 能量分析
+
+我们仿照此前的方式，把力学方程乘上$\omega$，电学方程乘上$i$，然后取等：
+$$
+Ri^2 + \frac{\d}{\d t} (\frac{1}{2} C u_c^2) - \frac{\d}{\d t} (\frac{1}{2} J \omega^2) = e i - \Gamma \omega = 0
+$$
+这个等式指明了所有能量的转化。
