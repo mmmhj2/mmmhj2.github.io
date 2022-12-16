@@ -24,9 +24,11 @@ f,g \in \ccmtt, \; \inner{f}{g} = \frac{1}{2\pi} \intperiod \overline f g
 $$
 
 回忆一下，内积变换必须满足：
+
 - $\forall x, \; \inner{x}{\cdot}$为线性变换；
 - $\forall x, y \; \inner{y}{x} = \overline{\inner{x}{y}}$；
 - $\forall x \neq 0 \; \inner{x}{x} > 0$。
+
 可以一一验证我们定义的内积满足以上三条公理。
 
 这三条公理可以导出一个重要关系，即$\inner{x}{\cdot}$为线性的，而$\inner{\cdot}{x}$为半线性的。
@@ -182,16 +184,59 @@ $$
 3) 级数$\sum a_n$和$\sum b_n$绝对收敛。
 {: .proposition}
 
+只证明1)推出3)，其他显然。
+已知级数正规收敛，则能推出
+$$
+\sum_{n=1}^\infty \sup_{x \in \RR} \left| a_n \cos nx + b_n \sin nx \right| < \infty
+$$
+取$x=0$，则有$\sum\_{n=1}^\infty \left\| a\_n \right\| < \infty$。
+取$x=\frac{\pi}{2n}$，则可得出$\| b\_n \| \le \sup\_{x \in \RR} \left\| a\_n \cos nx + b\_n \sin nx \right\| $，从而$\sum\_{n=1}^\infty \left\| b\_n \right\| < \infty$。
+{: .proof}
+
 利用这一命题，我们可以证明下列定理：
 
 设函数$f \in \cctt \cup \mathcal C_m^1 (\TT)$，那么其傅里叶级数正规收敛至原函数。
 {: .theorem}
+
+$$
+\begin{aligned}
+\sum_{-n \le k \le n \; k \neq 0} \left| \hat f(n) \right| 
+&= \sum_{-n \le k \le n \; k \neq 0} \frac{\left| \widehat{f^\prime}(k) \right|}{k}  \\
+&\le \sqrt{\sum_{-n \le k \le n \; k \neq 0} \frac{1}{k^2}} \sqrt{\sum_{-n \le k \le n \; k \neq 0} \left| \widehat{f^\prime}(k) \right|^2} \\
+&\le \sqrt{2 \sum_{k=1}^n \frac{1}{k^2}} \sqrt{\frac{1}{2\pi} \intperiod \left| f^\prime \right|^2} \\
+&= \sqrt{2 \zeta(2)} \normas{f^\prime}
+\end{aligned}
+$$
+这个证明中先后用到了柯西-施瓦茨不等式和贝塞尔不等式，但是没有使用狄利克雷定理。
+最终结果中的$\zeta(2) = \frac{\pi^2}{6}$，这是黎曼泽塔函数。
+从而有：
+$$
+\sum_{k = -\infty}^\infty \le \left| \hat f(0) \right| + \frac{\pi}{3} \normas{f^\prime}
+$$
+从而其已经满足正规收敛的条件（有上界且上界可和）。
+又因为狄利克雷定理，其一定收敛至原函数。
+{: .proof}
 
 若函数$f \in \ccmtt$的傅里叶级数一致收敛，那么
 $$
 \forall x \in \RR \qquad \sum_{n=-\infty}^\infty \hat f(n) e^{inx} = f(x)
 $$
 {: .proposition}
+
+记$g$为$f$的傅里叶级数和。
+由于级数一致收敛，且每一项连续，因此$g$也是连续函数，从而其也有傅里叶级数。
+$$
+\begin{aligned}
+\hat g(n) 
+&= \frac{1}{2\pi} \intperiod g(t) e^{-int} \d t \\
+&= \frac{1}{2\pi} \intperiod \left( \sum_{k=-\infty}^\infty \hat f(k) e^{ikt} \right) e^{-int} \d t \\
+&= \frac{1}{2\pi} \sum_{k=-\infty}^\infty \hat f(k) \intperiod e^{i(k-n)t} \d t \\
+&= \hat f(n)
+\end{aligned}
+$$
+注意求和和积分可交换的原因是级数一致收敛。
+考虑到傅里叶变换总是单射，我们有$f = g$。
+{: .proof}
 
 如果$f$不仅分段连续，而且连续，那么可以之间使用上一章证明的阿贝尔收敛。
 
