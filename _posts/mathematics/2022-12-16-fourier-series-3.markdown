@@ -2,6 +2,7 @@
 layout: post
 title: "傅里叶级数——均方收敛"
 categories: analysis
+date: 2022-12-16 23:25:00 +0800
 ---
 
 $$
