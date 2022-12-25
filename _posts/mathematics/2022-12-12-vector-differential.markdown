@@ -54,13 +54,13 @@ $$
 微分和一元函数的导数具有许多类似的性质。
 
 设$f,g \in U \to \RR^p$，$U \in \RR^n$为一开集合，且$f,g$在$a \in U$处可微，则$\forall \lambda \in R$，
-$f+g$和$\lambda f$都在$a$处可微，且$\d (f+g)_a = \d f_a+\d g_a$、$\d (\lambda f)_a = \lambda \d f_a$。
-$f \cdot g$也在$a$处可微，且$\d (f \cdot g)_a = \d f_a \cdot g(a)+\d g_a \cdot f(a)$。
+$f+g$和$\lambda f$都在$a$处可微，且$\d (f+g)\_a = \d f\_a+\d g\_a$、$\d (\lambda f)\_a = \lambda \d f\_a$。
+$f \cdot g$也在$a$处可微，且$\d (f \cdot g)\_a = \d f\_a \cdot g(a)+\d g\_a \cdot f(a)$。
 注意如果在非交换环（如矩阵空间）上，则乘法的顺序不能交换。
 {: .proposition}
 
 设$U \subset \RR^n , \; V \subset \RR^p$为两个开集合，$f: U \to \RR^p, \; g: V \to \RR^q, \; f(U) \subset V$。
-若$f$在$a \in U$可微，$g$在$f(a) \in V$可微，那么$g \circ f$在$a$可微，且$\d (g \circ f)_a = \d g_{f(a)} \circ \d f_a$。
+若$f$在$a \in U$可微，$g$在$f(a) \in V$可微，那么$g \circ f$在$a$可微，且$\d (g \circ f)\_a = \d g\_{f(a)} \circ \d f\_a$。
 {: .proposition}
 
 ## 偏导数
@@ -70,7 +70,7 @@ $f \cdot g$也在$a$处可微，且$\d (f \cdot g)_a = \d f_a \cdot g(a)+\d g_a 
 设$n,p \in \NN^\*$，$U \in \RR^n$为一开集合。$f:U \to \RR^p, \; a \in U, \; v \in \RR^n$。
 若实值映射$\varphi: t \mapsto f(a+tv)$在$t=0$处**可导**，则称$f$在$a$处沿向量$v$可导。我们记：
 $$
-f_v^\prime(a) = \varphi^\prime(0) = \lim_{t \in 0, t \neq 0} \frac{f(a+tv) - f(a)}{t}
+f_v^\prime(a) = \varphi^\prime(0) = \lim_{t \to 0, t \neq 0} \frac{f(a+tv) - f(a)}{t}
 $$
 {: .definition}
 
@@ -246,7 +246,7 @@ f(x + h) &= f(x) + \left( \sum_{i=1}^n h_i \partial_i \right) f(x) + \frac{1}{2}
 \end{aligned}
 $$
 
-用两种方法把函数$f(x,y)=e^x \sin x \cos x$在$(0,0)$处二阶展开。
+用两种方法把函数$f(x,y)=e^x \sin x \cos y$在$(0,0)$处二阶展开。
 利用泰勒展开的运算：
 $$
 \begin{aligned}
