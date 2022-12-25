@@ -2,6 +2,7 @@
 layout: post
 title: "自由能与热力学势能"
 categories: thermodynamics
+date: 2022-12-25 15:00:00 +0800
 ---
 
 $$
