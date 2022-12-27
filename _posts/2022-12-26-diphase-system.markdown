@@ -11,7 +11,7 @@ $$
 
 在本文中，我们将考察相变之中的纯净物系统。
 
-注意，本文中凡是小写字母表示的物理量，如不加特殊说明，那么表示对应大写字母物理量的单位质量形式。
+本文中凡是小写字母表示的物理量，如不加特殊说明，那么表示对应大写字母物理量的单位质量形式。
 {: .remark}
 
 ## 相
@@ -30,7 +30,7 @@ $$
 
 ### 相图
 
-![来自：https://commons.wikimedia.org/wiki/File:Phase-diag-zh.svg](/assets/thdyn/Phase-diag-zh.svg)
+![水的相图](/assets/thdyn/Phase-diag-zh.svg "来自：https://commons.wikimedia.org/wiki/File:Phase-diag-zh.svg 按Creative Commons Attribution-Share Alike 3.0 Unported授权")
 {: .center-image}
 
 上面是一张典型的相图，虚线部分是水的固液分界线，实线部分是通常情况。
@@ -81,7 +81,7 @@ $$
 
 我们把一些固定质量的液态水从气态缓慢恒温加压到液态，记录系统的体积和压强之间的关系，可以得到下图。
 
-![来自：https://www.researchgate.net/figure/pv-diagram-of-real-non-polar-fluid-with-its-isotherms_fig1_26488993](/assets/thdyn/pv-diagram-of-real-non-polar-fluid-with-its-isotherms.png)
+![水的PV图](/assets/thdyn/pv-diagram-of-real-non-polar-fluid-with-its-isotherms.png "来自：https://www.researchgate.net/figure/pv-diagram-of-real-non-polar-fluid-with-its-isotherms_fig1_26488993 按Creative Commons Attribution-NonCommercial 3.0 Unported授权")
 {: .center-image}
 
 从右往左观察穿过气液平衡态的那根曲线。
@@ -167,7 +167,7 @@ $$
 
 由温度和熵之间的关系画成的图称为温熵图，温熵图中通常还有许多辅助线。
 
-![来自：https://commons.wikimedia.org/wiki/File:TS-Wasserdampf_engl.png](/assets/thdyn/TS-Wasserdampf_engl.png)
+![水蒸气的温熵图](/assets/thdyn/TS-Wasserdampf_engl.png "来自：https://commons.wikimedia.org/wiki/File:TS-Wasserdampf_engl.png 按Creative Commons Attribution-Share Alike 3.0 Unported授权")
 {: .center-image}
 
 ---
