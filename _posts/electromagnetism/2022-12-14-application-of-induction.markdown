@@ -2,7 +2,7 @@
 layout: post
 title: "电磁感应的应用"
 categories: electromagnetism
-date: 2022-12-06 23:39:00 +0800
+date: 2022-12-14 21:46:00 +0800
 ---
 
 $$
