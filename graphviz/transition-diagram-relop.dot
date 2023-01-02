@@ -1,0 +1,32 @@
+digraph transition_diagram{
+	rankdir="LR";
+	ranksep=2;
+	node[fontname="Consolas"]
+	edge[fontname="Consolas"]
+	
+	s [shape=none, label=""];
+	node[shape=circle];
+	0 ;
+	1 ;
+	6 ;
+	node[shape=doublecircle];
+	2 [xlabel="return(relop, LE)"];
+	3 [xlabel="return(relop, NE)"];
+	4 [xlabel="*\nreturn(relop, LT)"];
+	5 [xlabel="return(relop, EQ)"];
+	7 [xlabel="return(relop, GE)"];
+	8 [xlabel="return(relop, GT)"];
+	
+	edge [tailport="e", headport="w", weight=2];
+	s -> 0 [label="START"];
+	0 -> 1 [label="<"];
+	1 -> 2 [label="="];
+	6 -> 7 [label="="];
+	
+	edge[tailport="s", weight=0];
+	0 -> 5 [label="="];
+	0 -> 6 [label=">"];
+	1 -> 3 [label=">"];
+	1 -> 4 [label="other"];
+	6 -> 8 [label="other"];
+}

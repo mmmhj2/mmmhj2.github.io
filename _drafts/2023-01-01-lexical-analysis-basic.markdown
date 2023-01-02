@@ -214,3 +214,5 @@ $$
 如果我们希望退回这个指针，那么我们在状态旁以星号标记。
 有几个星号就将指针退回几次。
 
+![](/assets/compilers/transition-diagram-relop.svg)
+{: .center-image}
