@@ -39,10 +39,12 @@ domain: mmmhj2.github.io
 url: https://mmmhj2.github.io
 
 markdown: kramdown
-kramdown:
-  math_engine: mathjax
-  
 highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  math_engine: mathjax
 
 # Exclude from processing.
 # The following items will not be processed, by default.
