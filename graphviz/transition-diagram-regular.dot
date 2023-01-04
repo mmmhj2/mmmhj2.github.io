@@ -1,0 +1,24 @@
+digraph transition_diagram{
+	rankdir="LR";
+	ranksep=2;
+	node[fontname="Consolas"]
+	edge[fontname="Consolas"]
+	
+	s [shape=none, label=""];
+	node[shape=circle];
+	0 ;
+	1 ;
+	2 ;
+	node[shape=doublecircle];
+	3 ;
+
+	edge [tailport="e", headport="w", weight=2];
+	s -> 0 [label="START"];
+	0 -> 1 [label="a"];
+	1 -> 2 [label="b"];
+	2 -> 3 [label="b"];
+	
+	edge[weight=0];
+	0 -> 0 [label="a"];
+	0 -> 0 [label="b"];
+}
