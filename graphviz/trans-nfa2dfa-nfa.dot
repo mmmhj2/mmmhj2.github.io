@@ -1,0 +1,29 @@
+digraph transition_diagram{
+	rankdir="LR";
+	ranksep=0.75;
+	node[fontname="Consolas"]
+	edge[fontname="Consolas"]
+	
+	s [shape=none, label=""];
+	node[shape=circle];
+	0,1,2,3,4,5,6,7,8,9;
+	node[shape=doublecircle];
+	10;
+	
+	edge[weight=1];
+	s -> 0 [label="START"];
+	0 -> 1 [label="ε"];
+	1 -> 2 [label="ε"];
+	1 -> 4 [label="ε"];
+	2 -> 3 [label="a"];
+	4 -> 5 [label="b"];
+	3 -> 6 [label="ε"];
+	5 -> 6 [label="ε"];
+	6 -> 7 [label="ε"];
+	7 -> 8 [label="a"];
+	8 -> 9 [label="b"];
+	9 -> 10 [label="b"];
+	edge[weight=0];
+	6 -> 1 [label="ε"];
+	0 -> 7 [label="ε"];
+}
