@@ -68,6 +68,7 @@ kramdown:
 
 exclude:
     - graphviz/
+    - inkscape/
     - .sass-cache/
     - .jekyll-cache/
     - gemfiles/
