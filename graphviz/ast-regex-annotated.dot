@@ -1,0 +1,29 @@
+graph ast
+{
+	ranksep=0.25;
+	graph [ordering="out"];
+	node[fontname="Consolas", shape=none];
+	edge[fontname="Consolas"];
+	
+	1 [label="a(1)\n{1};{1}"];
+	2 [label="b(2)\n{2};{2}"];
+	3 [label="a(3)\n{3};{3}"];
+	4 [label="b(4)\n{4};{4}"];
+	5 [label="b(5)\n{5};{5}"];
+	6 [label="#(6)\n{6};{6}"];
+	
+	r0 [label="cat\n{1,2,3};{6}"];
+	r1 [label="cat\n{1,2,3};{5}"];
+	r2 [label="cat\n{1,2,3};{4}"];
+	r3 [label="cat\n{1,2,3};{3}"];
+	r4 [label="*\n{1,2};{1,2}"];
+	r5 [label="|\n{1,2};{1,2}"];
+	
+	r0 -- r1 -- r2 -- r3 -- r4 -- r5 ;
+	r0 -- 6;
+	r1 -- 5;
+	r2 -- 4;
+	r3 -- 3;
+	r5 -- 1;
+	r5 -- 2;
+}
