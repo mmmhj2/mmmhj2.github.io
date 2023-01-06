@@ -222,7 +222,7 @@ E => E * E => E + E * E => id + E * E => id + id * E => id + id * id
 显然，文法中的无用符号是多余的，因此我们希望设计一个算法来消除文法中的所有无用符号。
 
 如果一个符号不是无用的，那么它必然满足两个条件：
-$X$是有结果的，即存在推导$X \Rightarrow^\*	w$，其中$w$是一个终结符号串；
+$X$是有结果的，即存在推导$X \Rightarrow^\* w$，其中$w$是一个终结符号串；
 $X$是可达的，即存在推导$S \Rightarrow^\* \alpha X \beta$。
 
 现在我们分别针对这两点设计算法。
@@ -234,44 +234,44 @@ s = empty_set();
 // 首先寻找经过一次推导就能得出终结符号串的头部
 for(const auto & prod : productions)
 {
-	const auto & head = prod.head;
-	if(s.find(head))
-		continue;
-	bool isTerminalString = true;
-	for(const auto & symb : prod.body)
-		if(!symb.isTerminal)
-		{
-			isTerminalString = false;
-			break;
-		}
-	if(!isTerminalString)
-		continue;
-	s.insert(head);
-	q.push(head);
+    const auto & head = prod.head;
+    if(s.find(head))
+        continue;
+    bool isTerminalString = true;
+    for(const auto & symb : prod.body)
+        if(!symb.isTerminal)
+        {
+            isTerminalString = false;
+            break;
+        }
+    if(!isTerminalString)
+        continue;
+    s.insert(head);
+    q.push(head);
 }
 
 // 逐步替代所有非终结符
 while(!q.empty())
 {
-	const auto & front = q.front();
-	for(const auto & prod : productions)
-	{
-		const auto & head = prod.head;
-		if(s.find(head)) continue;
-		if(!prod.body.find(front)) continue;
-		
-		bool isTerminalString = true;
-		for(const auto & symb : prod.body)
-			if(!s.find(symb))
-			{
-				isTerminalString = false;
-				break;
-			}
-		if(!isTerminalString) continue;
-		s.insert(head);
-		q.push(head);
-	}
-	q.pop();
+    const auto & front = q.front();
+    for(const auto & prod : productions)
+    {
+        const auto & head = prod.head;
+        if(s.find(head)) continue;
+        if(!prod.body.find(front)) continue;
+        
+        bool isTerminalString = true;
+        for(const auto & symb : prod.body)
+            if(!s.find(symb))
+            {
+                isTerminalString = false;
+                break;
+            }
+        if(!isTerminalString) continue;
+        s.insert(head);
+        q.push(head);
+    }
+    q.pop();
 }
 return s;
 ```
@@ -314,10 +314,10 @@ if E_1 then if E_2 then S_1 else S_2
 换成熟悉的C语言就是下面这个歧义：
 ```cpp
 if(true)
-	if(false)
-		puts("1");
-	else
-		puts("2");
+    if(false)
+        puts("1");
+    else
+        puts("2");
 ```
 最后面这个`else`语句到底会不会执行呢？
 如果把它看作和紧邻的`if`一组，那么就会执行，而如果把它看作和最上面的`if`一组，那么就不会执行。
@@ -353,17 +353,17 @@ $$
 // 首先遍历所有非终结符号
 for(int i = 1; i <= n; i++)
 {
-	for(int j = 1; j < i; j++)
-	{
-		/*
-			设A_j的产生式体为 δ_1 | δ_2 | ... | δ_k，
-			则将形如 A_i ::= A_j α 的所有产生式替换为
-			A_i ::= δ_1 α | δ_2 α | ... | δ_k α 
-		*/
-		replace_production(non_terminals[i], non_terminals[j]);
-	}
-	// 消除A_i的所有立即左递归
-	eliminate_lrecursion(non_terminals[i]);
+    for(int j = 1; j < i; j++)
+    {
+        /*
+            设A_j的产生式体为 δ_1 | δ_2 | ... | δ_k，
+            则将形如 A_i ::= A_j α 的所有产生式替换为
+            A_i ::= δ_1 α | δ_2 α | ... | δ_k α 
+        */
+        replace_production(non_terminals[i], non_terminals[j]);
+    }
+    // 消除A_i的所有立即左递归
+    eliminate_lrecursion(non_terminals[i]);
 }
 ```
 这个算法的原理非常简单，也容易理解。
@@ -412,9 +412,9 @@ A ::= a | ε
 然后把产生式体中的它们删去：
 ```
 S ::= A b B | C
-| b B	//删去A
-| A b	//删去B
-| b		//删去AB
+| b B   //删去A
+| A b   //删去B
+| b     //删去AB
 B ::= AA | A | AC | C
 C ::= b | c
 A ::= a | ε
@@ -467,9 +467,9 @@ $$
 对所有形如$A \to X\_1 X\_2 \dots X\_n, \; n>2$，构造一组产生式
 $$
 \begin{aligned}
-A \qatoq X_1 A_1
-A_1 \qatoq X_2 A_2
-\dots
+A \qatoq X_1 A_1 \\
+A_1 \qatoq X_2 A_2 \\
+\dots \\
 A_{n-2} \qatoq X_{n-1} X_n
 \end{aligned}
 $$
