@@ -23,7 +23,7 @@ email: vincent.lee.0410@outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
   A simple blog.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: https://mmmhj2.github.io
 twitter_username: NONE
 github_username:  mmmhj2
 
@@ -36,7 +36,6 @@ plugins:
   - jekyll-sitemap
   
 domain: mmmhj2.github.io
-url: https://mmmhj2.github.io
 
 markdown: kramdown
 highlighter: rouge
