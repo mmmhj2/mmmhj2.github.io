@@ -1,0 +1,135 @@
+digraph automaton
+{
+    rankdir=LR;
+    //splines="ortho";
+    node[shape=rect, fontname="Consolas"];
+    edge[fontname="Consolas"];
+    
+    I0[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I0</TD><TD></TD></TR>
+  <TR><TD>E'</TD><TD>=</TD><TD>.E</TD></TR>
+  <HR/>
+  <TR><TD>E</TD><TD>=</TD><TD>.E+T</TD></TR>
+  <TR><TD>E</TD><TD>=</TD><TD>.T</TD></TR>
+  <TR><TD>T</TD><TD>=</TD><TD>.T*F</TD></TR>
+  <TR><TD>T</TD><TD>=</TD><TD>.F</TD></TR>
+  <TR><TD>F</TD><TD>=</TD><TD>.(E)</TD></TR>
+  <TR><TD>F</TD><TD>=</TD><TD>.<B>id</B></TD></TR>
+</TABLE>>]
+    {
+        accept[shape=circle];
+        //rank=same;
+        I1[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I1</TD><TD></TD></TR>
+    <TR><TD>E'</TD><TD>=</TD><TD>E.</TD></TR>
+    <TR><TD>E</TD><TD>=</TD><TD>E.+T</TD></TR>
+    </TABLE>
+        >]
+        I2[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I2</TD><TD></TD></TR>
+    <TR><TD>E</TD><TD>=</TD><TD>T.</TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>T.*F</TD></TR>
+    </TABLE>
+        >]
+        I3[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I3</TD><TD></TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>F.</TD></TR>
+    </TABLE>
+        >]
+        I4[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I4</TD><TD></TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>F.</TD></TR>
+    <HR/>
+    <TR><TD>E</TD><TD>=</TD><TD>.E+T</TD></TR>
+    <TR><TD>E</TD><TD>=</TD><TD>.T</TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>.T*F</TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>.F</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>.(E)</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>.<B>id</B></TD></TR>
+    </TABLE>
+        >]
+        I5[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I5</TD><TD></TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD><B>id</B>.</TD></TR>
+    </TABLE>
+        >]
+    }
+    {
+        //rank=same;
+        I6[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I6</TD><TD></TD></TR>
+    <TR><TD>E</TD><TD>=</TD><TD>E+.T</TD></TR>
+    <HR/>
+    <TR><TD>T</TD><TD>=</TD><TD>.T*F</TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>.F</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>.(E)</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>.<B>id</B></TD></TR>
+    </TABLE>
+        >]
+        I7[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I7</TD><TD></TD></TR>
+    <TR><TD>T</TD><TD>=</TD><TD>T*.F</TD></TR>
+    <HR/>
+    <TR><TD>F</TD><TD>=</TD><TD>.(E)</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>.<B>id</B></TD></TR>
+    </TABLE>
+        >]
+        I8[label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+    <TR><TD></TD><TD>I8</TD><TD></TD></TR>
+    <TR><TD>E</TD><TD>=</TD><TD>E.+T</TD></TR>
+    <TR><TD>F</TD><TD>=</TD><TD>(E.)</TD></TR>
+    </TABLE>
+        >]
+    }
+    I9[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I9</TD><TD></TD></TR>
+  <TR><TD>E</TD><TD>=</TD><TD>E+T.</TD></TR>
+  <TR><TD>T</TD><TD>=</TD><TD>T.*F</TD></TR>
+</TABLE>
+    >]
+    I10[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I10</TD><TD></TD></TR>
+  <TR><TD>T</TD><TD>=</TD><TD>T*F.</TD></TR>
+</TABLE>
+    >]
+    I11[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I11</TD><TD></TD></TR>
+  <TR><TD>F</TD><TD>=</TD><TD>(E).</TD></TR>
+</TABLE>
+    >]
+
+    I0 -> I1 [label="E"];
+    I0 -> I2 [label="T"];
+    I0 -> I3 [label="F"];
+    I0 -> I4 [label="("];
+    I0 -> I5 [label=<<B>id</B>>];
+    I1 -> accept [label="$"];
+    I1 -> I6 [label="+"];
+    I2 -> I7 [label="*"];
+    I4 -> I8 [label="E"];
+    I4 -> I2 [label="T"];
+    I4 -> I3 [label="F"];
+    I4 -> I4 [label="("];
+    I4 -> I5 [label=<<B>id</B>>];
+    I6 -> I3 [label="F"];
+    I6 -> I4 [label="("];
+    I6 -> I5 [label=<<B>id</B>>];
+    I6 -> I9 [label="T"];
+    I7 -> I5 [label=<<B>id</B>>];
+    I7 -> I4 [label="("];
+    I7 -> I10 [label="F"];
+    I8 -> I11 [label=")"];
+    I9 -> I7 [label="*"];
+}
