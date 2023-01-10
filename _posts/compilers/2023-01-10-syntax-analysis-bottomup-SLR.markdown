@@ -337,7 +337,7 @@ $$
 我们知道，在进行LR语法分析时，栈中一定表示的是某个最右句型的前缀。
 然而，并非所有最右句型的前缀都可以出现在栈中，考虑最右推导：
 $$
-E \Rightarrow^*_{rm} F * \mathbf{id} \Rightarrow^*_{rm} (E) * \mathbf{id}
+E \Rightarrow^*_{rm} F * \mathbf{id} \Rightarrow_{rm} (E) * \mathbf{id}
 $$
 栈中不可能出现$(E)\*$，这是因为$(E)$是一个句柄，因此一旦出现就会被规约。
 我们称可能出现在栈中的最右句型的前缀为**可行前缀**。
@@ -347,10 +347,10 @@ $$
 
 LR(0)自动机可以识别所有可行前缀，因此基于其的SLR分析方法也可以利用可行前缀进行判断。
 
-如果存在推导$S \Rightarrow^\*_{rm} \alpha A w \Rightarrow_{rm} \alpha \beta_1 \beta_2 w$，那么我们称项$A \to \beta_1 \cdot \beta_2$对可行前缀$\alpha \beta_1$有效，这样的项称为有效项。
+如果存在推导$S \Rightarrow^\*\_{rm} \alpha A w \Rightarrow\_{rm} \alpha \beta\_1 \beta\_2 w$，那么我们称项$A \to \beta\_1 \cdot \beta\_2$对可行前缀$\alpha \beta\_1$有效，这样的项称为有效项。
 通常一个项可以对多个可行前缀有效。
-当我们在语法分析器的栈中找到$\alpha \beta_1$时，如果$\beta_2 \neq \epsilon$，那么说明句柄尚未完全进入栈中，我们应该继续移入。
-如果$\beta_2 = \epsilon$，那么我们应该选择规约。
+当我们在语法分析器的栈中找到$\alpha \beta\_1$时，如果$\beta\_2 \neq \epsilon$，那么说明句柄尚未完全进入栈中，我们应该继续移入。
+如果$\beta\_2 = \epsilon$，那么我们应该选择规约。
 如果有多个有效项要求对同一个可行前缀执行不同的操作，那么就会发生冲突。
 有些这样的冲突可以通过向前查看更多的符号得到解决，有些则不能。
 在SLR语法分析器中，我们通过查看下一个符号能不能出现在$A$的右边（即是否在$\mathrm{FOLLOW}$集合中）来做出这个决定。
