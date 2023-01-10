@@ -85,10 +85,11 @@ GCC原来使用自动工具（YACC）生成语法分析器。
 但是鉴于C语言的二义性（如`x * y`既可以解释成乘法，也可以解释成指针声明），自动工具难以应付，因此在2004年前后便转为使用递归下降分析了。
 以下是从[第一个版本](https://gcc.gnu.org/legacy-ml/gcc-patches/2004-10/msg01969.html)截取的部分代码，可以发现其结构正如上面所述。
 ```c
-/* Parse a translation unit.
-   translation-unit:
-     external-declaration
-     translation-unit external-declaration
+/* 处理“翻译单元”（translation unit）,其产生式为
+    translation-unit ::= 
+    external-definition 
+    | translation-unit external-definition
+    （注意此处的左递归）
 */
 static void
 c_parser_translation_unit (c_parser *parser)
@@ -110,10 +111,10 @@ c_parser_translation_unit (c_parser *parser)
     }
 }
 
-/* Parse an external declaration
-   external-declaration:
-     function-definition
-     declaration
+/* 处理“外部定义”（external declaration）,其产生式为
+   external-declaration ::=
+    function-definition
+    | declaration
 */
 
 static void
@@ -129,12 +130,12 @@ c_parser_external_declaration (c_parser *parser)
     }
   else if (c_lexer_next_token_is_keyword (parser->lexer, RID_ASM))
     {
-	  // 调用对应非终结符的处理函数（内联汇编）
+	  // 调用对应非终结符的处理函数（内联汇编，GCC拓展）
       c_parser_asm_definition (parser); 
     }
   else
     {
-	  // 调用对应非终结符的处理函数（函数定义）
+	  // 调用对应非终结符的处理函数（定义与函数定义）
       c_parser_declaration_or_fndef (parser, true, true, false, true); 
     }
 }
@@ -160,7 +161,7 @@ $\FIRST(\alpha)$是指所有能从指定文法符号中推导出的串的第一�
 如果$\FIRST(\alpha)$和$\FIRST(\beta)$的交集为空集，那么只要读取一个词法单元，并确定其在哪个集合之中，就可以确定采用哪个生成式了。
 
 我们不断用下面这个算法计算$\FIRST(\alpha)$，直到没有新的元素加入为止：
-1. 如果$X$是一个终结符号，那么$\FIRST(X) = X$。
+1. 如果$X$是一个终结符号，那么$\FIRST(X) = \\\{X\\\}$。
 2. 如果$X$是一个非终结符号，且存在一个产生式$X \to Y\_1 Y\_2 \dots Y\_k, \; k \ge 1$。
 考虑所有$1 \le i \le k$，如果满足$\epsilon \in \FIRST(Y_1) \cap \FIRST(Y_2) \cap \cdots \cap \FIRST(Y_{i-1})$，
 这就是说，$Y_1 Y_2 \dots Y_{i-1} \Rightarrow^\* \epsilon$，
