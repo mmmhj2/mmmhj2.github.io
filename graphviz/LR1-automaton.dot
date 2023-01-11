@@ -1,0 +1,95 @@
+digraph automaton
+{
+    rankdir=LR;
+    //splines="ortho";
+    node[shape=rect, fontname="Consolas"];
+    edge[fontname="Consolas"];
+    
+    I0[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I0</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>S'</TD> <TD>=</TD> <TD>.S</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>S</TD> <TD>=</TD> <TD>.CC</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.cC</TD> <TD>,</TD> <TD>c/d</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.d</TD> <TD>,</TD> <TD>c/d</TD></TR>
+</TABLE>>]
+
+    I1[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I1</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>S'</TD> <TD>=</TD> <TD>S.</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I2[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I2</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>S</TD> <TD>=</TD> <TD>C.C</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.cC</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.d</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I3[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I3</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>c.C</TD> <TD>,</TD> <TD>c/d</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.cC</TD> <TD>,</TD> <TD>c/d</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.d</TD> <TD>,</TD> <TD>c/d</TD></TR>
+</TABLE>>]
+
+    I4[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I4</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>d.</TD> <TD>,</TD> <TD>c/d</TD></TR>
+</TABLE>>]
+
+    I5[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I5</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>S</TD> <TD>=</TD> <TD>CC.</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I6[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I6</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>c.C</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.cC</TD> <TD>,</TD> <TD>$</TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>.d</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I7[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I7</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>d.</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I8[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I8</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>cC.</TD> <TD>,</TD> <TD>c/d</TD></TR>
+</TABLE>>]
+
+    I9[label=<
+  <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+  <TR><TD></TD><TD>I9</TD><TD></TD><TD></TD><TD></TD></TR>
+  <TR><TD>C</TD> <TD>=</TD> <TD>cC.</TD> <TD>,</TD> <TD>$</TD></TR>
+</TABLE>>]
+
+    I0 -> I1 [label="S"];
+    I0 -> I2 [label="C"];
+    I0 -> I3 [label="c"];
+    I0 -> I4 [label="d"];
+
+    I2 -> I5 [label="C"];
+    I2 -> I6 [label="c"];
+    I2 -> I7 [label="d"];
+
+    I3 -> I8 [label="C"];
+
+    I6 -> I9 [label="C"];
+
+    I3 -> I3 [label="c"];
+    I3 -> I4 [label="d"];
+
+    I6 -> I6 [label="c"];
+    I6 -> I7 [label="d"];
+}
