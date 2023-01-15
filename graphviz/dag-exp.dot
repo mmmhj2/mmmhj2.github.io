@@ -16,6 +16,7 @@ digraph dag {
     p2 -> a;
     p2 -> mp1;
     
+    mp1 -> a;
     mp1 -> mn;
     mp2 -> mn;
     mp2 -> d;
@@ -24,5 +25,5 @@ digraph dag {
     mn -> c;
 
     { rank=same; p2 mp2};
-    { rank=same; a mn d};
+    { rank=same; a mn};
 }
