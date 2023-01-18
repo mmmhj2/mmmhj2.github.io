@@ -211,7 +211,7 @@ L1:
 `do-while`循环和`while`循环十分类似。
 而对于`for`循环，我们可以把它简单地翻译成`while`循环：
 $$
-for(S_1;\ B;\ S_2)\ S_3 \iff S_1 \ while(B) \  {S_3 \  S_2}
+for(S_1;\ B;\ S_2)\ S_3 \iff S_1 \ while(B) \  \{S_3 \  S_2\}
 $$
 
 ### 控制流中的布尔表达式
