@@ -108,7 +108,7 @@ generate_code(E.addr + " = " + a1 + " + " + a2);
 
 ### λ运算简述
 
-不正式地讲，所谓λ运算，就是*代入*或*置换*（Substitution）运算。
+不正式地讲，所谓λ运算，就是*代换*或*置换*（Substitution）运算。
 对于一个典型的λ函数，写作$\lambda x . x$，表示对任意$x$，把点后的内容随$x$一起替换掉。
 比如，当$x = 3$时，$(\lambda x.x)(3) = 3$。
 在不引起歧义的情况下，可以把括号省略，从而写成$\lambda x.x \; 3 = 3$。
@@ -185,6 +185,7 @@ std::string y = std::string{"1"} + std::string{"2"};
 两个单一类型相等，当且仅当它们*完全一致*。
 
 聚合类型，就是指类型变量可以被零或多个全称量词绑定的类型。
+聚合类型也称类型方案（Type scheme）。
 比如$\forall \alpha . \alpha \to \alpha$就是一个聚合类型，全同函数$\mathbf{id}$就是这个类型的。
 $\forall \alpha . (List [\alpha]) \to \alpha$也是一个聚合类型，求一个列表的元素个数的函数就是这个类型的。
 注意$\forall$量词只能出现在最左侧。
@@ -203,8 +204,8 @@ $$
 比如对类型$\forall \alpha. \alpha \to \beta$，$\alpha$就是受限类型。
 和受限变量一样，如果同时替代所有受限变量，那么这个聚合类型和替代前的仍然相等。
 
-特别地，如果我们把一个受限类型用一个单一类型**置换**或代入（Substitute）并消去全称量词，那么就生成了一个聚合类型的**实例**。
-比如，对多态类型$\forall \alpha. \alpha \to \alpha$，应用置换$S = \\\{\alpha \mapsto \mathrm{integer}\\\}$，那么生成的单态类型$\mathrm{integer} \to \mathrm{integer}$就是这个多态类型的实例。
+特别地，如果我们把一个受限类型用一个单一类型**置换**或**代换**（Substitute）并消去全称量词，那么就生成了一个聚合类型的**实例**。
+比如，对多态类型$\forall \alpha. \alpha \to \alpha$，应用代换$S = \\\{\alpha \mapsto \mathrm{integer}\\\}$，那么生成的单态类型$\mathrm{integer} \to \mathrm{integer}$就是这个多态类型的实例。
 
 这一运算构成了一个偏序关系。
 如果类型$\sigma$是$\sigma^\prime$的一个实例，或称$\sigma^\prime$比$\sigma$更一般，就可以记作$\sigma^\prime \sqsubseteq \sigma$
@@ -213,14 +214,14 @@ $$
 $$
 \frac{\tau^\prime = S(\tau) \quad \beta_i \notin \mathrm{free}(\forall \alpha_1 \dots \forall \alpha_n . \tau)}{\forall \alpha_1 \dots \forall \alpha_n . \tau \sqsubseteq \forall \beta_1 \dots \forall \beta_m . \tau^\prime}
 $$
-表示若$\tau^\prime$是把置换$S$应用到$\tau$上产生的，且$\beta_i$都是$\forall \alpha_1 \dots \forall \alpha_n . \tau$的受限变量，那么有：
+表示若$\tau^\prime$是把代换$S$应用到$\tau$上产生的，且$\beta_i$都是$\forall \alpha_1 \dots \forall \alpha_n . \tau$的受限变量，那么有：
 $$
 \forall \alpha_1 \dots \forall \alpha_n . \tau \sqsubseteq \forall \beta_1 \dots \forall \beta_m . \tau^\prime
 $$
 对这个偏序关系，最小（最一般）的聚合类型为$\forall \alpha . \alpha$。
 
-若存在一个置换使得对两个聚合类型$\tau_1$和$\tau_2$，满足$S(\tau_1) = S(\tau_2)$，那么我们称这个置换是**合一置换**（Unifier）。
-对$\tau_1$和$\tau_2$之间的两个合一置换$S$、$S^\prime$，如果满足$\forall \tau, \forall S^\prime, S(\tau) \sqsubseteq S^\prime(\tau)$，那么称$S$是$\tau_1$和$\tau_2$的最一般合一置换。
+若存在一个代换使得对两个聚合类型$\tau_1$和$\tau_2$，满足$S(\tau_1) = S(\tau_2)$，那么我们称这个代换是**合一代换**（Unifier）。
+对$\tau_1$和$\tau_2$之间的两个合一代换$S$、$S^\prime$，如果满足$\forall \tau, \forall S^\prime, S(\tau) \sqsubseteq S^\prime(\tau)$，那么称$S$是$\tau_1$和$\tau_2$的最一般合一代换。
 
 #### 合一与类型推导
 
@@ -256,27 +257,40 @@ fun length(x) =
 2. 然后对`if ... then ... else`，我们设其类型为$\mathrm{boolean} \times \alpha_i \times \alpha_i \to \alpha_i$，注意此时我们已经把全称量词消去，并用独特的类型变量替换了，我们需要递归地确定其类型。
 3. 现在处理多态函数的调用`null(x)`。
    1. 首先对`null`，我们设其类型为$\mathrm{list}[\alpha_n] \to \mathrm{boolean}$。
-   2. 现在处理函数调用`null(x)`。我们尝试将$\beta$与$\mathrm{list}[\alpha_n]$合一，使用置换$\beta \mapsto \mathrm{list}[\alpha_n]$即可。
+   2. 现在处理函数调用`null(x)`。我们尝试将$\beta$与$\mathrm{list}[\alpha_n]$合一，使用代换$\beta \mapsto \mathrm{list}[\alpha_n]$即可。
    进行合一后，我们可以得出`null(x)`的类型为$\mathrm{boolean}$。
 4. 对常量`0`，其类型为$\mathrm{integer}$。
 5. 对运算`length(tl(x)) + 1`，我们把它看作对函数`+`的调用，自底向上地处理这个表达式，首先处理`length(th(x))`。
 6. 现在处理多态函数调用`length(tl(x))`。
    1. 首先对多态函数`tl`，我们设其类型为$\mathrm{list}[\alpha_t] \to \mathrm{list}[\alpha_t]$。
-   2. 然后处理函数调用`tl(x)`，进行$\mathrm{list}[\alpha_t]$和$\mathrm{list}[\alpha_n]$的合一，注意此时$\beta$已经被置换了。
-      此时使用置换$\mathrm{list}[\alpha_t] \mapsto \mathrm{list}[\alpha_n]$。
+   2. 然后处理函数调用`tl(x)`，进行$\mathrm{list}[\alpha_t]$和$\mathrm{list}[\alpha_n]$的合一，注意此时$\beta$已经被代换了。
+      此时使用代换$\mathrm{list}[\alpha_t] \mapsto \mathrm{list}[\alpha_n]$。
    3. 现在处理函数调用`length(tl(x))`，我们此前已经假设其类型为$\beta \to \gamma = \mathrm{list}[\alpha_n] \to \gamma$，从而其类型为$\gamma$。
 7. 现在处理对`+`的调用，其类型为$\mathrm{integer} \times \mathrm{integer} \to \mathrm{integer}$。
-   进行$\gamma$和$\mathrm{integer}$的合一，使用置换$\gamma \mapsto \mathrm{integer}$。
+   进行$\gamma$和$\mathrm{integer}$的合一，使用代换$\gamma \mapsto \mathrm{integer}$。
 8. 最后回到`if ... then ... else`，使用合一可得出其类型为$\mathrm{integer}$。
 9. 我们用这个算法得出`length(x)`的类型为$\mathrm{list}[\alpha_n] \to \mathrm{integer}$，现在用全称量词限定它，得到最终结果$\forall \alpha . \mathrm{list}[\alpha] \to \mathrm{integer}$。
 
+这种类型推导的算法虽然多见于函数式编程，但是在C++中也以模板的形式出现。
+在C++11重新引入`auto`关键字后更是无处不在。
+比如对C++模板函数：
+```cpp
+template <typename T, typename U>
+auto foo(T a, U b) -> decltype(a + b)
+{
+    // ......
+}
+```
+其类型就是多态的：$\forall \alpha \forall \beta \forall \gamma.\alpha \times \beta \to \gamma$，而每次进行调用时都需要通过多次合一来确定为模板填充哪些参数。
+当然，C++中的模板实例化和其他类型推导通常相当简单，并不需要使用Hindley–Milner这样复杂的算法，因为语言要求所有类型都必须在编译时确定，因此编译器有足够的信息以降低类型推导的难度，实际上其推导的结果一定不含全称量词。
+
 #### 合一算法的实现
 
-如果我们使用图论工具来描述合一算法，可以发现合一操作可以容易地用**并查集**的原理实现。
+如果我们使用图论工具来描述合一算法，可以发现合一操作可以容易地用**并查集**（Disjoint set）的原理实现。
 
 每当尝试进行一次合一，就执行一次并查集的合并。
-我们知道，并查集实际上是一棵树，而在此处树的根就是置换后的类型变量。
-需要注意一点，即合一代表了一次置换，而置换是有方向性的，因此这个并查集中不能使用按秩合并优化，但是仍可以使用路径压缩优化。
+我们知道，并查集实际上是一棵树，而在此处树的根就是代换后的类型变量。
+需要注意一点，即合一代表了一次代换，而代换是有方向性的，因此这个并查集中不能使用按秩合并优化，但是仍可以使用路径压缩优化。
 
 我们接下来详细描述这个算法：
 首先，我们假设结点用记录（结构体）实现，每个结点中保存指向其左右子节点（若有）的指针。
@@ -313,5 +327,5 @@ bool unify(node m, node n)
 我们约定，如果`union`操作中有一个为类型变量，而另一个为非变量（类型常量，即基本类型，或类型构造算子），则**总是把变量合并到非变量的等价类**里，因此不能使用按秩合并优化。
 注意此时每个结点记录既代表了DAG中的一个结点，又代表了并查集中的一个结点。
 
-成功完成该算法后，每个类型变量的等价类的代表元，即其所在并查集中的根结点所代表的类型，就是其应该被置换成的类型。
+成功完成该算法后，每个类型变量的等价类的代表元，即其所在并查集中的根结点所代表的类型，就是其应该被代换成的类型。
 这个根节点可能仍是一个类型变量或类型常量（即DAG上的叶子节点），也可能是一个复杂的类型表达式（即DAG上的内部节点）。
