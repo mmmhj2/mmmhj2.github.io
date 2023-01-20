@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Jekyll run",
+            "type": "shell",
+            "command": "bundle exec jekyll serve --drafts",
+            "windows": {
+                "command": "wsl.exe --shell-type standard ./jekyll.sh"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}
