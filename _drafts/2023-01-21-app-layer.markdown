@@ -257,7 +257,7 @@ DNS报文包括以下内容：
 我们使用Linux下的`dig`工具模拟域名查询。
 
 以`www.mod.gov.cn`为例，首先输入`dig www.mod.gov.cn @a.root-servers.net`。
-所有根服务器的域名都是`*.root-servers.net`的格式。
+所有根服务器的域名都是`*.root-servers.net`的格式，这些服务器的IP地址被提前写入所有域名解析器内了，其信息可在[这里](https://www.internic.net/domain/named.root)找到。
 其输出为：
 ```sh
 # ......
