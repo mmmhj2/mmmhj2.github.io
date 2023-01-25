@@ -60,7 +60,7 @@ TCP中的每一端都有自己的发送和接受缓存，相对地，网络中�
 值得注意的是校验和和UDP的算法相同，也是使用反码加法。
 和此前介绍的可靠协议不同，TCP报文段既具有序号（Sequence Number）又具有确认号（Acknowledgment Number），我们将在此后仔细介绍这两个字段的内容和用途。
 选项（Options）是可选和变长的，因此需要数据偏移（Data Offset，也称首部长度）来指定首部结束的位置。
-接收窗口（Window）是拥塞控制的一部分，我们将在之后仔细研究。
+接收窗口（Window）是流量控制的一部分，我们将在之后仔细研究。
 
 值得注意的是六个标志位：
 1. 紧急（URG）表明紧急指针（Urgent Pointer）所处的位置有带外数据（Out-Of-Band），需要直接通知应用层，几乎不使用；
@@ -200,13 +200,96 @@ while(true)
 标准[RFC 5681](https://www.rfc-editor.org/rfc/rfc5681)给出了最新的ACK生成建议，归纳为以下四条：
 1. 报文段按序到达，且所有该报文段序号之前的数据都已确认：等待至多500ms，然后发送该报文段的ACK；
 2. 报文段按序到达，且上一个报文段正在等待中：放弃上一个ACK，立刻发送刚刚接受的报文段的ACK，确认两个报文段；
-3. 报文段失序到达，即比期望序号大的报文段到达：发送带有期望序号的ACK，称为*冗余ACK*。
+3. 报文段失序到达，即比期望序号大的报文段到达：发送带有期望序号的ACK，称为*冗余ACK*（Duplicate ACK）。
 4. 报文段到达，且新的报文段可以填充之前的失序报文段导致的空隙：
    - 如果新的报文段恰好位于空隙的低端（即其序号正好为期望序号），则立刻发送ACK；
    - 否则，什么也不做。
 
-这个生成方式允许接收端保留失序的报文段，并用新的报文填充失序报文产生的空隙。
+这个生成方式允许接收端保留失序的报文段（当然，并不一定保存在接受缓存中），并用新的报文填充失序报文产生的空隙。
 如果接收端直接丢弃失序报文段，那么显然第四条规则就不适用了。
 
 这种规则为至多两个报文段生成一个ACK，且ACK的生成是延时的，因此称为**延时ACK**（Delayed ACK）。
 延时ACK的生成实际上是由[RCF 1122](https://www.rfc-editor.org/rfc/rfc1122#page-96)提出的。
+
+由于发送方一个接一个地发送大量报文段，如果一个报文段丢失，会导致大量的冗余ACK。
+为此，TCP标准要求发送方在收到三个冗余ACK后立刻重传ACK要求的报文段，这一机制称为**快速重传**（Fast retransmit）。
+需要注意，产生冗余ACK并不一定意味着有报文段丢失，其可能只是因为乱序而导致有报文段后到达。
+因此，如果一发现冗余ACK就重传，会导致带宽的大量浪费。
+实际上，快速重传机制和拥塞控制机制有紧密的联系。
+
+使用快速重传的代码如下：
+```cpp
+case ACKNOWLEDGEMENT:
+    // 移动滑动窗口
+    if(event.segment.ackseq > SendBase)
+    {
+        SendBase = event.segment.ackseq;
+        // 如果所有报文段都已应答，则停止定时器，否则重启定时器
+        if(SendBase == NextSeqNum)
+            timer.stop();
+        else
+            timer.restart();
+    }
+    else
+    {
+        DuplicateCounter[event.segment.ackseq]++;
+        if(DuplicateCounter[event.segment.ackseq] == 3)
+        {
+            // 快速重传
+            ip.send_segment(segments[event.segment.ackseq]);
+            DuplicateCounter[event.segment.ackseq] = 0;
+        }
+    }
+    break;
+```
+
+整个TCP的ARQ协议是GBN风格的：
+其只在发送端维护滑窗，也不为每个报文段维护单独的定时器。
+然而，和GBN协议不同，其并不在定时器超时时重发所有滑窗内的报文段，而是仅仅重发`SendBase`指向的那一个。
+由于累计确认的特性，如果更后面的报文段的确认到达，其甚至连一个报文段都不重发。
+
+在[RFC 2018](https://www.rfc-editor.org/rfc/rfc2018)中，提出了一种称为**选择确认**的改进，允许接收端选择性地确认失序的报文段，而不总是仅仅确认最后一个正常的报文段。
+这个改进使得TCP更像SR协议。
+
+### 流量控制
+
+我们此前已经介绍过，TCP在实现时需要在两端维护发送和接收缓存。
+然而缓存的大小是有限的，TCP通过**流量控制服务**（Flow-control service）来防止缓存区溢出。
+这和拥塞控制不同，后者用来防止IP网络拥塞的。
+虽然两者针对的问题不同，其都是通过制约发送方实现的，因此容易混淆。
+
+TCP让*发送方*维护**接收窗口**（Receive WiNDow）来进行流量控制。
+由于TCP是全双工的，实际上两端都要维护接收窗口。
+
+假设接收端为接收缓存申请了$\mathit{RcvBuffer}$字节的空间，我们额外维护两个变量：
+1. $\mathit{LastByteRead}$：表示应用进程从缓存读出的最后一个字节的编号；
+2. $\mathit{LastByteRcvd}$：表示网络中已经到达并接受入缓存中的最后一个字节的编号。
+
+那么缓存不溢出表示：
+$$
+\mathit{LastByteRcvd} - \mathit{LastByteRead} \le \mathit{RcvBuffer}
+$$
+我们使用$rwnd$表示接受窗口，和RFC中保持一致，那么其值为：
+$$
+\mathit{rwnd} = \mathit{RcvBuffer} - \left( \mathit{LastByteRcvd} - \mathit{LastByteRead} \right)
+$$
+显然，随着新的报文段被TCP接受，$\mathit{rwnd}$会随时间变化，而且除非清空缓存否则是随时间单减的。
+这个值被填充到报文段首部的窗口字段中，然后随着其他报文段发送至发送端。
+
+类似接收端，发送端也要维护两个变量：
+1. $\mathit{LastByteSent}$：表示发送端发送的最后一个字节的编号；
+2. $\mathit{LastByteAcked}$：表示发送端能确认接收端收到的的最后一个字节编号，这个编号实际上是最大的ACK编号减一。
+
+显然，这两个变量的差值$\mathit{LastByteSent} - \mathit{LastByteAcked}$就是已发送到连接中而尚未接受的数据量，发送方应当确保这个值小于$\mathit{rwnd}$。
+即，为了保证接收端的缓存不溢出，发送端必须保证：
+$$
+\mathit{LastByteSent} - \mathit{LastByteAcked} \le \mathit{rwnd}
+$$
+通过发送方节流可以比较容易做到这一点。
+
+然而，如果不进行缓存清空，则$\mathit{rwnd}$是不会增长的，当其值到达零时，由于上述不等式的要求，发送方不能发送任何数据。
+而如果进行缓存清空，则在进行清空时不得不丢弃到达的数据。
+为此，TCP协议要求$\mathit{rwnd} = 0$时发送方只能发送一个字节载荷的报文段，从而不需要缓存。
+而最终会接收方进行缓存清空，从而腾出$\mathit{rwnd}$。
+
+相对于TCP，UDP不提供流量控制，因此如果发送的速度过快，缓存会溢出而报文段将丢失。
