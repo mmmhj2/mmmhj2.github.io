@@ -160,6 +160,23 @@ $$
 前者就是RSA算法，而后者如果运行在整数同余群上就是ElGamal算法，如果运行在椭圆曲线群上就是椭圆曲线加密（Elliptic Curve Cryptography，ECC）。
 这三者都是常见的公钥加密算法。
 
+#### Diffie-Hellman密钥交换算法
+
+在研究更一般的公钥算法之前，首先让我们看看在不使用公钥的情况下如何进行密钥交换。
+和ElGamal公钥加密类似，Diffie-Hellman也使用同余乘法群上的运算进行加密，这个加密实际上非常简单。
+
+Diffie-Hellman算法通过在不安全的信道上进行以下通信来交换密钥：
+1. 首先，Alice和Bob协商选择一个模数$p$，然后选择一个同余群$\mathbb{Z}\_p$的生成元$g$。通常$p$是一个质数，这样同余群的性质更好。$g$称为这个群的*原根*（Primitive root）。$p,g$都是周知的，通常从标准中选择一对。
+2. Alice选择一个随机整数$1 < a < n$，计算$g^a$，然后发送给Bob，其中$n$为群$\mathbb{Z}\_p$的阶（即$g$的阶）。
+3. Bob选择一个随机整数$1 < b < n$，计算$g^b$，然后发送给Alice。
+4. 密钥为$\left( g^a \right)^b \equiv \left( g^b \right)^a \pmod{p}$。
+
+任何人都可以从通信中得到$p, g, g^a, g^b$，但是却难以计算$g^{ab}$。
+这是因为要计算后者需要求出同余意义下的$a = \log_g g^a$或$b = \log_g g^b$，这个问题称为离散对数问题。
+而正如上文所述，离散对数问题是单向函数候选之一。
+
+如果把群从整数同余群迁移到椭圆曲线群，那么得到的这种算法称为*椭圆曲线Diffie-Hellman密钥交换算法*（Elliptic Curve Diffie–Hellman key exchange, ECDH）。
+
 #### RSA
 
 **RSA算法**常年作为公开密钥系统的代名词，由其创始人Ron Rivest、Adi Shamir和Leonard Adleman的首字母命名。
@@ -222,3 +239,7 @@ $$c^d \equiv m^{k \varphi(n) + 1} \equiv m^{k(p-1)\varphi(q) + 1} \equiv m \pmod
 Bob使用自己的私钥解密，然后就能得到会话密钥，此后就使用会话密钥进行对称加密。
 
 这样，我们就既解决了RSA速度较慢的问题，又解决了协商密钥的问题。
+
+如果一个加密通信过程在私钥泄露后仍能保证会话密钥不泄露，那么这种过程就是**前向安全**（Forward secure）的。
+前向安全意味着过去的通信不会受到将来私钥泄露的威胁。
+由于RSA算法并不具有前向安全性，现在流行的许多加密通信协议实际上使用Diffie-Hellman密钥交换算法的一种改进（临时DH，D-H Ephemeral）交换会话密钥。
