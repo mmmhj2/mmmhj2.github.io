@@ -2,7 +2,7 @@
 layout: single
 title: "常用Laplace变换性质"
 date: 2022-11-24 20:20:00 +0800
-categories:
+categories: "控制理论"
 --- 
 
 ## Laplace变换的定义

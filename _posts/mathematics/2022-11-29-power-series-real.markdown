@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "实数域下的幂级数"
-categories: analysis
+categories: "分析"
 date: 2022-11-29 23:30:00 +0800
 --- 
 

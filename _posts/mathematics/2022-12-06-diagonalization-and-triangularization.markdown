@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "矩阵的对角化与上三角化"
-categories: algebra
+categories: "代数"
 date: 2022-12-06 23:37:00 +800
 --- 
 

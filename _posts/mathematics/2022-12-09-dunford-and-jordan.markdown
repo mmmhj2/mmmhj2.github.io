@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "丹佛分解和若尔当标准型"
-categories: algebra
+categories: "代数"
 date: 2022-12-09 20:24:00 +0800
 ---
 

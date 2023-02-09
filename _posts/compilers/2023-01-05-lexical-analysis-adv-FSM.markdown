@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "词法分析——有限自动机进阶"
+category: "编译原理"
 ---
 
 ## 有穷自动机的时间复杂度

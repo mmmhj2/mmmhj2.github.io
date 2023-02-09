@@ -1,6 +1,6 @@
 ---
 title: "开放系统及其理论"
-categories: thermodynamics
+categories: "热力学"
 time: 2022-12-04 20:05:00 +0800
 ---
 

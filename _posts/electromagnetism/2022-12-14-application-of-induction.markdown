@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "电磁感应的应用"
-categories: electromagnetism
+categories: "电磁学"
 date: 2022-12-14 21:46:00 +0800
 ---
 

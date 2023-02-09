@@ -2,7 +2,7 @@
 layout: single
 title: "系统的研究方法"
 date: 2022-11-25 01:20:00 +0800
-categories:
+categories: "控制理论"
 --- 
 
 ![](/assets/system/block-diagram-complete.svg)
