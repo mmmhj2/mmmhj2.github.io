@@ -28,7 +28,7 @@ twitter_username: NONE
 github_username:  mmmhj2
 
 # Build settings
-theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
   - jekyll-paginate
