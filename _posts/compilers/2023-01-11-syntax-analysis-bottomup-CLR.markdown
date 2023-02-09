@@ -277,7 +277,7 @@ CLR比起SLR要使用更多的状态，但是这些多出来的状态是因为�
 如果存在一个包含内核项$[A \to \alpha \cdot \beta, a]$的项集$I$，满足$J = \mathrm{GOTO}(I,X)$，
 且$[B \to \gamma \cdot \delta, b]$始终包含在$\mathrm{GOTO}(\mathrm{CLOSURE}([A \to \alpha \cdot \beta, a]),X)$中，
 此时，若$a \neq b$，那么称这个向前看符号$b$是**自发生成的**。
-否则，若$a \eq b$，那么称这个向前看符号$b$是从$[A \to \alpha \cdot \beta, a]$**传播的**。
+否则，若$a = b$，那么称这个向前看符号$b$是从$[A \to \alpha \cdot \beta, a]$**传播的**。
 
 值得注意的是所有具有相同核心的项的向前看符号要么都从一个项传播到另一个项，要么都不传播。
 我们可以利用这个性质来确定哪些向前看符号是生成的，哪些是传播的。
@@ -302,6 +302,8 @@ for(const auto & lr_item : kernel)
     }
 }
 ```
+
+在这个算法中，我们没有显式地计算$\mathrm{GOTO}(I,X)$，而是直接检查闭包中的每一项后面是否为$X$。
 
 现在，我们可以给出添加向前看符号的方法了。
 我们从$[S^\prime \to \cdot S, \\$]$开始，生成所有的“自发生成”的向前看符号，然后不断传播它们即可。
