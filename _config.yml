@@ -37,6 +37,7 @@ plugins:
   
 domain: mmmhj2.github.io
 locale: "zh-CN"
+github: [metadata]
 
 markdown: kramdown
 highlighter: rouge
