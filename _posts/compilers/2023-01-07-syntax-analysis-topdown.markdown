@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "语法分析——自顶向下方法"
 ---
 

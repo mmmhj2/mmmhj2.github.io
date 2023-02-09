@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "用代数方法确定系统的性能"
 categories: 
 date: 2022-12-10 15:30:00 +0800

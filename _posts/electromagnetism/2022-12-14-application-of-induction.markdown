@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "电磁感应的应用"
 categories: electromagnetism
 date: 2022-12-14 21:46:00 +0800

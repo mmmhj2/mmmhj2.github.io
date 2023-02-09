@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "修改火狐的账户服务器"
 date: 2022-01-29 15:36:00 +0800
 categories:

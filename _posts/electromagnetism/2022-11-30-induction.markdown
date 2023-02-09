@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "重访电磁感应"
 categories: electromagnetism
 date: 2022-11-30 20:40:00 +0800

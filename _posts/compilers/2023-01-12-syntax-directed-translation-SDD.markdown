@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "语法制导翻译——语法制导定义"
 ---
 

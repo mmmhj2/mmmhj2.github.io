@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "电标势与磁矢势"
 categories: electromagnetism
 date: 2022-11-26 16:08:00 +0800

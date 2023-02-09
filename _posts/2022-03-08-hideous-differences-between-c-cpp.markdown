@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "C 与 C++ 的微妙不同"
 date: 2022-03-15 19:15:00 +0800
 categories:

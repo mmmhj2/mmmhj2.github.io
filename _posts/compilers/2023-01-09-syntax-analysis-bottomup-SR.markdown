@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "语法分析——自底向上方法（移入规约法）"
 ---
 

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "在WSL2中启用显卡硬件加速"
 date: 2022-03-24 00:20:00 +0800
 categories:

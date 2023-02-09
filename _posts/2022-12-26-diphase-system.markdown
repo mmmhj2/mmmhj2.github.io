@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "双相系统"
 categories: thermodynamics
 date: 2022-12-26 21:19:00 +0800

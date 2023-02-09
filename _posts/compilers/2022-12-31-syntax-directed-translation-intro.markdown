@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "初识语法制导翻译"
 date: 2022-12-31 21:03:00 +0800
 ---

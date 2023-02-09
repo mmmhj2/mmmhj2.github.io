@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "介质中的电磁波"
 categories: electromagnetism
 date: 2022-11-27 19:40:00 +0800

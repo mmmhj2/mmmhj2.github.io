@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "核引理与凯莱-哈密顿定理"
 categories: algebra
 date: 2022-11-25 22:22:00 +0800

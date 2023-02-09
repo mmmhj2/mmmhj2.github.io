@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "词法分析——基础内容"
 ---
 

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "开放系统及其理论"
 categories: thermodynamics
 time: 2022-12-04 20:05:00 +0800

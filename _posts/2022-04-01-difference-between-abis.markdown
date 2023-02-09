@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "不同ABI调用约定下函数参数的位置"
 date: 2022-04-01 18:40:00 +0800
 categories:

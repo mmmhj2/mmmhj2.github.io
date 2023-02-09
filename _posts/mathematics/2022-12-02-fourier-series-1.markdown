@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "傅里叶级数——基本性质"
 categories: analysis
 date: 2022-12-02 20:30:00 +0800

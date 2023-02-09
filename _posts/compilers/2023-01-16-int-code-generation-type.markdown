@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "中间代码生成——类型系统"
 ---
 
