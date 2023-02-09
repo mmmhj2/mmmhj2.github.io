@@ -1,0 +1,129 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+search: false
+---
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
+
+.exampl {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color: AntiqueWhite;
+    border-left: 6px solid;
+    border-color: BurlyWood;
+    padding:10px 10px 10px 20px;
+}
+.exampl:before {
+    content: "例子";
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: underline;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.proposition {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color: Lavender;
+    border-left: 6px solid;
+    border-color: DarkGrey;
+    padding:10px 10px 10px 20px;
+}
+.proposition:before {
+    content: "命题";
+    font-weight: bold;
+    font-style: normal;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.remark {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color:  #cefdce;
+    border-left: 6px solid;
+    border-color: DarkGreen;
+    padding:10px 10px 10px 20px
+}
+
+.remark::before {
+	content: "注意";
+	font-weight: bold;
+	font-style: normal;
+	text-decoration: underline;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.theorem {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color: LemonChiffon;
+    border-left: 6px solid;
+    border-color: Tomato;
+    padding:10px 10px 10px 20px;
+}
+.theorem:before {
+    content: "定理" ;
+    font-weight: bold;
+    font-style: normal;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.lemma {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color: Lavender;
+    border-left: 6px solid;
+    border-color: DarkGrey;
+    padding:10px 10px 10px 20px;
+}
+.lemma:before {
+    content: "引理" ;
+    font-weight: bold;
+    font-style: normal;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.proof {
+    display: block;
+    margin: 20px 0 0 30px;
+    font-style: normal;
+    padding:10px 10px 10px 30px;
+    border-left: 6px solid;
+    border-color: DarkGrey;
+}
+.proof:before {
+    content: "证明";
+    font-style: italic;
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.definition {
+    display: block;
+    margin: 20px 0 20px 0;
+    font-style: normal;
+    background-color: LightCyan;
+    border-left: 6px solid;
+    border-color: DarkCyan;
+    padding:10px 20px 10px 20px;
+}
+.definition:before {
+    content: "定义";
+    font-weight: bold;
+    font-style: normal;
+	display: inline-block;
+	margin-right: 10px;
+}
