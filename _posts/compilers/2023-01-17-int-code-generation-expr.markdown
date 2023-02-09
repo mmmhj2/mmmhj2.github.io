@@ -1,6 +1,7 @@
 ---
-layout: post
+layout: single
 title: "中间代码生成——表达式与控制流"
+category: "编译原理"
 ---
 
 本文中，我们主要研究表达式以及各种语句的中间代码生成。

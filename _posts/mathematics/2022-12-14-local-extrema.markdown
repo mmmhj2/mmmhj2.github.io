@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title: "多元函数的极值与反函数"
 date: 2022-12-14 23:08:00 +0800
-categories: 
+categories: "微分方程"
 ---
 
 $$

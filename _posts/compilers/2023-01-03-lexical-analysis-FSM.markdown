@@ -1,6 +1,7 @@
 ---
-layout: post
+layout: single
 title: "词法分析——有限自动机"
+category: "编译原理"
 ---
 
 本文中我们研究如何使用有限状态自动机进行词法分析。

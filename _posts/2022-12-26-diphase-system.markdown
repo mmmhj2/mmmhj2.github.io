@@ -1,7 +1,6 @@
 ---
-layout: post
 title: "双相系统"
-categories: thermodynamics
+categories: "热力学"
 date: 2022-12-26 21:19:00 +0800
 ---
 

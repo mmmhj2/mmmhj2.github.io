@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: "计算机网络——链路层"
 ---
 

@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title: "高阶系统波德图的渐进研究"
 date: 2022-12-03 19:10:00 +0800
-categories:
+categories: "控制理论"
 ---
 
 ## 高阶系统的传递函数

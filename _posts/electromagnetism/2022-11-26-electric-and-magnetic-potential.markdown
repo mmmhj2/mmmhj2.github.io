@@ -1,7 +1,7 @@
 ---
-layout: post
+layout: single
 title: "电标势与磁矢势"
-categories: electromagnetism
+categories: "电磁学"
 date: 2022-11-26 16:08:00 +0800
 --- 
 

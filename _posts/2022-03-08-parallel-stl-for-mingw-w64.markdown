@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "在Mingw-w64中启用PSTL"
 date: 2022-03-08 22:11:00 +0800
 categories:

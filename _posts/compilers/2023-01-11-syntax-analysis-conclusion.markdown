@@ -1,6 +1,7 @@
 ---
-layout: post
+layout: single
 title: "语法分析——总结"
+category: "编译原理"
 ---
 
 语法分析方法可以分成三个大类：

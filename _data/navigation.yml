@@ -1,0 +1,7 @@
+main:
+  - title: "分类目录"
+    url: /categories/
+  - title: "标签目录"
+    url: /tags/
+  - title: "主页"
+    url: /

@@ -1,8 +1,8 @@
 ---
-layout: post
+layout: single
 title: "线性时不变一阶与二阶系统"
 date: 2022-12-01 15:30:00 +0800
-categories:
+categories: "控制理论"
 --- 
 
 我们来考虑几个典型系统。

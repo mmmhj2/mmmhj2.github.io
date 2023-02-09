@@ -1,6 +1,7 @@
 ---
-layout: post
+layout: single
 title: "中间代码生成——类型系统"
+category: "编译原理"
 ---
 
 本文将概述类型检查的两个大类：类型综合和类型推导。

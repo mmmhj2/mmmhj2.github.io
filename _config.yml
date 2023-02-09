@@ -28,7 +28,7 @@ twitter_username: NONE
 github_username:  mmmhj2
 
 # Build settings
-theme: minima
+theme: minimal-mistakes-jekyll
 plugins:
   - jekyll-feed
   - jekyll-paginate
@@ -36,6 +36,8 @@ plugins:
   - jekyll-sitemap
   
 domain: mmmhj2.github.io
+locale: "zh-CN"
+github: [metadata]
 
 markdown: kramdown
 highlighter: rouge
@@ -78,4 +80,18 @@ exclude:
     - vendor/cache/
     - vendor/gems/
     - vendor/ruby/
+
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      toc: true
 
