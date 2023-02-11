@@ -68,7 +68,7 @@ title: "计算机网络——网络安全"
 4. *选择密文攻击*（chosen-ciphertext attack）：攻击者可以获得任何自选密文的明文。这种情况下，攻击者更关心密钥而非明文。
 
 研究在不知道通常解密所需的秘密信息（即密钥）的情况下对信息进行解密的学问称为**密码分析**（Cryptanalysis）。
-从经典的频率分析，到纯数学的大数分解，再到基于额外信息的侧信道攻击，甚至使用[强迫](https://xkcd.com/538/)（Rubber-hose cryptanalysis）或隐秘手段（Black-bag cryptanalysis），都可以看作密码分析的一部分。
+从经典的频率分析，到纯数学的大数分解，再到基于额外信息的侧信道攻击，甚至使用[强迫](https://xkcd.com/538/)（Rubber-hose cryptanalysis，指用橡胶软管鞭打脚心）或隐秘手段（Black-bag cryptanalysis，指窃贼用来携带作案工具的黑色皮包），都可以看作密码分析的一部分。
 
 ### 对称密码系统
 
