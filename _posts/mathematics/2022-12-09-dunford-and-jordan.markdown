@@ -5,14 +5,6 @@ categories: "代数"
 date: 2022-12-09 20:24:00 +0800
 ---
 
-$$
-\newcommand{Ker}{\mathrm{Ker}}
-\newcommand{Id}{\mathrm{Id}}
-\newcommand{\endrospace}{\mathcal{L}(\mathbb{K})}
-\newcommand{\NN}{\mathbb{N}}
-\newcommand{\Mat}{\mathrm{Mat}}
-$$
-
 ## 丹佛分解
 
 在前面的文章中，我们提到了核引理，其中一个重要的关系就是：
@@ -24,6 +16,11 @@ $$
 现在我们假设$Q_k(X) = \prod_{i \neq k} P_i(X) = \frac{P(X)}{P_k(X)}$。
 简单的计算可以说明，这组多项式$(Q_k)$的公因式为$1$，从而根据主理想整环上的裴蜀定理，存在一组多项式$(A_k)$使得：
 $$
+\newcommand{Ker}{\mathrm{Ker}}
+\newcommand{Id}{\mathrm{Id}}
+\newcommand{\endrospace}{\mathcal{L}(\mathbb{K})}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\Mat}{\mathrm{Mat}}
 Q_1 \times A_1 + \cdots Q_r \times A_r = 1
 \implies \Id_E = Q_1(u) \circ A_1(u) + \cdots + Q_r(u) \circ A_r(u)
 $$

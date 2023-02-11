@@ -5,12 +5,6 @@ categories: "微分方程"
 date: 2022-12-12 19:27:00 +0800
 ---
 
-$$
-\newcommand{d}{\mathrm{d}}
-\newcommand{RR}{\mathbb{R}}
-\newcommand{NN}{\mathbb{N}}
-$$
-
 本文中我们将考虑如何把一元函数的导数拓展到更高维。
 
 我们在这篇文章中主要考虑有限维的实数向量空间。
@@ -19,6 +13,12 @@ $$
 ## 微分映射
 
 我们类比一元函数可导的定义来给出可微的定义。
+
+$$
+\newcommand{d}{\mathrm{d}}
+\newcommand{RR}{\mathbb{R}}
+\newcommand{NN}{\mathbb{N}}
+$$
 
 设$a \in U \subset \RR^n$，$U$为一开集合。称映射$f: U \to \RR^p$在$a$点**可微(differentiable)**若存在一线性映射
 $\varphi \in \mathcal{L} (\RR^n, \RR^p)$使得当$h \to 0$时，有

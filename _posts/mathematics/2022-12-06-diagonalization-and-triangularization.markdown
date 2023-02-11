@@ -5,12 +5,6 @@ categories: "代数"
 date: 2022-12-06 23:37:00 +800
 --- 
 
-$$
-\newcommand{dim}{\mathrm{dim}}
-\newcommand{ker}{\mathrm{ker}}
-\newcommand{Id}{\mathrm{Id}}
-$$
-
 我们之前已经研究了特征多项式和最小多项式的相似性，而我们又知道矩阵可对角化与其特征多项式和特征值有重大关系。
 这些关系促使我们去寻找可对角化与最小多项式的关系。
 
@@ -23,6 +17,9 @@ $$
 
 - 若矩阵$A$可对角化，则其与一个有特征值组成的对角矩阵相似：
 $$
+\newcommand{dim}{\mathrm{dim}}
+\newcommand{ker}{\mathrm{ker}}
+\newcommand{Id}{\mathrm{Id}}
 A \sim 
 \begin{pmatrix}
 \lambda_1 & & & & & & (0) \\

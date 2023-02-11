@@ -4,12 +4,6 @@ title: "语法分析——自顶向下方法"
 category: "编译原理"
 ---
 
-$$
-\newcommand\qatoq{\quad &\to \quad}
-\newcommand\qtoq{\quad \to \quad}
-\newcommand\gor{\; | \;}
-$$
-
 ## 总述
 
 本文将介绍如何利用自顶向下方法进行语法分析。
@@ -144,10 +138,13 @@ c_parser_external_declaration (c_parser *parser)
 
 ## 预测分析法
 
-$
+$$
+\newcommand\qatoq{\quad &\to \quad}
+\newcommand\qtoq{\quad \to \quad}
+\newcommand\gor{\; | \;}
 \newcommand\FIRST{\mathrm{FIRST}}
 \newcommand\FOLLOW{\mathrm{FOLLOW}}
-$
+$$
 
 ### FIRST和FOLLOW函数
 

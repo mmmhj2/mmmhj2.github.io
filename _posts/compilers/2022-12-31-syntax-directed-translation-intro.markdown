@@ -5,11 +5,6 @@ date: 2022-12-31 21:03:00 +0800
 category: "编译原理"
 ---
 
-$$
-\newcommand\produce[2]{#1 \  \to \  #2}
-\newcommand\prodor{\; | \;}
-$$
-
 本文将介绍关于文法的基础部分，有关词法和语法分析的大部分内容将在后续文章中介绍。
 
 ## 文法与产生式
@@ -122,6 +117,8 @@ $$
 我们先考虑只有加减乘除四个运算、两个优先级的简单情况（C++中的优先级高达十七种之多）。
 借助数学中的项和因子的概念，我们把对任何运算都不能再次分割的表达式称为因子（factor），能被乘除分开，而不能被加减分开的称为项（term），有：
 $$
+\newcommand\produce[2]{#1 \  \to \  #2}
+\newcommand\prodor{\; | \;}
 \begin{aligned}
 &\produce{expr}{expr + term \prodor expr - term \prodor term} \\
 &\produce{term}{term * factor \prodor term \backslash factor \prodor factor} \\

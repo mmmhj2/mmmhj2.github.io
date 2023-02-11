@@ -5,6 +5,8 @@ categories: "分析"
 date: 2022-12-16 23:25:00 +0800
 ---
 
+在研究傅里叶级数的均方收敛之前，我们为此前提到的$\mathcal{C}_{m}\mathbb{T}$空间附加一个内积运算，使其变成内积空间。
+
 $$
 \newcommand{d}{\mathrm{d}}
 \newcommand{TT}{\mathbb{T}}
@@ -17,10 +19,6 @@ $$
 \newcommand{cctt}{\cC(\TT)}
 \newcommand\inner[2]{\left( #1 \middle\vert #2 \right)}
 \newcommand{intperiod}{\int_0^{2\pi}}
-$$
-
-在研究傅里叶级数的均方收敛之前，我们为此前提到的$\ccmtt$空间附加一个内积运算，使其变成内积空间：
-$$
 f,g \in \ccmtt, \; \inner{f}{g} = \frac{1}{2\pi} \intperiod \overline f g
 $$
 

@@ -4,12 +4,6 @@ title: "语法分析——基础内容"
 category: "编译原理"
 ---
 
-$$
-\newcommand\qatoq{\quad &\to \quad}
-\newcommand\qtoq{\quad \to \quad}
-\newcommand\gor{\; | \;}
-$$
-
 本文将讲述语法分析的基础内容，包括引论和各种定义。
 在之后的文章中，我们将详细讲述各种语法分析的技巧。
 
@@ -45,6 +39,9 @@ $$
 
 我们此前提到过，解决二义性的重要方法就是分配优先级和结合性，因此我们有下面这个文法：
 $$
+\newcommand\qatoq{\quad &\to \quad}
+\newcommand\qtoq{\quad \to \quad}
+\newcommand\gor{\; | \;}
 \begin{aligned}
 E \qatoq E + T \; | \; T \\
 T \qatoq T * F \gor F \\

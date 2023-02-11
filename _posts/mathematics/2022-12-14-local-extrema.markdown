@@ -5,12 +5,6 @@ date: 2022-12-14 23:08:00 +0800
 categories: "微分方程"
 ---
 
-$$
-\newcommand{d}{\mathrm{d}}
-\newcommand{RR}{\mathbb{R}}
-\newcommand{NN}{\mathbb{N}}
-$$
-
 ## 极值
 
 若函数$f: U \to \RR$（U为开集）在一点$a \in U$处满足$\d f_a = 0$，则称其为**临界点**。
@@ -19,6 +13,12 @@ $$
 {: .proposition}
 
 为了判定临界点的性质，我们提出以下定理：
+
+$$
+\newcommand{d}{\mathrm{d}}
+\newcommand{RR}{\mathbb{R}}
+\newcommand{NN}{\mathbb{N}}
+$$
 
 设$f:U \subset \RR^n \to \RR$为一$\mathcal C^2$函数，且$a \in U$为一临界点，则根据泰勒展开，有：
 $$
