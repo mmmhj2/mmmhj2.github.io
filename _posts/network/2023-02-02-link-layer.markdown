@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "计算机网络——链路层"
+categories: "计算机网络"
 ---
 
 ## 链路层概述

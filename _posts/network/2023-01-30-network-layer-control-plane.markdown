@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "计算机网络——网络层：控制平面"
+categories: "计算机网络"
 ---
 
 ## 概述
