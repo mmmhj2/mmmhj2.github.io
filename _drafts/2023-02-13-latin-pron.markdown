@@ -5,7 +5,7 @@ categories: "外语"
 ---
 
 本文以英语为基础主要介绍古典拉丁语（Classical Latin）的发音。
-本文仅提供一个以英语为主的近似、
+本文仅提供一个以英语为主的近似，对应的IPA音标可以参见[此页](https://en.wikipedia.org/wiki/Help:IPA/Latin)或[此页](https://en.wikipedia.org/wiki/Latin_phonology_and_orthography#Table_of_orthography)。
 
 ## 元音
 
@@ -56,7 +56,8 @@ ui多数情况下也是单独发音。
 - bs，bt：发音如同`ps`、`pt`，例如urbs；
 - 有几个辅音的发音和英语只有一点不同：
   - h：送气，发音更短促；
-  - m：在词尾可能导致前一个元音变成鼻音。
+  - m：在词尾可能导致前一个元音变成鼻音；
+  - qu：比英语多一个唇音或唇硬腭音。
 - 其他辅音*永远*单独发音：
   - ch：单独发音，永不发`church`的音，音同拼音`k`；
   - ph：单独发音，永不发`philosophy`的音，音同拼音`p`；
