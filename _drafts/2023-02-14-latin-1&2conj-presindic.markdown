@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "拉丁语一二类变位——主动直陈式现在时"
+title: "拉丁语动词一二类变位——主动直陈式现在时"
 categories: "外语"
 ---
 
