@@ -76,3 +76,60 @@ categories: "外语"
 不难发现存在一些格和其他格的词缀相同，此时只能通过单词顺序、语境等确定其语法成分和含义。
 
 从例子里不难发现，*谓语动词也需要和主语在人称和数上进行配合*。
+
+## 翻译 
+
+- Salve, O patria!
+  - 祖国万岁！
+- Fama et sententia volant.
+  - 谣言与观点四起。
+- Da veniam puellae, amabo te.
+  - 请你原谅（那个）女孩。
+  - `da` “给” 主动现在时命令式 第二人称单数
+  - `veniam` “原谅” 单数宾格
+  - `puellae` “女孩” 单数与格
+- Clementia tua multas vitas servat.
+  - 你的仁慈拯救了许多生命。
+  - `clementia tua` “你的仁慈” 单数主格
+  - `multas vitas` “许多生命” 复数宾格
+  - `servat` “拯救” 主动现在时直陈式 第三人称单数
+- Multam pecuniam deportat.
+  - （他）带走了许多钱。
+- Fortunam et vitam antiquae patriae saepe laudas sed recusas.
+  - （你）时常赞美却拒绝古国的福寿。
+  - `fortunam et vitam` “运气与生活” 单数宾格
+  - `antiquae patriae` “古老的国家” 单数属格
+- Me vitare turbam iubes.（塞内卡）
+  - （你）命令人群避开我。
+  - `turbam` “人群” 单数宾格
+  - `iubes` “命令” 主动现在时直陈式 第二人称单数
+- Me philosophiae do.
+  - （我）把我献给哲学。（我献身于哲学。）
+  - `philosophiae` “哲学” 单数与格
+  - `do` “给予” 主动现在时直陈式 第一人称单数
+- Philosophia est ars vitae.（西塞罗）
+  - 哲学是生命的艺术。
+  - `philosophia` “哲学” 单数主格
+  - `ars` “艺术” 单数主格
+  - `vitae` “生命的；生活的” 单数属格
+  - 系动词`sum`的“宾语”需要和主语进行配合，所以也是主格，之后会仔细介绍。
+- Sanam formam vitae conservate.
+  - 保持健康的生活形式。
+  - `sanam formam` “健康的形式” 单数宾格
+  - `vitae` “生命的；生活的” 单数属格
+  - `conservate` “保持；保护” 主动现在时命令式 第二人称复数
+- Immodica ira creat insaniam.
+  - 过多的愤怒导致疯狂。
+- Quid cogitas? -- debemus iram vitare.
+  - 你怎么想？ （我们）必须避免愤怒。
+- Nulla avaritia sine poena est.（塞内卡）
+  - 没有贪婪能够免于处罚。
+  - `poena` “处罚；惩罚” 单数夺格（`sine`的宾语）
+- Me saevis catenis onerat.
+  - （他）用残酷的锁链压迫我。
+  - `saevis catenis` “残酷的锁链” 复数夺格
+- Rotam fortunae non timent.
+  - （他们）不畏惧命运之轮。
+  - `rotam` “轮子” 单数宾格
+  - `fortunae` “命运的；运气的” 单数属格
+  - `timent` “害怕” 主动现在时命令式 第三人称复数
