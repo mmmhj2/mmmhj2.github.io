@@ -3,6 +3,7 @@ layout: single
 title: "复数域下的幂级数"
 categories: "分析"
 date: 2022-11-28 13:20:00 +0800
+tags: ["幂级数"]
 --- 
 
 此文中，我们定义复数域下的开圆盘$D$和闭圆盘$\overline{D}$：

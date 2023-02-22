@@ -2,6 +2,7 @@
 layout: single
 title: "语法分析——自底向上方法（CLR、LALR）"
 category: "编译原理"
+tags: ["语法分析"]
 ---
 
 ## 更强大的LR语法分析器

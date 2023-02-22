@@ -2,6 +2,7 @@
 layout: single
 title: "词法分析——基础内容"
 category: "编译原理"
+tags: ["词法分析"]
 ---
 
 ## 基本定义

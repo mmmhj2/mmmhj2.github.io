@@ -2,6 +2,7 @@
 layout: single
 title: "计算机网络——链路层②"
 categories: "计算机网络"
+tags: ["链路层"]
 ---
 
 ## 交换局域网

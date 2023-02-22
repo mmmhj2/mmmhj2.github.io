@@ -3,6 +3,7 @@ layout: single
 title: "傅里叶级数——收敛行为"
 categories: "分析"
 date: 2022-12-08 21:00:00 +0800
+tags: ["傅里叶级数"]
 ---
 
 我们已经知道，傅里叶系数$\hat f : \mathbb{Z} \to \mathbb{C}$是有界的，其不能大于原函数的上确界。

@@ -2,6 +2,7 @@
 layout: single
 title: "语法分析——总结"
 category: "编译原理"
+tags: ["语法分析", "总述"]
 ---
 
 语法分析方法可以分成三个大类：

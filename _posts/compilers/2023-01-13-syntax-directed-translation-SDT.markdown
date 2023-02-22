@@ -2,6 +2,7 @@
 layout: single
 title: "语法制导翻译——语法制导翻译方案"
 category: "编译原理"
+tags: ["语法制导翻译"]
 ---
 
 ## 语法制导的翻译方案
