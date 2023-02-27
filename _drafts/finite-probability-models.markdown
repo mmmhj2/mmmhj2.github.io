@@ -145,3 +145,113 @@ X(\omega) = x \implies Y(\omega) = y
 $$
 根据此关系构造函数$\phi(x) = y$即可得到$\phi$。
 {: .proof}
+
+## 概率测度
+
+设$\Omega$为一有限集合，$\mathcal{A}$是其上一个σ-代数，我们称所有实值函数$\mathbf{P}: \mathcal A \to \mathbb{R}\_+$为**概率测度**或**概率分布**，若其满足以下公理：
+$$
+\begin{aligned}
+    &\mathbf{P}(\Omega) = 1 \\
+    \forall A, B \in \mathcal A \quad
+    & A \cap B = \emptyset \implies \mathbf{P}(A+B) = \mathbf{P}(A) + \mathbf{P}(B)
+\end{aligned}
+$$
+{: .definition}
+
+第二条公理也称作*可加性*或*加和性*。
+
+有限集合$\Omega$和其上的概率测度$\mathbf{P}$构成一个**有限概率空间**，记作$(\Omega, \mathcal A, \mathbf{P})$。$(\Omega, \mathcal P (\Omega), \mathbf{P})$可以简称为$\Omega$。
+{: .definition}
+
+设$A \in \mathcal A$，若$\mathbf{P}(A) = p$，那么我们称事件$A$发生的概率为$p$。
+如果事件发生的概率为零，那么这个事件称为*几乎不可能事件*、*可忽略事件*或*零测事件*；
+如果事件发生的概率为一，那么这个事件称为*几乎必然事件*。
+对有限且没有除$\emptyset$之外的零概率事件的概率测度，*几乎必然*和*必然*基本没有区别，因为概率为一的事件只有$\Omega$一个。
+但对无限集合，这种两者的区别就变得非常重要了。
+
+根据定义，以下性质是显然的。
+$$
+\begin{aligned}
+    & \mathbf{P}(\emptyset) = 0 \\
+    \forall A \in \mathcal{A} \quad 
+    & \mathbf{P}(A) \in [0,1] \\
+    & \mathbf{P}(A^C) = 1 - \mathbf{P}(A) \\
+    \forall A, B \in \mathcal{A} \quad
+    & A \subset B \implies \mathbf{P}(A) \le \mathbf{P}(B) \\
+    & \mathbf{P}(B \backslash A) = \mathbf{P}(B) - \mathbf{P}(A)
+\end{aligned}
+$$
+设$A\_1, \dots, A\_n \in \mathcal A$为两两不相容事件，那么有：
+$$
+\mathbf{P}(A_1 + \dots + A_n) = \sum_{i = 1}^n \mathbf{P}(A_i)
+$$
+{: .proposition}
+
+我们注意到最后一个命题中的不相容事件可以是来自$\Omega$中的任意个事件，由于$\Omega$本身是有限的，因此这些集合也是有限个的。
+对于无限的集合，我们要求这些集合是可列（或可数）的。
+
+最常见的概率分布为*均匀概率分布*，这个概率分布中，单个元素组成的事件$\\\{\omega_i\\\}$是等概率的，其分布可以写为：
+$$
+\left( \frac{1}{N}, \frac{1}{N}, \dots, \frac{1}{N} \right), \; N = \left| \Omega \right|
+$$
+任何一个事件$A$的概率等于：
+$$
+\forall A \in \mathcal P (\Omega) \quad \mathbf{P}(A) = \frac{| A |}{| \Omega |}
+$$
+{: .exampl}
+
+
+### 概率质量函数
+
+对于有限的样本空间$\Omega = \\\{ \omega\_1, \dots, \omega\_N \\\}$，我们设事件集合为$\mathcal A = \mathcal P(\Omega)$，可以为每个元素附加一个实数，构成一组向量$(p\_1, \dots, p\_N) \in \mathbb{R}^N$，只要满足$p\_1 + \cdots + p\_n = 1$，就能构造出一个概率测度：
+$$
+\forall A \in \mathcal{P}(\Omega) \quad \mathbf{P}(A) = \sum_{\omega_i \in A} p_i = \sum_{i=1}^N \mathbb{1}_A (\omega_i) p_i
+$$
+
+相对应的，对每个有限样本空间的概率测度$\mathbf{P}$，都可以构造一个映射
+$$
+\begin{aligned}
+    \mathbf p: \quad 
+    \Omega \; &\to \; \mathbb{R}_+ \\
+    \omega_i \; &\mapsto \; p_i
+\end{aligned}
+$$
+这个映射称为*概率质量函数*。
+对于有限的事件集合，概率质量函数实际上就是每个单个元素组成的事件$\\\{\omega_i\\\}$发生的概率，因此我们不对这两个术语加以区分。
+
+### 随机变量的概率测度
+
+仅仅针对单个事件进行观察往往是不足够的，因为许多时候我们并不能确定一个事件是否发生，甚至难以找出某个试验的事件空间。
+为此，我们引入了随机变量来将事件映射为数，从而处理事件的数学性质。
+按照相同的思路，我们也需要为随机变量定义概率测度和分布，才能处理涉及随机变量的概率问题。
+
+设$(\Omega, \mathcal P(\Omega), \mathbf{P})$为一有限概率空间，$X : \Omega \to E$为一随机变量，称$X(\Omega)$上的概率测度$\mathbf{P}_X$为$X$的**分布**，若其满足：
+$$
+\forall B \in \mathcal P (X(\Omega)) \quad \mathbf{P}_X(B) = \mathbf{P}(X \in B)
+$$
+，其中$\mathbf{P}(X \in B)$表示事件$\\\{X \in B\\\}$发生的概率。
+该分布的概率质量函数为：
+$$
+\mathbf{p}_X: X(\Omega) \to \mathbb{R}_+ , \quad X \mapsto \mathbf{P}(X = x)
+$$
+，其中$\mathbf{P}(X = x)$表示事件$\\\{X = x\\\}$发生的概率。
+{: .definition}
+
+这就是说，当我们关心一个随机变量的取值$x$的概率的时候，我们实际上指的是随机变量等于$x$的那些事件的和事件发生的概率。
+
+设样本空间$\Omega = \\\{ 0, 1\\\}$，那么其所有概率测度只由事件$\\\{ 1 \\\}$发生的概率$p \in (0, 1)$确定。
+这种测度或分布称为**伯努利分布**或**两点分布**，是最基本的分布之一。
+相对地，若概率空间$(\Omega, \mathcal P (\Omega), \mathbf P)$上的随机变量$X$只有有且只有零一两个取值，且其分布是伯努利分布，那么这个变量称为*伯努利变量*。
+{: .exampl}
+
+在伯努利分布中，通常事件$\\\{1\\\}$发生称为成功，事件$\\\{0\\\}$发生称为失败。
+
+设$n \in \mathbb{N}^\*, p \in (0,1)$，样本空间$\Omega = [\\\![ 0, n ]\\\!]$，若其概率质量函数为：
+$$
+\Omega \to \mathbb{R}_+, \quad k \mapsto \binom{n}{k} p^k (1-p)^{n-k}
+$$
+，那么称这个分布为**二项分布**。
+相对地，若概率空间$(\Omega, \mathcal P (\Omega), \mathbf P)$上的随机变量$X$只有有且只有$[\\\![ 0, n ]\\\!]$这$n+1$个取值，且其分布为二项分布，那么这个变量称为*二项分布变量*，记为$X \sim \mathcal B (n,p)$。
+{: .exampl}
+
+二项分布实际上就是$n$次独立的概率为$p$的伯努利实验的成功次数的分布。
