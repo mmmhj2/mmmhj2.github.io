@@ -153,7 +153,7 @@ $$
 $$
 {: .definition}
 
-根据条件概率的定义，独立且非零测或几乎必然的事件$A$也可以写为：$P(A\|B) = P(A)$。
+根据条件概率的定义，独立且非零测或几乎必然的事件$A$也可以写为：$\mathbf P(A\|B) = \mathbf P(A)$。
 
 若$A,B$是两个独立事件，那么$A^C, B$、$A, B^C$和$A^C, B^C$也是独立事件。
 {: .proposition}
@@ -162,7 +162,7 @@ $$
 
 两个σ-代数$\mathcal A, \mathcal B$是**独立**的，若
 $$
-\forall A \in \mathcal A, B \in \mathcal B, \quad P(A \cup B) = P(A) \cdot P(B)
+\forall A \in \mathcal A, B \in \mathcal B, \quad \mathbf P(A \cup B) = \mathbf P(A) \cdot \mathbf P(B)
 $$
 两个随机变量$X,Y$是**独立**的，若其对应的σ-代数$\sigma(X), \sigma(Y)$是独立的。
 {: .definition}
@@ -171,7 +171,7 @@ $$
 $$
 \begin{aligned}
     \forall (A,B) \in \mathcal{P}(X(\Omega)) \times \mathcal{P}(Y(\Omega)) \\
-    P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)
+    P(X \in A, Y \in B) = \mathbf P(X \in A) \cdot \mathbf P(Y \in B)
 \end{aligned}
 $$
 即对于任何一组随机变量的取值，同时取两个值的概率等于分别取两个值的概率之积。
@@ -182,7 +182,7 @@ $$
 $$
 \begin{aligned}
     \forall x, y \in X(\Omega) \times Y(\Omega) \\
-    P(X = x, Y = y) = P(X = x) \cdot P(Y = y)
+    P(X = x, Y = y) = \mathbf P(X = x) \cdot \mathbf P(Y = y)
 \end{aligned}
 $$
 {: .propsition}
@@ -199,10 +199,10 @@ $$
 因此
 $$
 \begin{aligned}
-    P(X \in A, Y \in B) &= \sum P(X = x, Y = y) \\
-    &= \sum P(X = x) P(Y = y) \\
-    &= \sum P(X = x) \sum P(Y = y) \\
-    &= P(X \in A) P(Y \in B)
+    P(X \in A, Y \in B) &= \sum \mathbf P(X = x, Y = y) \\
+    &= \sum \mathbf P(X = x) \mathbf P(Y = y) \\
+    &= \sum \mathbf P(X = x) \sum \mathbf P(Y = y) \\
+    &= P(X \in A) \mathbf P(Y \in B)
 \end{aligned}
 $$
 后推前是显然的，只需要使用等价的定义即可。
@@ -210,7 +210,7 @@ $$
 
 设$X:\Omega \to \mathbb R$，$Y:\Omega \to \mathbb R$为两个独立的实随机变量，那么随机变量$X+Y$的分布为：
 $$
-\forall z \in \mathbb R \quad P(X+Y=z) = \sum_{x+y=z} P(X=x) P(Y=y)
+\forall z \in \mathbb R \quad \mathbf P(X+Y=z) = \sum_{x+y=z} \mathbf P(X=x) \mathbf P(Y=y)
 $$
 {: .proposition}
 
@@ -219,17 +219,17 @@ $$
     \{Z = z\} &= \{\omega \in \Omega | X(\omega) + Y(\omega) = z\} \\
     &= \biguplus_{x+y=z} \{\omega \in \Omega | X(\omega) = x, Y(\omega) = y \} \\
     &= \biguplus_{x+y=z} \{X = x, Y = y\} \\
-    &= \sum_{x+y=z} P(X=x, Y=y) \\
-    &= \sum_{x+y=z} P(X=x) P(Y=y)
+    &= \sum_{x+y=z} \mathbf P(X=x, Y=y) \\
+    &= \sum_{x+y=z} \mathbf P(X=x) \mathbf P(Y=y)
 \end{aligned}
 $$
 {: .proof}
 
 显然，这个求和具有*卷积*（在离散情况下也称柯西积）的形式，因此我们有：
 $$
-P_{X+Y} = P_X * P_Y
+\mathbf P_{X+Y} = \mathbf P_X * \mathbf P_Y
 $$
-或者对于概率质量函数，可以写为$p\_{x+y} = p\_x * p\_y$
+或者对于概率质量函数，可以写为$\mathbf p\_{x+y} = \mathbf p\_x * \mathbf p\_y$
 
 设$X: \Omega \to E$，$Y: \Omega \to F$为两个独立的随机变量，$\phi: E \to E^\prime$，$\psi: F \to F^\prime$为两映射，那么$\phi(X)$和$\psi(Y)$也是独立的。
 {: .proposition}
@@ -245,7 +245,7 @@ $$
 
 称有限个事件$A\_1, \cdots, A\_n \in \mathcal P(\Omega)$是独立的，若
 $$
-\forall I \subset [\![ 1, n ]\!] \quad P(\cap_{i \in I} A_i) = \prod_{i \in I} P(A_i)
+\forall I \subset [\![ 1, n ]\!] \quad \mathbf P(\cap_{i \in I} A_i) = \prod_{i \in I} \mathbf P(A_i)
 $$
 {: .definition}
 
@@ -258,7 +258,7 @@ $$
 $$
 \begin{aligned}
     \forall A_1 \in \mathcal A_1, \cdots \forall A_n \in \mathcal A_n \\
-    P(A_1 A_2 \cdots A_n) = P(A_1) P(A_2) \cdots P(A_n)
+    P(A_1 A_2 \cdots A_n) = \mathbf P(A_1) \mathbf P(A_2) \cdots \mathbf P(A_n)
 \end{aligned}
 $$
 {: .definition}
