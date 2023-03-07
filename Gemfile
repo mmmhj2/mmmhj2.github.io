@@ -36,3 +36,5 @@ gem "kramdown-parser-gfm"
 
 # Minimal-mistakes theme
 gem "minimal-mistakes-jekyll"
+
+gem "webrick", "~> 1.8"
