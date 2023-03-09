@@ -421,3 +421,142 @@ $$
 
 从上面的讨论中，我们不难发现，一个对称的双线性映射和**内积**非常相似；
 相对地，一个二次型和这个内积导出的**范数**（$\Vert x \Vert = < x, x >$）的平方非常相似。
+
+## 对称双线性的简化
+
+本节中，我们设$E$为$\mathbb K$上一个有限维向量空间，$\varphi$为其中一个对称双线性函数，$q$为其相关的二次型。
+
+我们称$\varphi$或$q$的秩为其*任意一个基底下*矩阵的秩。
+如果一个对称双线性型（或二次型）的秩和空间的维数相等，那么称其为**非退化**的。
+{: .definition}
+
+### 简化相关的定理
+
+我们记$\mathcal B = (e\_1, \dots, e\_n)$为$E$的一组基底，而$(\psi\_1, \dots, \psi\_n)$为其对偶基底。
+
+若$\mathrm{Mat}_{\mathcal B} \varphi$是对角矩阵，那么称$\mathcal B$是关于$\varphi$**正交**的。
+{: .definition}
+
+如果矩阵是对角矩阵，那么说明$i \neq j, \; \varphi(e\_i, e\_j) = 0$，回忆上文中关于内积和对称双线性函数的类比，这说明两个基底向量垂直，因此我们称其为正交的。
+
+以下几个命题是等价的：
+- $\mathcal B$是关于$\varphi$或$q$正交的且
+  $$\mathrm{Mat}_{\mathcal B} \varphi = \mathrm{diag}(\alpha_1, \dots, \alpha_n)$$；
+- 有：
+  $$
+  \varphi(x,y) = \sum_{i=1}^n \alpha_i x_i y_i
+  $$
+  且：
+  $$
+  q(x) = \sum_{i=1}^n \alpha_i x_i^2
+  $$
+- 有：
+  $$
+  q = \sum_{i=1}^n \alpha \psi_i^2
+  $$
+  其中$(\psi\_1, \dots, \psi\_n)$为$\mathcal B$的对偶基底。
+
+#### 合同对角化
+
+对所有有限维空间的二次型（或对称双线性型），都存在一组基底，使其矩阵为对角阵。
+{: .theorem}
+
+这个命题等价于对任何二次型$q$：
+$$
+\begin{aligned}
+    q(a_1, \dots, a_n) &= \sum_{i=1}^n \alpha_{i,i} x_i^2 + \sum_{i,j=1\\ i \neq j}^n \alpha_{i,j} x_i x_j \\
+    &= \sum_{i=1}^m \beta_i \psi_i^2 (x_1, \dots, x_n)
+\end{aligned}
+$$
+其中$m = \mathrm{rank} q$，$\psi_i$为对角化基底的对偶基底，可视为一组线性独立的线性映射。
+{: .proposition}
+
+我们提供一个构造性的证明，根据证明的步骤就可以构造这组基底。
+
+使用归纳法，对$\dim E = 1$，这个结论显然；
+若$q = 0$，这个结论也显然，因此我们研究$q \neq 0$的情况。
+设$\dim E = n$，且这个命题对$\dim E = n-1$成立，那么分类讨论在标准基底下该函数的对角线上是否有非零元素。
+若含有非零元素，那么我们同时使用行变换和列变换将这个元素移动到$\alpha_{1,1}$的位置，由于同时使用这两个变换，变换前后的矩阵是合同的。
+然后我们进行配方：
+$$
+\begin{aligned}
+    q(x_1, \dots, x_n) &= a_{1,1} (x_1^2 + 2\sum_{i=2}^n \frac{\alpha_{1,i}}{\alpha_{1,1}} x_1 x_i) + q^\prime (x_2, \dots, x_n) \\
+    &= a_{1,1} (x_1^2 + \sum_{i=2}^n \frac{\alpha_{1,i}}{\alpha_{1,1}} x_i)^2 + q_2 (x_2, \dots, x_n) \\
+    &= a_{1,1} \psi_1^2 (x_1, \dots, x_n) + q_2(x_2, \dots, x_n)
+\end{aligned}
+$$
+从而使用归纳法，$q_2$可以转化为对偶基底的平方和，注意$q^\prime \neq q_2$，后者带有配方产生的额外项。
+不难发现$\psi\_1$和$q\_2$中所有函数都是独立的，因为仅有$\psi\_1$中含有$x\_1$
+如果对角线不含有非零元素，那么我们任取一个非零元素并移动到$\alpha_{1,2}$的位置，然后进行配方：
+$$
+\begin{aligned}
+    q(x_1, \dots, x_n) &= 2 \alpha_{1,2} \left( x_1 x_2 + \sum_{i=3}^n \frac{\alpha_{1,i}}{\alpha_{1,2}} x_1 x_i + \sum_{i=3}^n \frac{\alpha_{1,i}}{\alpha_{1,2}} x_2 x_i \right) + q^\prime (x_3, \dots, x_m) \\
+    &= 2 \alpha_{1,2} \left( x_1 + \sum_{i=3}^n \frac{\alpha_{2,i}}{\alpha_{1,2}} x_i \right) \left( x_2 + \sum_{i=3}^n \frac{\alpha_{1,i}}{\alpha_{1,2}} x_i \right) + q_3 (x_3, \dots, x_m)
+\end{aligned}
+$$
+现在，我们令
+$$
+\left\{ 
+    \begin{aligned}
+        \psi_1 &= \left( x_1 + \sum_{i=3}^n \frac{\alpha_{2,i}}{\alpha_{1,2}} x_i \right) + \left( x_2 + \sum_{i=3}^n \frac{\alpha_{1,i}}{\alpha_{1,2}} x_i \right)\\
+        \psi_2 &= \left( x_1 + \sum_{i=3}^n \frac{\alpha_{2,i}}{\alpha_{1,2}} x_i \right) - \left( x_2 + \sum_{i=3}^n \frac{\alpha_{1,i}}{\alpha_{1,2}} x_i \right)
+    \end{aligned}
+\right.
+$$
+容易验证这两个函数是线性且独立的。
+利用公式$AB = 1 \backslash 4 \left( (A+B)^2 - (A-B)^2 \right)$，可以将上式简化：
+$$
+q(x_1, \dots, x_n) = \frac{1}{2} a_{1,2} (\psi_1^2 - \psi_2^2) + q_3(x_3, \dots, x_m) 
+$$
+同理，新的两个函数和$q_3$展开的其他函数都是独立的。
+这就完成了命题的证明。
+{: .proof}
+
+除了使用这个方法通过配方进行简化之外，我们还可以利用高斯消元的思路，使用行变换和列变换进行简化。
+这种简化的思路和上文中提到确定二次型的正定性中的思路一致。
+
+以下推论把矩阵的合同和二次型的简化联系在一起：
+
+所有对称矩阵*合同于*对角阵。
+{: .proposition}
+
+### 复数域与实数域上的合同简化
+
+在复数域的$n$维线性空间上，所有对称矩阵（或对称双线性型，或二次型）都可以合同简化为：
+$$
+J_r = \begin{pmatrix}
+    I_r & 0 \\
+    0 & 0_{n-r}
+\end{pmatrix}
+$$
+其中$r$为该矩阵的秩。
+{: .proposition}
+
+根据上文所述，我们设在一组基底$(f\_1, \cdots, f\_n)$下该对称矩阵合同于一个对角阵$\mathrm{diag}(\alpha\_1, \cdots, \alpha\_r, 0, \cdots, 0)$，
+那么记$\beta\_i$满足：$\alpha\_i \beta\_i^2 = 1$，从而在基底
+$$
+( \beta_1 f_1, \cdots, \beta_r f_r, f_{r+1}, \cdots, f_r)
+$$
+下，该矩阵合同于$J\_r$。
+{: .proof}
+
+在实数域的$n$维线性空间上，所有对称矩阵（或对称双线性型，或二次型）都可以合同简化为：
+$$
+\begin{pmatrix}
+    I_p & 0 & 0 \\
+    0 & -I_q & 0 \\
+    0 & 0 & 0_{n-p-q}
+\end{pmatrix}
+$$
+其中$r$为该矩阵的秩。
+{: .proposition}
+
+这两个命题的证明是相似的。
+
+### 惯性指数
+
+我们称对称双线性函数$\varphi$的**惯性指数**为一对数$(n^+, n^-)$，其中$n^+$表示使$\varphi_{F \times F}$正定的子空间$F$的最大维数，$n^-$表示使$\varphi_{F \times F}$负定的子空间$F$的最大维数。
+{: .definition}
+
+（西尔维斯特惯性定理）在所有关于$\varphi$正交的基底下，表示$\varphi$的对角矩阵恰好有$n^+$个正元素和$n^-$个负元素。
+{: .theorem}
