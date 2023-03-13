@@ -270,3 +270,114 @@ $$
 {: .definition}
 
 同理，我们也可以将有限多个事件的独立性转化为其对应的指示函数的独立性。
+
+若$X\_1, \cdots, X\_n$是一组独立的随机变量，那么这些随机变量组成的集合的任意子集中的随机变量都是独立的。
+{: .proposition}
+
+$X\_1, \cdots, X\_n, Y\_1, \cdots, Y\_m$是一组独立的随机变量，当且仅当$X\_1, \cdots, X\_n$是独立的、$Y\_1, \cdots, Y\_m$是独立的且$X = (X\_1, \cdots, X\_n)$和$Y = (Y\_1, \cdots, Y\_m)$是独立的。
+{: .proposition}
+
+首先，若$X\_1, \cdots, X\_n, Y\_1, \cdots, Y\_m$是一组独立的随机变量，那么$X\_1, \cdots, X\_n$是独立的且$Y\_1, \cdots, Y\_m$是独立的，因此只用验证$X,Y$是独立的。
+设$x = (x\_1, \cdots, x\_n), y = (y\_1, \cdots, y\_m)$，那么：
+$$
+\begin{aligned}
+    \mathbf P (X = x, Y = y) &= \mathbf P (X_1 = x_1, \cdots, Y_m = y_m) \\
+    &= \mathbf P (X_1 = x_1) \cdots \mathbf P (X_n = x_n) P(Y_1 = y_1) \cdots P(Y_m = y_m) \\
+    &= \mathbf P (X_1 = x_1, \cdots, X_n = x_n) \mathbf{P} (Y_1 = y_1, \cdots, Y_m = y_m) \\
+    &= \mathbf{P}(X = x) \mathbf{P}(Y=y)
+\end{aligned}
+$$
+因此这两个随机变量是独立的。
+反之，有：
+$$
+\begin{aligned}
+    \mathbf P (X_1 = x_1, \cdots, Y_m = y_m) &= \mathbf{P}(X = x, Y = y) \\
+    &= \mathbf{P}(X = x) \mathbf{P}(Y = y) \\
+    &= \mathbf P (X_1 = x_1, \cdots, X_n = x_n) \mathbf{P} (Y_1 = y_1, \cdots, Y_m = y_m) \\
+    &= \mathbf{P}(X_1 = x_1) \cdots \mathbf{P}(Y_m = y_m)
+\end{aligned}
+$$
+因此这些随机变量都是独立的。
+{: .proof}
+
+### 有限次试验的独立性
+
+设$(E\_1, \mathcal{P}(E\_1), \mathbf{P}\_1), \dots, (E\_n, \mathcal{P}(E\_n), \mathbf{P}\_n)$为一组有限概率空间，设
+$\Omega = E\_1 \times \cdots \times E\_n$，那么其上存在唯一的概率测度$\mathbf P$满足：
+$$
+\begin{aligned}
+    \forall A_1 \in \mathcal{P}(E_1), \; \cdots \;, A_n \in \mathcal{P}(E_n) \\
+    \mathbf P(A_1 \times \cdots \times A_n) = \mathbf P_1 (A_1) \times \cdots \times \mathbf P_n (A_n)
+\end{aligned}
+$$
+测度$\mathbf P$称为**积概率测度**，记作
+$$
+\mathbf P = \mathbf P_1 \otimes \cdots \otimes \mathbf P_n
+$$
+{: .proposition}
+
+设$\mathbf p_i$表示$\mathbf P_i$对应的概率质量函数，那么容易验证：
+$$
+\mathbf p(\omega) = \prod_{i=1}^n \mathbf p_i (\omega)
+$$
+是一个良定义的概率质量函数，因为其值大于等于零且满足加和性。
+其对应的概率分布就是$\mathbf P$。
+由于这个分布由所有质量函数唯一确定，因此它是唯一的。
+{: .proof}
+
+对于积概率测度$\mathbf P = \mathbf P\_1 \otimes \cdots \otimes \mathbf P\_n$，
+根据笛卡尔积选择的*典范满射*$X\_1:\; \Omega \to E\_1,\; (\omega\_1, \cdots, \omega\_n) \mapsto \omega\_1$，……，$X\_n :\; \Omega \to E\_n,\; (\omega\_1, \cdots, \omega\_n) \mapsto \omega\_n$是概率分布分别为$\mathbf P\_1$，……，$\mathbf P\_n$的随机变量，
+且它们是独立的。
+{: .proposition}
+
+出于简单起见，只考虑$n = 2$的情况。
+设$A\_1 \in E\_1$，$A\_2 \in E\_2$，那么有：
+$$
+\begin{aligned}
+    \mathbf{P}_{X_1}(A_1) &= \mathbf{P}(X_1 \in A_1, X_2 \in E_2) \\
+    &= \mathbf{P}_1(X_1 \in A_1) \mathbf{P}_2(X_2 \in E_2) \\ 
+    &= \mathbf{P}_1(A_1)
+\end{aligned}
+$$
+同理$\mathbf P\_{X\_2}(A\_2) = \mathbf{P}\_2(A\_2)$。
+然后验证独立性：
+$$
+\begin{aligned}
+    \mathbf P (X_1 \in A_1, X_2 \in A_2) &= \mathbf P (A_1 A_2) \\
+    &= \mathbf P_1 (A_1) \mathbf P_2 (A_2) \\
+    &= \mathbf P (X_1 \in A_1) \times \mathbf P (X_2 \in A_2)
+\end{aligned}
+$$
+从而这两个随机变量是独立的。
+{: .proof}
+
+#### 伯努利试验与二项分布
+
+根据以上定义和定理，我们不难为连续进行的$n$次*独立*伯努利试验构造一个概率空间。
+设第$k$次伯努利试验成功（随机变量取值为$1$）的概率为$p\_k$，那么有：
+$$
+\mathbf P(X_1 = 1) = p_1 , \; \cdots, \mathbf P(X_n = 1) = p_n
+$$
+从而我们可以构造样本空间$\Omega = {[\\\![ 0, 1 ]\\\!]}^n$，其对于的概率测度恰好为积概率测度，对质量函数，有：
+$$
+\forall \omega \in \Omega \quad \mathbf p(\omega) = \prod_{k=1}^n \mathbf p_k^{X_k(\omega)} (1 - \mathbf p_k)^{1 - X_k(\omega)}
+$$
+其中$X\_k$表示$\omega$的第$k$个分量，取值要么为零（表示失败），要么为一（表示成功）。
+
+如果试验的概率等于$p$，那么有：
+$$
+\mathbf p(\omega) = \prod_{k=1}^n p^{X_k(\omega)} (1 - p)^{1 - X_k(\omega)} = p^{S(\omega)} (1-p)^{n-S(\omega)}
+$$
+其中$S$表示$\omega$中一的个数。
+$S$是从$\Omega$到自然数的一个映射，因此也是一个随机变量。
+
+更进一步地，如果我们需要求出$S(\omega) = k$的事件个数，那么我们只需要算出哪些试验成功，哪些失败即可，这可以通过二项式系数实现：
+$$
+\mathbf P(S = k) = \sum_{S(\omega) = k} \mathbf p (\omega) = \binom{n}{k} p^k (1-p)^{n-k}
+$$
+这恰好是二项分布的形式。
+
+因此我们有：
+
+设$X\_1, \dots, X\_n$为$n$个独立的、等概率的伯努利分布随机变量，那么$\sum X\_i$是一个服从二项分布的随机变量。
+{: .theorem}
