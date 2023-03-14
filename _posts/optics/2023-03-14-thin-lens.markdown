@@ -1,0 +1,250 @@
+---
+title: "薄透镜"
+categories: "光学"
+---
+
+本文中我们研究高斯光学中的薄透镜，即在满足高斯条件下进行研究。
+
+## 透镜的光学模型
+
+**透镜**是两个位于同一轴上的两个球体或球面的交构成的光学仪器。
+球心为$C\_1$的球与光轴的交点称为$S\_1$，另一个称为$S\_2$，这两个点也叫*顶点*。
+两个球心的中点记为$O$。
+{: .definition}
+
+两个球的半径即这个透镜的曲率半径。
+两个顶点之间的距离称为这个透镜的*厚度*，若透镜的厚度为零，那么称其为*薄透镜*。
+
+如果一个透镜的两端比中间厚，那么称其为*凹透镜*，反之称为*凸透镜*。
+
+### 薄透镜的重要点
+
+对于薄透镜，顶点和交点重合，这个点称为透镜的**光学中心**，简称**光心**。
+所有通过光学中心的光线不被偏折。
+{: .definition}
+
+和光学系统一样，我们也定义透镜的焦点。
+
+透镜的**物方主焦点**，简称**物方焦点**，是所有发出的光经过透镜后的出射光线平行于光轴的物点。
+物方交点所在的垂直面（称为物方焦平面）上的所有其他点称为*物方副焦点*。
+如果物点位于副焦点上，那么其出射光仍然平行，但是不平行于光轴。
+{: .definition}
+
+凸透镜的物方焦点在实物空间，而凹透镜的在虚物空间。
+
+同理，我们也能定义像方焦点。
+
+透镜的**像方主焦点**是平行于光轴的入射光经过透镜之后所成的像点。
+不平行于光轴的平行光通过透镜之后依然交于焦平面上的一点，这些点称为*像方副焦点*，副焦点总是位于像方焦平面上。
+{: .definition}
+
+凸透镜的像方焦点在实像空间，而凹透镜的在虚像空间。
+
+透镜的**主平面**是一对共轭平面。
+所有位于主平面上的物透过透镜所成的像必然等大同向。
+透镜的主平面于物方光轴交于**物方主点**，于像方光轴交于**像方主点**。
+{: .definition}
+
+*单个*透镜的主平面就是其光心所在的平面，主点就是光心。
+
+光心、焦点和主点是透镜基点的常见选择。
+
+### 构建光路的原理
+
+根据这些定义，我们可以用以下规则构建光路：
+
+1. 若入射光（或其延长线）通过物方主焦点，那么其出射光必然平行光轴；
+   $$
+   F \leftrightarrow A_{+\infty, \text{光轴}}^\prime
+   $$
+2. 若入射光平行于光轴，那么其出射光（或其延长线）必然通过像方主焦点；
+   $$
+   A_{-\infty, \text{光轴}} \leftrightarrow F^\prime
+   $$
+3. 通过光心的光线不发生偏折。
+{: .theorem}
+
+为单透镜构建光路的方法于初中光学所学完全一致，因此此处不再赘述。
+
+## 共轭关系与放大率
+
+我们定义，焦点距对应的主点（对单透镜就是光心）的代数距离为焦距，像方焦距为：
+$$
+f^\prime = \overline{H^\prime F^\prime} = \overline{O F^\prime}
+$$
+物方焦距为：
+$$
+f = \overline{HF} = \overline{OF}
+$$
+像焦距的倒数称为*屈光力*，单位为屈光度。
+{: .definition}
+
+对凸透镜，其像方焦距大于零，物方焦距小于零；
+对凹透镜，其像方焦距小于零，物方焦距大于零。
+
+### 共轭关系
+
+（牛顿公式）物方焦点与物的代数距离$\overline{FA}$和像方焦点与像的代数距离$\overline{F^\prime A^\prime}$满足以下关系：
+$$
+\overline{FA} \cdot \overline{F^\prime A^\prime} = - {f^\prime}^2
+$$
+也可记为：
+$$
+\sigma \cdot \sigma^\prime = f \cdot f^\prime
+$$
+{: .proposition}
+
+（笛卡尔公式）光心与物的代数距离与像的代数距离满足：
+$$
+\frac{1}{\overline{OA^\prime}} - \frac{1}{\overline{OA}} = \frac{1}{f^\prime}
+$$
+{: .proposition}
+
+在初中，我们总是假设物在透镜左边，而像在透镜右边，从而规避了符号的问题。
+在这里，我们通过引入符号实现了多个公式的统一。
+
+### 放大率
+
+回忆一下，我们曾将放大率定义为：
+$$
+\gamma = \frac{\overline{A^\prime B^\prime}}{\overline{AB}}
+$$
+这个定义中的长度都是代数量，因此倒立的像的放大率为负数。
+
+放大率与焦距之间满足：
+$$
+\gamma = \frac{f^\prime}{\overline{FA}} = \frac{- \overline{F^\prime A^\prime}}{f^\prime}
+$$
+与物距像距之间满足：
+$$
+\gamma = \frac{\overline{OA^\prime}}{\overline{OA}}
+$$
+{: .proposition}
+
+#### 两个特殊情况
+
+当物位于焦点上时，一个有限远处的物可以形成无限远处的像，而这种情况下的放大率不是良定义的。
+我们设一个物体位于焦平面上，其一个端点$A$位于光轴上，即位于焦点处，而另一个端点$B$位于副焦点处。
+那么$A$点对应的出射光平行于光轴，而$B$点的出射光与光轴成一个夹角，记为$\alpha^\prime$。
+此时，我们有：
+$$
+\tan \alpha^\prime = \frac{\overline{AB}}{f^\prime}
+$$
+
+同理，两束平行光可以在焦点上成像，这种情况下我们设其中一束平行于光轴，另一束与光轴成$\alpha$角，有：
+$$
+\tan \alpha = \frac{\overline{A^\prime B^\prime}}{f^\prime}
+$$
+
+这两种情况下我们都不考虑角度的方向。
+
+## 透镜组
+
+两个位于同一光轴上的透镜组成的光学系统称为**双合透镜**，双合透镜也是中心光学系统。
+两个透镜分别记为$L\_1$和$L\_2$，两个透镜的光心的距离称为双合透镜的*厚度*。
+若双合透镜的厚度为零，则称其为*紧贴*的。
+{: .definition}
+
+我们将双合透镜的物方和像方焦点记为$F$和$F^\prime$。
+和其他中心光学系统一样，如果双合透镜的两个焦点都位于无穷远处，那么这个双合透镜称为*无焦的*；
+否则，这个双合透镜就是*有焦的*。
+
+中心光学系统的性质保证两个焦点要么都位于有穷远处，要么都位于无穷远处。
+
+双合透镜是无焦的，当且仅当前一个透镜的像方焦点与后一个透镜的像方焦点重合。
+{: .proposition}
+
+双合透镜的放大率为两个透镜的放大率之积：
+$$
+\gamma = \gamma_1 \cdot \gamma_2
+$$
+{. proposition}
+
+### 有焦双合透镜
+
+我们定义前一个透镜的像方焦点和后一个透镜的物方焦点的代数距离为光距：
+$$
+\Delta = \overline{F_1^\prime F_2}
+$$
+
+双合透镜的焦点与组成它的两个透镜的焦点之间的距离满足：
+$$
+\begin{aligned}
+    \overline{F_2^\prime F^\prime} &= - \frac{f_2 f_2^\prime}{\Delta} \\
+    \overline{F_1 F} &= \frac{f_1 f_1^\prime}{\Delta}
+\end{aligned}
+$$
+{: .theorem}
+
+我们有：
+$$
+\begin{array}{ccccc}
+    A_{-\infty,\text{光轴}} &\longleftrightarrow &F_1^\prime &\longleftrightarrow &F^\prime \\
+    F &\longleftrightarrow &F_2 &\longleftrightarrow &A_{+\infty,\text{光轴}}^\prime
+\end{array}
+$$
+对两个四个共轭关系分别使用牛顿公式即可。
+{: .proof}
+
+双合透镜的主点与组成它的两个透镜的焦点之间的距离满足：
+$$
+\begin{aligned}
+    \overline{F_1 H} &= - \frac{f_1^\prime (f_1^\prime + f_2^\prime)}{\Delta} \\
+    \overline{F_2^\prime H^\prime} &= \frac{f_2^\prime (f_1^\prime + f_2^\prime)}{\Delta}
+\end{aligned}
+$$
+{: .theorem}
+
+根据焦距的定义，我们可以用以上关系得出双合透镜的焦距。
+
+#### 有焦双合透镜的屈光力
+
+我们按照相同的定义，称双合透镜的物方焦距和像方焦距为：
+$$
+f = \overline{HF}, \quad f^\prime = \overline{H^\prime F^\prime}
+$$
+像方焦距的倒数称为双合透镜的屈光力。
+
+双合透镜的屈光力与两个透镜的屈光力满足：
+$$
+V = V_1 + V_2
+$$
+或：
+$$
+\frac{1}{f^\prime} = \frac{1}{f^\prime_1} + \frac{1}{f^\prime_2}
+$$
+这一关系称为古尔斯特兰德关系。
+{: .theorem}
+
+$$
+\begin{aligned}
+    V &= \frac{1}{f^\prime} = \frac{1}{\overline{H^\prime F^\prime}} 
+    = \frac{1}{\overline{H^\prime F_2^\prime} + \overline{F_2^\prime F^\prime}} \\
+    &= \frac{1}{- \frac{f_2^\prime(f_1^\prime + f_2^\prime)}{\Delta} - \frac{f_2 f_2^\prime}{\Delta}} \\
+    &= \frac{\Delta}{- f_1^\prime f_2^\prime - {f_2^\prime}^2 - f_2 f_2^\prime} = \frac{\Delta}{- f_1^\prime f_2^\prime} \\
+    &= \frac{\overline{F_1^\prime O_1} + \overline{O_1 O_2} + \overline{O_2 F_2}}{- f_1^\prime f_2^\prime} \\
+    &= \frac{- f_1^\prime + e + f_2}{- f_1^\prime f_2^\prime} = \frac{f_1^\prime + f_2^\prime - e}{f_1^\prime f_2^\prime} \\
+    &= \frac{1}{f_1^\prime} + \frac{1}{f_2^\prime} - \frac{e}{f_1^\prime f_2^\prime} \\
+    &= V_1 + V_2 - \frac{e}{f_1^\prime f_2^\prime}
+\end{aligned}
+$$
+取$e = 0$即可得证。
+{: .proof}
+
+### 无焦双合透镜
+
+我们知道，双合透镜是无焦的，当且仅当前一个透镜的像方焦点与后一个透镜的像方焦点重合。
+这仅能发生在两个透镜之中一个为凸透镜的情况，如果两个透镜都是凹透镜，这组双合透镜不可能是无焦的。
+这是因为前一个凹透镜的像方焦点一定在左边，而后一个的一定在右边，因此不可能重合。
+
+无焦双合透镜的放大率与物的位置完全无关，这可由作图验证。
+实际上，无焦双合透镜的放大率满足：
+$$
+\gamma = \frac{\overline{A^\prime B^\prime}}{\overline{AB}} = - \frac{f_2^\prime}{f_1^\prime}
+$$
+
+无焦双合透镜总是将平行光偏折为平行光，其角放大率满足：
+$$
+G = \frac{\theta^\prime}{\theta} = \frac{\tan \theta^\prime}{\tan \theta} = - \frac{f_1^\prime}{f_2^\prime}
+$$
+这里需要注意符号。
