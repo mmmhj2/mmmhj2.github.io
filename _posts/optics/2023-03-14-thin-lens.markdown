@@ -158,7 +158,7 @@ $$
 $$
 \gamma = \gamma_1 \cdot \gamma_2
 $$
-{. proposition}
+{: .proposition}
 
 ### 有焦双合透镜
 
