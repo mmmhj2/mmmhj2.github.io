@@ -154,3 +154,244 @@ $$
 
 这些命题都可以非常容易地用计算验证。
 
+### 期望、二次型与协方差
+
+对有限概率空间中的两个实随机变量$X,Y$，$(X,Y) \mapsto E(XY)$是一个**正定的对称双线性型**，从而$X \mapsto E(X^2)$是一个**正定的二次型**。
+{: .proposition}
+
+设$\Omega = \\\{ \omega_1, \dots, \omega_n \\\}$，且$\mathbf{P}(\omega\_i) = p\_i > 0$。
+再设$X(\omega\_i) = x\_i$，$Y(\omega\_j) = y\_j$。
+注意到可以把任何随机变量转化为$\mathbb{1}$的线性组合，那么有：
+$$
+\begin{aligned}
+    XY &= \left( \sum_{i = 1}^n x_i \mathbb{1}_{\omega_i} \right) \left( \sum_{j = 1}^n y_j \mathbb{1}_{\omega_j} \right) \\
+    &= \sum_{i = 1}^n \sum_{j = 1}^n x_i y_j \mathbb{1}_{\omega_i} \mathbb{1}_{\omega_j} \\
+    &= \sum_{i = 1}^n x_i y_i \mathbb{1}_{\omega_i}
+\end{aligned}
+$$
+从而：
+$$
+\begin{aligned}
+    E(XY) &= E(\sum_{i = 1}^n x_i y_i \mathbb{1}_{\omega_i}) \\
+    &= \sum_{i = 1}^n x_i y_i E(\mathbb{1}_{\omega_i}) \\
+    &= \sum_{i = 1}^n x_i y_i p_i
+\end{aligned}
+$$
+已知$p_i$恒正，不难验证这个函数是正定的对称双线性型。
+{: .proof}
+
+根据代数所学知识，很容易发现，$X \mapsto \sqrt{E(X^2)}$构成一个范数。
+实际上所谓方差就是一个随机变量与其期望在期望这一范数下的距离的平方，而标准差就是距离。
+
+接下来，我们自然关心两个随机变量之间是否存在类似的关系，答案是当然。
+实际上，方差也是一个二次型，而协方差就是这个二次型对应的*极双线性型*。
+
+设映射：
+$$
+\begin{array}{cccc}
+    \mathbf{Cov}: & \mathcal L (\Omega) \times \mathcal L (\Omega) & \to & \mathbb R_+ \\
+    & (X,Y) & \mapsto & \mathbf E( (X - \mathbf EX) (Y - \mathbf EY) )
+\end{array}
+$$
+这个映射称为两个随机变量的**协方差**，是方差对应的对称双线性型。
+这个双线性型的正惯性指数为$N-1$，负惯性指数为零，其中$N$是$\Omega$的基数。
+{: .definition}
+
+设映射：
+$$
+\begin{array}{cccc}
+    \varphi: & \mathcal L (\Omega) & \to & \tilde{\mathcal L}(\Omega) \\
+    & X & \mapsto & X - E(X) = \tilde{X}
+\end{array}
+$$
+其中，$\tilde{\mathcal L}(\Omega) = \\\{ X | \mathbf E(X) = 0 \\\}$。
+我们已经知道$\mathbf E$是一个线性映射，因此$\tilde{\mathcal L}(\Omega)$实际上是其核。
+根据秩-零化度定理，不难发现$\tilde{\mathcal L}(\Omega)$实际上是$\mathcal L(\Omega)$的一个超平面。
+实际上，这个映射是向此超平面的正交投影。
+从而我们有：
+$$
+\begin{aligned}
+    X &= \tilde X + \mathbf EX \mathbb 1_{\Omega} \\
+    \mathbf E(X^2) &= \mathbf E(\tilde X^2 + 2 \tilde X \mathbf EX + \mathbf E(X)^2) \\
+    &= \mathbf E (\tilde X^2) + 2 \mathbf E(\tilde X \mathbf EX)  + \mathbf E(\mathbf E(X)^2) \\
+    &= \mathbf E (\tilde X^2) + 2 \mathbf EX E\tilde X  + \mathbf E(\mathbf E(X)^2) \\
+    &= \mathbf E (\tilde X^2) + \mathbf E(X)^2 \\
+    &= \mathbf V(X) + E(X)^2
+\end{aligned}
+$$
+这样我们使用线性映射重新证明了用期望计算方差的公式。
+我们知道，$\mathbf V$实际上是$\mathbf E(X^2)$和$\varphi$的复合，而$\varphi$是一个正交投影，这相当于把一个二次型限制在一个子空间上，当然限制后的映射依然是二次型。
+此外，我们知道$\mathbf V(X) = \mathbf E(\varphi(X) \cdot \varphi(X))$，从而容易验证$\mathbf {Cov}(X,Y) = \mathbf E(\varphi(X) \varphi(Y))$是其对应的对称双线性型。
+最后，我们知道$\mathbf V(X)$在子空间$\tilde {\mathcal L}(\Omega)$上恒正，因为若$\mathbf EX = 0$则$\mathbf V(X) = \mathbf E(X^2)$；
+而在其补空间$\mathrm{Span}(\mathbb 1_{\Omega})$上为零，因此其正惯性指数为$N-1$，负惯性指数为零。
+{: .proof}
+
+$$
+\forall X, Y \in \mathcal L(\Omega), \quad | \mathbf Cov(X,Y) | \le \sigma_X \sigma_Y
+$$
+{: .proposition}
+
+对双线性型$\mathbf Cov$应用柯西-施瓦茨不等式即可得证。
+{: .proof}
+
+$$
+\begin{aligned}
+    \mathbf {Cov}(X,Y) &= \mathbf E(XY) - (\mathbf EX )(\mathbf EY) \\
+    \mathbf V (X+Y) &= \mathbf V(X) + \mathbf V(Y) + 2 \mathbf{Cov}(X,Y)
+\end{aligned}
+$$
+{: .proposition}
+
+这两个命题可由简单的计算验证。
+{: .proof}
+
+从定义上不难看出，协方差也可以作为范数，表征两个随机变量在线性空间上的某种距离，可以作为相关性的一种度量。
+为了表征这种相关性，我们选择使用其“夹角”：
+
+定义两个随机变量$X,Y$的相关系数为：
+$$
+\frac{\mathbf {Cov}(X,Y)}{\sigma_X \cdot \sigma_Y}
+$$
+若相关系数为一，那么说明两个随机变量“共线”，即存在常数$a,b,c$满足$aX+bY=c$；
+若相关系数为零，那么说明两个随机变量正交，这样的随机变量称为**（线性）无关**的。
+{: .definition}
+
+考虑到$\mathbf {Cov}$作为一个对称的正二次型（虽然不是正定的），也可以以类似范数的方式来使用[^1]，这种定义方式无疑让人联想到内积空间中的夹角。
+
+[^1]: 这种范数实际上称为**半范数**（seminorm）。
+
+若两个随机变量是独立的，那么它们是线性无关的。
+{: .proposition}
+
+这个命题的证明比较容易，此处不再赘述。
+
+反之，两个线性无关的随机变量不一定是独立的，这是因为，正如其名，相关系数只能表示*线性空间*下的相关性。
+若两个随机变量以非线性的形式相关（比如一个是另一个的平方），那么就不会在相关系数中表现出来。
+
+若随机变量$X\_1, \dots, X\_n$两两无关，那么：
+$$
+\mathbf V(X_1 + \cdots X_n) = \mathbf V(X_1) + \cdots + \mathbf V(X_n)
+$$
+{: .proposition}
+
+这个命题由简单的计算即可验证。
+需要注意的是，这里要求随机变量两两无关，不同于此前要求独立。
+
+## 典型不等式
+
+此处列出几个和期望相关的典型不等式。
+
+（柯西-施瓦茨不等式）
+$$
+| \mathbf E(XY) | \le \sqrt{\mathbf E(X^2) \mathbf E(Y^2)}
+$$
+{: .proposition}
+
+考虑到$E$是一个正定的对称双线性型，这个不等式是显然的。
+{: .proof}
+
+（琴生不等式）对非零区间上的凸（Convex）函数$\varphi$，任何取值在该区间上的随机变量$X$满足：
+$$
+\varphi(\mathbf EX) \le \mathbf E (\varphi(X))
+$$
+{: .proposition}
+
+$X$为常函数的情况易证，不妨设$X$不是常函数。
+凸函数的性质保证：
+$$
+\forall c \in I, \exists \lambda \in \mathbb R, \forall x \in I, \quad \varphi(c) + \lambda(x-c) \le \varphi(x)
+$$
+设$c = \mathbf EX$，$x = X$，两边取期望，注意到$\mathbf E (X - \mathbf EX) = 0$即可得证。
+{: .proof}
+
+（马尔可夫不等式）设$X$为一**正**随机变量，那么对所有$t > 0$，有：
+$$
+\mathbf P (X \ge t) \le \frac{\mathbf E(X)}{t}
+$$
+若$\varphi$为一增函数，那么还有：
+$$
+\mathbf P (X \ge t) \le \frac{\mathbf E(\varphi(X))}{\varphi(t)}
+$$
+{: .proposition}
+
+有：
+$$
+\begin{aligned}
+    X &= X \mathbb{1}_{X < t} + X \mathbb{1}_{X \ge t} \\
+    & \ge X \mathbb{1}_{X \ge t} \\
+    & \ge t \mathbb{1}_{X \ge t}
+\end{aligned}
+$$
+两边同时取期望，注意到$\mathbb{1}_{X \ge t}$的期望等于$\mathbf P(X \ge t)$，即可得证。
+注意到$\mathbf P(X \ge t) = \mathbf P(\varphi(X) \ge \varphi(t))$，后一个不等式也可得证。
+{: .proof}
+
+（切比雪夫不等式）设$X$为一任意正随机变量，那么对所有$t > 0$，有
+$$
+\mathbf P ( | X - \mathbf E X | \ge t) \le \frac{\mathbf V(X)}{t^2}
+$$
+{: .proposition}
+
+取$X^\prime = |X - \mathbf E X|$代入马尔可夫不等式即可得证。
+这个不等式可以推广到任意实随机变量，只需要取$\varphi(X) = \max(X,0)$即可。
+{: .proof}
+
+## 生成函数
+
+设$X$为一自然数上分布的随机变量，那么：
+$$
+G_X(t) = \sum_{n = 0}^\infty \mathbf P(X = n) t^n
+$$
+称为这个随机变量的**生成函数**，也称**母函数**。
+{: .definition}
+
+注意到本章之中我们只研究有限概率空间，因此这个“级数”实际上只有有限项，从而总是良定义的多项式函数，不必关心其收敛问题。
+
+设$X$为一自然数上分布的随机变量，那么：
+$$
+G_X(t) = \mathbf E (t^X)
+$$
+{: .proposition}
+
+令$\varphi(x) = t^x$，那么
+$$
+G_X(t) = \sum_{n = 0}^\infty \mathbf P(X = n) t^n = \sum_{n = 0}^\infty \varphi(n) \mathbf P(X = n) = \mathbf E(t^X)
+$$
+{: .proof}
+
+设$X,Y$为两个自然数上分布的独立随机变量，那么：
+$$
+G_{X+Y}(t) = G_X(t) \cdot G_Y(t)
+$$
+{: .proposition}
+
+由于$X,Y$独立，它们的函数也独立，因此：
+$$
+G_{X+Y}(t) = E(t^X t^Y) = E(t^X) E(t^Y) = G_X(t) G_Y(t)
+$$
+{: .proof}
+
+两个自然数上分布的随机变量的分布相同，当且仅当其母函数相同。
+{: .proposition}
+
+不难注意到母函数是由分布唯一确定的。
+{: .proof}
+
+对自然数上分布的随机变量$X$，有：
+$$
+G_X^{(r)}(1) = \mathbf E [X(X-1) \cdots (X-r+1)]
+$$
+{: .proposition}
+
+简单计算可证。
+{: .proof}
+
+由最后一条定理，不难发现，对自然数上分布的随机变量$X$，有：
+$$
+\begin{aligned}
+    \mathbf E (X) &= G_X^\prime (1) \\
+    \mathbf V (X) &= G_X^{\prime \prime}(1) + G_X^\prime(1)(1 - G_X^\prime(1))
+\end{aligned}
+$$
+
+这就终结了我们关于有限概率空间的所有讨论，接下来我们将关注无限的概率空间下的问题。
