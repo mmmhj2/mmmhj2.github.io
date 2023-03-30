@@ -278,3 +278,100 @@ $$
 {: .theorem}
 
 这几个点都可以非常容易的在波德图或尼柯尔斯图中找出，因此可以利用这几个图判定系统的稳定性。
+
+## 稳定裕度
+
+前面介绍的闭环系统稳定性判定方法对判定抽象的、代数化的系统是非常有效的。
+然而，对于实际的系统，由于建模的误差、可能的时变参数（我们假设系统是时不变的）和非线性成分，严格地使用这些方法判定系统是否稳定是不现实的。
+因此，我们使用稳定性裕度的方法，进一步地判定系统具有稳定性的“余地”。
+
+### 裕度的定义
+
+我们定义：
+
+**幅值裕度**（或称增益裕度）表示输入的角频率使*开环传递函数*输出相角为$-\pi$时，*开环传递函数*的增益的相反数，即：
+$$
+MG = -G_{dB-BO}(\omega_\pi), \text{where} \; \varphi_{BO}(\omega_\pi) = -\pi
+$$
+**相角裕度**表示输入的角频率使*开环传递函数*输出增益为$0$时，*开环传递函数*相交加$\pi$，即：
+$$
+M\varphi = \pi + \varphi_{BO}(\omega_{C0}), \text{where} \; G_{dB-BO}(\omega_{C0}) = 0
+$$
+{: .definition}
+
+不难发现，根据简化的奈奎斯特判据，如果开环传递函数稳定，那么系统的幅值裕度大于零且相角裕度大于零时，闭环系统才稳定。
+
+对于大部分力学系统，其线性时不变模型的开环传递函数的幅值与相角裕度满足$MG \approx 10 - 12 \text{dB}$且$M\varphi \ge 45^\circ$时，实际系统才稳定。
+
+知道幅值裕度与相角裕度的定义之后，它们都可以从波德图等图像上非常容易地看出。
+
+### 二阶系统的相角裕度
+
+假设一个系统的传递函数为：
+$$
+H(p) = \frac{1}{1 + \frac{2\xi}{\omega_0}p + \frac{p^2}{\omega_0^2}}
+$$
+试求其相角裕度。
+
+首先必须注意到，我们本章中所有的稳定性判据都是针对*开环传递函数*而非整个系统的传递函数的。
+为此，我们必须首先求出系统的开环传递函数。
+有：
+$$
+H(p) = \frac{H_{BO}(p)}{1 + H_{BO}(p)}
+\iff
+H_{BO}(p) = \frac{H(p)}{1 - H(p)}
+$$
+从而：
+$$
+H_{BO}(p) = \frac{\frac{1}{1 + \frac{2\xi}{\omega_0}p + \frac{p^2}{\omega_0^2}}}{1 + \frac{1}{1 + \frac{2\xi}{\omega_0}p + \frac{p^2}{\omega_0^2}}}
+= \frac{\omega_0^2}{p(p + 2\xi \omega_0)}
+$$
+这是一个比较标准的二阶系统。
+其模长和辐角为：
+$$
+\left\{
+    \begin{aligned}
+        |H_{BO}(j\omega)| &= \frac{\omega_0^2}{\omega \sqrt{\omega^2 + 4 \xi^2 \omega_0^2}} \\
+        \varphi_{BO}(\omega) &= - \frac{\pi}{2} - \arctan \frac{\omega}{2 \xi \omega_0}
+    \end{aligned}
+\right.
+$$
+
+下面我们令模长等于1，即增益等于0，求出幅值裕度：
+$$
+\begin{aligned}
+    |H_{BO}(j\omega_{CO})| = 1 &\iff \frac{\omega_0^2}{\omega \sqrt{\omega_{CO}^2 + 4 \xi^2 \omega_0^2}} = 1 \\
+    &\iff \omega_{CO}^4 + 4 \xi^2 \omega_0^2 \omega_{CO}^2 - \omega_0^4 = 0
+\end{aligned}
+$$
+我们令$\Omega_{CO} = \omega_{CO}^2 > 0$，以简化计算。
+那么利用二次函数的求根公式，可得：
+$$
+\Omega_{CO} = \frac{-4\xi^2\omega_0^2 \pm 2 \omega_0^2 \sqrt{4 \xi^2 + 1}}{2}
+$$
+考虑到这个值大于零，从而
+$$
+\Omega_{CO} = \omega_0^2 ( \sqrt{4 \xi^4 + 1} - 2 \xi^2)
+$$
+因此有：
+$$
+\omega_{CO} = \omega_0 \sqrt{\sqrt{4\xi^4+1} - 2\xi^2}
+$$
+
+最后代入定义求其相角裕度：
+$$
+\begin{aligned}
+    M\varphi &= \pi + \varphi_{BO}(\omega_{CO}) \\
+    &= \pi - \frac{\pi}{2} - \arctan \frac{\omega_{CO}}{2\xi\omega_0} \\
+    &= \arctan \frac{2\xi\omega_0}{\omega_{CO}} \\
+    &= \arctan \frac{2\xi}{\sqrt{\sqrt{4\xi^2 + 1} - 2\xi^2}} \\
+    &= \arctan \frac{2}{\sqrt{\sqrt{4 + \frac{1}{\xi^4}} - 2}}
+\end{aligned}
+$$
+这个函数具有非常好的线性近似，实际上，当$\xi < 0.7$时，我们可以认为：
+$$
+M\varphi = 100 \xi
+$$
+
+因此，一个二阶系统的稳定性和其阻尼密切相关。
+下一章我们就会研究阻尼相关的问题。
