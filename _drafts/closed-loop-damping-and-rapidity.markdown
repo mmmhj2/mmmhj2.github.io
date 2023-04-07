@@ -50,3 +50,294 @@ $$
 {: .full}
 
 不难发现，等相位线总是从临界点出发，而等增益线总是围绕临界点。
+
+### 奈奎斯特图上的等增益与等相位线
+
+我们希望在**开环传递函数**的奈奎斯特图上画出闭环传递函数的等增益线与等相位线。
+我们设：$H\_{BO} = \sigma + j \omega = Z$。
+
+#### 等增益线
+
+已知：$H\_{BF} = \frac{Z}{1 + Z}$，令$\| H\_{BF} \| = m$可得：
+$$
+\begin{aligned}
+    [(\sigma + 1)^2 + \omega^2] m^2 - (\sigma^2 + \omega^2) &= 0 \\
+    (m^2-1)\sigma^2 + 2m^2\sigma + (m^2-1)\omega^2 + m^2 &= 0
+\end{aligned}
+$$
+
+设$m \neq 1$，可得：
+$$
+\begin{aligned}
+    \sigma^2 + \frac{2m^2}{m^2-1}\sigma + \omega^2 + \frac{m^2}{m^2-1} &= 0 \\
+    (\sigma + \frac{m^2}{m^2-1})^2 + \omega^2 &= \frac{m^2}{(m^2-1)^2}
+\end{aligned}
+$$
+这说明其为圆心在$(-\frac{m^2}{m^2-1}, 0)$，半径为$\frac{m^2}{\| m^2-1 \|}$的一个圆。
+
+若$m = 1$，那么有$2 \sigma + 1 = 0$，从而其为一根垂直的直线。
+
+#### 等相位线
+
+已知：
+$$
+\theta = \arg [\frac{Z}{1+Z}] = \arctan \frac{\omega}{\sigma} - \arctan\frac{\omega}{\sigma+1}
+$$
+从而有：
+$$
+\Theta = \tan \theta = \frac{\omega}{\sigma^2 + \sigma + \omega^2} 
+\iff
+(\sigma^2 + \sigma + \omega^2) \Theta = \omega
+$$
+
+设$\Theta \neq 0$并化简，可得：
+$$
+\left( \sigma + \frac{1}{2} \right)^2 + \left( \omega - \frac{1}{2\Theta} \right)^2 = \frac{1}{4} \frac{\Theta^2 + 1}{\Theta^2}
+$$
+从而其为圆心在$(-\frac{1}{2}, \frac{1}{2\Theta})$，半径为$\frac{1}{2} \sqrt{\frac{\Theta^2+1}{\Theta}}$的圆。
+
+不难注意到这些圆的圆心总在$m=1$这条等增益线上，且圆总是经过原点和临界点$(-1,0)$。
+
+若$\Theta = 0$，那么$\theta = -2\pi, -\pi, 0$。
+从而$\omega = 0$，与X轴重合。
+
+#### 综合
+
+综合上文的讨论，可得图像：
+
+![](/assets/system/nyquist-isogain-isophase.svg)
+{: .align-center}
+
+其中红色的为等相位线，蓝色的为等增益线。
+
+### 倒奈奎斯特图上的等增益与等相位线
+
+接下来我们研究*倒奈奎斯特图*，即$\frac{1}{H_{BO}}$的图像上的等增益与等相位线。
+在接下来的讨论中，我们很快就能发现选择这个特殊图像的好处。
+
+我们设：
+$$
+H_{BF} = \frac{H_{BO}}{1 + H_{BO}} = m \exp [j \theta]
+$$
+从而只需要固定$m$或$\theta$就可以画出这些曲线。
+
+现在，取倒数，可得：
+$$
+\frac{1}{H_{BF}} = \frac{1}{H_{BO}} + 1 = \frac{1}{H_{BO}} - (-1) = \frac{1}{m} \exp [- j \theta]
+$$
+
+若我们固定$m$，可发现等相位线的方程：
+$$
+\Gamma (\theta) = \frac{1}{H_{BO}} - (-1) = \frac{1}{m} \exp[-j\theta]
+$$
+从而这表明倒奈奎斯特图上的等增益线是圆心在$(-1,0)$处、半径为$\frac{1}{m}$的圆。
+
+同理，若固定$\theta$，不难发现等相位线是经过$(-1,0)$，与X轴成$-\theta$夹角的射线。
+
+### 尼柯尔斯图上的等增益与等相位线
+
+我们针对倒奈奎斯特图上的等增益与等相位线的研究给出了非常简单的几何形式，现在我们希望把这些结果转化到尼柯尔斯图上。
+最后可以得出本章开头所得出的图像。
+
+我们知道尼柯尔斯图是函数的增益与相角之间的关系，因此我们希望在固定闭环传递函数的增益$m$或辐角$\theta$的情况下求出开环传递函数的增益与相角之间满足的方程。
+
+#### 等增益线与等相位线的方程
+
+首先考虑等增益线的方程，在倒奈奎斯特图中，我们设$\frac{1}{H\_{BO}(j\omega)} = r \exp [j \lambda]$
+从而有：
+$$
+\begin{cases}
+    \sigma = r \cos \lambda \\
+    \omega = r \sin \lambda
+\end{cases}
+$$
+考虑等增益线的方程，注意闭环传递函数的增益是由$m$决定的，因此$m$为常量：
+$$
+\begin{aligned}
+    (\sigma + 1)^2 + \omega^2 &= \frac{1}{m^2} \\
+    (r \cos \lambda + 1)^2 + r^2 \sin^2 \lambda &= \frac{1}{m^2} \\
+    m^2 r^2 + 2m^2 \cos \lambda r + m^2 - 1 &= 0
+\end{aligned}
+$$
+
+这是一个关于$r$的二次方程，其判别式为：
+$$
+\Delta = 4m^4 \cos^2 \lambda - 4 m^2 (m^2 - 1)
+$$
+由于$r$是非负实数，我们要求判别式非负，求解可得：
+$$
+r = - \cos \lambda \pm \sqrt{\cos^2 \lambda - \frac{m^2 - 1}{m^2}}
+$$
+
+现在我们回到正常的开环传递函数上去，取：
+$$
+\begin{cases}
+    \rho = \frac{1}{r} \\
+    \varphi = - \lambda
+\end{cases}
+$$
+则有$H\_{BO} = \rho \exp [j\varphi]$。
+从而：
+$$
+\begin{aligned}
+    G_{dB-BO} (\varphi) &= 20 \lg \rho = - 20 \lg r \\
+    &= -20 \lg \left( - \cos \varphi \pm \sqrt{\cos^2 \varphi - \frac{m^2-1}{m^2}} \right) \\
+    &= 20 \lg \frac{m^2 \cos \varphi \pm m \sqrt{1-m^2\sin^2\varphi}}{1-m^2}
+\end{aligned}
+$$
+
+同理，对等相位线，我们的方程为：
+$$
+\tan \theta + r \cos \lambda \tan \theta + r \sin \lambda = 0
+\iff
+r = - \frac{\tan \theta}{\cos \lambda \tan \theta + \sin \lambda}
+$$
+再取：
+$$
+\begin{cases}
+    \rho = \frac{1}{r} \\
+    \varphi = - \lambda
+\end{cases}
+$$
+可得：
+$$
+ G_{dB-BO} (\varphi) = 20 \lg \left( \frac{\sin \varphi}{\tan \theta} - \cos \varphi \right)
+$$
+
+#### 绘制等增益线
+
+首先我们要求上文所述的二次函数的判别式非负，从而有：
+$$
+\begin{array}{c}
+    \Delta = 4m^4 \cos^2 \lambda - 4 m^2 (m^2 - 1) = 4m^2(1-m^2\sin^2\lambda) \ge 0 \\
+    \implies - \frac{1}{m} \le \sin \varphi \le \frac{1}{m} 
+\end{array}
+$$
+
+现在我们分三种情况进行讨论。
+
+---
+
+首先考虑$0 < m < 1$，即$G < 0$。此时由于$\frac{1}{m} > 1$，判别式恒非负，$\varphi$可任取。
+考虑复数的约定，我们把研究范围限制在$[-2\pi, 0]$上。
+
+由于要求$\rho > 0$，且不难发现存在$\varphi$使
+$$m^2 \cos \varphi - m \sqrt{1-m^2\sin^2\varphi} < 0$$
+因此我们要求正负号只取正，不取负。
+
+从而最终结果为：
+$$
+\begin{aligned}
+    &\forall m \in (0,1), \forall \varphi \in [-2\pi, 0], \\
+    &\quad G_{dB-BO}(\varphi) = 20 \lg \frac{m^2 \cos \varphi + m \sqrt{1 - m^2 \sin^2 \varphi}}{1-m^2}
+\end{aligned}
+$$
+
+---
+
+若$m = 1$，那么方程变为：
+$$r^2 + 2\cos\lambda r = 0 \iff r = -2 \cos \lambda \iff \rho = - \frac{1}{2\cos\varphi}$$
+
+注意到$\rho \ge 0$，可得$\cos \varphi < 0$，从而$\varphi \in (-\frac{3\pi}{2}, -\frac{\pi}{2})$。
+始终注意我们的研究范围限制在$[-2\pi, 0]$上。
+
+从而结果为：
+$$
+\begin{aligned}
+    & m = 1, \forall \varphi \in (-\frac{3\pi}{2}, -\frac{\pi}{2}), \\
+    &\quad G_{dB-BO}(\varphi) = 20 \lg \left( -\frac{1}{2\cos\varphi} \right)
+\end{aligned}
+$$
+
+---
+
+现在考虑$m > 1$，我们必须仔细考察判别式非负这一条件，即$- \frac{1}{m} \le \sin \varphi \le \frac{1}{m}$。
+
+我们设$\alpha \in [-2\pi, 0]$，满足：
+$$
+\begin{cases}
+    \sin \alpha = -\frac{1}{m} \\
+    \cos \alpha > 0
+\end{cases}
+$$
+不难发现这个角在第四象限。
+为满足判别式非负，$\varphi$ 只可能在四个区域上：
+$$
+\begin{aligned}
+    \varphi &\in [-2\pi, -2\pi - \alpha] &(\text{第四象限}) \\
+    &\cup [-\pi+\alpha, -\pi] &(\text{第三象限}) \\
+    &\cup [-\pi, -\pi-\alpha] &(\text{第二象限}) \\
+    &\cup [\alpha, 0] &(\text{第一象限})
+\end{aligned}
+$$
+
+当这个角在一四象限时，注意到：
+$$m^2\cos\varphi \pm m \sqrt{1 - m^2\sin^2\varphi} \ge 0$$，从而$\rho \le 0$，因此这个区域不可能产生可行的图像。
+
+相对地，当这个角在二三象限时，$\rho \ge 0$，因此我们可以将其限制在区间
+$$\varphi \in [-\pi + \alpha, -\pi - \alpha]$$上。
+
+从而有：
+$$
+\begin{align*}
+    &\forall m > 0, \forall \varphi \in \lbrack -\pi-\arcsin\frac{1}{m}, -\pi+\arcsin\frac{1}{m} \rbrack \\
+    &\quad G_{dB-BO}(\varphi) = 20 \log \frac{m^2 \cos \varphi \pm m \sqrt{1 - m^2\sin^2\varphi}}{1-m^2}
+\end{align*}
+$$
+
+---
+
+这三种情况分别对应于文首的图像上增益小于零，等于零和大于零的情况。
+
+#### 绘制等相位曲线
+
+首先我们考虑几个最特殊的情况，即$\theta = -2\pi, -\pi, 0$。
+此时方程退化为$r \sin \lambda = 0$，从而有$\sin \varphi = 0$，最终可得：
+$$\varphi = -2\pi, -\pi, 0$$
+这在尼科尔斯图上表现为三根垂直的直线，分别位于标识出的三个位置。
+
+接下来考虑方程：
+$$
+G_{dB-BO}(\varphi) = 20 \lg \left( \frac{\sin \varphi}{\tan \theta} - \cos \varphi \right)
+= 20 \lg \left( \cos \varphi (\frac{\tan\varphi}{\tan\theta} - 1) \right)
+$$
+
+我们需要研究$\theta$导致的函数的正负性变化，以确定这个曲线的值域。
+由于这个参数仅出现在$\tan$函数内部，其周期为$\pi$，因此我们只在$(-2\pi, -\pi)$上进行研究。
+
+我们继续进行分类讨论。
+
+---
+
+若$\theta \in (-2\pi, -\frac{3\pi}{2}]$，我们分别研究$\frac{\tan\varphi}{\tan\theta} - 1$和$\cos \varphi$的正负性。
+
+首先设$\frac{\tan\varphi}{\tan\theta} - 1 \ge 0$，即$\tan\varphi \ge \tan\theta$。
+根据$\tan(x)$的函数图像，可以看出：
+$$\varphi \in [\theta, -\frac{3\pi}{2}) \cup [\theta+\pi, -\frac{\pi}{2})$$
+
+接着考虑$\cos \varphi$的符号。
+这个函数非常简单，此处不再赘述。
+
+最后综合起来，可以发现$\rho \ge 0$，即函数有定义的区间为$[\theta, \theta+\pi]$。
+我们设$\theta^\prime = \theta + \pi$，即区间转换为$[\theta, -\pi]\cup[-\pi, \theta^\prime]$。
+由于整个函数的周期性，我们只需要一个区间即可。
+
+最后注意到整个函数的周期性，我们也完成了对区间$\theta \in (-\pi, -\frac{\pi}{2}]$上的讨论，注意此时需要把区间倒过来。
+从而我们可以得出结论：
+当$\theta \in (-2\pi, -\frac{3\pi}{2}]$时，定义区间为$[\theta, -\pi]$；
+当$\theta \in (-\pi, -\frac{\pi}{2}]$时，定义区间为$[-\pi, \theta]$
+
+---
+
+对$\theta \in (-\frac{3\pi}{2}, -pi]$和$(-\frac{\pi}{2}, 0]$的讨论完全同理。
+前者的定义区间为$[\theta, -\pi]$；
+后者的定义区间为$[-\pi, \theta]$。
+
+---
+
+因此，我们有：
+
+- 当$\theta \in (-2\pi, -\pi)$时，
+  $$ \forall \varphi \in (\theta, -\pi], \; G_{dB-BO}(\varphi) = 20 \lg \left( \frac{\sin \varphi}{\tan \theta} - \cos \varphi \right) $$
+- 当$\theta \in (-\pi, 0)$时，
+  $$ \forall \varphi \in (-\pi, \theta], \; G_{dB-BO}(\varphi) = 20 \lg \left( \frac{\sin \varphi}{\tan \theta} - \cos \varphi \right) $$
