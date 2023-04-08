@@ -534,7 +534,7 @@ $$
 
 设$A = (a\_1 | \cdots | a\_n)$，$(q\_1, \dots, q\_n)$为$\mathrm{Im} A$的一个标准正交基底，利用施密特正交化计算$q\_i$：
 $$
-\begin{array}{cccccc}
+\begin{array}{cclccl}
     q_1 &=& \frac{a_1}{v_1} & v_1 &=& \Vert a_1 \Vert \\
     \vdots &&& \vdots \\
     q_k &=& \frac{a_k - \sum_{i=1}^{k-1} (q_i | a_k) q_i }{v_k} & v_k &=& \Vert a_k - \sum_{i=1}^{k-1} (q_i | a_k) q_i \Vert
