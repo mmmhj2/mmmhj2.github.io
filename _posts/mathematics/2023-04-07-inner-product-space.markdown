@@ -559,3 +559,16 @@ $$
 \end{pmatrix}
 $$
 {: .proof}
+
+注意到
+$$
+(q_1 | \cdots | q_n)^\top \cdot (a_1 | \cdots | a_n) = 
+\begin{pmatrix}
+    v_1 & (q_1|a_2) & (q_1|a_3) & \cdots & (q_1|a_n) \\
+    0 & v_2 & (q_2|a_3) & \cdots & (q_2|a_n) \\
+    0 & 0 & v_3 & \cdots & (q_3|a_n) \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & 0 & \cdots & v_n
+\end{pmatrix}
+$$
+我们有$v\_k = (q\_k | a\_k)$。
