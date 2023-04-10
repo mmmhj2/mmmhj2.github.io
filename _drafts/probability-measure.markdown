@@ -54,6 +54,8 @@ $$
 注意到若$(A\_i)$是一个σ-代数，那么$(\cap A\_i)$也是一个σ-代数，因此所有包括$\mathcal C$的σ-代数的交就是$\sigma(\mathcal C)$。
 {: .proof}
 
+类似极限的定义，如果一列集合的上极限和下极限相等，那么称其收敛至这个极限，记为$\lim_{n \to \infty} A\_n$。
+
 ### 离散随机变量
 
 设$(\Omega, \mathcal A)$为一可测空间，$E$为一集合，那么称映射$X: \Omega \to E$为$E$上的**离散随机变量**，若：
@@ -85,7 +87,7 @@ $$
 $$
 \mathbf{P}(\biguplus_{n \in \mathbb N} A_n) = \sum_{n \in \mathbb{N}} \mathbf{P}(A_n)
 $$
-这一性质称为*可数可加性*。
+这一性质称为*可数可加性*或*σ-可加性*。
 {: .definition}
 
 从定义上讲，这个测度实际上就是有限个集合对可数情况的推广。
@@ -145,7 +147,7 @@ $$
 另一个命题取补集即可。
 {: .proof}
 
-设$A \in \mathcal A$为一时间，称其为可忽略的，或零测的，若$\mathbf{P}(A) = 0$；
+设$A \in \mathcal A$为一事件，称其为可忽略的，或零测的，若$\mathbf{P}(A) = 0$；
 称其为几乎必然的，若$\mathbf{P}(A) = 1$。
 {: .definition}
 
@@ -186,13 +188,115 @@ $$
 这个命题看上去是对性质的简单推广，实际上却使用较为复杂的技巧来用有穷的情况推知无穷的情况。
 在数学上，一切涉及无穷的概念都必须得到严格的讨论，因为其结果往往是反直觉的。
 
-### 博雷尔-坎泰利法则
+## 条件概率
+
+只要明确了可数情况下条件概率的定义，其性质实际上和有限情况下相差无几。
+
+设$B \in \mathcal A$为一非零测事件，映射：
+$$
+\begin{array}{cccc}
+    \mathbf{P}_B: & \mathcal A & \to & \mathbb R_+ \\
+    & A & \mapsto & \frac{\mathbf{P}(A \cap B)}{\mathbf{P}(B)}
+\end{array}
+$$
+构成$\Omega$上的一个概率测度，称为**条件概率测度**。
+记：
+$$
+\mathbf{P} (A|B) = \mathbf{P}_B (A) = \frac{\mathbf{P}(A \cap B)}{\mathbf{P}(B)}
+$$
+称为B发生条件下A的概率。
+{: .definition}
+
+设$(A\_n)$为一列不相容事件，那么$(A\_n \cap B)$也是不相容的，从而：
+$$
+\begin{aligned}
+    \mathbf{P}_B(\biguplus_{n \in \mathbb N} A_n) \times \mathbf{P}(B)
+    &= \mathbf{P} ( \left( \biguplus_{n \in \mathbb N} A_n \right) \cap B ) \\
+    &= \mathbf{P} \left( \biguplus_{n \in \mathbb N} (A_n \cap B) \right) \\
+    &= \sum_{n \in \mathbb N} \mathbf{P}(A_n \cap B) \\
+    &= \mathbf{P}(B) \sum_{n \in \mathbb N} \mathbf{P}(A_n | B)
+\end{aligned}
+$$
+从而可列可加性得证。其他性质显然。
+{: .proof}
+
+$\Omega$中的**完备事件群**表示一列*至多可数*的非零测事件$(B\_i)$，满足不相容且并集为$\Omega$
+{: .definition}
+
+（复合概率公式）设$(B\_i)$为一*有限*列事件且其积事件非零测，那么：
+$$
+\mathbf{P}(B_1 \cdots B_n) = \mathbf{P}(B_1) \mathbf{P}(B_2 | B_1) \cdots \mathbf{P}(B_n | B_1 \cap \cdots \cap B_{n-1})
+$$
+{: .proposition}
+
+注意到这个命题要求有限事件，因此证明和有限情况完全一致。
+
+（全概率公式）设$(B\_i)$为一完备事件群，那么：
+$$
+\forall A \in \mathcal A, \; \mathbf{P}(A) = \sum_{i \in I} \mathbf{P}(B_i) \mathbf{P}(A | B_i)
+$$
+{: .proposition}
+
+将$AB$拆分为$\uplus AB\_i$然后利用可加性即得证。
+{: .proof}
+
+（贝叶斯公式）设$A$为一非零测事件，$(B\_i)\_{i \in I}$为一完备事件群，那么：
+$$
+\mathbf{P}(B_i | A) = \frac{\mathbf{P}(B_i) \mathbf{P}(A|B_i)}{\sum_{j \in I} \mathbf{P}(B_j) \mathbf{P}(A|B_j)}
+$$
+{: .proposition}
+
+## 独立性
+
+我们首先回忆有限情况下独立的定义：
+
+1. 称一组事件$A\_1, \dots, A\_n \in \mathcal A$是*独立*的，若
+$$
+\begin{aligned}
+    &\forall I \in \{ 1, \dots, n\}, \\
+    &\quad \mathbf P(\bigcap_{i \in I} A_i) = \prod_{i \in I} \mathcal P(A_i)
+\end{aligned}
+$$
+2. 称一组随机变量$X\_1, \dots, X\_n$是*独立*的，若
+$$
+\begin{aligned}
+    &\forall A_1 \in X_1(\Omega), \dots, \forall A_n \in X_n(\Omega), \\
+    & \quad \mathbf{P}(X_1 \in A_1, \dots, X_n \in A_n) = \prod_{i=1}^n \mathbf{P}(X_i \in A_i)
+\end{aligned}
+$$
+3. 称一组$\mathcal A$中的σ-代数$\mathcal A_1, \dots, \mathcal A_n$是*独立*的，若
+$$
+\begin{aligned}
+    &\forall (A_1, \dots, A_n) \in \mathcal A_1 \times \cdots \times \mathcal A_n, \\
+    &\quad \mathbf{P}(A_1 \cdots A_n) = \mathbf{P}(A_1) \cdots \mathbf{P}(A_n)
+\end{aligned}
+$$
+{: .definition}
+
+还有两个常用的命题：
+
+1. 一组事件独立，等价于其指示变量独立，等价于其指示变量产生的σ-代数独立。
+2. 一组随机变量独立$X\_1, \dots, X\_n$，当且仅当：
+$$
+\begin{aligned}
+    & \forall (x_1, \dots, x_n) \in X_1(\Omega) \times \cdots \times X_n(\Omega), \\
+    & \quad \mathbf{P}(X_1 = x_1, \dots, X_n = x_n) = \prod_{i=1}^n \mathbf{P}(X_i = x_i)
+\end{aligned}
+$$
+{: .proposition}
+
+我们在此处不对这些命题加以证明。
+
+接下来我们给出无穷个事件的独立性的定义。
 
 称一列事件$(A\_n)$为**独立的**，若对所有的$k \in \mathbb N$，$A\_1, \dots, A\_k$是独立的，即：
 $$
 \forall k, \quad \mathbf{P} (A_1 \cap \cdots \cap A_k) = \mathbf P (A_1) \times \cdots \times \mathbf P (A_k)  
 $$
+同理，一列随机变量$(X\_n)$是**独立的**，若对所有自然数$k$，$X\_1, \dots, X\_k$是独立的。
 {: .definition}
+
+### 博雷尔-坎泰利法则
 
 （博雷尔-坎泰利零一律）若一列事件$(A\_n)$为独立的，那么：
 $$
@@ -240,6 +344,7 @@ $$
 $$
 
 这个引理中，我们不要求这列事件是独立的。
+{: .remark}
 
 #### 第二引理
 
