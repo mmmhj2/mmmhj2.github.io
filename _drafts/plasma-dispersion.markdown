@@ -1,6 +1,6 @@
 ---
 title: "等离子体中的色散"
-categories: "波动物理"
+categories: ["波动物理", "电磁学"]
 ---
 
 本文中，我们将借助电磁波在等离子体中的传播理解波的色散。
@@ -168,13 +168,14 @@ $$
 #### 隐失波
 
 当波的角频率小于$\omega\_p$时，电磁波不能在等离子体中传播，而是指数衰减至零且不传播任何能量，因此称为隐失波。
-因此，等离子体可视为一个高通滤波器，其截止频率与本征频率$\omega\_p$相同。
+因此，等离子体可视为一个*高通*滤波器，其截止频率与本征频率$\omega\_p$相同。
 {: .proposition}
 
 注意到$k^2 = \frac{\omega^2 - \omega_p^2}{c^2}$，不难得出：
 $$
 k = j \sqrt{\frac{\omega_p^2 - \omega^2}{c^2}} = j \frac{\omega}{c} \sqrt{\frac{\omega_p^2}{\omega^2}-1}
 $$
+
 代入可得：
 $$
 \begin{aligned}
@@ -201,3 +202,176 @@ $$
 $$
 可知玻印廷矢量为零，波不传递能量。
 因此所有能量要么被吸收了，要么被反射了。
+
+#### 非隐失波的结构关系
+
+若$\omega > \omega_p$，那么这个波不再是隐失波，而能够在等离子体中正常传播。
+但是，等离子体仍是色散的介质，因为$\omega$和$k$不是线性相关的。 \
+此时，局部电中性的等离子体中的电场和磁场分别满足：
+$$\vec E(M,t) \cdot \vec u = \vec B(M,t) \cdot \vec u = 0$$
+且电场和磁场之间满足：
+$$\vec B (M,t) = \frac{\vec k \times \vec E(M,t)}{\omega} = \frac{\vec u \times \vec E(m,t)}{v_\varphi}$$。
+{: .proposition}
+
+这些命题容易由计算验证。
+
+## 波包在非吸收色散介质中的传播
+
+本节中，我们将在色散但非吸收性的介质中研究一个波包（或波列）的传播。
+
+### 两个频率相近的同振幅谐波
+
+现在考虑两个频率相近的谐波的叠加：
+$$\omega_1 = \omega_0 - \frac{\delta \omega}{2}, \, \omega_2 = \omega_0 + \frac{\delta \omega}{2}$$
+那么新的波的振幅为：
+$$
+\begin{aligned}
+    u(x,t) &= u_m \cos [\omega_1 t - k_{(\omega_1)}x] + u_m \cos [\omega_2 t - k_{(\omega_2)}x] \\
+    &= 2 u_m \big( 
+    \cos[(\omega_0 - \frac{\delta\omega}{2})t - (k - \frac{\mathrm d k}{\mathrm d \omega} \frac{\delta \omega}{2})x] \\ 
+    &+ 
+    \cos[(\omega_0 + \frac{\delta\omega}{2})t - (k + \frac{\mathrm d k}{\mathrm d \omega} \frac{\delta \omega}{2})x] \big) \\
+    &= 2 u_m \cos (\omega_0 t - k_0 x) \cos (\frac{\delta \omega}{2}t - \frac{\mathrm d k}{\mathrm d \omega} \frac{\delta \omega}{2}x) \\
+    &= 2 u_m \cos (\omega_0 t - k_0 x) \cos (\frac{\delta \omega}{2}(t - \frac{\mathrm d k}{\mathrm d \omega}x))
+\end{aligned}
+$$
+
+不难发现，这个振幅具有两个不同的部分，一个部分具有非常显著的行波的特点，角频率为$\omega\_0$，波矢为$k\_0$，而另一个部分的频率非常的低，波矢为$\frac{\mathrm d k}{\mathrm d \omega}$。
+实际上，正如调制的信号一样，后一个频率很低的波构成了这个波的包络，即波包。
+
+波包的速度，即$\frac{\mathrm d \omega}{\mathrm d k}$，称为这个波的**群速度**。
+
+### 更一般的波包
+
+波包，或称波列，为一系列无穷多同向传播的平面谐波的叠加，这些平面谐波中主要的角频率非常接近$\omega\_0$：
+$$u(x,t) = \Re [\underline{u}(x,t)]$$，其中
+$$
+\begin{aligned}
+    \underline{u}(x,t) &= \int_0^\infty \underline A(\omega) \exp [j(\omega t - k(\omega) x)] \mathrm d \omega \\
+    & \approx \int_{\omega_0 - \frac{\delta\omega}{2}}^{\omega_0 + \frac{\delta\omega}{2}}\underline A(\omega) \exp [j(\omega t - k(\omega) x)] \mathrm d \omega
+\end{aligned}
+$$
+{: .definition}
+
+#### 时域有限性
+
+我们不加证明地给出以下性质：
+
+根据傅里叶变换的性质，波包在时域上的长度$\tau$和在频域上的长度$\delta \omega$满足：
+$$
+\delta \omega \cdot \tau \approx 1
+$$
+{: .proposition}
+
+#### 包络存在性
+
+波包可由一个平面谐波乘一个包络$\underline{E}$表述：
+$$
+\underline{u}(x,t) \approx \exp [j (\omega_0 t - k_{(\omega_0)}x)] \underline{E}(x,t)
+$$
+{: .proposition}
+
+$$
+\begin{aligned}
+    u(x,t) 
+    &= \int_{\omega_0 - \frac{\delta \omega}{2}}^{\omega_0 + \frac{\delta \omega}{2}} \underline{A}(\omega) \exp [j(\omega t - k x)] \mathrm d \omega \\
+    &= \int_{\omega_0 - \frac{\delta \omega}{2}}^{\omega_0 + \frac{\delta \omega}{2}} \underline{A}(\omega) \exp [j(\omega_0 t - k_0 x)] \exp [j((\omega - \omega_0)t - (k - k_0)x)] \mathrm d \omega \\
+    &= \exp [j(\omega_0 t - k_0 x)] \int_{\omega_0 - \frac{\delta \omega}{2}}^{\omega_0 + \frac{\delta \omega}{2}} \underline{A}(\omega) \exp [j((\omega - \omega_0)t - (k - k_0)x)] \mathrm d \omega \\
+    &= \exp [j(\omega_0 t - k_0 x)] \int_{\omega_0 - \frac{\delta \omega}{2}}^{\omega_0 + \frac{\delta \omega}{2}} \underline{A}(\omega) \exp [j(\omega - \omega_0)(t - \left. \frac{\mathrm d k}{\mathrm d \omega} \right|_{\omega = \omega_0} x)] \mathrm d \omega \\
+    &= \exp [j(\omega_0 t - k_0 x)] \underline{E}(x,t)
+\end{aligned}
+$$
+{: .proof}
+
+### 波包的时变
+
+波包由两个参数描述：\
+相速度$v\_\varphi$：
+$$
+v_\varphi = \frac{\omega_0}{k(\omega_0)}
+$$
+和群速度$v\_g$：
+$$
+v_g = \left( \frac{\mathrm d \omega}{\mathrm d k} \right)
+$$
+{: .proposition}
+
+若介质的群速度与频率无关，那么称这个介质是弱色散的，波包在其中传播时不会变形；
+反之，则称这个介质是强色散的。
+
+波包的相速度可以超过光速，但是群速度则不能。
+
+## 任意角度入射电磁波的反射与透射
+
+我们设垂直屏幕向内为X轴，界面的方向为Y轴，建立右手直角坐标系。
+设入射电磁波在OYZ平面内，且其*在平面内偏振*，入射波所在的介质位于Z轴负半轴，其折射率为$n\_1$，透射波的为$n\_2$。
+设入射角为$\theta\_1$，反射角为$\theta\_1^\prime$，透射角为$\theta\_2$。
+
+我们设：
+$$
+\begin{aligned}
+    \vec{\underline{E_i}} &= E_0 \exp [j (\omega t - \vec k_i \cdot \vec{OM})] \vec v_i \\
+    \vec{\underline{E_r}} &= \underline{r} E_0 \exp [j (\omega t - \vec k_r \cdot \vec{OM})] \vec v_r \\
+    \vec{\underline{E_t}} &= \underline{t} E_0 \exp [j (\omega t - \vec k_t \cdot \vec{OM})] \vec v_t
+\end{aligned}
+$$
+根据我们的假设，$\vec v\_i, \vec v\_r, \vec v\_t$都在OYZ平面内。
+
+根据几何关系，不难发现
+$$
+\vec k_i = \cos \theta \vec u_z + \sin \theta \vec u_y
+$$
+然后再根据磁场和电场的耦合关系，即结构关系，可得：
+$$
+\vec{\underline{B_i}} = \frac{n_1}{c} E_0 \exp [j(\omega t - \vec k_i \cdot \vec{OM})] \vec u_x
+$$
+同理，可以计算其他两个磁场，可得：
+$$
+\begin{aligned}
+    \vec{\underline{B_i}} &= \frac{n_1}{c} E_0 \exp [j (\omega t - \vec k_i \cdot \vec{OM})] \vec u_x \\
+    \vec{\underline{B_r}} &= - \underline{r} \frac{n_1}{c} E_0 \exp [j (\omega t - \vec k_r \cdot \vec{OM})] \vec u_x \\
+    \vec{\underline{B_t}} &= \underline{t} \frac{n_2}{c} E_0 \exp [j (\omega t - \vec k_t \cdot \vec{OM})] \vec u_x
+\end{aligned}
+$$
+
+根据电场在界面法向连续的特点，我们有：
+$$\begin{multline}
+    E_0 \exp[j(\omega t - \vec k_i \cdot \vec{OM})] \cos \theta_1 \\
+    + \underline{r} E_0 \exp[j(\omega t - \vec k_r \cdot \vec{OM})] \cos \theta_1^\prime \\
+    = \underline{t} E_0 \exp[j(\omega t - \vec k_t \cdot \vec{OM})] \cos \theta_2
+\end{multline}$$
+由于$\vec{OM}$可取界面上任何一点，我们可以得出：
+$$\vec k_i \cdot \vec{OM} = \vec k_r \cdot \vec{OM} = \vec k_t \cdot \vec{OM}$$
+从而有：
+$$
+\begin{aligned}
+    k_i \sin \theta_1 = k_r \sin \theta_1^\prime &\iff \theta_1 = \theta_1^\prime \\
+    k_i \sin \theta_1 = k_t \sin \theta_2 &\iff n_1 \sin \theta_1 = n_2 \sin \theta_2
+\end{aligned}
+$$
+严格地讲，入射、反射和透射波的频率相等也是由这里推出的，但我们直接假设它们相等，从而略去了这里的证明。
+最后，我们有：
+$$\cos \theta_1 + \underline{r} \cos \theta_1^\prime = \underline{t} \cos \theta_2$$
+
+同理，应用磁场连续的特点，我们有：
+$$n_1(1-\underline{r}) = n_2 \underline{t}$$
+
+代入，即可得：
+$$\underline{r} = \frac{n_1 \cos\theta_2 - n_2 \cos\theta_1}{n_2\cos\theta_1 + n_1 \cos \theta_2}$$
+这个关系称为*菲涅尔公式*。
+
+如果电场不是在平面内偏振，而是沿X轴偏振，那么反射系数有所不同。
+
+### 布儒斯特角
+
+我们考虑反射系数等于零的特殊情况：
+$$
+\begin{aligned}
+    r = 0 \iff n_1 \cos \theta_2 &= n_2 \cos \theta_1 \\
+    \theta_1 &= \arccos [\frac{n_2}{n_1} \cos \theta_2] \le \frac{\pi}{2}
+\end{aligned}
+$$
+若入射角恰好等于此角，那么不会出现反射光，这个角称为布儒斯特角。
+
+如果入射光不是沿平面偏振的，那么反射光就不再是零。
+相对地，此时入射光沿平面偏振的分量的反射光为零，因此反射光一定是垂直于入射面方向偏振的，所以这个角也称为起偏振角。
