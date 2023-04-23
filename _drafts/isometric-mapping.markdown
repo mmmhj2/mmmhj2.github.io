@@ -228,7 +228,7 @@ $\mathcal{SO}(E)$与$\mathcal{SO}\_n(R)$同构；$\mathcal O^-(E)$与$\mathcal O
 从而：
 $$
 \begin{array}{ccccccc}
-    MX &=& \frac{1}{2 } (MZ + M \overline Z) &=& \frac{1}{2 }(\lambda Z + \overline{\lambda Z}) &=& aX - bY
+    MX &=& \frac{1}{2 } (MZ + M \overline Z) &=& \frac{1}{2 }(\lambda Z + \overline{\lambda Z}) &=& aX - bY \\
     MY &=& \frac{1}{2i} (MZ - M \overline Z) &=& \frac{1}{2i}(\lambda Z - \overline{\lambda Z}) &=& bX + aY
 \end{array}
 $$
