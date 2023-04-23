@@ -216,7 +216,7 @@ $$
     &= \mathbf E (\tilde X^2) + 2 \mathbf E(\tilde X \mathbf EX)  + \mathbf E(\mathbf E(X)^2) \\
     &= \mathbf E (\tilde X^2) + 2 \mathbf EX E\tilde X  + \mathbf E(\mathbf E(X)^2) \\
     &= \mathbf E (\tilde X^2) + \mathbf E(X)^2 \\
-    &= \mathbf V(X) + E(X)^2
+    &= \mathbf V(X) + \mathbf E(X)^2
 \end{aligned}
 $$
 这样我们使用线性映射重新证明了用期望计算方差的公式。
@@ -358,6 +358,47 @@ $$
 $$
 我们要求这个概率小于$10^{-4}$，代入即可得$n > 10^6$，从而$n$的最小值为$1000001$。
 {: .exampl}
+
+最后补充一个和切比雪夫不等式密切相关的结论。
+
+（单边切比雪夫不等式）设$X$为一实随机变量，对任意正实数$a > 0$，有：
+$$
+\mathbf{P}(X - \mathbf{E}X \ge a) \le \frac{\mathbf{V}(X)}{\mathbf{V}(X) + a^2}
+$$
+{: .proposition}
+
+设$Y = X - \mathbf{E}X - a$，显然其期望为$-a$，而其方差与$X$相同。
+欲证：
+$$
+\mathbf{P}(Y \ge 0) \le \frac{\mathbf{V}(Y)}{\mathbf{V}(Y) + (\mathbf E Y)^2} = \frac{\mathbf{E}(Y^2) - (\mathbf{E}(Y))^2}{\mathbf{E}(Y^2)}
+$$
+移项可得：
+$$
+(\mathbf E Y)^2 \le \mathbf{E}(Y^2) (1 - \mathbf{P}(Y \ge 0))
+= \mathbf{E}(Y^2) \mathbf{P}(Y < 0)
+= \mathbf{E}(Y^2) \mathbf{E}(\mathbb 1_{Y < 0})
+$$
+根据柯西-施瓦茨不等式，有：
+$$
+(\mathbf E (Y \mathbb 1_{Y < 0}))^2 \le \mathbf{E}(Y^2) \mathbf{E}({\mathbb 1_{Y < 0}}^2)
+= \mathbf{E}(Y^2) \mathbf{E}(\mathbb{1}_{Y < 0})
+$$
+据此进行放缩，我们要求：
+$$
+(\mathbf E Y)^2 \le (\mathbf E (Y \mathbb 1_{Y < 0}))^2
+$$
+而我们有：
+$$
+Y \mathbf{1}_{Y < 0} = Y - Y \mathbf{1}_{Y \ge 0} \le Y
+$$
+从而：
+$$
+\mathbf{E}(Y \mathbb 1_{Y < 0}) \le \mathbf E Y = -a < 0
+$$
+从而两边平方，注意反转不等号，即可得出原式。
+{: .proof}
+
+
 
 ## 生成函数
 

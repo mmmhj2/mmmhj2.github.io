@@ -417,7 +417,7 @@ $$
 P^\top P = (a_{i,j}) = C_i^\top C_j = (C_i | C_j)
 $$
 其中$C\_i$表示矩阵$P$的第$i$列，也就是$\mathcal B^\prime$的第$i$个向量在$\mathcal B$下的坐标。
-那么$a\_{i,j} = (e\_i^\prime | e\_j^prime) = \delta_{i,j}$当且仅当$\mathcal B^\prime$标准正交，从而若标准正交，则转置的矩阵与原矩阵的积为单位阵，从而互为逆。
+那么$a\_{i,j} = (e\_i^\prime | e\_j^\prime) = \delta_{i,j}$当且仅当$\mathcal B^\prime$标准正交，从而若标准正交，则转置的矩阵与原矩阵的积为单位阵，从而互为逆。
 {: .proof}
 
 ## 子空间的距离
@@ -430,7 +430,7 @@ $$
 
 设$F$为$E$中一个子空间，满足$F \oplus F^\perp = E$，那么从$u$到该子空间$F$的距离在$v = p\_F(u)$处唯一地取得：
 $$
-\exists ! v = p_F(u), \; \mathrm{d}(u,v) = \Vert u - v \Vert
+\exists ! v = p_F(u), \; \mathrm{d}(u,F) = \mathrm{d}(u,v) = \Vert u - v \Vert
 $$
 {: .proposition}
 
@@ -464,6 +464,7 @@ $$
     \end{aligned}
    \right. 
    $$
+   得出投影算子之后再求距离。
 4. 除此之外，我们不难发现$\mathrm{d}(x, F) = \Vert p_{F^\perp}(x) \Vert$，从而我们可以直接在其正交补空间中求解其距离。
 
 利用这一性质，我们可以计算线性空间中的最小值问题。
