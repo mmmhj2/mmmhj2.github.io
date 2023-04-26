@@ -238,3 +238,106 @@ $$
 
 复数域上的线性映射可以有任意维的不变子空间，因为复数矩阵总是可以上三角化。
 {: .remark}
+
+### 三维空间中的等距变换
+
+本节中，我们将对三维空间中的等距变换或正交矩阵进行研究。
+
+设$E$为一三维欧氏空间，那么对任何一个等距变换，总存在一组标准正交基$\mathcal B = (e\_1, e\_2, e\_3)$，在这组基底下其总是可以写为两者之一：
+$$
+\begin{pmatrix}
+    \cos \theta & - \sin \theta & 0 \\
+    \sin \theta &   \cos \theta & 0 \\
+    0 & 0 & 1
+\end{pmatrix}
+\text{或}
+\begin{pmatrix}
+    \cos \theta & - \sin \theta & 0 \\
+    \sin \theta &   \cos \theta & 0 \\
+    0 & 0 & -1
+\end{pmatrix}
+$$
+{: .proposition}
+
+这个命题是上文中有限维空间中的映射的一种特殊情况。
+
+#### 旋转矩阵及其性质
+
+若在某组标准正交基底$\mathcal B = (e\_1, e\_2, e\_3)$下，一个等距变换可以写为：
+$$
+\begin{pmatrix}
+    \cos \theta & - \sin \theta & 0 \\
+    \sin \theta &   \cos \theta & 0 \\
+    0 & 0 & 1
+\end{pmatrix}
+$$
+那么这个变换记为$\mathrm{Rot}\_{e\_3, \theta}$，表示以向量$e\_3$为轴旋转$\theta$角。
+这个变换总是右手的，因此属于特殊正交群$SO\_3(\mathbb R)$。
+{: .definition}
+
+向量$u$张成的空间及其正交补空间$u^\perp$是变换$\mathrm{Rot}\_{u,\theta}$的不变子空间。
+{: .proposition}
+
+1. $\forall \theta, \theta^\prime$，$$\mathrm{Rot}_{u, \theta} = \mathrm{Rot}_{u, \theta^\prime} \iff \theta = \theta^\prime \pmod{2\pi}$$
+2. $\forall \theta, \theta^\prime$，$$\mathrm{Rot}_{u, \theta} \circ \mathrm{Rot}_{u, \theta^\prime} = \mathrm{Rot}_{u, \theta + \theta^\prime} = \mathrm{Rot}_{u, \theta^\prime} \circ \mathrm{Rot}_{u, \theta}$$
+3. $$\mathrm{Rot}_{u, \theta}^{-1} = \mathrm{Rot}_{u, -\theta}$$
+4. 设$D = \mathrm{Span}(u)$，其中$u$为单位向量，那么$$\forall x \in D^\perp, \, f(x) = \cos \theta x + \sin \theta u \times x$$
+5. 记$p, q$分别为向$D$及其正交补空间的正交投影，那么
+$$
+\begin{aligned}
+    f(x) &= f(p(x) + q(x)) \\
+    &= f(p(x)) + f(q(x)) \\
+    &= p(x) + \cos \theta q(x) + \sin \theta u \times q(x) \\
+    &= \cos \theta x + (1 - \cos \theta) (x|u) u + \sin \theta u \times x
+\end{aligned}
+$$
+{: .proposition}
+
+三维空间中的右手正交变换（即$SO\_3(\mathrm R)$的元素）至少有一个不变的单位向量。
+{: .proposition}
+
+这种矩阵总是可以对角化为：
+$$
+\begin{pmatrix}
+    R(\theta) & 0 \\
+    0 & 1
+\end{pmatrix}
+$$
+从而一定有一个一维的不变子空间。
+{: .proof}
+
+#### 三维空间等距变换的分类
+
+我们根据等距变换的一个特殊特征子空间的维数，即其几何重数，进行分类：
+
+设$f \in \mathcal O(E)$，$F = \ker (f - \mathrm{Id}\_E)$，那么：\
+若$\dim F = 3$，那么$f = \mathrm{Id}\_E$，$f$是右手的； \
+若$\dim F = 2$，那么$f$是关于$F$平面的反射，$f$是左手的； \
+若$\dim F = 1$，那么$f$是绕直线$F$的旋转，$f$是右手的； \
+若$\dim F = 0$，那么$f$是关于平面的反射和绕该平面的法向量的旋转的复合，且这个复合是可交换的，$f$是左手的。
+{: .theorem}
+
+我们只证明最后一种情况。
+首先，若$\dim F = 0$，那么这个变换一定是左手的，因为右手的变换一定存在不变一维的不变子空间。
+根据行列式的运算法则，不难发现$\det (-f) = - \det f = 1$，因此$-f$是右手的，从而存在单位向量$x$满足$-f(x) = x$。
+从而$-1$是$f$的一个特征值。
+现在设$P = x^\perp$，$\sigma$为关于平面$P$的反射，那么$\sigma \circ f \in SO$，且$\sigma \circ f(x) = x$。
+从而，根据这一定理的第一和第三种情况，要么有$\sigma \circ f = \mathrm{Id}$，要么$\sigma \circ f$是一个旋转。
+然而，若$\sigma \circ f = \mathrm{Id}$，那么两边同时复合$\sigma^{-1} = \sigma$，可得$f = \sigma$，矛盾。
+因此$\sigma \circ f = r$，其中$r$为一个旋转。
+从而$f = \sigma \circ r$。 \
+接下来证明其交换性，设旋转的转轴直线为$D$，若$x \in D$，那么
+$$(\sigma \circ r)(x) = \sigma (x) = -x = r(-x) = (r \circ \sigma)(x)$$
+若$x \in D^\perp$，那么
+$$(\sigma \circ r)(x) = r(x) = (r \circ \sigma)(x)$$
+从而该复合是可交换的。
+{: .proof}
+
+我们可以使用以下方法确定一个等距映射的类型：
+
+1. 首先验证这个映射的矩阵是正交阵。
+2. 求$1$的特征子空间，确定其维数。
+   1. 若为一维，那么就是旋转，且转轴即为此特征子空间，此时需要确定其转角。
+        - 由于矩阵的迹是相似不变量，因此有$\mathrm{Tr}(M) = 1 + 2\cos \theta$；
+        - 选择转轴上的一个单位向量$v$，然后选择与其垂直的任意向量$u$，求解$u \times f(u) = \lambda v$，$\theta$的符号与$\lambda$相同。
+   2. 若为二维，那么就是反射，反射平面即为特征子空间。

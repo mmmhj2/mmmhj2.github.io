@@ -90,7 +90,7 @@ $$E = h \nu = \hbar \omega = pc \iff p = \frac{h}{\lambda} = \hbar k$$
 
 并非只有光子才能产生干涉。
 1961年德国科学家克劳斯·约恩松使用电子成功进行了双缝干涉实验。
-在1992年、1999年和2011年，科学家们成功地使用冰冻原子、富勒烯甚至[蛋白质](https://doi.org/10.1038/ncomms1263)这样的大分子成功观察到了干涉现象。
+在1992年、1999年和2011年，科学家们成功地使用冰冻原子、富勒烯甚至[蛋白质](https://doi.org/10.1038/ncomms1263)这样的大分子观察到了干涉现象。
 
 #### 德布罗意波
 
@@ -104,3 +104,11 @@ $$E = h \nu = \hbar \omega = pc \iff p = \frac{h}{\lambda} = \hbar k$$
 一个沿$\vec e\_x$传播的和自由量子相关的波可以写为：
 $$\underline{\psi} = \underline{\psi_0} \exp [i(\omega t - k x)] = \underline{\psi_0} \exp [\frac{i}{\hbar}(Et-px)]$$
 {: .proposition}
+
+德布罗意波满足以下方程：
+$$i \hbar \frac{\partial \underline{\psi}}{\partial t} = \frac{\hbar^2}{2m} \Delta \underline{\psi} + V(\vec r, t) \underline{\psi}$$
+其中$V$是一个与势能相关的函数。
+这个方程称为薛定谔方程。
+{: .proposition}
+
+这里的正负号的约定和波的约定密切相关，因此可能出现多种不同的符号组合。
