@@ -128,3 +128,20 @@ $$\Gamma = \frac{2 \sqrt{\mathcal E_1 \mathcal E_2}}{\mathcal E_1 + \mathcal E_2
 这种干涉是*非定域*的，因为可在空间中任何一点观察到干涉现象。
 当且仅当光屏平行于或正交于轴$S\_1S\_2$时，才可观察到干涉条纹，前者所见的干涉条纹为双曲线，光屏较小时可近似为直线，后者所见的为圆。
 {: .theorem}
+
+为了简化我们的研究，接下来我们提出一个引理用来化简计算。
+
+记$I$为$S\_1$和$S\_2$两点之间的中点，$M$为距离光源非常远一点，那么有：
+$$S_2M - S_1M = \vec{S_2S_1} \cdot \frac{\vec IM}{|IM|}$$
+{: .proposition}
+
+我们考虑计算$S\_2M^2 - S\_1M^2$：
+$$\begin{aligned} S_2M^2 - S_1M^2 &= (\vec{S_2M} + \vec{S_1M})(\vec{S_2M} - \vec{S_1M}) \\ &= (\vec{S_2I} + \vec{IM} + \vec{S_1I} + \vec{IM})(\vec{S_2M} - \vec{S_1M}) \\ &= 2\vec{IM} \cdot (\vec{S_2M} - \vec{S_1M}) \\ &= 2 \vec{IM} \cdot \vec{S_2S_1}\end{aligned}$$
+又有：
+$$\begin{aligned} S_2M^2 - S_1M^2 &= (|S_2M| + |S_1M|)(|S_2M| - |S_1M|) \\ &\approx 2|IM|(|S_2M| - |S_1M|) \end{aligned}$$
+左右相等，从而原命题得证。
+{: .proof}
+
+#### 直线干涉图样
+
+
