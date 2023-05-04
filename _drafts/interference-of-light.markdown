@@ -74,7 +74,7 @@ $$\mathcal E(M) = \mathcal E_1(M) + \mathcal E_2(M) + 2 \sqrt{\mathcal E_1(M) \m
 如果写成光程差的形式，那么有：
 $$\mathcal E(M) = \mathcal E_1(M) + \mathcal E_2(M) + 2 \sqrt{\mathcal E_1(M) \mathcal E_2(M)} \cos(\frac{2\pi}{\lambda_0} \delta(M))$$
 其中$\delta(M) = \mathcal L(S\_2M) - \mathcal L(S\_1M)$。
-注意*存在三种情况使得光程差具有一个额外的半波长*。
+注意存在三种情况会导致额外的$\pi$相位差，从而光程差具有一个额外的半波长。
 {: .theorem}
 
 正如我们在波动物理中所学的，干涉后的辐照度也可以用复数相加的形式表示出来。
@@ -144,4 +144,82 @@ $$\begin{aligned} S_2M^2 - S_1M^2 &= (|S_2M| + |S_1M|)(|S_2M| - |S_1M|) \\ &\app
 
 #### 直线干涉图样
 
+设光屏平行于两个有限远处的点光源连成的直线放置，距点光源的距离为$D$。
+两点光源的连线在光屏上的投影记为Y轴，中点$I$在光屏上的投影（即中垂线与平面的交点）记为原点。
+两光源之间的距离为$a$，且远小于$D$，那么在原点附近的点处，从两个点光源出发到光屏上一点的光程差为：
+$$\delta = \mathcal L(S_2M) - \mathcal L(S_1M) = n \frac{ay}{D}$$
+{: .proposition}
 
+记得光程差和相位差满足：
+$$2 \pi \delta = \lambda_0 \Delta \varphi$$
+这样的光程差形成直线型的干涉图样，如下图所示。
+![](/assets/optics/diffraction-pattern-lines.png)
+{: .align-center}
+
+两个条纹之间的间距为常数，满足：
+$$i = \frac{\lambda_0 D}{na} = \frac{\lambda D}{a}$$
+
+有：
+$$\begin{aligned} S_2M - S_1M &= \vec{S_2S_1} \cdot \vec u &(根据几何引理) \\ &= \frac{ay}{IM} \\ &\approx \frac{ay}{D} \end{aligned}$$
+{: .proof}
+
+#### 环状干涉图样
+
+若光屏垂直于两个点光源的连线放置，此时我们设点光源的中点$I$到光屏的距离为$D$，光屏的原点为中点在光屏上的投影（或光源的投影，这两者是重合的）。
+此时光程差满足：
+$$\delta = \mathcal L (S_2M) - \mathcal L(S_1M) = na \cos i \approx na (1 - \frac{r^2}{2D^2})$$
+其中$i$表示光屏上的点$M$到中点$I$的连线与点光源连线的夹角，$r$表示$M$到原点的位置。
+{: .proposition}
+
+这样的光程差会形成同心圆环形状的干涉图样，但是圆环之间的间距不是常数。
+![](/assets/optics/diffraction-pattern-circles.png)
+{: .align-center}
+
+$$
+\begin{aligned}
+    S_2M - S_1M &= \vec{S_2S_1} \cdot \vec u \\
+    &= a \cos i = a \sqrt{1 - \sin^2 i} \approx a \sqrt{1 - i^2} \\
+    & \approx a \sqrt{1 - \frac{r^2}{D^2}} \\
+    & \approx a(1 - \frac{1}{2} \frac{r^2}{D^2})
+\end{aligned}
+$$
+{: .proof}
+
+## 无穷远处点光源的干涉
+
+当点光源位于无穷远处时，其发射的光可以认为是一束无限大小的平行光。
+我们直接把其发射光近似为一个平面波：
+$$s_i(M,t) = A_{0i} \cos (\omega t \underbrace{- \varphi_i(O) - \vec k_i \cdot \vec{OM}}_{-\varphi_i(M)})$$
+其中$O$为任选的参考点，或原点。
+
+设光在折射率为$n$的介质中传播，那么有
+$$\Vert \vec k_1 \Vert = \Vert \vec k_2 \Vert = n \frac{2\pi}{\lambda_0} = k$$
+
+### 干涉图样
+
+无穷远处点光源的干涉图样是和两点光源所成角的*角平分线*平行的直线条纹。
+条纹之间的距离相等，满足：
+$$i = \frac{\lambda}{2 \sin (\frac{\alpha}{2})} = \frac{\lambda_0}{2n \sin(\frac{\alpha}{2})}$$
+其中$\alpha$为两点光源所成的角度。
+{: .proposition}
+
+从平面上任取一点作为原点$O$，设X轴与两光束的角平分线平行。
+首先，有：
+$$\Delta \varphi(M) = \varphi_2(M) - \varphi_1(M) = (\vec k_2 - \vec k_1) \cdot \vec{OM} + \varphi_2(O) - \varphi_1(O)$$
+然后，我们把$\vec k$正交分解，可得：
+$$
+\begin{aligned}
+    \vec k_1 &= \frac{2n\pi}{\lambda_0} (\sin \frac{\alpha}{2} (- \vec e_y) + \cos \frac{\alpha}{2} \vec e_x) \\
+    \vec k_2 &= \frac{2n\pi}{\lambda_0} (\sin \frac{\alpha}{2} (\vec e_y) + \cos \frac{\alpha}{2} \vec e_x)
+\end{aligned}
+$$
+从而：
+$$\vec k_2 - \vec k_1 = 2 k \sin \frac{\alpha}{2} \vec e_y$$
+从而：
+$$\Delta \varphi(M) = 2 k \sin \frac{\alpha}{2} y_{OM} + \varphi_2(O) - \varphi_1(O)$$
+只要$y\_{OM}$相同，那么相位差就相同，因此与X轴平行的直线的光强是相同的，从而形成条纹状的干涉图样。
+另一方面，设第$q$阶干涉的Y坐标为$y_q$，那么有：
+$$2 \pi q = 2 k \sin \frac{\alpha}{2} y_q + C$$
+从而
+$$i = \frac{2\pi}{2k \sin\frac{\alpha}{2}} = \frac{\lambda_0}{2 n \sin \frac{\alpha}{2}}$$
+{: .proof}
