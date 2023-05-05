@@ -132,7 +132,7 @@ $$\Gamma = \frac{2 \sqrt{\mathcal E_1 \mathcal E_2}}{\mathcal E_1 + \mathcal E_2
 为了简化我们的研究，接下来我们提出一个引理用来化简计算。
 
 记$I$为$S\_1$和$S\_2$两点之间的中点，$M$为距离光源非常远一点，那么有：
-$$S_2M - S_1M = \vec{S_2S_1} \cdot \frac{\vec IM}{|IM|}$$
+$$S_2M - S_1M = \vec{S_2S_1} \cdot \frac{\vec{IM}}{|IM|}$$
 {: .proposition}
 
 我们考虑计算$S\_2M^2 - S\_1M^2$：
