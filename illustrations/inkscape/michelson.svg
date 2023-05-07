@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="michelson.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.131677"
+     inkscape:cx="214.85432"
+     inkscape:cy="194.91696"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="2551"
+     inkscape:window-y="361"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="66.400282,-69.441569"
+       end_point="75.525879,-45.259875"
+       center_point="70.963081,-57.350722"
+       id="path-effect6014"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="free"
+       discard_orig_path="true"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="92.988125,24.173075"
+       end_point="76.312593,43.920415"
+       center_point="84.650359,34.046745"
+       id="path-effect6012"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="free"
+       discard_orig_path="true"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="47.276626,5.8631594"
+       end_point="38.15103,-18.318534"
+       center_point="42.713828,-6.2276873"
+       id="path-effect1711"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="free"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+    <inkscape:path-effect
+       effect="mirror_symmetry"
+       start_point="60.932522,-25.095604"
+       end_point="60.932522,-24.393476"
+       center_point="60.932522,-24.74454"
+       id="path-effect1709"
+       is_visible="true"
+       lpeversion="1.2"
+       lpesatellites=""
+       mode="free"
+       discard_orig_path="false"
+       fuse_paths="false"
+       oposite_fuse="false"
+       split_items="false"
+       split_open="false"
+       link_styles="false" />
+  </defs>
+  <g
+     inkscape:label="图层 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect165"
+       width="22.11702"
+       height="0.70212764"
+       x="13.077127"
+       y="18.781916" />
+    <path
+       style="fill:#ed0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect165-9"
+       width="22.11702"
+       height="0.70212764"
+       x="38.815502"
+       y="-25.095604"
+       transform="rotate(60.85455)"
+       sodipodi:type="rect" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 17.904255,44.146276 34.579787,24.398936"
+       id="path981" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="20.94346"
+       y="45.506313"
+       id="text5471"><tspan
+         sodipodi:role="line"
+         id="tspan5469"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="20.94346"
+         y="45.506313">分光镜</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="7.5478396"
+       y="37.083252"
+       id="text5471-27"><tspan
+         sodipodi:role="line"
+         id="tspan5469-2"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="7.5478396"
+         y="37.083252">光源</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="7.5478396"
+         y="41.492977"
+         id="tspan5916" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="51.300076"
+       y="45.513203"
+       id="text5471-5"><tspan
+         sodipodi:role="line"
+         id="tspan5469-7"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="51.300076"
+         y="45.513203">镜1</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="51.300076"
+         y="49.922928"
+         id="tspan5550" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="6.4928207"
+       y="20.063492"
+       id="text5471-2"><tspan
+         sodipodi:role="line"
+         id="tspan5469-1"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="6.4928207"
+         y="20.063492">镜2</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="6.4928207"
+         y="24.473217"
+         id="tspan5569" /></text>
+    <circle
+       style="fill:#000006;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="path5887"
+       cx="15.739944"
+       cy="34.466518"
+       r="0.20945217" />
+    <rect
+       style="fill:#0000ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect165-4"
+       width="22.11702"
+       height="0.70212764"
+       x="71.485466"
+       y="18.556051" />
+    <path
+       style="fill:#ed0000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="rect165-9-3"
+       width="22.11702"
+       height="0.70212764"
+       x="67.064804"
+       y="-76.218628"
+       transform="rotate(60.85455)"
+       sodipodi:type="rect"
+       d="m 61.424071,-74.089949 -16.602818,14.611947 0.463871,0.527074 16.602818,-14.611947 z"
+       inkscape:path-effect="#path-effect6014"
+       class="UnoptimicedTransforms" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:0.26458299,0.26458299;stroke-dashoffset:0"
+       d="M 76.312593,43.920415 92.988125,24.173075"
+       id="path981-4" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="70.912956"
+       y="48.001194"
+       id="text5471-29"><tspan
+         sodipodi:role="line"
+         id="tspan5469-21"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="70.912956"
+         y="48.001194">分光镜</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="86.932251"
+       y="47.966743"
+       id="text5471-27-3"><tspan
+         sodipodi:role="line"
+         id="tspan5469-2-0"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="86.932251"
+         y="47.966743">光源</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="86.932251"
+         y="52.376469"
+         id="tspan5916-2" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="89.763367"
+       y="13.086452"
+       id="text5471-5-7"><tspan
+         sodipodi:role="line"
+         id="tspan5469-7-9"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="89.763367"
+         y="13.086452">镜1</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="89.763367"
+         y="17.496176"
+         id="tspan5550-8" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.52778px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, Normal';stroke-width:0.264583"
+       x="64.901161"
+       y="19.837629"
+       id="text5471-2-4"><tspan
+         sodipodi:role="line"
+         id="tspan5469-1-1"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="64.901161"
+         y="19.837629">镜2</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:3.52778px;stroke-width:0.264583"
+         x="64.901161"
+         y="24.247355"
+         id="tspan5569-9" /></text>
+    <path
+       style="fill:#000006;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.314;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+       id="path5887-2"
+       inkscape:path-effect="#path-effect6012"
+       sodipodi:type="arc"
+       sodipodi:cx="74.148285"
+       sodipodi:cy="34.240654"
+       sodipodi:rx="0.20945217"
+       sodipodi:ry="0.20945217"
+       d="m 86.183032,44.226459 c -0.114043,0.01937 -0.190788,0.12753 -0.171414,0.241574 0.01937,0.114043 0.127531,0.190787 0.241574,0.171413 0.114043,-0.01937 0.190788,-0.12753 0.171414,-0.241573 -0.01937,-0.114043 -0.12753,-0.190788 -0.241574,-0.171414 z"
+       class="UnoptimicedTransforms" />
+  </g>
+</svg>
