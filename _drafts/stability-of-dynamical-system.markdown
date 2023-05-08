@@ -74,7 +74,57 @@ $$P_1(\mathbf{\overline{u}}, \mathbf{\overline{x}}) = \cdots = P_n(\mathbf{\over
 
 ## 连续系统的李雅普诺夫稳定性
 
+对任何给定的参量$\mathbf{u} = \mathbf{\overline{u}}$，平衡点$\mathbf{\overline{x}}$是*（李雅普诺夫）稳定*的，若：
+$$
+\begin{multline}
+    \forall \varepsilon > 0, \, t_0 > 0, \; \exists \delta > 0 \; \text{s.t.} \; \forall t > t_0 \\
+     \Vert \mathbf{x}(t_0) - \mathbf{\overline{x}} \Vert < \delta \implies \Vert \mathbf{x}(t) - \mathbf{\overline{x}} \Vert < \varepsilon
+\end{multline}
+$$
+更进一步地，其为*渐进稳定的*，若其是稳定的，且：
+$$\exists \delta^\prime > 0 \; \text{s.t.} \; \Vert \mathbf{x}(t_0) - \mathbf{\overline{x}} \Vert < \delta^\prime \implies \lim_{t \to \infty} \mathbf{x}(t) = \mathbf{\overline{x}} $$
+{: .definition}
+
+这就是说，平衡点是稳定的，若系统的状态足够接近平衡点（距离小于$\delta$）时，就会被这个点“吸引”，从而在之后的时间中任意地接近它（距离小于$\varepsilon$）。
+对渐进稳定，还要求状态趋向这个平衡点，而不只是足够接近它。
+
+值得注意的是，稳定性并不要求从任何状态开始都接近这个平衡点，而仅仅要求平衡点“吸引”附近的状态。
+这意味着系统的状态完全可以不靠近任何一个平衡点。
+这样的稳定性只在平衡点局部有意义，因此称为*局部稳定性*，也是我们主要关注的稳定性。
+
+如果从任何初始状态开始，而不局限于一个平衡点周围进行稳定性研究，那么这种被研究的稳定性称为*全局稳定性*。
+下面介绍的方法都不足以判定全局稳定性，这种稳定性通常利用相轨线等需要单独分析。
+
 ### 李雅普诺夫第一方法
+
+李雅普诺夫第一方法主要研究系统的一阶导数，因此也称线性化方法。
+对上述具有$n$个状态变量的系统，其雅可比矩阵为：
+$$
+\mathbf{J}(\mathbf u, \mathbf x) = 
+\begin{pmatrix}
+    \nabla \frac{P_1}{Q_1} \\
+    \vdots \\
+    \nabla \frac{P_n}{Q_n}
+\end{pmatrix}
+=
+\begin{pmatrix}
+    \frac{\partial \frac{P_1}{Q_1}}{\partial x_1} & \cdots & \frac{\partial \frac{P_1}{Q_1}}{\partial x_n} \\
+    \vdots & \ddots & \vdots \\
+    \frac{\partial \frac{P_n}{Q_n}}{\partial x_1} & \cdots & \frac{\partial \frac{P_n}{Q_n}}{\partial x_n}
+\end{pmatrix}
+$$
+从而其在平衡点$\mathbf{\overline{x}}$附近的导数向量可以写为：
+$$\left( \frac{\mathrm d \mathbf x}{\mathrm d t} \right)^\top = \mathrm{J}(\mathbf{\overline{u}}, \mathbf{\overline{x}}) (\mathbf x - \mathbf{\overline{x}})^\top + \mathbf G$$
+其中
+$$\mathbf G = \mathcal{o}(\Vert \mathbf{x} - \mathbf{\overline{x}}\Vert)$$
+是余项，表示更高阶的导数，正如泰勒展开中那样。
+
+那么，系统的局部稳定性由以下定理指出：
+
+1. 若平衡点处雅可比矩阵的所有特征值的实部小于零，那么这个平衡点是渐近稳定的；
+2. 若平衡点处雅可比矩阵的特征值的实部至少有一个大于零，那么这个平衡点是不稳定的；
+3. 若不满足以上两条之一，即系统的所有特征值的实部小于等于零，但存在实部为零的特征值，则这个平衡点是一个*分叉点*，该方法不能确定平衡点的稳定性。
+{: .theorem}
 
 ### 李雅普诺夫第二方法
 
