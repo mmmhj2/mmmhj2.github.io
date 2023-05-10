@@ -148,13 +148,121 @@ $\mathbb Re\_1$是其一个特征子空间，从而是一个不变子空间。
 不难验证$\mathcal B = (e\_1, e\_2, \dots, e\_n)$是由特征向量组成的标准正交基底。
 {: .proof}
 
-设$A \in \mathcal M_n(\mathbb R)$是一个对称矩阵，那么存在一个正交矩阵$P \in \mathcal P_n(\mathbb R)$和一个实对角矩阵$D$，满足：
+设$A \in \mathcal M_n(\mathbb R)$是一个对称矩阵，那么存在一个正交矩阵$P \in \mathcal O_n(\mathbb R)$和一个由特征值组成的实对角矩阵$D$，满足：
 $$D = P^{-1} A P = P^\top A P$$
 这意味着对称矩阵可以同时被*相似对角化*和*合同对角化*。
 {: .proposition}
-
+<!--
 ## 黑塞矩阵
 
 ## 圆锥曲线
+-->
 
 ## 极分解
+
+### 正定矩阵的特征值
+
+本节中我们将关心用两种特殊的矩阵来表示可逆矩阵：正交阵与正定阵。
+
+回忆以下之前关于正定矩阵的定义，我们知道，对称矩阵是正定的，等价于其对应的二次型是正定的，当且仅当其将对所有非零列向量$x$满足：
+$$x^\top M x > 0, x \neq 0$$
+这又等价与其正惯性系数等于空间维数，又等价于其所有顺序主子式大于零。
+
+利用谱定理，我们马上就能证明以下命题：
+
+对称矩阵$M$是*正定的*，当且仅当其所有特征值都大于零。
+记这样的矩阵的集合为$\mathcal P\_n(\mathbb R)$
+{: .proposition}
+
+根据谱定理，我们将对称矩阵对角化：
+$$M = P^\top D P, \, D = \mathrm{diag}(\lambda_1, \dots, \lambda_n), \; \lambda_i \in \mathrm{Spec}(M)$$
+从而：
+$$x^\top M x > 0 \iff x^\top P^\top D P x > 0 \iff (Px)^\top D (Px) > 0$$
+这个式子对所有非零$x$成立，当且仅当$\lambda\_i > 0$。
+{: .proof}
+
+### 对称矩阵的平方根
+
+设$S$为一正定的对称矩阵，则存在唯一的正定的对称矩阵$T$，满足$T^2 = S$。
+称矩阵$T$为$S$的平方根，记为$\sqrt{S}$。
+{: .proposition}
+
+**存在性：**
+令$S = P^{-1} D P$，$D = \mathrm{diag}(\lambda\_1, \dots, \lambda\_n)$是特征值组成的对角阵。
+令$\tilde{D} = \mathrm{diag}(\sqrt{\lambda\_1}, \dots, \sqrt{\lambda\_n})$，
+不难验证$T = P^{-1} \tilde{D} P$满足条件。\
+**唯一性：**
+记$t,s$为二线性变换，其在标准基底下的矩阵为$T,S$，$S$对称且其特征值大于零，满足$t \circ t = s$。
+不难发现由于$t \circ s = t \circ t \circ t = s \circ t$，两线性变换可交换。
+记$E\_{\lambda\_i}$为其一个特征子空间，显然其也是一个不变子空间。
+由于两线性变换可交换，因此两不变子空间相同，所以$E\_{\lambda\_i}$也是$t$的不变子空间。
+记$t\_i = t\_{E\_{\lambda\_i}}$，从而$t\_i^2 = s\_i = \lambda\_i \mathrm{Id}\_{E\_{\lambda\_i}}$。
+若$\mu \in \mathrm{Spec}(t\_i)$，则$\mu^2 = \lambda\_i$，因为特征值一定是零化多项式的根，且$t$是对称的，从而特征值一定存在。
+又$T \in \mathcal{P\_n}$，从而其特征值大于零，从而$\mu > 0, \mu = \sqrt{\lambda\_i}$。
+$t\_i$只有这一个特征值，且其可对角化，从而$t\_i = \mathrm{Id}\_{E\_{\lambda\_i}}$。
+注意到根据以上关系，$t$由$s$唯一地构造出来：
+$$t = \sum_{\lambda_i \in \mathrm{Spec}(s)} \sqrt{\lambda_i} p_{E_{\lambda_i}}$$
+从而$t$唯一，从而$T$唯一。
+{: .proof}
+
+注意到
+$$S = P^\top D P = P^\top \tilde{D} \tilde{D} P = (\tilde{D} P)^\top (\tilde{D}P)$$
+由于$P$是两个正交标准基底转换形成的正交矩阵，如果使用格拉姆-施密特正交化算法，则会生成一个上三角矩阵。
+又因为$\tilde{D}$是一个对角阵，所以$\tilde{D}P$也是一个三角阵，因此可将正定的对称矩阵$S$写为：
+$$S = L^\top L$$
+其中$L$是一个上三角阵。
+这种分解方式称为矩阵的**科列斯基分解**（Cholesky decomposition）。
+可以验证这种分解方式也是唯一的。
+
+设$M \in \mathcal{M}_n(\mathbb R)$。
+若$A = M^\top M$，则$A$是一个特征值非负的对称矩阵。
+相对地，若$A$是一个特征值非负的对称矩阵，那么存在$M$使$A = M^\top M$。
+{: .proposition}
+
+**前推后**：
+首先，$(M^\top M)^\top = M^\top M$，从而$A$是对称的。
+其次，对所有行向量$X$，有
+$$X^\top A X = X^\top M^\top M X = (MX)^\top (MX) = \Vert MX \Vert^2 \ge 0$$
+**后推前**：
+根据谱定理，特征值非负的对称矩阵$A$满足：
+$$P^{-1} A P = D, \; D = \mathrm{diag}(\lambda_1, \dots, \lambda_n), \; \lambda_i \ge 0$$
+从而设
+$$\tilde{D} = \mathrm{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_n})$$
+不难验证$M = P \tilde{D} P^{-1}$满足条件。
+{: .proof}
+
+这个命题可以看作科列斯基分解在半正定对称矩阵上的推广。
+值得注意的是，此时的分解$M$不一定是唯一的。
+
+### 可逆矩阵的极分解
+
+设$M \in \mathrm{GL}_n(\mathbb R)$，则矩阵$S = M^\top M \in \mathcal{P}_n(\mathbb R)$是正定的对称矩阵。
+记$T \in \mathcal{P}_n(\mathbb R)$为$S$的平方根矩阵，则$MR^{-1}$是一个正交矩阵。
+{: .proposition}
+
+对称性不难验证。设$X$是$S$的一个特征向量（特征向量非零），$\lambda$为其对应的特征值，则：
+$$\Vert MX \Vert^2 = (MX)^\top (MX) = X^\top S X = \lambda X^\top X = \lambda \Vert X \Vert^2$$
+又注意到可逆矩阵的特征值非零，从而$\lambda > 0$，从而$S$是正定的。
+更进一步地：
+$$(MR^{-1})^\top (MR^{-1}) = R^{-1} M^\top M R^{-1} = R^{-1} S R^{-1} = I_n$$
+同理不难验证反方向，从而$(MR^{-1})^\top = (MR^{-1})^{-1}$，从而其为正交矩阵。
+{: .proof}
+
+（极分解）设$M \in \mathrm{GL}_n(\mathbb R)$，从而存在唯一一对正交矩阵$O \in \mathrm{O}_n$和正定矩阵$R \in \mathcal{P}_n$，满足：
+$$M = OR$$
+这种分解称为矩阵的**极分解**。
+{: .theorem}
+
+**存在性：**
+设$R = \sqrt{M^\top M}$，从而$M = MR^{-1} R = OR$。\
+**唯一性：**
+$M^\top M$正定，从而$R$唯一，从而$O = MR^{-1}$唯一。
+{: .proof}
+
+这种分解称为极分解，因为其形式与复数的极坐标形式非常相似。
+我们知道：
+$$z = e^{i\theta} r$$
+其中$r$是复数的模长，而$\theta$是复数的辐角。
+如果把正交矩阵看作旋转，而把正定矩阵看作长度，那么这两者形式上是非常相似的。
+
+若$M$不是可逆的，那么这个分解仍然存在，但是$R$是半正定的，且分解不唯一。

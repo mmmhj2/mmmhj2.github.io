@@ -245,7 +245,12 @@ $$\hat x = x, \; \hat y = y, \; \hat z = z, \; \hat {\vec r} = \vec r$$
 而对于动量，我们有：
 $$\hat p_x = \frac{\hbar}{i} \frac{\partial}{\partial x}, \; \hat{\vec p} = \frac{\hbar}{i} \nabla$$
 对于动能，有：
-$$\hat{E_c} = \frac{{\hat{\vec p}}^2}{2m} = \frac{1}{2m} \left( \frac{\hbar}{i} \nabla \right)^2 = - \frac{\hbar^2}{2m} \Delta$$
+$$
+\hat{E_c} 
+= \frac{ { \hat{\vec{p}} }^2 }{2m} 
+= \frac{1}{2m} \left( \frac{\hbar}{i} \nabla \right)^2 
+= - \frac{\hbar^2}{2m} \Delta
+$$
 对于势能，有：
 $$\hat V(\vec r) = V(\vec r)$$
 对于能量，有：
