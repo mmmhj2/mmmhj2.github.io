@@ -1,0 +1,39 @@
+\documentclass[tikz,dvisvgm]{standalone}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{shapes,arrows}
+
+\tikzstyle{block} = [draw, fill=white, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=white, circle, node distance=2cm]
+
+\begin{document}
+	\begin{tikzpicture}[node distance=2cm, >=latex']
+		\node[coordinate] (input) at (0,0) {};
+		\node[coordinate, left of=input, node distance=1cm] (trueinput) {};
+		\node[sum, right of=input] (sub) {};
+		\node[block, right of=sub] (H1) {$H_1(p)$};
+		\node[sum, right of=H1] (sum) {};
+		\node[block, right of=sum] (H2) {$H_2(p)$};
+		\node[coordinate, right of=H2] (feedback) {};
+		\node[coordinate, right of=feedback, node distance=1cm] (output) {};
+		\node[block, below of=sum] (H3) {$H_3(p)$};
+		\node[block, above of=H1] (C) {$C(p)$};
+		
+		\draw[-] (trueinput) -- (input);
+		\draw[->] (input) -- (sub);
+		\draw[->] (sub) -- node [above] {$\varepsilon(p)$} (H1);
+		\draw[->] (H1) -- (sum);
+		\draw[->] (sum) -- (H2);
+		\draw[-] (H2) -- (feedback);
+		\draw[->] (feedback) -- (output);
+		
+		% Feedback loop
+		\draw[->] (feedback) |- (H3);
+		\draw[->] (H3) -| node [pos=0.99, below left] {$-$} (sub);
+		
+		% Feedforward loop
+		\draw[->] (input) |- (C);
+		\draw[->] (C) -| node [pos=0.99, above right] {$+$} (sum);
+		
+	\end{tikzpicture}
+\end{document}
