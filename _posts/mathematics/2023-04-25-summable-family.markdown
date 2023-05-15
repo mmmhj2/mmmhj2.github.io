@@ -1,9 +1,9 @@
 ---
-title: "可和实数族"
+title: "离散概率空间"
 categories: ["概率论", "分析"]
 ---
 
-本章中我们将重新研究级数，即至多可数个实数或复数组成的序列之和，的性质，为研究更一般的概率空间做好准备。
+本章中我们将重新研究级数，即至多可数个实数或复数组成的序列之和，的性质，然后研究更一般的概率空间，即离散概率空间。
 
 ## 正可和实数族
 
@@ -100,7 +100,7 @@ $$\sum_{i \in I, j \in J} a_i b_j = \left( \sum_{i \in I} a_i \right) \left( \su
 
 接下来我们把研究的内容转向更一般的实数和复数上。
 我们定义：
-$$x^+ = \max(x, 0), \quad x^- = \min(-x,0)$$
+$$x^+ = \max(x, 0), \quad x^- = \max(-x,0)$$
 从而有：
 $$x = x^+ - x^-, \quad |x| = x^+ + x^-$$
 
@@ -145,9 +145,165 @@ $$\sum_{i \in I} x_i = \sum_{i \in I} x_i^+ - \sum_{i \in I} x_i^- = \sum_{n=0}^
 $(z\_i)\_{i \in I}$可和，当且仅当$(\| z\_i \|)\_{i \in I}$可和。
 {: .proposition}
 
+下标为$I$可和实数列集合$\mathcal l^1(I)$构成一个数列空间$\mathbb R^I$的一个线性子空间，且从实数列到其和的映射是*线性*的。
+{: .proposition}
+
+根据前述命题，直接使用级数的结论即可。
+{: .proof}
+
 ### 分组求和
 
 设$(z\_i)\_{i \in I}$为一族*可和*的可数复数，且$(I\_j)\_{j \in J}$为$I$的一个划分，那么对任意$j \in J$，$(z\_i)\_{i \in I\_j}$可和，且$(\sum\_{i \in I\_j} z\_i)\_{j \in J}$可和。
 并且有：
 $$\sum_{i \in I} z_i = \sum_{j \in J} \left( \sum_{i \in I_j} z_i \right)$$
 {: .proposition}
+
+以实数列为例。有：
+$$
+\begin{multline}
+    \sum_{i \in I} x_i = \sum_{i \in I} x_i^+ - \sum_{i \in I} x_i^- \\
+    = \sum_{j \in J} \left( \sum_{i \in I_j} x_i^+ \right) - \sum_{j \in J} \left( \sum_{i \in I_j} x_i^- \right)
+    = \sum_{j \in J} \left( \sum_{i \in I_j} x_i^+ - \sum_{i \in I_j} x_i^- \right) \\
+    = \sum_{j \in J} \left( \sum_{i \in I_j} x_i \right)
+\end{multline}
+$$
+{: .proof}
+
+同理，我们仍有：
+
+（富比尼定理）设$(x\_{i,j})\_{(i,j) \in I \times J}$为一可和实数列，那么：
+$$\sum_{(i,j) \in I \times J} x_{i,j} = \sum_{i \in I} \left( \sum_{j \in J} x_{i,j} \right) = \sum_{j \in J} \left( \sum_{i \in I} x_{i,j} \right) $$
+{: .proposition}
+
+对两个实数列之积，我们有：
+
+设两实数列$(x\_i)\_{i \in I}$、$(y\_j)\_{j \in J}$可和，其积数列$(x\_i y\_j)\_{(i,j) \in I \times J}$可和，且：
+$$\sum_{(i,j) \in I \times J} x_i y_j$ = \left( \sum_{i \in I} x_i \right) \left( \sum_{j \in J} y_j \right)$$
+{: .proposition}
+
+这些命题都很容易用分组求和的方式证明。
+
+## 离散概率空间
+
+### 离散概率空间的定义
+
+设$\Omega$为一至多可数的集合，装备有一个σ-代数$\mathcal P(\Omega)$，二者合称**离散可测空间**。
+若$\Omega$还带有一个概率测度$\mathbf P$，那么称其为一个**离散概率（测度）空间**。
+{: .definition}
+
+记$\Omega$为一至多可数的集合。
+设$\mathbf P$为一个概率测度，那么定义映射$\mathbf p$：
+$$\forall \omega \in \Omega, \; \mathbf p(\omega) = \mathbf P(\{ \omega \})$$
+，称为该测度的*概率质量函数*。
+该映射在$\Omega$上可和，即$(\mathbf p(\omega))$可和，且：
+$$\forall A \subset \Omega, \; \mathbf P(A) = \sum_{\omega \in A} \mathbf p(\omega)$$
+另一方面，若$\mathbf p: \Omega \to \mathbb R\_+$为一可和的映射，且其和为一，那么一定存在由以下关系定义的一个概率测度：
+$$\forall A \subset \Omega, \; \mathbf P(A) = \sum_{\omega \in A} \mathbf p(\omega)$$
+且该测度满足：
+$$\forall \omega \in \Omega, \; \mathbf p(\omega) = \mathbf P(\{ \omega \})$$
+{: .proposition}
+
+很容易根据定义验证其性质。
+{: .proof}
+
+这个命题说明，给出离散概率空间上的任何一个概率测度，和给出其概率质量函数等价。
+因此，一个测度的概率质量函数也称为这个测度的*分布律*。
+
+设$(E, \mathcal P (E))$为一任意可测空间，其上的一个概率测度$\mu$是*离散的*，若存在一个至多可数的集合$S$使
+$$\mu(E \backslash S) = 0$$
+即该测度只在至多可数的点上非零。
+利用$S$组成的概率测度空间$(S, \mathcal S, \mu)$是一个离散概率空间。
+离散测度所有概率非零的事件组成的集合$S$称为这个概率测度的*支集*（Support）。
+{: .definition}
+
+任何一个可测空间上的*狄拉克测度*：
+$$
+\forall A \in \mathbf P(E) \quad \delta_x (A) = \left\{
+    \begin{aligned}
+        1 \; & x \in A \\
+        0 \; & x \notin A
+    \end{aligned}
+\right.
+$$
+都是离散概率测度。
+{: .exampl}
+
+### 几个常见离散分布
+
+#### 泊松分布
+
+设$\lambda > 0$，则参数为$\lambda$的**泊松分布**为$\mathbb N$上一概率测度，其概率质量函数为：
+$$\forall k \in \mathbb N, \quad \mathbf p(k) = e^{-\lambda} \frac{\lambda^k}{k!}$$
+服从这种分布的随机变量称为泊松变量，记为$X \sim \mathcal P(\lambda)$。
+{: .definition}
+
+泊松分布的来源由下一个命题展示：
+
+设$(p\_n)\_{n \in \mathbb N^*}$为一个值在$(0,1)$之中的数列，满足：
+$$p_n \sim_{n \to \infty} \frac{\lambda}{n}, \lambda > 0$$
+那么：
+$$\forall k \in \mathbb N, \; \lim_{n \to \infty} \binom{n}{k} p_n^k (1-p_n)^{n-k} = e^{-\lambda} \frac{\lambda^k}{k!}$$
+{: .proposition}
+
+简单计算几个等价无穷：
+$$
+\begin{aligned}
+    \binom{n}{k} &= \frac{n(n-1)\cdots(n-k+1)}{k!} = \left( 1 - \frac{1}{n} \right) \cdots \left( 1 - \frac{k-1}{n} \right) \frac{n^k}{k!} \sim \frac{n^k}{k!} \\
+    p_n^k &= \left( \frac{\lambda}{n} + o(\frac{1}{n}) \right)^k \sim \frac{\lambda^k}{n^k} \\
+    (1-p_n)^{n-k} &= \exp [(n-k) \ln (1 - \frac{\lambda}{n} + o(\frac{1}{n}))] = e^{(n-k)(-\frac{\lambda}{n} + o(\frac{1}{n}))} \sim e^{-\lambda}
+\end{aligned}
+$$
+{: .proof}
+
+这个命题说明了，泊松分布实际上是二项分布的一种极限，是小概率事件（概率为$p$）无穷次独立重复试验后发生次数的分布。
+
+#### 几何分布
+
+设$p \in (0,1)$，参数为$p$的**几何分布**为$\mathbb N^*$上一概率分布，其概率质量函数为：
+$$\forall k \in \mathbb N^*, \quad \mathbf{p}(k) = p (1-p)^{k-1}$$
+服从几何分布的随机变量称为几何变量，记为$X \sim \mathcal G(p)$。
+{: .definition}
+
+下面一个命题说明了几何分布的由来：
+
+设$p \in (0,1)$，$(X\_n)\_{n \in \mathbb N^*}$为一列成功概率相同的独立伯努利变量，约定空集的最小值为$\infty$，那么映射
+$$U(\omega) = \min \{ n \in \mathbb N^* | X_n(\omega) = 1 \}$$
+规定了一个随机变量，事件$\{U = \infty \}$是零测的，而除去无穷后定义的随机变量服从几何分布。
+{: .proposition}
+
+$$
+\begin{aligned}
+    \mathbf P(U = 1) &= \mathbf P(X_1 = 1) = p \\
+    \mathbf P(U = k) &= \mathbf P(X_k = 1) \prod_{i=1}^{k-1} \mathbf{P}(X_i = 0) = p (1-p)^{k-1} \\
+\end{aligned}
+$$
+对于无穷处的情况，我们知道：
+$$\{U = \infty\} = \bigcap_{k=1}^\infty \{ X_k = 0 \} \subset \bigcap_{k=1}^n \{ x_k = 0 \}, \; \forall n \in \mathbb N^*$$
+从而
+$$\mathbf{P}(U = k) \le \prod_{i=1}^n \mathbf{P}(X_i = 0) = (1-p)^n \to 0$$
+{: .proof}
+
+这个命题说明，几何分布相当于重复多次同概率的独立伯努利试验，第一次取得成功的次数的分布。
+
+（无记忆性）设$U: \Omega \to \mathbb N^*$为一离散随机变量，在$\mathbb N^*$上的任意一点处概率大于零。
+该变量服从几何分布，当且仅当其满足*无记忆性*：
+$$\forall n \in \mathbb N, \; \forall k \in \mathbb N^*, \quad \mathbf{P}(U = n+k | U > n) = \mathbf{P}(U = k)$$
+这条性质等价于：
+$$\forall n \in \mathbb N, \quad \mathbf{P}(U = n+1 | U > n) = \mathbf{P}(U=1)$$
+{: .proposition}
+
+前推后是显然的，代入定义即可。
+考虑后推前。
+设该随机变量满足无记忆性的等价形式。
+记$\mathbf{P}(U=1) = p$。
+由于$\mathbf{P}(U=1) > 0, \mathbf P(U \neq 1) > \mathbf P(U = 0) > 0$，从而$0 < p < 1$。
+对条件概率左边取反，可得
+$$ 
+\begin{multline}
+    \mathbf{P}(U \neq n+1 | U>n) = \mathbf{P}(U > n+1 | U>n) = \mathbf{P}(U=1) \\
+    \iff \mathbf{P}(U > n+1) = (1-p) \mathbf{P}(U>n)
+\end{multline}
+$$
+从而$\mathbf{P}(U > n) = (1-p)^n$。
+相邻两项相减即得几何分布。
+{: .proof}
