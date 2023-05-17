@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "电标势与磁矢势"
 categories: "电磁学"
 date: 2022-11-26 16:08:00 +0800

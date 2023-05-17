@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "介质中的电磁波"
 categories: "电磁学"
 date: 2022-11-27 19:40:00 +0800

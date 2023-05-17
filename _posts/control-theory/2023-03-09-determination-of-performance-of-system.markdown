@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "用代数方法确定系统的性能"
 categories: "控制理论"
 date: 2023-03-09 15:30:00 +0800

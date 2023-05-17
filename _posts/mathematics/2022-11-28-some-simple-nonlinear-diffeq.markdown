@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "几个常见非线性微分方程的解"
 categories: "微分方程"
 date: 2022-11-28 13:20:00 +0800

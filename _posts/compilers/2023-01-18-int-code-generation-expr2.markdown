@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "中间代码生成——表达式与控制流②"
 category: "编译原理"
 tags: ["中间代码生成"]

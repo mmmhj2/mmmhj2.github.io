@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: 关于
 permalink: /about/
 ---

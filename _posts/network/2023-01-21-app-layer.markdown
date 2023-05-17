@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "计算机网络——应用层"
 categories: "计算机网络"
 tags: ["应用层"]

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "拉丁语名词第一类变格"
 categories: "外语"
 ---

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "计算机网络——网络层：控制平面②"
 categories: "计算机网络"
 tags: ["网络层"]
