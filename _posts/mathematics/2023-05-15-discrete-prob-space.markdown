@@ -307,3 +307,116 @@ $$
 从而$\mathbf{P}(U > n) = (1-p)^n$。
 相邻两项相减即得几何分布。
 {: .proof}
+
+## 离散随机变量的矩
+
+和有限的随机变量一样，我们也可以定义离散随机变量的矩——前提是它们存在。
+
+### 离散随机变量的期望
+
+设$(\Omega, \mathcal A, \mathbf P)$为一概率空间，$X: \Omega \to \mathbb R$为一离散随机变量。
+若数列$(x \mathbf P(X = x))\_{x \in X(\Omega)}$可和（绝对收敛），那么称其具有**期望**，且其期望为：
+$$\mathbf E X = \sum_{x \in X(\Omega)} x \mathbf P(X=x)$$
+{: .definition}
+
+（转移公式）设$X: \Omega \to E$为一离散随机变量，且$f: E \to \mathbb R$为一实值函数，则离散随机变量$f(X) = f \circ X$具有期望，当且仅当
+$$(f(x) \mathbf P(X=x))_{x \in X(\Omega)}$$
+可和（绝对收敛），此时：
+$$\mathbf E f(x) = \sum_{x \in X(\Omega)} f(x) \mathbf P(X=x)$$
+{: .proposition}
+
+若$f(X)$具有期望，那么
+$$(y \mathbf P(f(X)=y))\_{y \in f(X(\Omega))}$$
+可和，从而：
+$$
+\begin{aligned}
+    E(f(x)) &= \sum_{y \in f(X(\Omega))} y \mathbf P(f(X) = y) \\
+    &= \sum_{y \in f(X(\Omega))} y \sum_{x \in X(\Omega), f(x) = y} \mathbf P(X=x) \\
+    &= \sum_{y \in f(X(\Omega))} \sum_{x \in X(\Omega), f(x) = y} f(x) \mathbf P(X=x) \\
+    &= \sum_{x \in X(\Omega)} f(x) \mathbf P(X=x)
+\end{aligned}
+$$
+反之亦然，对$f(x)$取绝对值即可证明绝对收敛性。
+{: .proof}
+
+设$X,Y$为两实值离散随机变量，$V=(X,Y)$为其联合分布。
+设$f:(x,y) \mapsto x$，$g: (x,y) \mapsto y$。
+应用上文的定理，可得：
+$$
+\begin{aligned}
+    \mathbf EX &= \mathbf E f(V) = \sum_{(x,y) \in V(\Omega)} x \mathbf P(X=x,Y=y) \\
+    &= \sum_{x \in X(\Omega), y \in Y(\Omega)} x \mathbf P(X=x,Y=y) \\
+    \mathbf EY &= \mathbf E g(V) = \sum_{(x,y) \in V(\Omega)} y \mathbf P(X=x,Y=y) \\
+    &= \sum_{x \in X(\Omega), y \in Y(\Omega)} y \mathbf P(X=x,Y=y) \\
+\end{aligned}
+$$
+注意到两个求和的方式不同，第一个求和是针对联合分布的，其中不含为零的项。
+{: .exampl}
+
+#### 期望的几个性质
+
+若$X$几乎必然为正，既$\mathbb P(X \ge 0) = 1$，且具有期望，那么其期望大于等于零：
+$$\mathbf EX \ge 0$$
+且期望为零，当且仅当该随机变量几乎必然为零。
+{: .proposition}
+
+$$
+\begin{aligned}
+    \mathbf EX &= \sum_{x \in X(\Omega)} x \mathbf P(X=x) \\
+    &= \sum_{x \in X(\Omega), x \ge 0} x \mathbf P(X=x) + \cancel{\sum_{x \in X(\Omega), x < 0} x \mathbf P(X=x)} \\
+    &\ge 0
+\end{aligned}
+$$
+左右相等的情况显然。
+{: .proof}
+
+离散随机变量$X$具有期望，当且仅当$\vert X \vert$具有期望，且：
+$$\vert \mathrm EX \vert \le \mathrm E \vert X \vert$$
+{: .proposition}
+
+注意到可和等价于绝对收敛，因此显然。
+{: .proof}
+
+（比较审敛）设$X,Y$为二正实值离散随机变量，且$X \le Y$。
+若$Y$具有期望，那么$X$也具有期望，且$\mathbf EX \le \mathbf EY$。
+{: .proposition}
+
+$$
+\begin{aligned}
+    \mathbf EX &= \sum_{x,y \in V(\Omega)} x \mathbf P(X=x,Y=y) \\
+    &\le \sum_{x,y \in V(\Omega)} y \mathbf P(X=x,Y=y) = \mathbf EY \le \infty
+\end{aligned}
+$$
+{: .proof}
+
+（期望的线性）
+记$\mathcal L\_d^1(\Omega)$为具有期望的离散实值随机变量的集合，则该集合是$\mathbb R^\Omega$的一个线性子空间。
+且期望算子
+$$\mathbf E: \mathcal L_d^1(\Omega) \to \mathbb R$$
+是其上的一个线性算子。
+{: .proposition}
+
+略。
+{: .proof}
+
+设$X,Y \in \mathcal L\_d^1(\Omega)$。
+若$X,Y$独立，则$XY$具有期望，且$\mathbf E(XY) = \mathbf EX \mathbf EY$
+{: .proposition}
+
+记$V=(X,Y)$，$h: (x,y) \mapsto xy$，则$\mathbf EXY = \mathbf E h(V)$。
+从而$\mathbf EXY$存在当且仅当
+$$(xy \mathbf P(X=x) \mathbf P(Y=y))_{x \in X(\Omega), y \in Y(\Omega)}$$
+可和（绝对收敛）。
+考虑到$(x \mathbf P(X=x))$和$(y \mathbf P(Y=y))$均可和，那么其积数列可和，且积数列等于两数列之积，从而$\mathbf EXY = \mathbf EX \mathbf EY$
+{: .proof}
+
+### 离散随机变量的高阶矩
+
+称离散随机变量$X: \Omega \to \mathbb R$具有$r$阶矩（$r \in \mathbb N^*$），若$X^r$具有期望。
+此时，称该随机变量的$r$阶矩为$\mathbf E(X^r)$。
+{: .definition}
+
+具有$r$阶矩的离散随机变量的集合记为$\mathcal L\_d^r (\Omega)$。
+$\mathcal L\_d^r (\Omega)$是$\mathcal L\_d^{r-1} (\Omega)$的子空间。
+这意味着具有方差的随机变量一定具有期望。
+{: .proposition}
