@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "傅里叶级数——收敛行为"
 categories: "分析"
 date: 2022-12-08 21:00:00 +0800

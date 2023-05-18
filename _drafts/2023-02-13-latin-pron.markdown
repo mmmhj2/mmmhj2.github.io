@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "拉丁语发音简明说明"
 categories: "外语"
 ---

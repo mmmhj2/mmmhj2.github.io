@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "多元函数的微分"
 categories: "微分方程"
 date: 2022-12-12 19:27:00 +0800

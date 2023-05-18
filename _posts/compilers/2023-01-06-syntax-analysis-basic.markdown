@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "语法分析——基础内容"
 category: "编译原理"
 tags: ["语法分析"]

@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "中间代码生成——类型系统"
 category: "编译原理"
 tags: ["中间代码生成"]

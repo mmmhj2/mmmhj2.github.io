@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "电磁感应的应用"
 categories: "电磁学"
 date: 2022-12-14 21:46:00 +0800

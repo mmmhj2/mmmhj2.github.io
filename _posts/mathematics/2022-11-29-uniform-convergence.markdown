@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "函数和级数的一致收敛"
 categories: "分析"
 date: 2022-11-29 13:30:00 +0800

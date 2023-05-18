@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "核引理与凯莱-哈密顿定理"
 categories: "代数"
 date: 2022-11-25 22:22:00 +0800

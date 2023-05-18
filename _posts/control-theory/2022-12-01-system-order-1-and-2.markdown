@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "线性时不变一阶与二阶系统"
 date: 2022-12-01 15:30:00 +0800
 categories: "控制理论"

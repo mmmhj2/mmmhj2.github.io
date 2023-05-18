@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: single_legacy
 title: "系统的研究方法"
 date: 2022-11-25 01:20:00 +0800
 categories: "控制理论"
