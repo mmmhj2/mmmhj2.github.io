@@ -109,3 +109,36 @@ $$C(p) = \frac{Cp}{1 + \varepsilon p}$$
 
 然而，在控制器引入高通滤波并非非常实用，因为传感器的噪声往往是高频的，从而这个控制器会放大噪声，导致不良的后果。
 因此，微分控制器往往不会单独使用。
+
+#### 比例微分控制器
+
+比例微分控制器将一个微分控制器与一个比例控制器相加，在时域上可表示为：
+$$u(t) = A \epsilon(t) + B \dot \epsilon(t)$$
+其中$\epsilon$表示误差，通常为控制器的输入。
+那么，在频域上，其传递函数可写为：
+$$C(p) = A + B \frac{p}{1 + \varepsilon p} \approx \frac{1}{1+\varepsilon p}(A + Bp) = \frac{A}{1+\varepsilon p}(1 + \frac{B}{A} p)$$
+注意到$\varepsilon$是一个非常小的数，因此可以进行这种近似。
+
+在这个控制器中，我们依然使用滤波微分控制器作为微分控制器的近似。
+
+计算其增益和辐角，可得：
+$$
+\begin{aligned}
+    G_{dB-C} (\omega) &= 20 \lg A + 10 \lg (1 + \frac{B^2 \omega^2}{A^2}) - 10 \lg (1 + \varepsilon^2 \omega^2) \\
+    \varphi_C (\omega) &= \arctan \frac{B\omega}{A} - \arctan \varepsilon \omega
+\end{aligned}
+$$
+
+这个控制器具有两个截止频率：$\omega\_{c1} = \frac{A}{B}$和$\omega\_{c2} = \frac{1}{\varepsilon}$。
+考虑到$\varepsilon$非常小，这意味着$\omega\_{c1} < \omega\_{c2}$。
+
+系统的波德图具有三条渐进线：
+- $\omega < \omega\_{c1}$时，增益为常数$20 \lg A$，相角为零；
+- $\omega\_{c1} < \omega < \omega\_{c2}$时，增益为一条斜率为正二十的直线，相角为$\frac{\pi}{2}$；
+- $\omega\_{c2} < \omega$时，增益为常数$20 \lg \frac{B}{\varepsilon}$，相角为零。
+
+这个控制器略好于直接的微分控制器，其不会完全抑制低频分量，但是仍会放大高频分量，导致噪音被放大。
+因此，常见的控制器中一般不使用微分环节。
+常见的PID控制器中通常只有20%含有微分环节。
+
+### 相位超前控制器

@@ -248,9 +248,17 @@ $$\forall k \in \mathbb N, \; \lim_{n \to \infty} \binom{n}{k} p_n^k (1-p_n)^{n-
 简单计算几个等价无穷：
 $$
 \begin{aligned}
-    \binom{n}{k} &= \frac{n(n-1)\cdots(n-k+1)}{k!} = \left( 1 - \frac{1}{n} \right) \cdots \left( 1 - \frac{k-1}{n} \right) \frac{n^k}{k!} \sim \frac{n^k}{k!} \\
-    p_n^k &= \left( \frac{\lambda}{n} + o(\frac{1}{n}) \right)^k \sim \frac{\lambda^k}{n^k} \\
-    (1-p_n)^{n-k} &= \exp [(n-k) \ln (1 - \frac{\lambda}{n} + o(\frac{1}{n}))] = e^{(n-k)(-\frac{\lambda}{n} + o(\frac{1}{n}))} \sim e^{-\lambda}
+    \binom{n}{k} 
+    &= \frac{n(n-1)\cdots(n-k+1)}{k!} \\
+    &= \left( 1 - \frac{1}{n} \right) \cdots \left( 1 - \frac{k-1}{n} \right) \frac{n^k}{k!} \\
+    &\sim \frac{n^k}{k!} \\
+    p_n^k 
+    &= \left( \frac{\lambda}{n} + o(\frac{1}{n}) \right)^k \\
+    &\sim \frac{\lambda^k}{n^k} \\
+    (1-p_n)^{n-k} 
+    &= \exp [(n-k) \ln (1 - \frac{\lambda}{n} + o(\frac{1}{n}))] \\
+    &= e^{(n-k)(-\frac{\lambda}{n} + o(\frac{1}{n}))} \\
+    &\sim e^{-\lambda}
 \end{aligned}
 $$
 {: .proof}
@@ -285,7 +293,7 @@ $$\mathbf{P}(U = k) \le \prod_{i=1}^n \mathbf{P}(X_i = 0) = (1-p)^n \to 0$$
 
 这个命题说明，几何分布相当于重复多次同概率的独立伯努利试验，第一次取得成功的次数的分布。
 
-（无记忆性）设$U: \Omega \to \mathbb N^*$为一离散随机变量，在$\mathbb N^*$上的任意一点处概率大于零。
+（无记忆性）设$U: \Omega \to \mathbb N^\*$为一离散随机变量，在$\mathbb N^\*$上的任意一点处概率大于零。
 该变量服从几何分布，当且仅当其满足*无记忆性*：
 $$\forall n \in \mathbb N, \; \forall k \in \mathbb N^*, \quad \mathbf{P}(U = n+k | U > n) = \mathbf{P}(U = k)$$
 这条性质等价于：
@@ -319,11 +327,24 @@ $$
 $$\mathbf E X = \sum_{x \in X(\Omega)} x \mathbf P(X=x)$$
 {: .definition}
 
+有界，即存在实数$M$使$\mathbf P(X > M) = 0$，的离散随机变量都具有期望，且$\mathbf E X \le M$。
+{: .exampl}
+
+根据定义，我们要求该数列绝对收敛，而不只是收敛。
+从定义上看，这是显然的：可和是有限数列求和的自然推广。
+从实际使用上看，要求数列绝对收敛允许我们交换求和的顺序，从而期望才不会因为顺序而改变，才是有意义的。
+
 （转移公式）设$X: \Omega \to E$为一离散随机变量，且$f: E \to \mathbb R$为一实值函数，则离散随机变量$f(X) = f \circ X$具有期望，当且仅当
 $$(f(x) \mathbf P(X=x))_{x \in X(\Omega)}$$
 可和（绝对收敛），此时：
-$$\mathbf E f(x) = \sum_{x \in X(\Omega)} f(x) \mathbf P(X=x)$$
+$$\mathbf E f(X) = \sum_{x \in X(\Omega)} f(x) \mathbf P(X=x)$$
 {: .proposition}
+
+这一命题有时也成为“下意识的统计学家法则”（law of the unconscious statistician）。
+当为离散随机变量$f(X)$计算期望时，正确的做法是重新计算$f(X)$的分布，而非继续使用$X$的分布。
+统计学家可能会下意识地直接将式子中的$x$替换为$f(x)$而不计算$f(X)$的分布。
+幸运的是，该命题告诉我们这两个期望是等价的：
+$$\mathbf E f(X) = \sum_{x \in X(\Omega)} f(x) \mathbf P(X=x) = \sum_{y \in f \circ X(\Omega)} y \mathbf P(f(X)=y)$$
 
 若$f(X)$具有期望，那么
 $$(y \mathbf P(f(X)=y))\_{y \in f(X(\Omega))}$$
@@ -420,3 +441,130 @@ $$(xy \mathbf P(X=x) \mathbf P(Y=y))_{x \in X(\Omega), y \in Y(\Omega)}$$
 $\mathcal L\_d^r (\Omega)$是$\mathcal L\_d^{r-1} (\Omega)$的子空间。
 这意味着具有方差的随机变量一定具有期望。
 {: .proposition}
+
+## 概率生成函数
+
+本节中我们将研究离散概率空间$(\Omega, \mathcal A, \mathbf P)$上的离散随机变量的生成函数。
+
+### 生成函数的定义与基本性质
+
+称离散随机变量$X: \Omega \to \mathbb N$的**生成函数**（也称*母函数*）为：
+$$
+G_X: \; [-1, 1] \to \mathbb R; \quad t \mapsto \sum_{k=0}^\infty \mathbf P(X=k) t^k
+$$
+对任意的离散随机变量，级数在$[-1,1]$上*正规收敛*（normally convergent），因此该函数是良定义的。
+{: .definition}
+
+注意到
+$$
+\forall k, \forall t \in [-1,1], 
+\begin{cases}
+    | \mathbf P(X=k) t^k | \le \mathbf P(X=k) \\
+    \sum_{k=0}^\infty \mathbf P(X=k) = 1 < \infty
+\end{cases}
+$$
+因此级数每一项的上界收敛，根据定义，该级数正规收敛。
+{: .proof}
+
+1. 该函数在$[-1,1]$上连续，在$(-1,1)$上光滑（无穷阶可导），且$G\_X(1) = 1$；
+2. $$\forall t \in [-1,1], \quad G_X(t) = \mathbf E(t^X)$$
+3. $G\_X$唯一确定$X$的分布律。
+{: .proposition}
+
+1. 显然。
+2. 注意到$t^X$有界，因此一定具有期望。应用转移公式即可：
+$$G_X(t) = \sum_{k=0}^\infty \mathbf P(X=k) (t^k) = \mathbf E(t^X)$$
+3. 可将$\sum\_{k=0}^\infty \mathbf P(X=k) (t^k)$看作$G\_X$在零附近的幂级数展开，此时：
+$$\mathbf P(X=k) = \frac{G_X^{(k)}(t)}{k!}$$
+{: .proof}
+
+#### 常见离散变量的生成函数
+
+服从参数为$\lambda$的泊松分布的离散随机变量的母函数为：
+$$G(t) = e^{\lambda(t-1)}$$
+服从参数为$p$的偏移几何分布（即从一开始，而不是从零开始）的离散随机变量的母函数为：
+$$G(t) = \frac{pt}{1-(1-p)t}$$
+{: .proposition}
+
+对泊松分布，有：
+$$G(t) = \sum_{k=0}^\infty e^{-\lambda} \frac{\lambda^k}{k!} t^k = e^{-\lambda} e^{\lambda t} = e^{\lambda(t-1)}$$
+该函数可解析延拓至$\mathbb R$上。 \
+对几何分布，有：
+$$G(t) = \sum_{k=1}^\infty p (1-p)^{k-1} t^k = pt \sum_{k=0}^\infty (1-p)^k t^k = \frac{pt}{1-(1-p)t}$$
+该函数可解析延拓至$(-\frac{1}{1-p}, \frac{1}{1-p})$上。
+{: .proof}
+
+### 生成函数与独立性
+
+设$X,Y$两自然数上的独立离散随机变量，则：
+$$G_{X+Y} = G_X \cdot G_Y$$
+{: .proposition}
+
+若$X,Y$独立，则$t^X, t^Y$独立，从而：
+$$G_{X+Y}(t) = \mathbf E(t^X t^Y) = \mathbf E(t^X) \mathbf E(t^Y) = G_X(t) \cdot G_Y(t)$$
+{: .proof}
+
+注意到两独立离散随机变量的和的分布是一个柯西积（卷积）：
+$$\mathbf P(X+Y = k) = \sum_{i+j=k} \mathbf P(X=i) \mathbf P(Y=j)$$
+不难发现，生成函数类似于傅里叶变换和拉普拉斯变换，能够将分布（概率质量函数）的卷积转化为乘积，实际上这种离散的变换称为*Z变换*。
+对于连续的随机变量，其分布（概率密度函数）的傅里叶变换称为*特征函数*，拉氏变换称为*矩生成函数*，都具有和生成函数类似的功能。
+
+设$X\_1, \dots, X\_n$为有限个独立离散随机变量，则：
+$$G_{X_1 + \cdots + X_N} = \prod_{i=1}^n G_{X_i}$$
+{: .proposition}
+
+利用生成函数证明多个独立泊松分布的和的分布仍为泊松分布。\
+设$X\_1, \dots, X\_n$为独立的服从泊松分布的离散随机变量，其参数分别为$\lambda\_1, \dots, \lambda\_n$。
+则：
+$$\forall t \in [-1,1], \; G_{X_1+\cdots+X_n}(t) = \prod_{i=1}^n e^{\lambda_i (t-1)} = e^{(\lambda_1 + \cdots + \lambda_n)(t-1)}$$
+其生成函数仍是泊松分布的生成函数。
+由于分布律由生成函数唯一确定，因此其一定服从泊松分布。
+{: .exampl}
+
+### 生成函数与矩
+
+设$X$为一自然数上的离散随机变量，$r \in \mathbb N^*$，以下三条命题等价：\
+1）$X$具有$r$阶矩；\
+2）$G\_X$在$[0,1]$上$r$阶可导；\
+3）$G\_X$在$1$处具有$r$阶左导数。\
+若满足以上三条命题，则：
+$$G_X^{(r)}(1) = \mathbf E[X(X-1) \cdots (X-r+1)]$$
+{: .proposition}
+
+从而我们可以利用生成函数计算随机变量的期望与方差：
+随机变量$X$期望有界，当且仅当$G\_X$在$1$处具有一阶左导数，此时：
+$$\mathbf EX = G_X^\prime(1)$$
+随机变量$X$具有方差，当且仅当$G\_X$在$1$处具有二阶左导数，此时：
+$$\mathbf VX = G_X^{\prime\prime}(1) + G_X^\prime(1) - \left(G_X^\prime(1)\right)^2$$
+{: .proposition}
+
+设$(X\_n)\_{n \in \mathbb N}$为一列独立的同分布离散随机变量，$N$为一自然数上的离散随机变量，且与$(X\_n)$独立。
+设
+$$S = X_1 + X_2 + \cdots + X_N $$
+试求$S$的期望。\
+首先不难验证$S$也是一个离散随机变量，计算其分布，可得：
+$$
+\begin{aligned}
+\mathbf P(S = k) &= \sum_{n=1}^\infty \mathbf P(X_1 + \dots + X_N = k | N = n) \mathbf P(N=n) \\
+&= \sum_{n=1}^\infty \mathbf P(X_1 + \dots + X_n = k | N = n) \mathbf P(N=n) \\
+&= \sum_{n=1}^\infty \mathbf P(X_1 + \dots + X_n = k) \mathbf P(N=n)
+\end{aligned}
+$$
+最后一步能省去条件概率，是因为$N$和其他变量均独立。
+然后计算生成函数：
+$$
+\begin{aligned}
+G_S(t) &= \sum_{k=1}^\infty \mathbf P(S=k) t^k \\
+&= \sum_{k=1}^\infty \left( \sum_{n=1}^\infty \mathbf P(X_1 + \cdots + X_n = k) \mathbf P(N=n) \right) \\
+&= \sum_{n=1}^\infty \mathbf P(N=n) \sum_{k=1}^\infty \mathbf P(X_1 + \cdots + X_n = k) t^k \\
+&= \sum_{n=1}^\infty \mathbf P(N=n) G_{X_1 + \cdots + X_n}(t) \\
+&= \sum_{n=1}^\infty \mathbf P(N=n) G_{X_1}^n(t) \\
+&= G_N (G_{X_1}(t))
+\end{aligned}
+$$
+我们知道这些数列都是绝对收敛的，从而能够交换求和顺序。
+从而我们有：
+$$G_S = G_N \circ G_{X_1}$$
+进而：
+$$\mathbf E(S) = G_S^\prime(1) = G_N^\prime(G_{X_1}(1)) G_{X_1}^\prime(1) = \mathbf E(N) \mathbf E(X_1)$$
+{: .exampl}
