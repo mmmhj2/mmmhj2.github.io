@@ -22,8 +22,8 @@ search: false
     font-weight: bold;
     font-style: normal;
     text-decoration: underline;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .proposition {
@@ -39,8 +39,8 @@ search: false
     content: "命题";
     font-weight: bold;
     font-style: normal;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .remark {
@@ -54,12 +54,12 @@ search: false
 }
 
 .remark::before {
-	content: "注意";
-	font-weight: bold;
-	font-style: normal;
-	text-decoration: underline;
-	display: inline-block;
-	margin-right: 10px;
+    content: "注意";
+    font-weight: bold;
+    font-style: normal;
+    text-decoration: underline;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .theorem {
@@ -75,8 +75,8 @@ search: false
     content: "定理" ;
     font-weight: bold;
     font-style: normal;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .lemma {
@@ -92,23 +92,23 @@ search: false
     content: "引理" ;
     font-weight: bold;
     font-style: normal;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .proof {
     display: block;
-    margin: 20px 0 0 30px;
+    margin: 20px 0 20px 25px !important;
     font-style: normal;
-    padding:10px 10px 10px 30px;
+    padding: 10px 10px 10px 30px;
     border-left: 6px solid;
     border-color: DarkGrey;
 }
 .proof:before {
     content: "证明";
     font-style: italic;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .definition {
@@ -124,6 +124,6 @@ search: false
     content: "定义";
     font-weight: bold;
     font-style: normal;
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
