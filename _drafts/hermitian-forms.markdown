@@ -11,7 +11,7 @@ categories: "代数"
 
 ### 半线性映射的定义
 
-设$E,F$为两复向量空间，称$f: E \to F$是*半线性的*，若：
+设$E,F$为两复向量空间，称$f: E \to F$是*半线性的*（Sesquilinear），若：
 $$
 \begin{aligned}
     \forall x,y \in E, \quad& f(x+y) = f(x) + f(y) \\
@@ -49,9 +49,9 @@ $$
 
 ### 厄米函数与厄米二次型
 
-若半双线性函数$\varphi$是共轭对称的，则称其为**厄米函数**：
+若半双线性函数$\varphi$是共轭对称的，则称其为**厄米函数**（Hermitian function）：
 $$\forall x, y \in E, \; \varphi(x,y) = \overline{\varphi(y,x)}$$
-与厄米函数对应的二次型称为**厄米二次型**：
+与厄米函数对应的二次型称为**厄米二次型**（Hermitian quadratic form）：
 $$x \mapsto \phi(x) = \varphi(x,x) \in \mathbb R$$
 厄米二次型对应的函数称为其极化形式。
 {: .definition}
@@ -197,6 +197,9 @@ $$X = P_{\mathcal B \to \mathcal B^\prime} X^\prime, \; Y = P_{\mathcal B \to \m
 
 ## 复空间的正交性
 
+本节中我们假设$\varphi$为一个厄米函数，$\phi$为其对应的厄米二次型。
+我们并不要求这个二次型是非负或正定的，因此即使其不是一个范数，我们仍可以定义其正交性。
+
 设$A$为$E$的一个子集，$\varphi$为$E$的一个厄米函数，则与$A$正交的集合为：
 $$A^\perp = {y \in E | \forall x \in A, \; \varphi(x,y) = 0}$$
 即：
@@ -228,7 +231,7 @@ $$
 这个子空间可以看作$\gamma\_\varphi$的核空间，即$\gamma\_\varphi(x)$为零函数的空间。
 实际上，我们可以给出一个非退化的等价定义：
 
-若一个厄米函数定义的全空间的正交子空间只有零向量，那么这个厄米函数是**非退化的**。
+若一个厄米函数（或二次型）定义的全空间的正交子空间只有零向量，那么这个厄米函数（或二次型）是**非退化的**。
 {: .definition}
 
 ### 正交子空间的维数
@@ -279,3 +282,132 @@ $$
 \end{aligned}
 $$
 {: .proof}
+
+### 非迷向空间
+
+若向量$x$对一个二次型$\phi$满足$\phi(x) = 0$，那么称其为**迷向向量**（Isotropic vector）。
+若二次型的迷向向量仅有零向量，则称其为**确定的**（也称非迷向的）。
+{: .definition}
+
+注意厄米二次型的确定性和厄米函数的确定性的定义不同，但是确定的厄米函数一定对应确定的厄米二次型，反之亦然。
+和厄米函数一样，确定的厄米二次型一定是非退化的，但非退化的二次型不一定是确定的。
+
+设$F$为$E$中一有限维子空间，以下三条命题等价：\
+1） $\varphi_{\vert F \times F}$是非退化的；\
+2） $F \cap F^\perp = \{ 0 \}$；\
+3） $E = F \oplus F^\perp$。\
+此时$F^\perp$称为$F$的**正交补空间**，而存在正交补空间的子空间称为**非迷向空间**。
+{: .definition}
+
+1）与2）的等价由定义显然。
+3）推2）也是显然的。
+我们仅证明2）推3），即仅需要证明$E = F + F^\perp$。
+设$x \in E$，$\gamma\_\varphi (x) \in E^\*$，则$\gamma\_\varphi(x)\_\{\vert F\} \in F^\*$。
+另一方面，记$\varphi^\prime = \varphi\_\{\vert F \times F\}$。
+由于1）与2）等价，我们知道$\varphi^\prime$是非退化的，从而：
+$$\ker (\gamma_{\varphi^\prime}) = F \cap F^\perp = \{ 0 \}$$
+从而$\gamma\_\{\varphi^\prime \}$是一个单射。
+又因为空间是有限维的，从而其是一个向$F^\*$的满射。
+因此存在$y \in F$，满足
+$$\gamma_{\varphi^\prime}(y) = \gamma_\varphi(x)_{\vert F}$$
+从而：
+$$\forall z \in F, \; \varphi(x,z) = \varphi(y,z) \implies \varphi(x-y,z) = 0$$
+从而$x-y \in F^\perp$。
+因此：
+$$\forall x \in E, \; x = \underbrace{(x - y)}_{\in F^\perp} + \underbrace{y}_{\in F}$$
+{: .proof}
+
+根据这一命题，我们有：
+
+设$E$为一有限维复空间，那么对任何厄米函数$\varphi$，都存在一组在该函数下正交的基底。
+{: .theorem}
+
+这一命题说明任意厄米矩阵$H$都可以合同对角化，即存在可逆矩阵$P$，满足：
+$$P^* H P = \mathrm{diag}(\lambda_1, \dots, \lambda_n), \; \lambda_i \in \mathbb R$$
+
+我们使用归纳法证明该结论。
+空间为一维时显然，现在设空间为$n$维。
+首先，零变换的情况是平凡的，我们只考虑非零的变换，设：
+$$\exists a \in E, \text{满足} \phi(a) \neq 0$$
+那么$a \mathbb C$是一个非迷向的子空间。
+现在考虑其正交子空间：
+$$\text{设} \lambda a \in (a \mathbb C)^\perp = \{ a \}^\perp \implies \varphi(\lambda a, a) = \overline{\lambda} \varphi(a,a) = 0 \implies \lambda = 0$$
+从而$(a \mathbb C)^\perp \cap (a \mathbb C) = 0$。
+根据上述命题，我们知道这说明$E = (a \mathbb C)^\perp \oplus (a \mathbb C)$。
+我们知道$(a \mathbb C)^\perp$的维数比全空间少，因此根据归纳假设，该空间中存在一个正交的基底，设为$\mathcal B$。
+根据定义，$\\\{ a \\\} \cap \mathcal B$是这个空间的一个正交的基底。
+{: .proof}
+
+根据厄米矩阵的对角化的形式，我们称其对角阵中的非零的实数个数为其**秩**。
+这一定义也可拓展到厄米函数和厄米二次型上。
+
+## 复希尔伯特空间
+
+对正的厄米函数$\varphi$，有：
+$$\varphi \text{确定} \iff \varphi \text{非退化}$$
+{: .proposition}
+
+此外，若$\varphi$是确定的，那么它不会改变符号。
+
+若复向量空间$E$装备有一正定的（从而是非退化的）厄米二次型$\phi$，则：
+$$\Vert \cdot \Vert : x \mapsto \sqrt{\phi(x)}$$
+可作为其一个范数，$(E, \phi)$合称**准希尔伯特空间**。
+若空间$E$是完备的，那么又可称为**希尔伯特空间**。
+若空间是有限维的（从而一定是完备的），那么又可称为**厄米空间**。
+{: .definition}
+
+在准希尔伯特空间中，由于其二次型正定且非退化，任何有限维子空间都是非迷向的，且存在正交补。
+
+复准希尔伯特空间有许多与实内积空间相同的性质，此处仅列出而不再证明。
+
+（柯西-施瓦茨不等式）设$\phi$为一非负厄米二次型，$\varphi$为其对应的厄米函数，那么：
+$$|\varphi(x,y)|^2 \le \phi(x) \phi(y)$$
+{: .proposition}
+
+（闵可夫斯基不等式）设$\phi$为一非负厄米二次型，则：
+$$\sqrt{\phi(x+y)} \le \sqrt{\phi(x)} + \sqrt{\phi(y)}$$
+{: .proposition}
+
+（勾股定理）若两向量正交，则：
+$$(x, y) = 0 \implies \Vert x+y \Vert^2 = \Vert x \Vert^2 + \Vert y \Vert^2$$
+然而，若两向量满足：
+$$\Vert x+y \Vert^2 = \Vert x \Vert^2 + \Vert y \Vert^2$$
+则其内积的实部为零，但虚部不一定为零。
+{: .proposition}
+
+（正交投影）设$\mathcal B = \\\{ \varepsilon\_1, \dots, \varepsilon\_n \\\}$为有限维子空间$F$的一个正交标准基底，那么从$x$向$F$的正交投影可以写为：
+$$p_F(x) = \sum_{k = 1}^n (\varepsilon_k, x) \varepsilon_k = \sum_{k=1}^n \overline{(x, \varepsilon_k)} \varepsilon_k$$
+{: .definition}
+
+## 厄米空间与伴随算子
+
+接下来我们将研究厄米空间的性质。
+这个空间中的许多性质在无穷维情形下也能得到推广，并且是量子力学的重要数学基础。
+
+本章中我们设$E$为一厄米空间，$\varphi$为其对应的正定的厄米函数。
+
+### 伴随算子的定义
+
+设$u \in \mathcal L(E)$，则存在唯一的$u^\* \in \mathcal L(E)$，使：
+$$\forall (x,y) \in E^2, \; \varphi(u(x), y) = \varphi(x, u^*(y))$$
+称$u^\*$为$u$的**伴随算子**。
+在正交标准基底下，$u^\*$的矩阵表示就是$u$的厄米矩阵。
+{: .definition}
+
+这一定义对无限维的情况也有效，但我们目前只关心有限维的情况。
+
+设$x, y \in E$，$X,Y$为其对应的列向量，$A,B$分别为$u$和$u^*$的矩阵，$S$为厄米函数的矩阵。
+则：
+$$(AX)^* SY = X^* A^* SY = X^* BSY$$
+注意到$S$可逆，从而$B = S^{-1} A^\* S$，两者唯一确定。
+在标准正交基底下，$S = I\_n$，从而$B = A^\*$
+{: .proof}
+
+和厄米矩阵类似，伴随算子也具有一些运算上的性质：
+
+1. $$(u+v)^* = u^* + v^*$$
+2. $$(\lambda u)^* = \overline{\lambda} u^*$$
+3. $$(u^*)^* = u$$
+4. $$(u \circ v)^* = v^* \circ u^*$$
+5. $$u \text{可逆} \iff u^* \text{可逆}, \; (u^*)^{-1} = (u^{-1})^*$$
+{: .proposition}
