@@ -1,22 +1,22 @@
 clear;
 hold off;
-% ¹âµÄ²¨³¤ºÍ²¨Êı£¬ÒÔ¼°Æ×Ïß¿í¶È
+% å…‰çš„æ³¢é•¿å’Œæ³¢æ•°ï¼Œä»¥åŠè°±çº¿å®½åº¦
 lambda = 632e-9;
 sigma = 1 / lambda;
 delta_sigma = sigma / 10;
 
-% ÒÇÆ÷ÅäÖÃ
-a = 0.05;   % Á½¿×¼ä¾à
-D = 1;      % ¿×µ½¹âÆÁµÄ¾àÀë
+% ä»ªå™¨é…ç½®
+a = 0.05;   % ä¸¤å­”é—´è·
+D = 1;      % å­”åˆ°å…‰å±çš„è·ç¦»
 
-% ¼ÆËãÏàÎ»²î
-delta_x = 30 * lambda * D / a;          % »æÖÆ¶şÊ®¸öÌõÎÆ
+% è®¡ç®—ç›¸ä½å·®
+delta_x = 30 * lambda * D / a;          % ç»˜åˆ¶äºŒåä¸ªæ¡çº¹
 x = linspace(-delta_x, delta_x, 8000);
 delta = a .* x ./ D;
 
 %plot(1 + cos(2 .* pi ./ lambda .* delta))
 
-% ¼ÆËãĞÁ¸ñº¯Êı
+% è®¡ç®—è¾›æ ¼å‡½æ•°
 SIN = pi .* delta_sigma .* delta;
 SINC = sin(SIN) ./ SIN;
 intensity = SINC .* cos(2 .* pi .* sigma .* delta);
