@@ -568,3 +568,15 @@ $$G_S = G_N \circ G_{X_1}$$
 进而：
 $$\mathbf E(S) = G_S^\prime(1) = G_N^\prime(G_{X_1}(1)) G_{X_1}^\prime(1) = \mathbf E(N) \mathbf E(X_1)$$
 {: .exampl}
+
+#### 计算常见离散分布的矩
+
+我们知道，服从参数为$\lambda$的泊松分布的离散随机变量的母函数为：
+$$G(t) = e^{\lambda(t-1)}$$
+服从参数为$p$的偏移几何分布（即从一开始，而不是从零开始）的离散随机变量的母函数为：
+$$G(t) = \frac{pt}{1-(1-p)t}$$
+
+利用生成函数可以计算这些函数的期望和方差：
+$$X \sim P(\lambda) \implies \mathbf EX = \lambda, \mathbf VX = \lambda$$
+而：
+$$X \sim G(p) \implies \mathbf EX = \frac{1-p}{p}, \mathbf VX = \frac{1-p}{p^2}$$
