@@ -1,0 +1,54 @@
+\documentclass[tikz,dvisvgm]{standalone}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{shapes,arrows}
+
+\tikzstyle{block} = [draw, fill=white, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=white, circle, node distance=2cm]
+
+\begin{document}
+	\begin{tikzpicture}[node distance=2cm, >=latex']
+		\node[coordinate] (input) at (0, 0) {};
+		\node[sum, right of=input] (sub) {};
+		\node[block, right of=sub] (corrector) {$C(p)$};
+		\node[block, right of=corrector, node distance=4cm] (transfer) {$e^{-\tau p} H(p)$};
+		\node[coordinate, right of=transfer] (feedback) {};
+		\node[coordinate, right of=feedback] (output) {};
+		\node[block, below of=corrector] (sensor) {$K(p)$};
+		
+		\draw[->] (input) -- (sub);
+		\draw[->] (sub) -- (corrector);
+		\draw[->] (corrector) -- (transfer);
+		\draw[-] (transfer) -- (feedback);
+		\draw[->] (feedback) -- (output);
+		\draw[->] (feedback) |- (sensor);
+		\draw[->] (sensor) -| node [pos=0.99, below left] {$-$} (sub);
+		
+		\node[coordinate] (input) at (0, -5) {};
+		\node[sum, right of=input] (sub1) {};
+		
+		\node[sum, right of=sub1] (sub2) {};
+		\node[block, right of=sub2] (corrector1) {$C(p)$};
+		\node[block, below of=corrector1] (corrector2) {$C^\prime(p)$};
+		\node[coordinate, right of=corrector1] (corroutput) {};
+		
+		\node[block, right of=corroutput, node distance=2cm] (transfer) {$e^{-\tau p} H(p)$};
+		\node[coordinate, right of=transfer] (feedback) {};
+		\node[coordinate, right of=feedback] (output) {};
+		\node[block, below of=corrector2] (sensor) {$K(p)$};
+		
+		\draw[->] (input) -- (sub1);
+		\draw[->] (sub1) -- (sub2);
+		\draw[->] (sub2) -- (corrector1);
+		\draw[-] (corrector1) -- (corroutput);
+		\draw[->] (corroutput) |- (corrector2);
+		\draw[->] (corrector2) -| node[pos=0.99, below left] {$-$} (sub2);
+		
+		\draw[->] (corroutput) -- (transfer);
+		\draw[-] (transfer) -- (feedback);
+		\draw[->] (feedback) -- (output);
+		\draw[->] (feedback) |- (sensor);
+		\draw[->] (sensor) -| node[pos=0.99, below left] {$-$} (sub1);
+	
+	\end{tikzpicture}
+\end{document}
