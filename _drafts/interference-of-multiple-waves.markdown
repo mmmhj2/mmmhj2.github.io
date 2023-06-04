@@ -148,5 +148,47 @@ $$\mathcal E(M) = \mathrm{sinc}^2 \left( \frac{b}{2a} \Phi(M) \right) \mathcal E
 
 ## 法布里-珀罗干涉仪
 
-钠灯的两条波长相差仅$0.9$纳米的谱线在法布里-珀罗干涉仪上也可清晰地分辨出来，如下图所示：
-![](/assets/optics/fabry-perot.png){: .align-center}
+法布里-珀罗干涉仪使用两面平行的半反半透镜，通过让光线在其中发生多次反射来形成光程差，其示意图如下：
+
+![](/assets/optics/fabry-perot-schema.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Etalon-1.svg under the Creative Commons Attribution-Share Alike 3.0 Unported license"){: .aligned-center}
+
+设两面镜子对振幅的反射和透射系数分别为$r$和$t$，则其满足$r^2+t^2=1$，其中$r^2$和$t^2$表示能量的反射和透射系数，记为$R$和$T$。
+
+按照和迈克耳孙干涉仪中空气薄膜干涉相同的推理，相邻两束光线的光程差和相位差分别为：
+$$\delta = 2nl\cos\theta, \; \varphi = \frac{4\pi l \cos \theta}{\lambda}$$
+
+通过将光屏放置在无穷远处，或通过凸透镜聚光成像，可形成圆环状的干涉图案。
+
+干涉图案上一点的振幅可视为无穷束等倾的平行光的振幅之和：
+$$\underline{a}(M) = \underline{a_0} T(1 + R e^{i\varphi} + R^2 e^{2i\varphi} + \cdots)$$
+这个级数绝对收敛，因此该振幅是良定义的，利用等比数列求和公式：
+$$\underline{a}(M) = \underline{a_0}T \frac{1}{1 - R e^{i \varphi}}$$
+从而其光照强度为：
+$$\mathcal E(M) = |\underline{a}(M)|^2 = \frac{\mathcal E_0}{1 + \frac{4R}{(1-R)^2} \sin^2 \frac{\varphi}{2}}$$
+
+这个函数的变化非常剧烈，在接近$2 k \pi$时快速达到最大值，而在$(2k+1)\pi$时取最小值，最小值非常贴近零，从而在$2k\pi$处形成非常尖锐的尖峰。
+这意味着这种干涉仪的分辨力极强。
+钠灯的两条波长相差仅$0.6$纳米的谱线在法布里-珀罗干涉仪上也可清晰地分辨出来，如下图所示：
+
+![](/assets/optics/fabry-perot.png "Octave模拟的结果，图中使用了两种颜色的光来区分两种波长"){: .align-center}
+
+干涉仪的分辨率由两个变量表征：尖峰宽度和分辨力。
+
+尖峰宽度是函数$\frac{\mathcal E}{\mathcal E\_0}$在$2k\pi$附近最大值尖峰的宽度，用函数值从$1$降至$\frac{1}{2}$时相位差的两倍$\Delta \varphi$表示，定义为：
+$$\mathcal F = \frac{2\pi}{\Delta \varphi}$$
+当$R$逼近$1$时，其值近似为$\pi \frac{\sqrt{R}}{1-R}$。
+
+分辨力定义为
+$$\mathcal {PR} = p \mathcal F$$
+其中$p = \frac{2 l \cos i}{\lambda}$表示干涉级数。
+
+### 干涉滤镜
+
+利用法布里-珀罗干涉仪的原理，可以制成非常精确的滤色镜。
+若光线垂直入射，那么相邻两束光线的光程差即为：
+$$\delta = 2 n_{air} l = p \lambda_0$$
+从而通过适当地选取两片玻片的间距，即可实现滤色。
+
+如选择$e = 0.546 \mathrm{\mu m}$，那么干涉相长的波长位于1.09微米、546纳米、364纳米等等，而其中位于可见光的只有$546$纳米的绿光。
+
+这种干涉滤镜往往会附有一层着色的玻璃板来加强效果，然而其实际的工作原理和玻璃板的颜色关系不大。
