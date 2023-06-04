@@ -96,7 +96,7 @@ $$E = h \nu = \hbar \omega = pc \iff p = \frac{h}{\lambda} = \hbar k$$
 
 1924年，路易·德·布罗意在其博士论文中指出，任何物质都具有波动性，这种波称为物质波或德布罗意波。
 
-德布罗意认为，能量为$E$，动量为$p$的物质的频率为$\nu = \frac{E}{h}$，波长为$\lambda = \frac{h}{p}$
+德布罗意认为，能量为$E$，动量为$p$的物质的频率为$\nu = \frac{E}{h}$，波长为$\lambda = \frac{h}{p}$。
 
 在量子力学中，各种复杂的波的研究占据重要地位，而傅里叶变换告诉我们，任何复杂的波都可以分解为平面谐波的叠加。
 因此，我们直接借用之前的概念，给出波的表示法。
@@ -187,6 +187,8 @@ $$\psi(\vec r, t) = \frac{1}{(2\pi\hbar)^{3/2}} \int \phi(\vec p) e^{i(\vec p \c
 $$\frac{\mathrm d \psi}{\mathrm d x} = \frac{1}{\sqrt{2\pi\hbar}} \int \phi(\vec p) \frac{ip}{\hbar} e^{ipx/\hbar} \mathrm d p$$
 注意到该函数对位置求导相当于在傅里叶变换的函数上乘$\frac{ip}{\hbar}$，这与此前学习的傅里叶变换和拉普拉斯变换的性质相同。
 
+这里我们可以看出，对一般的信号而言，傅里叶变换实现了时域和频域的变换，而对波函数，傅里叶变换实现了位置空间和动量空间的转换。
+
 ### 动量的分布
 
 首先从简单的方面入手，尝试计算位置的期望：
@@ -265,3 +267,90 @@ $$\hat L = \hat r \times \hat p = \frac{\hbar}{i} \vec r \times \nabla$$
 在上面的关系中，我们不难看出，可观测量和对应的物理量一样，具有很多可以运算的性质。
 然而，可观测量以及量子力学中使用的期望，究竟在什么程度上和经典力学的物理量对应呢？
 这个问题需要从薛定谔方程的解中寻找答案。
+
+## 自由粒子的薛定谔方程
+
+自由粒子指不受力且势能为零的粒子，此时其薛定谔方程可写为：
+$$i \hbar \frac{\partial \psi(x,t)}{\partial t} = \frac{\hbar^2}{2m} \frac{\partial^2 \psi^2(x,t)}{\partial x^2}$$
+
+我们考虑利用傅里叶变换在动量空间求解这个偏微分方程：
+$$
+\begin{aligned}
+\psi(x,t) &= \frac{1}{\sqrt{2\pi\hbar}} \int \phi(p) e^{-ipx/\hbar} \mathrm d p \\
+\frac{\partial \psi(x,t)}{\partial x} &= \frac{1}{\sqrt{2\pi\hbar}} \int \phi(p) \left( -\frac{ip}{\hbar} \right) e^{-ipx/\hbar} \mathrm d p \\
+\frac{\partial^2 \psi(x,t)}{\partial x^2} &= \frac{1}{\sqrt{2\pi\hbar}} \int \phi(p) \left( -\frac{p^2}{\hbar^2} \right) e^{-ipx/\hbar} \mathrm d p
+\end{aligned}
+$$
+这意味着：
+$$\mathcal F[\frac{\partial^2 \psi(x,t)}{\partial x^2}] = \left( -\frac{p^2}{\hbar^2} \right) \phi(p,t)$$
+注意到我们只对位置变量$x$进行傅里叶变换。
+把方程两边同时进行关于位置变量的傅里叶变换：
+$$i\hbar \frac{\partial \phi(p,t)}{\partial t} = \left( -\frac{\hbar^2}{2m} \right) \left( -\frac{p^2}{\hbar^2} \right) \phi(p,t)$$
+化简可得：
+$$i \hbar \frac{\partial \phi(p,t)}{\partial t} = \frac{p^2}{2m} \phi(p,t)$$
+从而其解为：
+$$\phi(p,t) = \phi(p,0) e^{i \frac{p^2}{2m\hbar}t}$$
+再进行傅里叶逆变换，可得：
+$$\psi(x,t) = \frac{1}{\sqrt{2\pi\hbar}} \int \phi(p,0) e^{\frac{i}{\hbar}(px-\frac{p^2}{2m}t)} \mathrm d p$$
+
+### 经典力学中的动量
+
+在经典力学中，我们有：
+$$p = m \frac{\mathrm d x}{\mathrm d t}$$
+那么在量子力学中，动量和位置的期望是否仍然满足这一关系？
+
+我们有：
+$$
+\begin{aligned}
+m \frac{\mathrm d \langle x \rangle}{\mathrm d t} 
+&= m \frac{\mathrm d}{\mathrm d t} \int \hat x \psi^*(x,t) \psi(x,t) \mathrm d x \\
+&= m (\int \hat x \psi^* \frac{\mathrm d \psi}{\mathrm d t} \mathrm d x + \int \hat x \frac{\mathrm d \psi^*}{\mathrm d t} \psi \mathrm d x) \\ 
+\end{aligned}
+$$
+代入薛定谔方程，分部积分然后化简，可得原式确实等于$\langle p \rangle$。
+现在，又根据帕塞瓦尔等式，有：
+$$\langle p \rangle = \int p |\phi(p,t)|^2 = \int p |\phi(0,t)|^2 = p_0$$
+从而自由粒子的动量守恒，这与经典力学中的动量吻合。
+
+## 常势能下粒子的基态
+
+具有势能的粒子的薛定谔方程具有以下形式：
+$$i\hbar\frac{\partial \psi}{\partial t} = \frac{\hat p^2}{2m} \psi + V(\hat {\vec r}, t) \psi$$
+等式右边具有一个熟悉的结构，我们可以单独研究它。
+
+### 哈密顿量
+
+粒子的**哈密顿量**是一个算子，是表征了粒子动能和势能的总和的可观测量：
+$$\hat H = \frac{\hat p^2}{2m} + V(\hat{\vec r}, t)$$
+从而薛定谔方程可写为：
+$$i\hbar\frac{\partial \psi}{\partial t} = \hat H \psi$$
+{: .definition}
+
+哈密顿量是一个把线性函数映为线性函数的厄米函数。
+厄米函数的特征值总为实数，因此哈密顿量的特征值都是实数，这些特征值即为粒子的*基态能量*。
+
+设哈密顿量的一个特征值和对应的特征向量为$E\_a$和$\psi\_a$，满足：
+$$\hat H \psi_a = E_a \psi_a$$
+其中特征向量$\psi\_a$的列向量也称为其*本征态*。
+则其对应的薛定谔方程和其解为：
+$$i \hbar \frac{\partial \psi_a}{\partial t} = E_a \psi_a \iff \psi_a(x,t) = \psi_a(x, 0)e^{i E_a t/\hbar}$$
+注意到其模方，即概率密度，与时间无关，从而其任何可观测量与时间无关。
+{: .proposition}
+
+我们在代数中已经证明，有限维的厄米函数一定可以对角化，从而其特征向量张成的空间就是全空间。
+对无限维的厄米函数，如哈密顿量，这一命题依然（部分）成立，因此哈密顿量的特征向量构成了解的一组基底，而薛定谔方程的解总是可以表示为这些特征向量的线性叠加。
+
+薛定谔方程的解可以表示为：
+$$\psi(x,t) = \sum_a C_a \psi_a(x) e^{-iE_a t/\hbar}$$
+其中$\psi\_a(x)$表示$\psi\_a(x,0)$。
+{: .proposition}
+
+这为我们求解薛定谔方程提供了有力的武器。
+
+### 势差
+
+### 势垒
+
+### 无限方势阱
+
+### 有限方势阱
