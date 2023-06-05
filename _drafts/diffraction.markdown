@@ -12,7 +12,49 @@ categories: "光学"
 
 ### 惠更斯原理的数学表述
 
+设在笛卡尔坐标系中OXY平面上放置有一带有孔洞的不透光平面，其中的透光部分记为$\Sigma$。
+在Z轴负半轴上某处存在一点光源$S$，发出波矢为$k\_0$、振幅为$A\_0$的单色光。
+记$P$为平面上一点，点周围的面积元为$\mathrm d \sigma$。整个系统放置在折射率为$1$的均匀介质中。
+**惠更斯-菲涅尔原理**说明，在光屏后任意一点的振幅为：
+$$\underline{A}(M) = K \iint_\Sigma \frac{A_0}{SP} \frac{1}{PM} e^{-i (k_0 \vec u) \cdot \vec{SP}} e^{-i (k_0 \vec{u^\prime}) \cdot \vec{PM}} \mathrm d \sigma(P)$$
+其中$K$是一个常数。
+{: .proposition}
+
+和干涉一样，惠更斯原理对振幅而非光强求和。
+我们将次波视作相干的。
+
+首先计算从$S$出发到透光部分一点$P$的振幅，注意这个波是球面波：
+$$\underline A_s (p) = \frac{A_0}{SP} e^{-i(k_0 \vec u) \cdot \vec{SP}}$$
+然后考虑次波，注意微元符号：
+$$\mathrm d \underline A_p (M) = \frac{K A_s}{PM} e^{-i (k_0 \vec u^\prime) \cdot \vec{PM}} \mathrm d \sigma(P)$$
+从而：
+$$
+\begin{aligned}
+A(M) &= \iint_\Sigma \mathrm d A_p (M) \\
+&= K \iint_\Sigma \frac{A_0}{SP \cdot PM} e^{-i(k_0 \vec u) \cdot \vec{SP}} e^{-i(k_0 \vec u^\prime) \cdot \vec{PM}} \mathrm d \sigma(P)
+\end{aligned}
+$$
+{: .proof}
+
+亥姆霍次衍射理论说明常数$K = \frac{i}{\lambda}$，此处不对此加以证明。
+
 ### 衍射的不同类型
+
+为了区分不同的衍射类型，我们定义**菲涅耳数**：
+$$\mathcal F = \frac{a^2}{L \lambda}$$
+其中$a$表示产生衍射的物体的特征大小，比如圆孔的半径；
+$L$表示观察衍射的光屏距离衍射物体的距离；
+$\lambda$表示光的波长。 \
+$F \gg 1$时，认为*不发生衍射*；
+$F \approx 1$时，认为发生近场衍射，又称*菲涅尔衍射*；
+$F \ll 1$时，认为发生远场衍射，又称*夫琅禾费衍射*。
+{: .definition}
+
+我们只研究夫琅禾费衍射。
+
+对于远场的情形，我们可以使用凸透镜来将平行光聚焦在光屏上。
+由于成像的是平行光，这相当于光屏距离物体无穷远。
+因此通常来说，当系统具有一定的光学能力（如含有平面镜或透镜时），我们主要研究夫琅禾费衍射，否则研究菲涅尔衍射。
 
 ## 夫琅禾费衍射
 
