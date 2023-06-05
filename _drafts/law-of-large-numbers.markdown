@@ -163,3 +163,89 @@ $$\mathbf P(\bigcup_{k \ge 1} \bigcap_{n>0} \bigcup_{p \ge n} \{ |X_n| \ge \frac
 $$\mathbf P(\bigcap_{k \ge 1} \bigcup_{n>0} \bigcap_{p \ge n} \{ |X_n| < \frac{1}{k} \}) = 1$$
 即$\mathbf P(C) = 1$。
 {: .proof}
+
+设$(\varepsilon\_n)\_{n \in \mathbb N}$为一列收敛至零的实数列，且一列离散随机变量$(X\_n)$满足：
+$$\sum_{n \in \mathbb N} \mathbf P(|X_n| \ge \varepsilon_n) < \infty$$
+那么$X\_n$几乎必然收敛至零。
+{: .proposition}
+
+这个命题意味着，若我们能够将$\vert X\_n \vert$限制地足够小，那么其就能几乎必然收敛至零。
+
+## 强大数定律
+
+### 强大数定律的特殊情况
+
+我们首先证明一个比较容易的情况。
+
+设$(X\_n)$为一列独立同分布的离散随机变量，且：
+$$\exists K \ge 0, \; \forall n, \; \mathbf E X_n^4 \le K$$
+设：
+$$S_n = (X_1 + \cdots + X_n)$$
+则$\frac{S\_n}{n} - \mathbf E X$几乎必然收敛至零。
+{: .proposition}
+
+首先，我们只研究期望为零的随机变量，设$X^\prime\_n = X\_n - \mathbf E X\_n$。
+我们马上证明这个变量满足题设。
+首先不难验证这一列变量也是独立同分布的，因为其只是为每个变量减去一个常数。
+然后，我们验证其四次方有界：
+$$
+\begin{aligned}
+\mathbf E(X_n^\prime)^4 &\le \mathbf E(|X_n| + | \mathbf E X_n|)^4 \\
+&\le 2^4 \mathbf E \max (|X_n|, |\mathbf E X_n|)^4 \\
+&\le 2^4 \mathbf E (X_n^4 + (\mathbf E X_n)^4) \\
+&\le 2^4 (K^4 + (\mathbf E X)^4) \le K^\prime
+\end{aligned}
+$$
+接下来我们只需要求出$S\_n$的上界即可。
+$$\mathbf E(S_n^4) = \mathbf E ((X_1 + \cdots + X_n)^4) = \sum_{i,j,k,l} \mathbf E(X_i X_j X_k X_l)$$
+设$i \not \in \\\{j,k,l\\\}$，那么由独立性，可知：
+$$\mathbf E (X_i X_j X_k X_l) = \mathbf E X_i \mathbf E(X_j X_k X_l) = 0$$
+从而这个乘法展开后只有两种情况：
+$$\mathbf E(S_n^4) = \sum_{1\le i \le n} \mathbf E(X_i^4) + \binom{4}{2} \sum_{1 \le i < j \le n} \mathbf E(X_i^2 X_j^2)$$
+利用琴生不等式（或方差非负）：
+$$E(X_i^4) \ge (\mathbf E (X_i^2))^2 \implies \mathbf E(X_i^2) \le \sqrt{\mathbf E(X_i^4)} \le \sqrt{K}$$
+从而：
+$$ \mathbf E(X_i^2 X_j^2) \le K$$
+原等式可放缩为：
+$$\mathbf E(S_n^4) \le n K + 3 n(n-1) K \le 3 n^2 K$$
+利用马尔可夫不等式：
+$$\mathbf P(|\frac{S_n}{n}| \ge \varepsilon) = \mathbf P (|\frac{S_n}{n}|^4 \ge \varepsilon^4) \le \frac{\mathbf E(\frac{S_n}{n})^4}{\varepsilon^4} \le \frac{3K}{n^2 \varepsilon^4}$$
+从而$\sum \mathbf P(|\frac{S_n}{n}| \ge \varepsilon) < +\infty$，因此其几乎一定收敛至零。
+{: .proof}
+
+### 强大数定律
+
+（强大数定律）设$(X\_n)$为一列*两两独立*的同分布离散随机变量，且具有二阶矩，那么
+$$\frac{S_n}{n} - \mathbf E X \xrightarrow{\text{a.s.}} 0$$
+{: .theorem}
+
+和弱大数定律一样，强大数定律并不要求具有二阶矩，这里加入这个条件只是为了降低证明难度。
+{: .remark}
+
+我们知道，一个实值函数可以写成其正部分和负部分之和：
+$$X_n = X_n^+ - X_n^-, \; |X_n| = X_n^+ + X_n^-$$
+注意到$X\_n^+$和$X\_n^-$都是满足题设的正随机变量，我们可以只对正随机变量证明这个命题，因此我们设$X\_n \ge 0$。
+设$\varepsilon > 0$，构造函数：
+$$\varphi(n) = \lfloor (1+\varepsilon)^n \rfloor + 1$$
+满足：
+$$(1+\varepsilon)^n \le \varphi(n) \le (1+\varepsilon)^n + 1$$
+利用切比雪夫不等式：
+$$
+\begin{aligned}
+\mathbf P \left( \left|\frac{S_{\varphi(n)}}{\varphi(n)} - \mathbf E X_1 \right| \ge \frac{1}{(1+\varepsilon)^\frac{n}{4}} \right) 
+&\le \mathbf V \left(\frac{S_{\varphi(n)}}{\varphi(n)}\right) (1+\varepsilon)^{n/2} \\
+&= \mathbf V(S_{\varphi(n)}) \frac{(1+\varepsilon)^{n/2}}{\varphi^2(n)} \\
+&= \sum_{i=1}^{\varphi(n)} \mathbf V(X_i) \frac{(1+\varepsilon)^{n/2}}{\varphi^2(n)} \\
+&= \mathbf V(X_1) \frac{(1+\varepsilon)^{n/2}}{\varphi(n)} \\
+&\le \mathbf V(X_1) (1+\varepsilon)^{-n/2}
+\end{aligned}
+$$
+从而：
+$$\sum \mathbf P \left( \left|\frac{S_{\varphi(n)}}{\varphi(n)} - \mathbf E X_1 \right| \ge \frac{1}{(1+\varepsilon)^\frac{n}{4}} \right) \le +\infty$$
+从而：
+$$\frac{S_{\varphi(n)}}{\varphi(n)} - \mathbf E X_1 \xrightarrow{\text{a.s.}} 0$$
+现在，我们注意到$\forall k \in [\varphi(n), \varphi(n+1)]$，都有：
+$$\frac{S_\varphi(n)}{\varphi(n+1)} \le \frac{S_k}{k} \le \frac{S_\varphi(n+1)}{\varphi(n)}$$
+简单的变换之后，我们可以用$\frac{S\_\varphi(n)}{\varphi(n)}$和$\frac{S\_\varphi(n+1)}{\varphi(n+1)}$限制$\frac{S\_k}{k}$，从而使其也满足这个不等式，因此也几乎必然收敛。
+这就完成了对原命题的证明。
+{: .proof}
