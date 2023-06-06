@@ -314,7 +314,9 @@ $$\langle p \rangle = \int p |\phi(p,t)|^2 = \int p |\phi(0,t)|^2 = p_0$$
 
 ## 常势能下粒子的基态
 
-具有势能的粒子的薛定谔方程具有以下形式：
+若我们约定波函数具有：
+$$\psi(x,t) = A \exp [\textcolor{red}{-}i(\omega t - k x)]$$
+的形式，那么具有势能的粒子的薛定谔方程具有以下形式：
 $$i\hbar\frac{\partial \psi}{\partial t} = \frac{\hat p^2}{2m} \psi + V(\hat {\vec r}, t) \psi$$
 等式右边具有一个熟悉的结构，我们可以单独研究它。
 
@@ -331,11 +333,14 @@ $$i\hbar\frac{\partial \psi}{\partial t} = \hat H \psi$$
 
 设哈密顿量的一个特征值和对应的特征向量为$E\_a$和$\psi\_a$，满足：
 $$\hat H \psi_a = E_a \psi_a$$
-其中特征向量$\psi\_a$的列向量也称为其*本征态*。
+其中特征向量$\psi\_a$的列向量也称为其*本征态*（Eigenstate，即特征态）。
 则其对应的薛定谔方程和其解为：
 $$i \hbar \frac{\partial \psi_a}{\partial t} = E_a \psi_a \iff \psi_a(x,t) = \psi_a(x, 0)e^{i E_a t/\hbar}$$
 注意到其模方，即概率密度，与时间无关，从而其任何可观测量与时间无关。
 {: .proposition}
+
+从偏微分方程的角度上看，这可以视作是应用分离变量法解方程：空间变量留在$\psi\_a$中，时间变量由$E\_a$表示了。
+因此，$\psi\_a(x, t=0)$也可以叫做静止态，因为其求解时与时间无关。
 
 我们在代数中已经证明，有限维的厄米函数一定可以对角化，从而其特征向量张成的空间就是全空间。
 对无限维的厄米函数，如哈密顿量，这一命题依然（部分）成立，因此哈密顿量的特征向量构成了解的一组基底，而薛定谔方程的解总是可以表示为这些特征向量的线性叠加。
@@ -347,10 +352,122 @@ $$\psi(x,t) = \sum_a C_a \psi_a(x) e^{-iE_a t/\hbar}$$
 
 这为我们求解薛定谔方程提供了有力的武器。
 
+#### 波函数的连续性
+
+我们假设势能函数$V(x)$存在一处断点：
+$$\forall \varepsilon > 0, \; V(x_0 - \varepsilon) \neq V(x_0 + \varepsilon)$$
+这种断点虽然在现实中不能存在，但可以表征势能的剧烈变化。
+我们希望研究此时波函数的连续性。
+
+由于波函数有界，其在$x\_0$处也是如此。
+现在考虑在$x\_0 - \varepsilon$和$x\_0 + \varepsilon$之间积分，可得：
+$$\psi^\prime (x_0 + \varepsilon) - \psi^\prime (x_0 - \varepsilon) + \frac{2m}{\hbar^2} \int_{x_0+\varepsilon}^{x_0-\varepsilon} (E-V) \psi(x) \mathrm d x = 0$$
+从而当$\varepsilon$趋于零时，波函数的偏导之间的差距趋于零。
+
+这意味着即使在势能的（有限）断点处，*波函数的导数存在且连续*，从而*波函数连续*。
+
+### 常势
+
+常势能下的不含时薛定谔方程可写为：
+$$-\frac{\hbar^2}{2m}\psi^{\prime\prime}(x) + V \psi(x) = E \psi(x)$$
+其解为：
+$$\psi(x) = A e^{ipx/\hbar} + B e^{-ipx/\hbar}, \; \frac{p^2}{2m} = E-V$$
+
+若$E - V > 0$，那么说明粒子的定态能量大于势能，从而能够在此处稳定存在，正如经典力学中所示。
+此时其波函数可视为两个平面波的叠加。
+
+若$E - V < 0$，那么其能量小于势能，而粒子的动量为复数。
+此时的波函数是两个指数函数的和。
+此时，量子力学和经典力学的不同就展现了出来：即使粒子的能量小于进入该区域所需的势能，粒子仍可以穿过该区域。
+
 ### 势差
+
+现在让我们研究下面这个势能函数：
+$$
+V(x) = \left\{ 
+    \begin{aligned}
+        0, &\; x \le 0 \\
+        V_0, &\; x > 0
+    \end{aligned}
+\right.
+$$
+这个函数在零处存在端点，但是我们已经证明其波函数依然是连续的。
+
+按照之前的思路，我们通过寻找定态解，即$\hat H \psi = E \psi$的解来构造所有解。
+
+首先在$x \le 0$处，我们有：
+$$\frac{\hbar^2}{2m}\psi^{\prime\prime}(x) + E\psi(x) = 0$$
+其解为：
+$$\psi_-(x) = e^{ikx} + \alpha e^{-ikx}, \; k = \frac{\sqrt{2mE}}{\hbar}$$
+
+然后我们考虑$x > 0$处的解，有：
+$$\frac{\hbar^2}{2m}\psi^{\prime\prime}(x) + (E - V_0)\psi(x) = 0$$
+注意分类讨论此时$E$和$V\_0$的大小关系。
+
+---
+
+首先我们设$E < V\_0$，这意味着粒子的能量不足以进入该势场。
+此时其解为：
+$$\psi_+(x) = \beta e^{- \kappa x}, \; \kappa = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$$
+
+利用波函数及其导数的连续性，联立方程，可得：
+$$\left\{ \begin{aligned} 1 + \alpha & = \beta \\ ik(1-\alpha) &= -\beta\kappa \end{aligned} \right.$$
+从而可得：
+$$\alpha = \frac{k - i \kappa}{k + i \kappa}, \; \beta=\frac{2k}{k+i\kappa}$$
+这两个系数分别代表了反射波和透射波的振幅与入射波的关系，因此也被称为反射和透射系数。
+
+---
+
+现在我们设$E > V\_0$，同样的计算给出：
+$$\psi_+(x) = \beta e^{ik^\prime x}, \; k^\prime = \frac{\sqrt{2m(E - V_0)}}{\hbar}$$
+
+同样利用连续性，可得：
+$$\alpha = \frac{k-k^\prime}{k+k^\prime}, \; \beta = \frac{2k}{k+k^\prime}$$
+
+---
+
+根据以上的讨论，我们可以发现，与经典力学不同，量子力学中的波函数，即使能量小于势能所需，依然可能穿过势场；
+相对地，即使能量大于势能所需，仍然可能在原来一侧留下反射波，而不一定全部进入势场。
 
 ### 势垒
 
+接下来我们研究如下的势能函数：
+$$
+V(x) = \left\{ 
+    \begin{aligned}
+        0   &, \; x \le 0 \\
+        V_0 &, \; 0 < x \le a \\
+        0   &, \; a < x
+    \end{aligned}
+\right.
+$$
+我们直接假设$V\_0 > E$，那么其解具有以下的形式：
+$$
+\psi(x) = \left\{
+    \begin{aligned}
+    e^{ikx} + \alpha e^{-ikx} &, \; x \le 0 \\
+    \beta e^{-\kappa x} + \gamma e^{\kappa x} &, \; 0 < x \le a \\
+    \delta e^{ikx} &, \; a < x
+    \end{aligned}
+\right.
+$$
+其中：
+$$k = \frac{\sqrt{2mE}}{\hbar}, \; \kappa = \frac{\sqrt{2m(E-V_0)}}{\hbar}$$
+
+运用在$x=0$处的连续性，可得：
+$$1 + \alpha = \beta + \gamma, \; ik(1-\alpha) = -\beta \kappa + \gamma \kappa$$
+
+运用在$x=a$处的连续性，可得：
+$$\beta e^{-\kappa a} + \gamma e^{\kappa a} = \delta e^{i k a}, \; \kappa (-\beta e^{-\kappa a} + \gamma e^{\kappa a}) = ik \delta e^{ika}$$
+
+代入计算，可得：
+$$\delta = \frac{i k \kappa e^{-ika}}{(k + i \kappa)^2 e^{\kappa a} - (k - i \kappa)^2 e^{-\kappa a}}$$
+
+这意味着当势垒足够薄（$\kappa a$足够小）时，粒子将有概率能够在另一侧出现，即使其能量根本不足以穿透势垒。
+这种效应就被称为隧道效应或隧穿效应（Tunneling effect）。
+
+<!--
 ### 无限方势阱
 
 ### 有限方势阱
+-->
