@@ -588,3 +588,81 @@ $$\exists x \in F^\perp, \quad v(x) = \lambda x$$
 从而，若$u$为自伴算子，则存在由其特征向量构成的标准正交基底。
 若$H$为厄米矩阵，则存在幺正矩阵$U$满足：
 $$U^* H U = \mathrm{diag}(\lambda_1, \dots, \lambda_n), \; \lambda_i \in \mathbb R$$
+
+设$E$为一有限维复空间，而$\varphi\_0$、$\varphi$为两*厄米*半双线性型，其中$\varphi\_0$是正定的。
+则存在一组基底$\mathcal B$，使其对$\varphi\_0$是*标准正交的*，而对$\varphi$是正交的。
+{: .proposition}
+
+$\varphi\_0$是标准正交的，从而能够构成$E$的一个内积。
+现在我们直接记$\varphi\_0(x,y) = (x,y)$。
+设$\gamma, \gamma\_\varphi$分别为两个半双线性型对应的从$E$到$E^*$的半线性映射，即：
+$$\gamma(x) = \varphi_0(x,\cdot), \; \gamma_\varphi(x) = \varphi(x, \cdot)$$
+已知$\varphi_0$是正定的，从而是非退化的，从而$\gamma$是双射。
+现在定义$u: E \to E$，满足：
+$$\forall (x,y) \in E^2, \; (u(x),y) = \varphi_0(u(x), y) = \varphi(x,y)$$
+这意味着：
+$$\begin{multline}
+\gamma(u(x))(y) = \gamma_\varphi(x)(y) \\
+\iff \gamma(u(x)) = \gamma_\varphi(x) \iff \gamma \circ u = \gamma_\varphi \\
+\iff u = \gamma^{-1} \circ \gamma_\varphi
+\end{multline}$$
+由于$\gamma$和$\gamma_\varphi$均为共轭线性的，因此$u$是线性的。
+不难观察到$u$是自伴的：
+$$(u(x), y) = \varphi(x,y) = \overline{\varphi(y,x)} = \overline{(u(y),x)} = (x, u(y))$$
+从而存在一组正交标准基底使其可以被对角化：
+$$\mathcal B = \{e_1, \cdots, e_n \}, \quad u(e_i) = \lambda_i e_i, \lambda_i \in \mathbb R$$
+现在记
+$$x_i = \sum_{i=1}^n \xi_i e_i, \; y_i = \sum_{i=1}^n \eta_i e_i$$
+从而
+$$\varphi(x,y) = (u(x),y) = \left(\sum_{i=1}^n \xi_i e_i, \sum_{i=1}^n \eta_i e_i\right) = \sum_{i=1}^n \lambda_i \overline{\xi_i} \eta_i$$
+从而在这组基底对于$\varphi$也是正交的。
+特别地，在这组基底下，$\varphi_0$的矩阵为单位阵，而$\varphi$的矩阵为对角阵，对角线上的值即为$u$的特征值。
+{: .proof}
+
+### 正规算子
+
+设$E$为一厄米空间，称其上的线性变换$u$为**正规算子**，若其与其伴随算子可交换：
+$$u \circ u^* = u^* \circ u$$
+{: .definition}
+
+酉算子和厄米算子都是正规算子的特殊情况。
+
+厄米空间上的一个线性算子是正规算子，当且仅当其在一组正交标准基底下的矩阵是**正规矩阵**，即：
+$$u \circ u^* = u^* \circ u \iff MM^* = M^*M$$
+{: .proposition}
+
+记$u$为厄米空间$E$上的一个正规算子，则其特征值$\lambda$对应的特征子空间$F = \ker(u - \lambda \mathrm{Id})$的正交补空间$F^\perp$是$u$的不变子空间。
+{: .proposition}
+
+设$x \in F$，则
+$$ u(u^*(x)) = u^*(u(x)) = u^*(\lambda x) = \lambda u^*(x) $$
+从而$u^\*(x)$也是$\lambda$对应的一个特征向量，因此$u^\*(x) \in F$。
+从而$F$也是$u^*$的不变子空间。（实际上因为$u$和$u^\*$交换，从而其一个的特征子空间一定是另一个的不变子空间。）
+从而$F^\perp$是$u^{\*\*} = u$的不变子空间。
+{: .proof}
+
+厄米空间中的正规算子的特征向量可以组成一组标准正交基底，从而其可被对角化。
+{: .theorem}
+
+利用归纳法。首先，对一维空间，显然。
+对$n$维空间，注意到复空间中矩阵一定有至少一个特征值，设其为$\lambda$。
+则其特征子空间$F$至少有一维，其正交补空间$F^\perp$至多有$n-1$维。
+利用归纳假设，将其限制在不变子空间$F^\perp$上，映射$u\_{F^\perp}$的维数小于$n$，因此满足题设，设其特征值构成的正交标准基底为$\\\{ e\_2, \dots, e\_n \\\}$。
+对特征子空间$F$，任取一个特征向量，归一化为正交向量$e\_1$。
+不难验证基底：
+$$\mathcal B = \{ e_1, e_2, \dots, e_n \}$$
+即为所求。
+{: .proof}
+
+$u$为正规算子，当且仅当其能在一组正交标准基底下对角化。
+{: .proposition}
+
+前推后和前述定理完全一致，只考虑后推前。
+设在一组标准正交基底下，$u$可对角化为：
+$$D = \begin{pmatrix}
+\lambda_1 & \dots & 0 \\
+\vdots & \ddots & \vdots \\
+0 & \dots & \lambda_n
+\end{pmatrix}, \lambda_i \in \mathbb R$$
+那么显然$\overline{D}$是$u^*$的矩阵，且两者都是对角矩阵，因此可交换，因此$u$是正规的。
+{: .proof}
