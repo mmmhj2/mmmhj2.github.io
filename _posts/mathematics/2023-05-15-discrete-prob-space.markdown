@@ -442,6 +442,36 @@ $\mathcal L\_d^r (\Omega)$是$\mathcal L\_d^{r-1} (\Omega)$的子空间。
 这意味着具有方差的随机变量一定具有期望。
 {: .proposition}
 
+### 几个常见不等式
+
+本章中我们将介绍几个常见的不等式，其证明和有限情况大致相同，因此不再重复。
+
+（均值不等式）设$X$为一个具有期望的离散随机变量，且非几乎必然为常数，那么：
+$$\inf X < \mathbf E(X) < \sup X$$
+{: .proposition}
+
+注意到$\sup X - X > 0$，那么其期望必然大于零，从而证明了右侧不等式。
+用$-X$替换$X$即可证明另一侧。
+{: .proof}
+
+（柯西-施瓦茨不等式）设$X,Y$为二具有二阶矩的离散随机变量，则：
+$$|\mathbf E (XY)| \le \sqrt{\mathbf E(X^2) \mathbf E(Y^2)}$$
+{: .proposition}
+
+（琴生不等式）设$I$为一非空区间，$\phi: I \to \mathbb R$为一凸（convex）函数，则：
+$$\phi(\mathbf E \; X) \le \mathbf E (\phi(X))$$
+{: .proposition}
+
+（马尔可夫不等式）设$X$为一具有期望的*正*离散随机变量，则：
+$$\mathbf P(X \ge t) \le \frac{\mathbf E \; X}{t}, \quad \forall t > 0$$
+更一般地，对于一个非空区间$I$上的*增函数*$\phi$，那么：
+$$\mathbf P(X \ge t) \le \frac{\mathbf E (\phi(X))}{\phi(t)}, \quad \forall t > 0$$
+{: .proposition}
+
+（切比雪夫不等式）设$X$是一个具有二阶矩的离散随机变量，那么：
+$$\mathbf P(|X - \mathbf E \; X| \ge t) \le \frac{\mathbf V(X)}{t^2}, \quad \forall t > 0$$
+{: .proposition}
+
 ## 概率生成函数
 
 本节中我们将研究离散概率空间$(\Omega, \mathcal A, \mathbf P)$上的离散随机变量的生成函数。

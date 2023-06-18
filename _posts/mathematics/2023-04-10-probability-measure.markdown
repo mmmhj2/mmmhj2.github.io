@@ -65,6 +65,7 @@ $$
     &X(\Omega) \text{至多可数}
 \end{aligned}
 $$
+若映射$X$满足上一条件，则称$X$是$\mathcal A$-可测的。
 {: .definition}
 
 根据定义，有限的随机变量是离散的。
@@ -74,6 +75,24 @@ $$
 \forall x \in E, \quad X^{-1}(\{x\}) = \{ X = x \} \in \mathcal A
 $$
 {: .proposition}
+
+### σ-代数的原子
+
+设$\mathcal D = \\\{ A\_i \in \mathcal P(\Omega), i \in I \\\}$为$\Omega$的一个至多可数的分划，那么$\sigma(\mathcal D)$是所有形如$\cup\_{i \in J} A\_i, J \subset I$的集合构成的集合。 \
+反之，若$\Omega$至多可数，$\mathcal A$为其上一个σ-代数，那么存在唯一的分划$\mathcal D$满足$\sigma(\mathcal D) = \mathcal A$
+这种分划$\mathcal D$称为这个σ-代数的**原子**。
+{: .proposition}
+
+设$(\Omega, \mathcal A)$为一可测空间，则：\
+设$X : \Omega \to E$为一离散随机变量，记
+$$\mathcal D_X = \{ \{X = x\}, \; x \in X(\Omega) \}$$
+那么：
+$$\sigma(\mathcal D_X) = \sigma(X) = \{ X^{-1}(B), \; B \in \mathcal P (E) \}$$
+这个σ-代数称为X生成的代数。 \
+反之，设$\mathcal D$为$\Omega$的一个至多可数的分划，那么存在唯一的离散随机变量$X$，使$\sigma(X) = \sigma(\mathcal D)$
+{: .proposition}
+
+这些命题的证明和有限情况下的别无二致。
 
 ## 概率测度
 
@@ -182,7 +201,7 @@ $$
 然后由归纳法即可得证。
 {: .proof}
 
-零测事件的并集仍是零测事件。
+有限或可数个零测事件的并集仍是零测事件。
 {: .proposition}
 
 这个命题看上去是对性质的简单推广，实际上却使用较为复杂的技巧来用有穷的情况推知无穷的情况。
