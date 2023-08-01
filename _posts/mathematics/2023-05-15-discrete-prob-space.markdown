@@ -478,7 +478,7 @@ $$\mathbf P(|X - \mathbf E \; X| \ge t) \le \frac{\mathbf V(X)}{t^2}, \quad \for
 
 ### 生成函数的定义与基本性质
 
-称离散随机变量$X: \Omega \to \mathbb N$的**生成函数**（也称*母函数*）为：
+称离散随机变量$X: \Omega \to \mathbb N$的**生成函数**（也称*母函数*）定义为：
 $$
 G_X: \; [-1, 1] \to \mathbb R; \quad t \mapsto \sum_{k=0}^\infty \mathbf P(X=k) t^k
 $$
@@ -498,6 +498,7 @@ $$
 
 1. 该函数在$[-1,1]$上连续，在$(-1,1)$上光滑（无穷阶可导），且$G\_X(1) = 1$；
 2. $$\forall t \in [-1,1], \quad G_X(t) = \mathbf E(t^X)$$
+这也是生成函数的等价定义之一。
 3. $G\_X$唯一确定$X$的分布律。
 {: .proposition}
 
@@ -585,7 +586,7 @@ $$
 $$
 \begin{aligned}
 G_S(t) &= \sum_{k=1}^\infty \mathbf P(S=k) t^k \\
-&= \sum_{k=1}^\infty \left( \sum_{n=1}^\infty \mathbf P(X_1 + \cdots + X_n = k) \mathbf P(N=n) \right) \\
+&= \sum_{k=1}^\infty \left( \sum_{n=1}^\infty \mathbf P(X_1 + \cdots + X_n = k) \mathbf P(N=n) \right) t^k \\
 &= \sum_{n=1}^\infty \mathbf P(N=n) \sum_{k=1}^\infty \mathbf P(X_1 + \cdots + X_n = k) t^k \\
 &= \sum_{n=1}^\infty \mathbf P(N=n) G_{X_1 + \cdots + X_n}(t) \\
 &= \sum_{n=1}^\infty \mathbf P(N=n) G_{X_1}^n(t) \\
@@ -597,6 +598,7 @@ $$
 $$G_S = G_N \circ G_{X_1}$$
 进而：
 $$\mathbf E(S) = G_S^\prime(1) = G_N^\prime(G_{X_1}(1)) G_{X_1}^\prime(1) = \mathbf E(N) \mathbf E(X_1)$$
+这一公式称为瓦尔德恒等式（Wald's identity）。
 {: .exampl}
 
 #### 计算常见离散分布的矩
@@ -609,4 +611,4 @@ $$G(t) = \frac{pt}{1-(1-p)t}$$
 利用生成函数可以计算这些函数的期望和方差：
 $$X \sim P(\lambda) \implies \mathbf EX = \lambda, \mathbf VX = \lambda$$
 而：
-$$X \sim G(p) \implies \mathbf EX = \frac{1-p}{p}, \mathbf VX = \frac{1-p}{p^2}$$
+$$X \sim G(p) \implies \mathbf EX = \frac{1}{p}, \mathbf VX = \frac{1-p}{p^2}$$
