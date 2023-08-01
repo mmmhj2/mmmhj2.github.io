@@ -98,7 +98,9 @@ $$(F - ma) \delta x = 0$$
 
 尽管如此，我们还是可以利用自由度的概念将动力学普遍方程改写为分立的方程，改写的成果就是拉氏方程。
 
-设具有$n$个质点的、受到完整约束的质点系具有$k$个自由度，则其在任何时间，确定其所有质点位置的$3n$个坐标都可以由$k$个变量表示：
+#### 广义坐标与广义速度
+
+设具有$n$个质点的、受到完整约束的质点系具有$k$个自由度，则其在任何时间，确定其所有质点位置的$3n$个坐标都可以由$k$个仅与时间相关的函数$q\_i(t)$表示：
 $$
 \left.
 \begin{aligned}
@@ -109,7 +111,7 @@ z_i &= z_i (q_1, \dots, q_k, t)
 \right\} \iff
 \vec r_i = \vec r_i (q_1, \dots, q_k, t)
 $$
-这$k$个变量具有和空间坐标相似的功能，因此称为系统的**广义坐标**（generalized coordinate）。
+这$k$个函数具有和空间坐标相似的功能，因此称为系统的**广义坐标**（generalized coordinate）。
 
 现在对两边同时求全导数：
 $$
@@ -122,6 +124,8 @@ $$
 \delta \vec r_i = \frac{\partial \vec r_i}{\partial q_1} \delta q_1 + \cdots + \frac{\partial \vec r_i}{\partial q_k} \delta q_k = \sum_{j=1}^k \frac{\partial \vec r_i}{\partial q_j} \delta q_j
 $$
 这能够用来表示系统的虚位移。
+
+#### 改写动力学普遍方程
 
 现在考察动力学普遍方程。
 
@@ -154,7 +158,12 @@ $$\sum_{j=1}^k (Q_j^* + Q_j) \delta q_j = 0$$
 注意到广义坐标之间是独立的，我们有：
 $$Q_j^* + Q_j = 0 \iff \frac{\mathrm d}{\mathrm d t} \frac{\partial T}{\partial \dot q_j} - \frac{\partial T}{\partial q_j} = Q_j, \quad \forall j = 1, \dots, k$$
 
+#### 结论
+
+对自由度为$k$的受到完整双边理想约束的动力学系统，其运动方程具有以下形式：
+$$\frac{\mathrm d}{\mathrm d t} \frac{\partial T}{\partial \dot q_j} - \frac{\partial T}{\partial q_j} = Q_j, \quad \forall j = 1, \dots, k$$
 这个方程就称为**第二类拉格朗日方程**，简称拉格朗日方程。
+{: .theorem}
 
 这个方程也可以使用泛函分析中的欧拉-拉格朗日方程来非常快捷地得到——实际上，拉格朗日方程就是欧拉-拉格朗日方程在分析力学中的复述。
 
@@ -180,6 +189,94 @@ $$\frac{\mathrm d}{\mathrm d t} \frac{\partial L}{\partial \dot q_j} - \frac{\pa
 $$\delta W = Q_j \delta q_j \iff Q_j = \frac{\delta W}{\delta q_j}$$
 
 ## 拉氏方程的首次积分
+
+现在我们希望从拉氏方程中寻找到一些守恒量。
+在运动学中，常见的守恒量有动能和动量。
+我们知道，在拉氏方程中，动能和拉格朗日量的作用相似，因此可以从拉氏量开始寻找守恒量。
+守恒量就是关于时间不变的量，为了研究它们，我们需要对这个方程进行积分。
+
+### 拉氏量的结构
+
+我们知道，在拉氏方程中，拉氏量是动能和势能之差，为此，我们分别研究系统的动能和势能。
+首先考虑系统的动能：
+
+$$
+\begin{aligned}
+T &= \sum_i \frac{1}{2} m_i \vec v_i \cdot \vec v_i \\
+&= \sum_i \frac{1}{2} m_i \left( \frac{\partial \vec r_i}{\partial q_1} \dot q_1 + \cdots + \frac{\partial \vec r_i}{\partial q_k} \dot q_k + \frac{\partial \vec r_i}{\partial t} \right) \cdot \left( \frac{\partial \vec r_i}{\partial q_1} \dot q_1 + \cdots \right)
+\end{aligned}
+$$
+这个式子可以看作是关于广义速度的一个二次多项式，其中的二次、一次和常数项分别为：
+$$
+\begin{aligned}
+T_2 &= \sum_{i=1}^n \frac{m_i}{2} \left( \sum_{j=1}^k \sum_{l=1}^k \frac{\partial \vec r_i}{\partial q_j} \frac{\partial \vec r_i}{\partial q_l} \dot q_j \dot q_l \right) = \mathbf{Q^\top A Q} \\
+T_1 &= \sum_{i=1}^n m_i \left( \sum_{j=1}^k \frac{\partial \vec r_i}{\partial q_j} \frac{\partial r_i}{\partial t} \dot q_j \right) = \mathbf{BQ} \\
+T_0 &= \sum_{i=1}^n \frac{m_i}{2} \frac{\partial \vec r_i}{\partial t} \cdot \frac{\partial \vec r_i}{\partial t} = C \\
+\implies & T = T_2 + T_1 + T_0
+\end{aligned}
+$$
+其中：
+$$\mathbf{Q} = \begin{bmatrix} \dot q_1 \\ \vdots \\ \dot q_k \end{bmatrix}, \; \mathbf{A} \in \mathcal{M}_{k,k}, \; \mathbf{B} \in \mathcal{M}_{1,k}, \; C \in \mathbb{R}$$
+值得注意的是，$\mathbf{A}, \mathbf{B}, C$实际上都是关于广义坐标和时间的函数。
+若系统所受的约束为定常约束，则其位矢不显含时间$t$，从而其对时间的偏导数为零，因此系统的动能只含有二次项：
+$$T = \mathbf{Q^\top A Q}$$
+
+对势能而言，通常，势能只是时间和广义坐标的函数，而不显含广义速度，因此其对广义速度的偏导数为零。
+从而现在我们可以将拉氏方程写成矩阵的形式：
+$$ \mathbf{A \dot Q} + \mathbf{G} = \mathbf{0}, \; \mathbf{\dot Q} = \begin{bmatrix} \ddot q_1 \\ \vdots \\ \ddot q_n \end{bmatrix} $$
+矩阵$\mathbf{A \dot Q} + \mathbf{G}$的每一行都表示一个广义坐标的方程。
+
+现在，我们可以定义系统的守恒量：
+
+若存在一个函数$F$，对方程的解$\mathbf{Q}$满足：
+$$F(\dot q_1(t), \cdots, \dot q_k(t), q_1(t), \cdots, q_k(t), t) = K$$
+其中$K$为常数，则称该函数为方程的一个**首次积分**。
+{: .definition}
+
+不难发现，首次积分表征了系统中的守恒量，因为其总是常数。
+
+### 循环积分和能量积分
+
+系统的首次积分相对难以寻找，然而对受理想约束的保守系统，一些特殊的首次积分是不难找到的，本节中将给出两个例子。
+
+#### 循环积分
+
+若拉氏量仅显含一部分广义坐标，而不显含另一部分（即偏导数为零），那么我们称不被显含的坐标为循环坐标，因为这种坐标通常和系统的旋转运动或周期运动相关。
+具有循环坐标的系统有一种首次积分：*循环积分*。
+
+现在，我们设一个自由度为$k$的系统具有$r$个循环坐标。
+根据广义坐标选取的任意性，我们设循环坐标总是在下标靠后的位置，则其拉氏量可写为：
+$$L = L(\dot q_1, \dots, \dot q_k, q_1, \dots, q_{k-r}, t)$$
+现在代入拉氏方程，对循环坐标，可得：
+$$\frac{\mathrm d}{\mathrm d t} \frac{\partial L}{\partial \dot q_j} = 0 \implies \frac{\partial L}{\partial \dot q_j} = C_j$$
+
+显然，$p\_j = \frac{\partial L}{\partial \dot q\_j}$是一个守恒量，称为**广义动量**，因此，我们有以下命题成立：
+
+循环坐标的广义动量守恒。
+{: .proposition}
+
+#### 能量积分
+
+若拉氏量中不显含时间，那么有：
+$$\frac{\mathrm d L}{\mathrm d t} = \sum_{j=1}^k \left( \frac{\partial L}{\partial q_j} \dot q_j + \frac{\partial L}{\partial \dot q_j} \ddot q_j \right)$$
+若系统是保守系统，那么还有：
+$$\frac{\mathrm d}{\mathrm d t} \frac{\partial L}{\partial \dot q_j} - \frac{\partial L}{\partial q_j} = 0$$
+代入可得：
+$$\frac{\mathrm d L}{\mathrm d t} = \sum_{j=1}^k \frac{\mathrm d}{\mathrm d t} \left( \frac{\partial L}{\partial \dot q_j} \dot q_j \right) \iff \frac{\mathrm d}{\mathrm d t} \left( \sum_{j=1}^k \frac{\partial L}{\partial \dot q_j} \dot q_j - L \right) = 0$$
+从而也构成了一个守恒量。
+
+求解方程，可得：
+$$\sum_{j=1}^k \frac{\partial L}{\partial \dot q_j} \dot q_j - L = 2 T_2 + T_1 - (T_2 + T_1 + T_0 - V) = E$$
+即
+$$T_2 - T_0 + V = E$$
+这表明系统的一部分能量是守恒的，这个能量称为*广义能量*，而这种守恒称为**广义能量守恒**。
+对定常约束的系统，$T\_0 = 0$，广义能量守恒就是一般意义下的机械能守恒。
+
+广义能量中的势能的物理意义是显然的。
+考虑到广义速度和速度具有相似的功能，广义能量中的二次项也不难理解。
+那么$T\_0$的物理意义是什么呢？
+
+对旋转的系统，如果将离心力（惯性力的一种，参见上文的讨论）视为有势力，那么会产生额外的势能，这种势能在广义能量守恒中以$-T\_0$的形式出现，因此这个势能也叫*离心势能*。
 
 ## 第一类拉氏方程
 
