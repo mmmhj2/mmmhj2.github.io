@@ -307,20 +307,3 @@ $$\sum_{j=1}^m A_{kj}(q_1, \dots, q_m, t) \dot q_j + b_k (q_1, \dots, q_m, t) = 
 $$\sum_{j=1}^m A_{kj}(q_1, \dots, q_m, t) \delta q_j = 0$$
 从而方程可写为：
 $$\frac{\mathrm d}{\mathrm d t} \frac{\partial T}{\partial \dot q_j} - \frac{\partial T}{\partial q_j} = Q_j + \sum_i \lambda_i \frac{\partial f_i}{\partial q_j} + \sum_{k=1}^r \mu_k A_{kj} \quad \forall j = 1,\dots,m$$
-
-<!-- ## 刚体运动学
-
-为了利用动静法求解刚体的动力学问题，我们还需要研究刚体的运动学。
-刚体的运动按求解难易程度可分为平面运动，定点运动和任意运动，我们将分别考虑这些问题.
-
-### 平面运动的刚体动力学
-
-#### 定轴转动的刚体动力学
-
-#### 静平衡与动平衡
-
-### 定点运动的刚体动力学
-
-#### 陀螺近似理论
-
-### 任意刚体动力学 -->
