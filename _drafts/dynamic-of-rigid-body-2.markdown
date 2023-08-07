@@ -100,7 +100,8 @@ $$
 &= \sum_i m_i \vec \omega (\vec r_i \cdot \vec r_i) - \sum_i m_i \vec r_i (\vec r_i \cdot \vec \omega) \\
 &= \vec \omega \sum_i m_i r_i^2
 \end{aligned}$$
-注意到我们研究刚体的平面运动，因此$\vec \omega$总是和矢径垂直。
+其中$\vec r\_i$为点到定轴$z$的距离，该矢量垂直于$z$轴。（实际上，根据定义，对定轴的动量矩等于对轴上任意一点的动量矩在该轴上的投影，我们总可以选择合适的点来消去$z$轴分量以简化计算。）
+
 取矢量的大小，可得：
 $$L_z = \omega \sum_i m_i r_i^2 = J_z \omega$$
 其中，$J\_z$是一个仅和刚体本身有关的常数，称为沿$z$轴的**转动惯量**（rotational inertia）。
@@ -142,8 +143,74 @@ $$T = \frac{1}{2} m v_c^2 + \frac{1}{2} J_C \omega^2$$
 应用平行轴定理，我们可以在知道刚体对任何一个垂直轴的转动惯量的前提下求出刚体的动能：
 $$T = \frac{1}{2} m v_c^2 + \frac{1}{2} (J_{z^\prime} - m d^2) \omega^2$$
 
-
 ### 静平衡与动平衡
+
+本节中我们将研究定轴转动刚体的平衡问题。
+首先，我们设一任意形状刚体绕定轴转动，以定轴为$z$轴，在其上任取$O$点，建立与刚体固连（从而随刚体转动）的右手直角坐标系$Oxyz$。
+设三轴的单位向量分别为$\hat i$、$\hat j$和$\hat k$
+
+按照上述约定，任意刚体中的点的矢径可写为：
+$$\vec r = x \hat i + y \hat j + z \hat k$$
+而刚体的角速度和角加速度则可写成数乘单位向量的形式：
+$$\vec \omega = \omega \hat k, \; \vec \alpha = \alpha \hat k$$
+
+#### 惯性积与惯量主轴
+
+我们使用上述约定来研究刚体的运动。
+对每个质点，其具有切向和法向加速度：
+$$\vec a_i = \vec a_i^t + \vec a_i^n$$
+其中切向加速度为
+$$\begin{aligned}
+\vec a_i^t &= \alpha \hat k \times \vec r_i = \alpha(x_i \hat j - y_i \hat i)
+\end{aligned}$$
+而法向加速度为
+$$\begin{aligned}
+\vec a_i^t &= \omega \hat k \times (\omega \hat k \times \vec r_i) = \omega^2 (\hat k \times (\hat k \times \vec r_i)) \\
+&= \omega^2 ((\hat k \cdot \vec r_i) \hat k - (\hat k \cdot \hat k) \vec r_i) \\
+&= - \omega^2 (x_i \hat i + y_i \hat j)
+\end{aligned}$$
+从而其受惯性力为
+$$\vec F_{i,\text{惯}} = - m_i \vec \alpha_i = - (\alpha y_i + \omega^2 x_i) \hat i + (\alpha x_i - \omega^2 y_i) \hat j$$
+该惯性力对$O$点的矩为：
+$$\begin{aligned} 
+\vec M_{O,i,\text{惯}} &= \vec r_i \times \vec F_{i,\text{惯}} = 
+\det \begin{bmatrix} 
+\hat i & \hat j & \hat k \\
+x_i & y_i & z_i \\
+m_i (\alpha y_i + \omega^2 x_i) & m_i (-\alpha x_i + \omega^2 y_i) & 0
+\end{bmatrix} \\
+&= 
+m_i [(\alpha x_i z_i - \omega^2 y_i z_i) \hat i + 
+(\alpha y_i z_i + \omega^2 x_i z_i) \hat j -
+\alpha (x_i^2 + y_i^2) \hat k ]
+\end{aligned}$$
+
+对所有质点的惯性力及其矩求和，利用质心的定义，可得：
+$$\begin{aligned}
+\vec F_\text{惯} &= m [(\alpha y_C + \omega^2 x_c) \hat i + m (\omega^2 y_c - \alpha x_c) \hat j] \\
+\vec M_{O,\text{惯}} &= \sum_i m_i[(\alpha x_i z_i - \omega^2 y_i z_i) \hat i + (\alpha y_i z_i + \omega^2 x_i z_i) \hat j - \alpha (x_i^2 + y_i^2) \hat k]
+\end{aligned}$$
+
+不难从上面的式子中发现一些模式：就力矩而言，其所有项都是二次齐次的。
+更重要的是，我们已经知道，其中一项具有转动惯量的形式：$m\_i (x\_i^2 + y\_i^2)$。
+这提醒我们定义新的变量来简化理解。
+
+对具有任意形状的刚体，在其上固连一坐标系$Oxyz$，刚体对轴$x,y$、$y,z$和$z,x$的**惯性积**（product of inertia）定义为：
+$$\left\{ \begin{aligned}
+    J_{xy} = J_{yx} &= \sum_i m_i x_i y_i \\
+    J_{yz} = J_{zy} &= \sum_i m_i y_i z_i \\
+    J_{zx} = J_{xz} &= \sum_i m_i z_i x_i
+\end{aligned} \right.$$
+{: .definition}
+
+从而我们可以将惯性力矩重写为：
+$$\vec M_{O, \text{惯}} = (J_{xz} \alpha - J_{yz} \omega^2) \hat i + (J_{yz} \alpha + J_{xz} \omega^2) \hat j - J_z \alpha \hat k$$
+
+利用惯性积，我们可以定义惯性主轴：
+
+若对于刚体上固连参考系$Oxyz$的某轴$z$，与其相关的两个惯性积$J\_{xz}, J\_{yz}$都为零，那么称轴$z$为$O$点的**惯量主轴**（principal axis of inertia）。
+若该轴还通过质心$O$，那么称该轴为**中心惯量主轴**（central principal axis of inertia）。
+{: .definition}
 
 ## 定点运动的刚体动力学
 
