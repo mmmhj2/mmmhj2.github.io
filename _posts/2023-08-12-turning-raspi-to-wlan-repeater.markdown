@@ -192,6 +192,7 @@ $ sudo iptables -A INPUT -i wlan0 -j DROP
 
 然后固定现有的规则：
 ```shell
+$ sudo apt install iptables-persistent netfilter-persistent
 $ sudo netfilter-persistent save
 ```
 
