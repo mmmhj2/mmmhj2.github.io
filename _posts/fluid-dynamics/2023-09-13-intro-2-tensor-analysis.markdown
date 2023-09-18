@@ -128,6 +128,14 @@ $$
 \end{aligned}
 $$
 
+同理，我们也可以使用类似的符号来将散度定理简化并一般化：
+$$
+\begin{aligned}
+\iiint_V \nabla \cdot \vec u \mathrm d v &= \iint_S \vec u \cdot \mathrm d \vec S \\
+\iiint_V \partial_i \vec u_i \mathrm d v &= \iint_S u_i n_i \mathrm d S
+\end{aligned}
+$$
+
 #### 克罗内克符号
 
 克罗内克符号是一个二阶张量，定义为：
