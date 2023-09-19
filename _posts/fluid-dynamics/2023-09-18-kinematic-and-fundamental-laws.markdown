@@ -299,4 +299,5 @@ $$
     \end{aligned}
 \right.
 $$
-前者表示质量（密度）的变化，后者表示速度的变化。
+前者表示质量（密度）的变化，后者表示速度的变化，物质导数可展开为：
+$$\frac{\D}{\D t} = \frac{\partial}{\partial t} + \vec U \cdot \nabla = \frac{\partial}{\partial t} + U_1 \frac{\partial}{\partial x_1} +  + U_2 \frac{\partial}{\partial x_2} +  + U_3 \frac{\partial}{\partial x_3}$$

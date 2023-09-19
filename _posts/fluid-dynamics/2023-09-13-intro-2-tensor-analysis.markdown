@@ -104,7 +104,8 @@ $$\mathrm{Tr}(A) = \sum_i A_{ii} = A_{ii}$$
 $$\nabla \vec u(x_1, x_2, x_3) = \sum_{i=1}^3 \frac{\partial \vec u_i}{\partial x_i} = \partial_{\textcolor{red}{i}} u_i = u_{i\textcolor{red}{,i}}$$
 
 有时还能见到将指标写在上标位置的情况。
-如果出现这种写法则上标意味着反协变向量的指标（行向量的推广），下标意味着鞋边向量的指标（列向量的推广）。
+如果出现这种写法则上标意味着反协变向量的指标（行向量的推广），下标意味着协变向量的指标（列向量的推广）。
+我们不使用这种写法。
 
 ### 张量的应用
 
@@ -112,11 +113,11 @@ $$\nabla \vec u(x_1, x_2, x_3) = \sum_{i=1}^3 \frac{\partial \vec u_i}{\partial 
 
 对于向量$\vec u$，其*梯度张量*定义为：
 $$ \vec T = \vec \nabla \vec u = \begin{pmatrix}
-\partial_1 u_1 & \cdots & \partial_n u_1 \\
+\partial_1 u_1 & \cdots & \partial_1 u_n \\
 \vdots & \ddots & \vdots \\
-\partial_1 u_n & \cdots & \partial_n u_n
+\partial_n u_1 & \cdots & \partial_n u_n
 \end{pmatrix}$$
-可视为梯度对向量场的推广。
+可视为梯度对向量场的推广，也可视为雅可比矩阵的转置。
 {: .definition}
 
 我们可以尝试利用梯度张量来化简一些运算：
@@ -127,6 +128,30 @@ $$
 &= n_i \vec T_{ij}
 \end{aligned}
 $$
+
+特别地，在力学中常常见到$(\vec U \cdot \nabla)\vec V$的形式，此时该算子$(\vec U \cdot \nabla)$应被理解成$U\_i \partial\_i$的形式：
+$$
+(\vec U \cdot \nabla) \vec V = U_j \partial_j V_i = 
+\begin{pmatrix}
+U_x \frac{\partial V_x}{\partial x} + U_y \frac{\partial V_x}{\partial y} + U_z \frac{\partial V_x}{\partial z} \\
+U_x \frac{\partial V_y}{\partial x} + U_y \frac{\partial V_y}{\partial y} + U_z \frac{\partial V_y}{\partial z} \\
+U_x \frac{\partial V_z}{\partial x} + U_y \frac{\partial V_z}{\partial y} + U_z \frac{\partial V_z}{\partial z} \\
+\end{pmatrix}
+$$
+也可以理解成$\vec U$乘$\vec V$的梯度张量的形式：
+$$
+(\vec U \cdot \nabla) \vec V = 
+\begin{pmatrix}
+U_x & U_y & U_z
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\partial_x V_x & \partial_x V_y & \partial_x V_z \\
+\partial_y V_x & \partial_y V_y & \partial_y V_z \\
+\partial_z V_x & \partial_z V_y & \partial_z V_z \\
+\end{pmatrix}
+$$
+甚至理解成$\vec V$的雅可比矩阵乘$\vec U$的形式。
 
 同理，我们也可以使用类似的符号来将散度定理简化并一般化：
 $$
