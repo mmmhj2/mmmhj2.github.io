@@ -213,19 +213,19 @@ $$
 ### 湍动能方程
 
 流体的湍动能$k$满足：
-$$\pd{k}{t} + \avU \cdot \nabla k = \Pi + \epsilon - \nabla \cdot \vec \phi$$
+$$\pd{k}{t} + \avU \cdot \nabla k = \Pi + \varepsilon - \nabla \cdot \vec \phi$$
 其中：
 $$
 \begin{aligned}
 k &= \frac{1}{2} \ol{\vec u \cdot \vec u} \\
 \Pi &= - \ol{u_i u_j} \partial_j \overline{U_i} \\
-\epsilon &= \frac{1}{2} \nu \ol{d_{ij} d_{ij}} \\
+\varepsilon &= \frac{1}{2} \nu \ol{d_{ij} d_{ij}} \\
 \phi_i &= \overline{\frac{1}{2} \left(u_j u_j + \frac{p}{\rho} \right) u_i} - \nu \overline{d_{ij} u_j} \\
 d_{ij} &= \partial_j u_i + \partial_i u_j
 \end{aligned}
 $$
 对于一个固定的控制体，其积分形式为：
-$$\frac{\mathrm d}{\mathrm d t} \iiint_D k \mathrm d v = \iiint_D (\Pi - \epsilon) \mathrm d v - \iint_S (k \avU + \vec \phi) \cdot \mathrm d \vec S$$
+$$\frac{\mathrm d}{\mathrm d t} \iiint_D k \mathrm d v = \iiint_D (\Pi - \varepsilon) \mathrm d v - \iint_S (k \avU + \vec \phi) \cdot \mathrm d \vec S$$
 这个方程又称为k方程。
 {: .proposition}
 
@@ -243,7 +243,7 @@ $$\ol{\nu u_i \partial_{jj} u_i} = \nu \partial_{jj} \ol{u_i u_i} - \nu \overlin
 $$\ol{d_{ij} d_{ij}} = 2 (\ol{\partial_j u_i \partial_j u_i} + \ol{\partial_i u_i \partial_j u_j})$$
 从而
 $$\ol{\nu u_i \partial_{jj} u_i} = \frac{1}{2} \nu \ol{d_{ij} d_{ij}} - \nu \partial_i \overline{d_{ij} u_j}$$
-第一项成为$\epsilon$，第二项成为$\nabla \cdot \vec \phi$的一部分。
+第一项成为$\varepsilon$，第二项成为$\nabla \cdot \vec \phi$的一部分。
 - $$\ol{\ol{U_j} u_i \partial_j u_i} = \ol{U_j} \partial_j (\frac{1}{2} \ol{u_i^2}) = \ol{U_j} \partial_j k$$
 - $$\ol{u_i u_j \partial_j \ol{U_i}} = \ol{u_i u_j} \partial_j \overline{U_i}$$
 这一项成为$\Pi$。
@@ -253,6 +253,21 @@ $$\ol{\nu u_i \partial_{jj} u_i} = \frac{1}{2} \nu \ol{d_{ij} d_{ij}} - \nu \par
 {: .proof}
 
 对于均匀的情况，可简化为：
-$$\frac{\mathrm d k}{\mathrm d t} = \Pi - \epsilon$$
+$$\frac{\mathrm d k}{\mathrm d t} = \Pi - \varepsilon$$
 如果平均流动为零，则可进一步简化为：
-$$\frac{\mathrm d k}{\mathrm d t} = - \epsilon$$
+$$\frac{\mathrm d k}{\mathrm d t} = - \varepsilon$$
+
+利用布辛涅司克近似，可进一步将$\Pi$写成：
+$$\Pi = - \ol{u_i u_j} \partial_j \ol{U_i} = 2 \nu_T \ol{D_{ij} D_{ij}}$$
+
+### 平均耗散方程
+
+和$k$方程类似，我们也能提出平均湍流耗散$\varepsilon$的方程：
+
+湍流的平均耗散$\varepsilon$，定义为$$\varepsilon = \frac{1}{2} \nu \ol{d_{ij} d_{ij}}$$，满足：
+$$\pd{\varepsilon}{t} + \ol{\vec U} \cdot \nabla \varepsilon = \frac{\varepsilon}{k} (C_1 \Pi - C_2 \varepsilon) - \nabla \cdot \vec{\varphi_\varepsilon}$$
+其中
+$$\vec \varphi_\epsilon = - \frac{\nu_T}{\sigma_\varepsilon} \nabla \varepsilon$$
+{: .proposition}
+
+这两个方程合起来组成了$k - \varepsilon$模型，这是湍流的数值模拟的重要基础。
