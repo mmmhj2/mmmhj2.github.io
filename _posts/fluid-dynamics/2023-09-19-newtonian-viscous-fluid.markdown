@@ -102,7 +102,7 @@ $$(\nabla \cdot \tau)_i = \partial_j \tau_{ij} = \mu \partial_{jj} U_i \iff \nab
 $$
 \left\{
     \begin{aligned}
-    &\pDt{\vec U} = - \frac{1}{\rho} \nabla \rho + \frac{\mu}{\rho} \Delta \vec U + \vec f \\
+    &\pDt{\vec U} = - \frac{1}{\rho} \nabla p + \frac{\mu}{\rho} \Delta \vec U + \vec f \\
     &\nabla \cdot \vec U = 0
     \end{aligned}
 \right.
@@ -147,7 +147,7 @@ $$\sigma = - p \mathbf I$$
 $$
 \left\{
     \begin{aligned}
-    &\pDt{\vec U} = - \frac{1}{\rho} \nabla \rho + \vec f \\
+    &\pDt{\vec U} = - \frac{1}{\rho} \nabla p + \vec f \\
     &\nabla \cdot \vec U = 0
     \end{aligned}
 \right.

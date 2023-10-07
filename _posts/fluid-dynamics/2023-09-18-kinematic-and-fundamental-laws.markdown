@@ -81,18 +81,20 @@ $$\frac{\mathrm d \varPhi(t)}{\mathrm d t} = \iiint_{D(t)} \frac{\partial \varph
 若控制体随流体一起运动，则$\vec W = \vec U$；
 若控制体不动，则$\vec W = 0$。
 
+雷诺定理可视为变限积分求导的莱布尼茨法则在三维上的推广。
+
 ### 不可压缩性
 
 现在欲计算随流体运动的控制体的体积随时间的导数，令$\varphi = 1$，则$\varPhi = V$，代入雷诺定理，可得：
-$$\frac{\mathrm d V}{\mathrm d t} = \iint_S \vec U \cdot \vec n \mathrm d S = \iiint_{D} \nabla \vec U \mathrm d \nu$$
+$$\frac{\mathrm d V}{\mathrm d t} = \iint_S \vec U \cdot \vec n \mathrm d S = \iiint_{D} \nabla \cdot \vec U \mathrm d \nu$$
 
 取体积微元$V = \nu$，可得：
-$$\frac{\mathrm d \nu}{\mathrm d t} = \nu \nabla \vec U$$
+$$\frac{\mathrm d \nu}{\mathrm d t} = \nu \nabla \cdot \vec U$$
 
 从而我们有以下命题：
 
 一流体不可压缩，即微粒的体积不随时间变化，当且仅当
-$$\nabla \vec U = 0$$
+$$\nabla \cdot \vec U = 0$$
 {: .proposition}
 
 上文已经提出了一个证法，现在利用密度提出另一个证法。
@@ -284,7 +286,7 @@ $$
 
 受表面力和体积力的流体的运动方程为：
 $$\rho \frac{\D \vec U}{\D t} = \nabla \cdot \sigma + \rho \vec f$$
-其中$\sigma$是应力张量，其散度定义为：
+其中$\sigma$是应力张量，其散度定义为[^1]：
 $$(\nabla \cdot \sigma)_i = \partial_j \sigma_{ij}$$
 向量的物质导数定义为：
 $$\left(\frac{\D \vec U}{\D t}\right)_i = \frac{\D U_i}{\D t}$$
@@ -300,4 +302,15 @@ $$
 \right.
 $$
 前者表示质量（密度）的变化，后者表示速度的变化，物质导数可展开为：
-$$\frac{\D}{\D t} = \frac{\partial}{\partial t} + \vec U \cdot \nabla = \frac{\partial}{\partial t} + U_1 \frac{\partial}{\partial x_1} +  + U_2 \frac{\partial}{\partial x_2} +  + U_3 \frac{\partial}{\partial x_3}$$
+$$\frac{\D}{\D t} = \frac{\partial}{\partial t} + \vec U \cdot \nabla = \frac{\partial}{\partial t} + U_1 \frac{\partial}{\partial x_1} + U_2 \frac{\partial}{\partial x_2} + U_3 \frac{\partial}{\partial x_3}$$
+
+对动量方程应用改写的雷诺定理，令控制体固定，设$\chi = \vec U$，可得：
+$$\frac{\d}{\d t} \iiint_D \rho \vec U \d v = \iiint_D \rho \frac{\D \vec U}{\D t} \d v + \iint_S \rho \vec U \cdot \vec U \cdot \mathrm d \vec S$$
+再将物质导数展开，可得动量方程的积分形式。
+
+动量方程的积分形式为：
+$$\frac{\d}{\d t} \iiint_D \rho \vec U \d v = \iiint_D \rho \vec f \d v + \iint_S (\sigma + \rho \vec U \cdot \vec U) \d \vec S$$
+{: .proposition}
+
+[^1]: 值得注意的是，该处定义与张量数乘的定义不同。一致的定义应为：$$(\nabla \cdot \sigma)_i = \partial_j \sigma_{ji}$$
+考虑到$\sigma$是*对称的*，这两种定义对应力张量是等价的。

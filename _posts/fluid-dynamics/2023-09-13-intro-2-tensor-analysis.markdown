@@ -85,7 +85,8 @@ $$(U \otimes V)_{i_1 i_2 \cdots i_{n+m}} = U_{i_1 \cdots i_n} \times V_{i_{n+1} 
 
 一个$p$阶的张量和一个$q$阶的张量的缩并（点乘、内积）是一个$p+q-2$阶的张量：
 $$P \cdot Q = u_{i_1 i_2 \cdots k \cdots i_p} v_{j_1 j_2 \cdots k \cdots j_q}$$
-其中$k$是按语境确定的一个常数，通常是第一个张量的最后一个指标和第二个张量的第一个指标。
+其中$k$是按语境确定的一个求和指标，通常是第一个张量的最后一个指标和第二个张量的第一个指标，这种情况下可以写成：
+$$P \cdot Q = u_{i_1 i_2 \cdots i_{p-1} k} v_{k j_2 \cdots j_q}$$
 {: .definition}
 
 使用两个指标进行的缩并称为双点乘，常出现在二阶张量中，定义为：
@@ -141,7 +142,8 @@ $$
 \end{aligned}
 $$
 
-特别地，在力学中常常见到$(\vec U \cdot \nabla)\vec V$的形式，此时该算子$(\vec U \cdot \nabla)$应被理解成$U\_i \partial\_i$的形式：
+利用爱因斯坦求和约定，我们可以非常方便地表示各种拉普拉斯算符，只需要将$\nabla$替换为$\partial\_i$即可。
+例如，在力学中常常见到$(\vec U \cdot \nabla)\vec V$的形式，此时根据内积的定义，该算子$(\vec U \cdot \nabla)$应被理解成$U\_i \partial\_i$的形式：
 $$
 (\vec U \cdot \nabla) \vec V = U_j \partial_j V_i = 
 \begin{pmatrix}
@@ -150,7 +152,7 @@ U_x \frac{\partial V_y}{\partial x} + U_y \frac{\partial V_y}{\partial y} + U_z 
 U_x \frac{\partial V_z}{\partial x} + U_y \frac{\partial V_z}{\partial y} + U_z \frac{\partial V_z}{\partial z} \\
 \end{pmatrix}
 $$
-也可以理解成$\vec U$乘$\vec V$的梯度张量的形式：
+如果不使用求和约定，则可以理解成$\vec U$乘$\vec V$的梯度张量的形式：
 $$
 (\vec U \cdot \nabla) \vec V = 
 \begin{pmatrix}
@@ -165,7 +167,10 @@ U_x & U_y & U_z
 $$
 甚至理解成$\vec V$的雅可比矩阵乘$\vec U$的形式。
 
-同理，我们也可以使用类似的符号来将散度定理简化并一般化：
+再例如，对张量的二阶拉普拉斯算子：
+$$\Delta U = \nabla \cdot \nabla U = \partial_i \partial_i U_j$$
+
+我们可以使用类似的符号来将散度定理简化并一般化：
 $$
 \begin{aligned}
 \iiint_V \nabla \cdot \vec u \mathrm d v &= \iint_S \vec u \cdot \mathrm d \vec S \\
