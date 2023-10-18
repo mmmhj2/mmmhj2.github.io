@@ -312,5 +312,4 @@ $$\frac{\d}{\d t} \iiint_D \rho \vec U \d v = \iiint_D \rho \frac{\D \vec U}{\D 
 $$\frac{\d}{\d t} \iiint_D \rho \vec U \d v = \iiint_D \rho \vec f \d v + \iint_S (\sigma + \rho \vec U \cdot \vec U) \d \vec S$$
 {: .proposition}
 
-[^1]: 值得注意的是，该处定义与张量数乘的定义不同。一致的定义应为：$$(\nabla \cdot \sigma)_i = \partial_j \sigma_{ji}$$
-考虑到$\sigma$是*对称的*，这两种定义对应力张量是等价的。
+[^1]: 值得注意的是，该处定义与张量数乘的定义不同。考虑到$\sigma$是*对称的*，这两种定义对应力张量是等价的。一致的定义应为：$$(\nabla \cdot \sigma)_i = \partial_j \sigma_{ji}$$

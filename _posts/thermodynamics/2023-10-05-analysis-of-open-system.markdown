@@ -1,6 +1,6 @@
 ---
 title: "开放系统的能量与质量分析"
-categories: "热力学"
+categories: ["热力学", "工程热力学"]
 ---
 
 本章中我们将考虑控制体积，即开放系统，中的质量和能量。
@@ -50,7 +50,10 @@ $$\dot m_\text{in} - \dot m_\text{out} = \frac{\mathrm d m}{\mathrm d t}$$
 我们用密度对体积的积分替代质量，用上一节中流速对面积的积分替代流量，即可得到下述命题。
 
 质量守恒原理也可写成：
-$$\frac{\mathrm d}{\mathrm d t} \iiint_V \rho \mathrm d \nu + \iint_S \rho \vec V \cdot \mathrm d \vec S = 0$$
+$$
+\newcommand{\oiint}{ {\subset\!\supset} \llap{\iint} }
+\frac{\mathrm d}{\mathrm d t} \iiint_V \rho \mathrm d \nu + \oiint_S \rho \vec V \cdot \mathrm d \vec S = 0
+$$
 利用散度定理可得其微分形式：
 $$\frac{\mathrm d \rho}{\mathrm d t} + \nabla \cdot \rho \vec V = 0$$
 {: .proposition}
@@ -139,4 +142,22 @@ $$\dot Q + \dot W + \sum_\text{出入口} \dot m (h + e_k + e_p) = \frac{\mathrm
 $$Q_\text{in} + W_\text{in} + \sum_\text{in} m \theta - Q_\text{out} - W_\text{out} - \sum_\text{out} m \theta = m_2 e_2 - m_1 e_1$$
 若忽略流体和系统的动能和势能，则可进一步简化为：
 $$Q_\text{in} + W_\text{in} + \sum_\text{in} m h - Q_\text{out} - W_\text{out} - \sum_\text{out} m h = m_2 u_2 - m_1 u_1$$
+
+考虑从管道中向一真空刚体气缸充气的问题，以气缸为系统。
+设充气过程中外界既不做功也不发生热量交换，则该系统的入口只有管道，没有出口，初状态的内能为零，有：
+$$mh_\text{in} = m u_\text{tank} \iff h_\text{in} = u_\text{tank}$$
+也可以选择进入气缸的气体作为系统，此时需考虑管道中的气体推动进入气缸的气体所做的功，有：
+$$W + mu_\text{in} = mu_\text{tank} \iff P_\text{in} V_\text{in} + m u_\text{in} = m u_\text{tank} \iff h_\text{in} = u_\text{tank}$$
+这个例子能够体现流动功的物理意义。
+{: exampl}
+
+### 广义能量方程
+
+上面的命题和推导使用了一系列的简化。
+我们可以在热力学第一定律的方程上使用雷诺定理来直接得到控制体的能量守恒方程。
+
+对任意边界可变的系统，其能量守恒方程为：
+$$\dot Q + \dot W = \frac{\mathrm d}{\mathrm d t} \iiint_V e \rho \mathrm d \nu + \oiint_S \left( \frac{P}{\rho} + e \right)\rho (\vec U - \vec W) \mathrm d \vec S$$
+其中$\vec U$为面积元上的流速，$\vec W$为面积元上边界移动的速度。
+{: .proposition}
 

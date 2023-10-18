@@ -48,7 +48,7 @@ $$\overline{VW} = \overline{V} \cdot \overline{W} + \overline{v \cdot w} = \over
 接下来我们研究均值视点下的黏性耗散。
 
 首先将速度拆分：
-$$\vec U(\vec x, t) = \overline{\vec U}(\vec x, t) = \vec u (\vec x, t)$$
+$$\vec U(\vec x, t) = \overline{\vec U}(\vec x, t) + \vec u (\vec x, t)$$
 
 然后对动能取平均：
 $$
@@ -213,7 +213,7 @@ $$
 ### 湍动能方程
 
 流体的湍动能$k$满足：
-$$\pd{k}{t} + \avU \cdot \nabla k = \Pi + \varepsilon - \nabla \cdot \vec \phi$$
+$$\pd{k}{t} + \avU \cdot \nabla k = \Pi - \varepsilon - \nabla \cdot \vec \phi$$
 其中：
 $$
 \begin{aligned}

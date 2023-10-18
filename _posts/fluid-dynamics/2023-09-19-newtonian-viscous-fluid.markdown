@@ -285,6 +285,8 @@ $$\frac{\d E_k}{\d t} = P_\text{ext} + P_\text{int} + \iint_S \frac{1}{2} \rho U
 $$P_\text{ext} = \frac{\d}{\d t} \iiint_D \frac{1}{2} \rho U^2 \mathrm d v - P_\text{int}$$
 {: .theorem}
 
+若体积力均为保守力，则将其外压力项中的体积力移到方程左边，即可得到流体的机械能守恒定律。
+
 #### 黏性耗散
 
 我们可以更进一步地讨论内力项：
