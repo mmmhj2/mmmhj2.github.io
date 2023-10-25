@@ -93,6 +93,21 @@ $$X \sim P(\lambda), Y \sim P(\mu) \implies X+Y \sim P(\lambda + \mu)$$
 我们先介绍两个支集为*正实数*的连续概率分布，最后介绍统计学中常用的几个和正态分布相关的分布。
 可以简单地认为这些分布在负实数上的概率密度函数和累积分布函数都是零。
 
+首先我们介绍一条命题，可用于计算两个相关的随机变量的分布函数。
+
+设$\varphi$为一单增的双射，$X$为一连续随机变量，$Y = \varphi(X)$。
+则$Y$的分布满足：
+$$F_Y(y) = F_X(\varphi^{-1}(y))$$
+若$\varphi$单减，则：
+$$F_Y(y) = 1 - F_X(\varphi^{-1}(y))$$
+{: .proposition}
+
+只证明单增的情况。
+$$F_Y(y) = P(Y \le y) = P(\varphi(X) \le y) = P(X \le \varphi^{-1}(y)) = F_X(\varphi^{-1}(y))$$
+{: .proof}
+
+如果需要求出概率密度函数，则可以对分布函数求导。
+
 ### 指数分布
 
 概率密度函数形如
@@ -101,7 +116,7 @@ $$p(x) =
 , \quad \lambda \in \mathbb R_+, x \in \mathbb R_+$$
 的连续概率分布称为*指数分布*，记为$X \sim \exp (\lambda)$。
 其累计分布函数为
-$$P(x) = \begin{cases}
+$$F(x) = \begin{cases}
 1 - e^{- \lambda x} & x \ge 0 \\
 0 & x < 0
 \end{cases}$$
