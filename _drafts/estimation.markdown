@@ -129,6 +129,22 @@ $$
 $$\E ({S^*}^2) = \frac{n}{n-1} \E(S^2) = \V(X)$$
 {: .proof}
 
+特别地，正态分布的样本方差满足卡方分布。
+
+设$X \sim N(m, \sigma^2)$，则其样本的方差$S^2$满足：
+$$\frac{n}{\sigma^2} S^2 = \frac{n-1}{\sigma^2} {S^*}^2 \sim \chi^2(n-1)$$
+{: .proposition}
+
+此处给出一个不严格的证明，严格的证明需要使用Cochran定理。
+$$
+\begin{aligned}
+\frac{n}{\sigma^2} S^2 &= \sum_{i=1}^n (\frac{X_i - m}{\sigma})^2 - n(\frac{\overline X - m}{\sigma})^2 \\
+&\sim \chi^2(n) - \chi^2(1) = \chi^2(n-1) 
+\end{aligned}
+$$
+注意到样本均值和样本取值并不独立，因此该证明是不严密的。
+{: .proof}
+
 ### 估计量
 
 设总体的分布具有一个固定的参数$\theta$，则*估计量*（Estimator）是从样本空间到样本估计值的函数：
@@ -264,3 +280,171 @@ $$\frac{\mathrm d}{\mathrm d \theta} L(\theta | x) = 0$$
 即可得到$\hat \theta(x)$，然后验证二阶导即可。
 
 ## 区间估计
+
+在点估计中，我们根据样本给出了统计参数的估计值。
+现在，我们希望利用区间估计，给出统计参数在一定概率下的可能的区间。
+
+设$X$为样本，$\theta$为待估计的统计参数，*置信区间*（Confidence interval）是由随机变量$u(X), v(X)$确定的区间$(u(X), v(X))$，满足：
+$$P(\theta \in (u(X), v(X))) = P(u(X) < \theta < v(X)) = 1 - \alpha = \gamma$$
+其中$\gamma$为一常数，称为*置信度*（Confidence level）；$\alpha$称为风险。
+{: .definition}
+
+通常，进行区间估计可分三步进行：
+
+1. 确定置信度$\gamma$；
+2. 确定估计量$\hat \theta$，此时使用的估计量不必是最优的点估计量；
+3. 寻找随机变量$U(\hat \theta)$，其中含有参数$\theta$且不含有其他不能由样本求出的变量，然后利用该变量的分布计算置信区间。
+
+因为需要利用随机变量$U$的分布，该分布最好已知或易于计算，因此可能为了得出性质简单的分布而舍弃估计量的品质。
+通常将随机变量转化为标准正态分布或几个相关的分布（如卡方分布等）。
+
+习惯上讲，我们使用满足以下条件的区间作为置信区间：
+$$P(u(X) < \theta) = \frac{\alpha}{2} = \frac{1-\gamma}{2}, \quad P(v(X) < \theta) = 1-\frac{\alpha}{2} = \frac{1+\gamma}{2}$$
+
+我们简单介绍几个常见的区间估计。
+
+### 正态分布的期望
+
+#### 已知方差求期望
+
+若总体的方差已知，则使用样本均值$\overline X$估计正态分布的期望，可以使用随机变量：
+$$
+\def\avgX{\overline{X}}
+U(\avgX) = \frac{\avgX - m}{ \frac{\sigma}{\sqrt{n}} } \sim N(0,1)
+$$
+来进行区间估计。
+{: .proposition}
+
+容易证明$U(\avgX)$服从标准正态分布，接下来介绍如何使用该随机变量进行区间估计。
+设所需的置信度为$\gamma$，而风险为$\alpha = 1 - \gamma$。
+如上文所述，由于$U$是中心化的对称的随机变量，我们选择$u(X) = - v(X)$作为区间的界。
+首先，我们需要求出$m$和$U(\avgX)$的关系，从而得出$u(X)$和$v(X)$。
+$$
+U(\avgX) = \frac{\avgX - m}{ \frac{\sigma}{\sqrt{n}} } \iff
+\avgX - \frac{\sigma}{\sqrt{n}} U(\avgX) = m
+$$
+考虑到$U$和$m$之间存在这种双射关系，我们可以直接限制$U(\avgX)$，然后再计算$m$的区间。
+由于$U$服从的标准正态分布是中心化且对称的，我们考虑对称的限制：
+$$P(b < U(\avgX) < a) = P(-a < U(\avgX) < a) = \gamma$$
+由于$U$是标准正态分布，我们可以通过查表很容易地求出$a$的值$a\_\gamma$。
+然后，我们可以使用上文的关系求出$m$的置信区间。
+$$u(X) = \avgX - \frac{\sigma}{\sqrt{n}} a_\gamma, \; v(X) = \avgX + \frac{\sigma}{\sqrt{n}} a_\gamma$$
+{: .proof}
+
+#### 未知方差求期望
+
+若总体的方差未知，则可以使用样本方差$S^2$近似，此时使用的随机变量为：
+$$U(\avgX) = \frac{\avgX - m}{\frac{S}{\sqrt{n-1}}} \sim t(n-1)$$
+其中$t$表示服从学生t-分布，$S = \sqrt{S^2}$表示样本的标准差。
+{: .proposition}
+
+注意到：
+$$\frac{\avgX - m}{\frac{\sigma}{\sqrt{n}}} \sim N(0,1), \quad \frac{n S^2}{\sigma^2} \sim \chi^2(n-1)$$
+从而：
+$$U(\avgX) = \frac{\avgX - m}{\frac{\sigma}{\sqrt{n}}} \cdot \left( \frac{\sqrt{\frac{n S^2}{\sigma^2}}}{\sqrt{n-1}} \right)^{-1} \sim \frac{N(0,1)}{\sqrt{\frac{\chi^2(n-1)}{n-1}}} =  t(n-1)$$
+现在，根据定义，可以尝试求解$m$
+$$U(\avgX) = \frac{\avgX - m}{\frac{S}{\sqrt{n-1}}} 
+\iff m = \avgX - U(\avgX) \frac{S}{\sqrt{n-1}}$$
+学生t-分布也是一个中心化的对称分布，因此我们如法炮制查表求出$a\_\gamma$，从而可得置信区间：
+$$u(X) = \avgX - a_\gamma \frac{S}{\sqrt{n-1}}, \; v(X) = \avgX + a_\gamma \frac{S}{\sqrt{n-1}}$$
+{: .proof}
+
+### 正态分布的方差
+
+#### 已知均值求方差
+
+当总体的均值已知时，我们使用估计量$T$：
+$$T = \frac{1}{n} \sum_{i=1}^n \left( X_i - m \right)^2$$
+注意和样本方差不同，此处不使用样本均值，而是总体均值。
+和随机变量$U$：
+$$U(T) = \frac{nT}{\sigma^2} \sim \chi^2(n)$$
+进行区间估计。
+{: .proposition}
+
+证明随机变量服从卡方分布是容易的，但是卡方分布并非对称分布，因此我们研究一下如何求置信区间。
+首先，我们仍然先考虑限制随机变量$U$：
+$$P(a < U < b) = \gamma = 1 - \alpha$$
+如前文所述，我们考虑以下概率：
+$$P(U < b) = 1 - \frac{\alpha}{2}, \quad P(U < a) = \frac{\alpha}{2}$$
+由于$U$服从卡方分布，我们也可以比较容易地由查表计算出$a,b$的值$a\_\gamma$和$b\_\gamma$。
+$U$和$\sigma^2$之间的关系比较简单，此处不再赘述，可得置信区间为：
+$$v(X) = \frac{n t}{a_\gamma}, \; u(X) = \frac{n t}{b_\gamma}$$
+其中$t$是估计量$T$的值。
+{: .proof}
+
+#### 未知均值求方差
+
+当均值未知时，我们直接使用样本的方差（修正前后均可）进行估计。
+$$U = \frac{n S^2}{\sigma^2} = \frac{(n-1){S^*}^2}{\sigma^2} \sim \chi^2(n-1)$$
+{: .proposition}
+
+该估计的证明与用法和已知均值情况下的完全相同。
+{: .proof}
+
+### 双正态分布估计
+
+接下来我们研究两个正态分布：
+$$X \sim N(m_1, \sigma_1^2), \; Y \sim N(m_2, \sigma_2^2), \; X,Y\text{独立}$$
+之间关系的区间估计。
+
+#### 两个正态分布期望的差
+
+我们使用$D$：
+$$D = \overline{X} - \overline{Y} \to m_1 - m_2$$
+来估计两个正态分布的期望的差，其服从正态分布：
+$$D \sim N(m_1 - m_2, \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2})$$
+若两个正态分布的方差已知但不相等，则可使用：
+$$U(D) = \frac{D - (m_1 - m_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1)$$
+进行区间估计。
+若两个正态分布的方差未知但相等，则可使用：
+$$U(D) = \frac{D - (m_1 - m_2)}{\sqrt{\sum(X_i - \overline{X})^2 + \sum(Y_i - \overline Y)^2}} \cdot \frac{\sqrt{n_1 + n_2 - 2}}{\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t(n_1 + n_2 - 2)$$
+进行区间估计。
+{: .proposition}
+
+标准正态分布和t-分布都是中心化的对称分布，而如何使用它们已经在之前介绍过了，假设我们已经求出$a\_\gamma$，则两者的置信区间都可以用$U$的定义容易地求出。
+{: .proof}
+
+#### 两个正态分布方差之比
+
+两个分布的方差之比的估计量为：
+$$T = \frac{{S_1^*}^2}{{S_2^*}^2}$$
+可由以下随机变量进行区间估计：
+$$U(T) = T \times \frac{\sigma_2^2}{\sigma_1^2} = \frac{{S_1^*}^2 \sigma_2^2}{{S_1^*}^2 \sigma_1^2} \sim F(n_1 - 1, n_2 - 1)$$
+{: .proposition}
+
+注意到
+$$(n_1-1)\frac{{S_1^*}^2}{\sigma_1^2} \sim \chi^2 (n_1-1), \; (n_2-1)\frac{{S_2^*}^2}{\sigma_2^2} \sim \chi^2 (n_2-1)$$
+从而
+$$U(T) = \frac{(n_1-1)\frac{{S_1^*}^2}{\sigma_1^2} / (n_1-1)}{(n_2-1)\frac{{S_2^*}^2}{\sigma_2^2} / (n_2-1)} \sim F(n_1-1, n_2-1)$$
+费舍尔分布不是对称的分布，因此我们通常采用。
+$$P(U < a) = \frac{\alpha}{2}, \; P(U < b) = 1 - \frac{\alpha}{2}$$
+这一区间。
+{: .proof}
+
+费舍尔分布具有一条特殊的性质，即：
+$$P(U > a) = P(\frac{1}{U} < \frac{1}{a})$$
+因此，其分布表上通常只提供$P(U < a) = 0.99$之类的反查。
+为了解出$P(U < a) = 0.01$的解，我们需要进行转化：
+$$P(U < a) = 1 - P(U \ge a) = 1 - P(\frac{1}{U} \le \frac{1}{a})$$
+从而查出$\frac{1}{a}$的值。
+
+### 二项分布的概率
+
+我们使用成功频率$f$估计二项分布的成功概率$p$。
+使用的随机变量为：
+$$U(f) = \frac{f - p}{\sqrt{p(1-p)/n}} \sim N(0,1)$$
+{: .proposition}
+
+根据棣莫弗-拉普拉斯定理，我们使用正态分布近似二项分布，可得：
+$$f \sim N(p, \frac{p(1-p)}{n})$$
+从而$U(f) \sim N(0,1)$
+{: .proof}
+
+值得注意的是，在求解$U$和$p$的关系时，需要解不等式：
+$$P(-a < p < a) = \gamma \iff P(-a < \frac{f-p}{\sqrt{p(1-p)/n}} < a) = \gamma$$
+即需要求解不等式：
+$$\frac{|f-p|}{\sqrt{p(1-p)/n}} < a$$
+我们可以选择两边同时平方并求解不等式，也可以选择直接进行近似：
+$$\sqrt{p(1-p)/n} \approx \sqrt{f(1-f)/n}$$
+甚至可以直接使用近似
+$$\sqrt{p(1-p)} \approx \sqrt{\frac{1}{2} \times \frac{1}{2}} = \frac{1}{2}$$
