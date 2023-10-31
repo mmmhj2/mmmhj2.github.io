@@ -407,15 +407,15 @@ $$U(D) = \frac{D - (m_1 - m_2)}{\sqrt{\sum(X_i - \overline{X})^2 + \sum(Y_i - \o
 #### 两个正态分布方差之比
 
 两个分布的方差之比的估计量为：
-$$T = \frac{{S_1^*}^2}{{S_2^*}^2}$$
+$$T = \frac{ {S_1^*}^2}{ {S_2^*}^2}$$
 可由以下随机变量进行区间估计：
-$$U(T) = T \times \frac{\sigma_2^2}{\sigma_1^2} = \frac{{S_1^*}^2 \sigma_2^2}{{S_1^*}^2 \sigma_1^2} \sim F(n_1 - 1, n_2 - 1)$$
+$$U(T) = T \times \frac{\sigma_2^2}{\sigma_1^2} = \frac{ {S_1^*}^2 \sigma_2^2}{ {S_1^*}^2 \sigma_1^2} \sim F(n_1 - 1, n_2 - 1)$$
 {: .proposition}
 
 注意到
-$$(n_1-1)\frac{{S_1^*}^2}{\sigma_1^2} \sim \chi^2 (n_1-1), \; (n_2-1)\frac{{S_2^*}^2}{\sigma_2^2} \sim \chi^2 (n_2-1)$$
+$$(n_1-1)\frac{ {S_1^*}^2}{\sigma_1^2} \sim \chi^2 (n_1-1), \; (n_2-1)\frac{ {S_2^*}^2}{\sigma_2^2} \sim \chi^2 (n_2-1)$$
 从而
-$$U(T) = \frac{(n_1-1)\frac{{S_1^*}^2}{\sigma_1^2} / (n_1-1)}{(n_2-1)\frac{{S_2^*}^2}{\sigma_2^2} / (n_2-1)} \sim F(n_1-1, n_2-1)$$
+$$U(T) = \frac{(n_1-1)\frac{ {S_1^*}^2}{\sigma_1^2} / (n_1-1)}{(n_2-1)\frac{ {S_2^*}^2}{\sigma_2^2} / (n_2-1)} \sim F(n_1-1, n_2-1)$$
 费舍尔分布不是对称的分布，因此我们通常采用。
 $$P(U < a) = \frac{\alpha}{2}, \; P(U < b) = 1 - \frac{\alpha}{2}$$
 这一区间。
