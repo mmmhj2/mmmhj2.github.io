@@ -1,6 +1,6 @@
 ---
 title: "统计估计"
-categories: "概率"
+categories: "概率论"
 ---
 
 ## 前置知识
