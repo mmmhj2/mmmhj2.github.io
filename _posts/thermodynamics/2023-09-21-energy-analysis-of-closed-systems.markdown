@@ -80,7 +80,7 @@ $$
 $$h = u + Pv = u + R_\text{spec} T \iff \d h = \d u + R_\text{spec} \d T$$
 从而其两个比热之间具有关系：
 $$c_p = c_v + R_\text{spec}$$
-其中$R\_\text{spec}$为*比气体常数*，定义为：
+其中$R\_\text{spec}$为*比气体常数*或*个别气体常数*（Specific gas constant），定义为：
 $$R_\text{spec} = \frac{nR}{m} = \frac{R}{M}$$
 $M$为气体的相对分子质量。
 
