@@ -163,7 +163,7 @@ $$I_1 = \mathrm{Tr}(\sigma),\ I_2 = \sigma_1\sigma_2+\sigma_2\sigma_3+\sigma_3\s
 利用矩阵的迹，我们可以将应力分解为一个数量矩阵和另一个矩阵之和。
 
 $$\sigma = \frac{1}{3} \mathrm{Tr}(\sigma) \mathbf I + \left(\sigma - \frac{1}{3} \mathrm{Tr}(\sigma) \mathbf I \right) = \sigma_s + \sigma_d$$
-其中$\sigma\_s$称为球形部分、$\sigma\_d$称为偏离部分，也记作$s$。
+其中$\sigma\_s$称为体积应力张量（volumetric stress tensor）、$\sigma\_d$称为偏应力张量（deviatoric stress tensor），也记作$s$。
 {: .definition}
 
 第一个部分可以视为施加在各个方向上均匀的压力，就像在水中受到的水压一样。

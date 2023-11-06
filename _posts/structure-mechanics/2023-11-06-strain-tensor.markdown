@@ -211,7 +211,7 @@ $$\d \bu = \bu(\bx + \d \bx) - \bu(\bx) = \varepsilon \cdot \d \bx + \Omega \tim
 
 $$\varepsilon = \frac{1}{3} \mathrm{Tr}(\varepsilon) \bI - \left( \varepsilon - \frac{1}{3} \mathrm{Tr}(\varepsilon) \bI \right)$$
 
-第一部分的数量矩阵可视为一个均匀的膨胀变形，而第二部分的迹为零，这意味着这个形变维持体积不变。
+第一部分的数量矩阵可视为一个均匀的膨胀变形，称为体积应变张量（volumetric strain tensor），而第二部分的迹为零，这意味着这个形变维持体积不变，称为偏应变张量（deviatoric strain tensor）。
 
 和上一节的内容结合，我们可将位移向量的变化变为三个变换的组合。
 
