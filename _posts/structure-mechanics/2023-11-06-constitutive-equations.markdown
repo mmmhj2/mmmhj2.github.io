@@ -94,13 +94,23 @@ $$\varepsilon = \frac{1 + \nu}{E} \sigma - \frac{\nu}{E} \mathrm{Tr}(\sigma) \ma
 
 ### 二维弹性方程
 
-若物体所受的应力是二维的，那么刚度矩阵简化为：
-$$\mathbf A = \frac{E}{1-\nu^2} \begin{pmatrix} 1 & \nu & 0 \\ \nu & 1 & 0 \\ 0 & 0 & \frac{1-\nu}{2} \end{pmatrix}$$
+若物体所受的应力是二维的，那么柔度矩阵简化为：
+$$\mathbf S = \frac{E}{1-\nu^2} \begin{pmatrix} 1 & \nu & 0 \\ \nu & 1 & 0 \\ 0 & 0 & \frac{1-\nu}{2} \end{pmatrix}$$
 
 若物体所受的应变是二维的，那么刚度矩阵简化为：
 $$\mathbf A = \begin{pmatrix} \lambda + 2\mu & \lambda & 0 \\ \lambda & \lambda + 2\mu & 0 \\ 0 & 0 & \mu \end{pmatrix}$$
 
-### 几种常见应力与应变
+### 两种弹性系数的关系
+
+从上面的定义和结论中不难看出，两种本构关系的表示形式，即杨氏模量和泊松系数和拉梅系数之间是等价的。具体而言，我们有：
+
+$$E = \frac{\mu (3\lambda + 2\mu)}{\lambda + \mu}, \quad \nu = \frac{\lambda}{2(\lambda+\mu)}$$
+
+还有：
+$$
+\lambda = \frac{E \nu}{(1 + \nu) (1 - 2\nu)}, \quad
+\mu = \frac{E}{2(1+\nu)}
+$$
 
 ### 形变能
 
@@ -118,7 +128,7 @@ $$w = \frac{1}{2} \sigma : \varepsilon$$
 
 ### 冯·米塞斯判据
 
-对延性材料，冯·米塞斯给出了如下判据。
+对延性材料，冯·米塞斯（Von Mises）给出了如下判据。
 
 延性材料处于弹性区域中，当：
 $$s : s \le \frac{2}{3} \sigma_e^2$$
@@ -136,8 +146,8 @@ $$\sigma_\text{VM} \le \sigma_e$$
 
 ### 朗肯判据
 
-对脆性材料，朗肯给出了如下判据。
+对脆性材料，朗肯（Rankine）给出了如下判据。
 
-脆性材料处于弹性区域中，当其第一主应力小于实验测得的弹性限度：
+脆性材料处于弹性区域中，当其第一主应力小于弹性限度：
 $$\sigma_1 \le \sigma_r$$
 {: .proposition}

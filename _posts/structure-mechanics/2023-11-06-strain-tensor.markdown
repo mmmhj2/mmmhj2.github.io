@@ -231,4 +231,5 @@ $$
 \end{aligned}
 $$
 其余四个方程可通过下标的圆排列得出。
+这一组方程称为贝尔特拉米相容性方程（Beltrami compatibility equations）
 {: .proposition}
