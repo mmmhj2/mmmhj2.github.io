@@ -102,19 +102,21 @@ $\partial \Sigma$表示$\Sigma$的边界。
 
 不出意料地，尽管圣维南问题的约束条件众多，得出的结论能够很好地应用于许多并不满足该要求的梁上。
 
-#### 圆柱形梁的例子
-
 以半径为$R$的圆柱形梁为例，一个满足条件的$\Phi$函数为：
 $$\Phi(r, \theta) = \frac{1}{2} (R^2 - r^2)$$
 而应力为
 $$\sigma_{1r} = 0,\quad \sigma_{1\theta} = -\frac{M_t}{I}r$$
 其中
-$$I = \frac{\pi R^4}{2}$$
-
+$$I = \frac{\pi R^4}{2}$$<br/>
 又其剪力可写为
 $$\vec \tau = \sigma_{1r} \vec e_r + \sigma_{1\theta} \vec e_\theta$$
 从而圆上最大的剪力为
 $$|\vec \tau| = |M_t| \times \frac{2}{\pi R^2}$$
+{: .exampl}
+
+对于圆环形梁，相似的步骤给出：
+$$I = - \frac{\pi}{2}\left( R_\text{外}^2 - R_\text{内}^2 \right),\ |\vec \tau|_\text{max} = |M_t| \times \frac{2R_\text{外}}{\pi \left( R_\text{外}^4 - R_\text{内}^4 \right)}$$
+{: .exampl}
 
 ### 剪力与特解
 
@@ -125,6 +127,38 @@ $$|\vec \tau| = |M_t| \times \frac{2}{\pi R^2}$$
 设梁受到沿$\vec x\_2$方向的剪力$\vec T\_2$，则可用一沿$\vec x\_3$轴平行的直线$\Gamma$将横截面分为两个部分$x\_2 \le a$和$x\_2 > 0$。在该平面上，由剪力$\vec T\_2$引起的应力为：
 $$\sigma_{12}^{T_2} = \frac{T_2}{J_2} \frac{\mu_2(x_2)}{b(x_2)},\ \sigma_{13}^{T_2} = 0$$
 其中$\mu\_2(x\_2)$表示$x\_2 \le 2$部分的面积，而$b(x\_2)$表示该横截面的宽度。
+{: .proposition}
+
+设矩形梁对齐坐标轴放置，长为$H$，沿$\vec x\_2$轴；宽为$b$。
+其受到沿$\vec x\_2$方向的剪切内力$\vec T\_2$，试计算其应力的剪切部分。 <br/>
+根据上文的命题有
+$$\sigma_{12}^{T_2} = \frac{T_2}{J_2} \frac{\mu_2(x_2)}{b(x_2)},\ \sigma_{13}^{T_2} = 0$$
+依次计算可得：
+$$
+\begin{aligned}
+b(x_2) &= b \\
+\mu_2(x_2) &= \int_{-\frac{H}{2}}^{x_2} x b \d x = \frac{b}{2} \left( x_2^2 - \frac{H^2}{4} \right) \\
+J_2 &= \int_{-\frac{b}{2}}^{\frac{b}{2}}\int_{-\frac{H}{2}}^{\frac{H}{2}} x_2^2 \d x \d y = \frac{bH^3}{12}
+\end{aligned}
+$$
+从而
+$$\sigma_{12}^{T_2} = \frac{6 T_2}{b H} \left[ \left( \frac{x_2}{H}\right)^2 - \frac{1}{4} \right]$$
+最大剪应力自然为
+$$|\tau|_\text{max} = \frac{3T_2}{2bH}$$
+{: .exampl}
+
+### 梁的断裂判据
+
+注意到梁的应力张量具有非常特殊的形式，我们可以简化梁的断裂判据。
+
+（冯·米塞斯判据）
+延性材料构成的梁的冯·米塞斯判据为：
+$$\sigma_\text{VM} = \sqrt{\frac{2}{3} s_{ij} s_{ij}} = \sqrt{\sigma_{11}^2 + 3 (\sigma_{12}^2 + \sigma_{13}^2)} < \sigma_e$$
+{: .proposition}
+
+（朗肯判据）
+脆性材料构成的梁的朗肯判据为：
+$$\sigma_\text{I} = \frac{1}{2}\left( \sigma_{11} + \sqrt{\sigma_{11}^2 + 4 \tau^2} \right) < \sigma_{rt}$$
 {: .proposition}
 
 ## 梁的本构方程
@@ -197,6 +231,33 @@ $$
 $$L = \begin{pmatrix} A & \mathbf 0 \\ \mathbf 0 & C \end{pmatrix}$$
 按照类似的方法将几个系数分别对应，即可求出$A,C$，此处不再赘述。
 {: .proof}
+
+#### 形变能密度
+
+利用上文的公式，我们给出形变能的表达式。
+
+形变能线密度利用内力的表达式为：
+$$w = \frac{1}{2} \left( \frac{N^2}{ES} + \textcolor{blue}{ \frac{M_{f3}^2}{EJ_2} + \frac{M_{f2}^2}{EJ_3} + \frac{M_t^2}{GI}} + \frac{T_2^2}{GS_2} + \frac{T_3^2}{GS_3} \right)$$
+利用形变的表达式为：
+$$w = \frac{1}{2} \left( ES \varepsilon_1^2 + \textcolor{blue}{EJ_2 \chi_3^2 + EJ_3 \chi_2^2+ GI \chi_1^2} + GS_2 \varepsilon_2^2 + GS_3 \varepsilon_3^2 \right)$$
+其中$E$为杨氏模量；
+$$G = \frac{E}{2(1+\nu)}$$
+为剪切模量；$S$是横截面积；
+$$J_i = \int_\Sigma x_i^2 \d S$$
+为绕$i$轴的惯性主矩；
+$$I = 2 \int_\Sigma \Phi \d x_2 \d x_3$$
+为扭转惯性矩；
+$$\frac{1}{S_j} = \frac{1}{J_j^2} \int \frac{\mu_j(x_j)^2}{b(x_j)^2} \d S$$
+为等效面积。
+{: .proposition}
+
+其中标蓝的项的数量级往往大于其他项。
+
+二维情况下，方程简化为
+$$w = \frac{1}{2} \left( \frac{N^2}{ES} +  \frac{M_{f3}^2}{EJ_2} + \textcolor{red}{\frac{T_2^2}{GS_2}} \right)$$
+和
+$$w = \frac{1}{2} \left( ES \varepsilon_1^2 + EJ_2 \chi_3^2 + \textcolor{red}{GS_2 \varepsilon_2^2}\right)$$
+在满足欧拉-伯努利假设的情况下，标红色的项为零。
 
 ### 求解系统
 
