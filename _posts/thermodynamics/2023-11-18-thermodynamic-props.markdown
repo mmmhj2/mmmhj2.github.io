@@ -111,3 +111,79 @@ layout: single
 只要恰当的选择系数，该方程能取得极高的精度。
 
 ## 热力学属性的关系
+
+接下来我们关心这些热力学属性之间的关系。
+首先我们引入两个偏微分恒等式：
+
+设\\( z(x,y) \\)是可微的函数，则
+\\[ \left( \frac{\partial x}{\partial z} \right)_y = \frac{1}{\left( \frac{\partial z}{\partial x} \right)_y} \\]
+对性质良好的函数\\( z \\)，我们可将\\( x \\)变为\\(y,z\\)的函数：\\( x = x(y, z) \\)，从而得到
+\\[ \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z = \textcolor{red}{-} \left( \frac{\partial z}{\partial y} \right)_x \\]
+{: .proposition}
+
+注意到第二条命题和链式法则不同：设\\(z(x(y), k)\\)是一个可微的函数，且\\(k\\)与\\(x\\)无关，则
+\\[ \left( \frac{\partial z}{\partial y} \right)_k = \left(  \frac{\partial z}{\partial x} \right)_k \left(  \frac{\partial x}{\partial y} \right)_k \\]
+这两个命题在省略表示不变量的下标时容易混淆。
+
+### 麦克斯韦关系
+
+和描述电磁场的麦克斯韦方程不同，麦克斯韦关系表示了几个热力学属性之间的偏微分关系。
+
+（麦克斯韦关系，Maxwell relations）
+简单可压缩热力学系统满足
+{% raw %}
+\[
+    \begin{aligned}
+    \left( \frac{\partial T}{\partial v} \right)_s &= - \left( \frac{\partial P}{\partial s} \right)_v \\
+    \left( \frac{\partial T}{\partial P} \right)_s &= \left( \frac{\partial v}{\partial s} \right)_P \\
+    \left( \frac{\partial s}{\partial v} \right)_T &= \left( \frac{\partial P}{\partial T} \right)_v \\
+    \left( \frac{\partial s}{\partial P} \right)_T &= - \left( \frac{\partial v}{\partial T} \right)_P \\
+    \end{aligned} 
+\]
+{% endraw %}
+其中\\(T\\)是温度、\\(P\\)是压强、\\(v\\)是比容、\\(T\\)是单位质量的熵。
+{: .proposition}
+
+我们已经知道：
+\\[ 
+    \def\d{\mathrm{d}}
+    \d u = T \d S - P \d v, \quad
+    \d h = T \d S + v \d P
+\\]
+定义系统的亥姆霍次和吉布斯函数分别为
+\\[ a = u - T s, \quad g = h - T s \\]
+两者均是状态函数，因此具有恰当微分
+\\[ \d a = \d u - (T \d s + s \d T), \quad \d g = \d h - (T \d s + s \d T) \\]
+代入内能和焓的微分，可得
+\\[ \d a = - s \d T - P \d v, \quad \d g = - s \d T + v \d P \\]
+这两个方程和开头的两个方程合称吉布斯关系（Gibbs relations）。
+这四个方程均具有全微分的形式，而我们知道
+\\[ \d z = \frac{\partial z}{\partial x} \d x + \frac{\partial z}{\partial y} \d y\\]
+同时
+\\[ \frac{\partial^2 z}{\partial x \partial y} = \frac{\partial^2 z}{\partial y \partial x} \\]
+从而，以亥姆霍次函数的微分为例，可得
+\\[ \frac{\partial s}{\partial v} = \frac{\partial P}{\partial T} \\]
+{: .proof}
+
+利用能量这一量纲可以容易地记忆麦克斯韦关系，注意到
+\\[ [u] = [T][s] = [P][v] \\]
+从而
+\\[ \frac{[T]}{[v]} = \frac{[P]}{[s]},\ \frac{[T]}{[P]} = \frac{[v]}{[s]},\ \frac{[s]}{[v]} = \frac{[P]}{[T]},\ \frac{[s]}{[P]} = \frac{[v]}{[T]}\\]
+现在为所有\\([T], [v]\\)出现在同一侧的方程加上负号并将量纲替换为偏导即可。
+
+### 克拉佩龙方程
+
+（克拉佩龙方程）系统饱和压强和温度的微分和相变焓具有以下关系：
+\\[ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_{12}}{T v_{12}} \\]
+下标$12$表示两相之间属性的差。
+{: .proposition}
+
+考虑麦克斯韦方程：
+\\[ \left( \frac{\partial s}{\partial v} \right)_T = \left( \frac{\partial P}{\partial T} \right)_v \\]
+我们已经知道，相变中的压力就是饱和压力，而其只是饱和温度的函数，因此可将偏微分替代为全微分。
+这个微分的值与比容没有关系，因此直接对上式积分可得
+\\[ \int \d s = \left( \frac{\d P}{\d T} \right)_\text{饱和} \int \d v \implies s_{12} = \left( \frac{\d P}{\d T} \right)_\text{饱和} v_{12}\\]
+相变过程的压力和温度维持不变，根据热力学基本关系
+\\[ \int \d h = \int T \d s + \cancel{v \d P} \implies h_{12} = T s_{12} \\]
+代入即可得到欲证的方程。
+{: .proof}
