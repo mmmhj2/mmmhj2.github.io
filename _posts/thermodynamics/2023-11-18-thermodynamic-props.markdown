@@ -83,6 +83,7 @@ $$ P V = n R T \iff P v = R_\text{spec} T $$
 
 气体的压缩因子（Compressibility factor）表征了气体偏离理想气体的程度，定义为：
 $$ Z = \frac{Pv}{R_\text{spec} T} \iff Z = \frac{v_\text{实际}}{v_\text{理想}} $$
+{: .definition}
 
 尽管气体的性质各不相同，其压缩因子只与两个参数密切相关：对比压强（Reduced pressure）和对比温度（Reduced temperature），定义为
 $$ P_R = \frac{P}{P_\text{临界}}, \quad T_R = \frac{T}{T_\text{临界}} $$
@@ -184,3 +185,166 @@ $$ \int \d s = \left( \frac{\d P}{\d T} \right)_\text{饱和} \int \d v \implies
 $$ \int \d h = \int T \d s + \cancel{v \d P} \implies h_{12} = T s_{12} $$
 代入即可得到欲证的方程。
 {: .proof}
+
+[^1]: 克拉佩龙方程有时也指理想气体状态方程，他于1834年合并了玻意耳-马略特定律、查理定律和盖-吕萨克定律等经验定律，提出了理想气体状态方程。
+
+#### 克-克方程
+
+对于理想气体的气液相变，我们还可以进一步地进行近似。
+
+<small>（克劳修斯-克拉佩龙方程，Clausius–Clapeyron relation）</small>
+若发生气液相变的气体能被视为理想气体，则有
+$$\ln \left( \frac{P_2}{P_1} \right)_\text{饱和} = \frac{h_\text{fg}}{R_\text{spec}} \left( \frac{1}{T_1} - \frac{1}{T_2} \right)_\text{饱和}$$
+{: .proposition}
+
+注意到通常而言气体的体积远大于液体的，因此$v\_\text{fg}$可用气体的体积$v\_\text{g}$代替。
+然后利用理想气体状态方程，可得
+$$ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_\text{fg}}{T v_\text{g}} = \frac{P h_\text{fg}}{T^2 R_\text{spec}} $$
+简单变换可得
+$$\left( \frac{\d P}{P} \right)_\text{饱和} = \frac{h_\text{fg}}{R_\text{spec}} \left( \frac{\d T}{T^2} \right)_\text{饱和} $$
+积分即可得到原式。
+{: .proof}
+
+克-克方程联系了饱和蒸汽压、温度和相变焓（即相变潜热）。
+不需要比容的数据，就可以估算饱和蒸汽压随温度变化的关系。 
+
+### 内能、熵和焓的变化
+
+简单可压缩系统的内能、熵和焓的变化具有以下关系
+$$
+\begin{aligned}
+\d u &= c_v \d T + \left[ T \left( \frac{\partial P}{\partial T} \right)_v - P \right] \d v \\
+\d h &= c_p \d T + \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right] \d P \\
+\d s &= \frac{c_v}{T} \d T + \left(\frac{\partial P}{\partial T}\right)_v \d v \\
+&= \frac{c_p}{T} \d T - \left(\frac{\partial v}{\partial T}\right)_P \d P
+\end{aligned}
+$$
+其积分形式为
+$$
+\begin{aligned}
+u_2 - u_1 &= \int_{T_1}^{T_2} c_v \d T + \int_{v_1}^{v_2} \left[ T \left( \frac{\partial P}{\partial T} \right)_v - P \right] \d v \\
+h_2 - h_1 &= \int_{T_1}^{T_2} c_p \d T + \int_{P_1}^{P_2} \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right] \d P \\
+s_2 - s_1 &= \int_{T_1}^{T_2} \frac{c_v}{T} \d T + \int_{v_1}^{v_2} \left(\frac{\partial P}{\partial T}\right)_v \d v \\
+&= \int_{T_1}^{T_2} \frac{c_p}{T} \d T - \int_{P_1}^{P_2} \left(\frac{\partial v}{\partial T}\right)_P \d P
+\end{aligned}
+$$
+{: .proposition}
+
+我们知道，简单可压缩系统的状态可由两个状态函数完全确定。
+当研究内能时，我们选择温度和比容，则
+$$\d u = \frac{\partial u}{\partial T} \d T + \frac{\partial u}{\partial v} \d v = c_v \d T + \frac{\partial u}{\partial v} \d v$$
+由于温度和比容是两个仅有的独立的变量，因此对一个求偏导时另一个一定维持不变，此处我们省去了括号。
+对于熵，有
+$$\d s = \frac{\partial s}{\partial T} \d T + \frac{\partial s}{\partial v} \d v$$
+代入热力学基本关系：
+$$\d u = T \d s - P \d v = T \left( \frac{\partial s}{\partial T} \d T + \frac{\partial s}{\partial v} \d v \right) - P \d v $$
+运用待定系数法，可得
+$$c_v = T \frac{\partial s}{\partial T}, \quad \frac{\partial u}{\partial v} = T \frac{\partial s}{\partial v} - P$$
+再使用麦克斯韦关系，可得
+$$\frac{\partial u}{\partial v} = T \frac{\partial P}{\partial T} - P$$
+从而
+$$\d u = c_v \d T + \left( T \frac{\partial P}{\partial T} - P \right) \d v$$
+对焓变同理，选择温度和压强两个变量即可。
+对熵变，我们注意到
+$$\d s = \frac{\partial s}{\partial T} \d T + \frac{\partial s}{\partial v} \d v = \frac{c_v}{T} \d T + \frac{\partial P}{\partial T} \d v$$
+另一个方程同理。
+{: .proof}
+
+注意到根据定义有
+$$h_2 - h_1 = u_2 - u_1 + (P_2 v_2 - P_1 v_1)$$
+我们可由上一个命题的任意一个方程求出内能变化和焓变之一，然后用该方程求出另一个，而不必进行四次积分。
+
+#### 真实气体的变化
+
+利用内能、焓和熵作为状态从而与路径无关的性质，我们可以以任何中途状态的组合计算它们的变化。
+对于真实气体，我们可以通过先将其近似为理想气体，然后在理想气体上进行状态变化，最后再回到真实气体来进行计算。
+
+以从状态$(P\_1, T\_1)$到状态$(P\_2, T\_2)$为例，我们以如下方式计算焓变：计算相同温度的理想气体焓变，计算理想气体在不同温度的焓变，最后保持温度不变并回到现实气体状态。
+$$
+\begin{aligned}
+h_2 - h_1 &= (h_2 - h_2^*) + (h_2^* - h_1^*) + (h_1^* - h_1) \\
+h_2 - h_2^* &= \int_{P_2^*}^{P_2} \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right]_{T = T_2} \d P \\
+h_2^* - h_1^* &= \int_{T_1}^{T_2} c_p \d T\\
+h_1^* - h_1 &= \int_{P_1}^{P_1^*} \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right]_{T = T_1} \d P
+\end{aligned}
+$$
+标星号的表示理想气体的状态。
+
+第二项理想气体之间的焓变容易计算，因为理想气体的比热只是温度的函数。
+而计算真实气体和理想气体之间的差则需要知道气体的$P\ v\ T$关系，这往往需要复杂的表格或计算。
+我们使用*偏离因数*（Departure factor）来简化这样的计算。
+
+焓的偏离因数定义为相同温度下理想气体和真实气体焓的差距的无量纲量
+$$Z_h = \frac{(h^* - h)_T}{R T_{cr}}$$
+熵的偏离因数定义为
+$$Z_s = \frac{(s^* - s)_{T,P}}{R}$$
+{: .definition}
+
+利用修正的理想气体状态放方程$Pv = Z R\_\text{spec} T$，这两个偏离因数可以用如下积分计算
+$$
+\begin{aligned}
+Z_h &= T_R^2 \int_0^{P_R} \left( \frac{\partial Z}{\partial T_R} \right)_{P_R} \d (\ln P_R) \\
+Z_s &= \int_0^{P_R} \left[ Z - 1 + T_R \left( \frac{\partial Z}{\partial T_R} \right)_{P_R} \right] \d (\ln P_R)
+\end{aligned}
+$$
+
+而求出这两个系数之后，对应的焓变、内能变和熵变可以表示为
+$$
+\begin{aligned}
+h_2 - h_1 &= (h_2^* - h_1^*) - R_\text{spec} T_{cr} ({Z_h}_2 - {Z_h}_1) \\
+u_2 - u_1 &= (h_2^* - h_1^*) - R_\text{spec} (Z_2 T_2 - Z_1 T_1) \\
+s_2 - s_1 &= (s_2^* - s_1^*) - R_\text{spec} ({Z_s}_2 - {Z_s}_1)
+\end{aligned}
+$$
+
+### 压缩性与体积膨胀系数
+
+气体的*等温压缩性*（Isothermal compressibility）定义为
+$$\beta = -\frac{1}{v} \left( \frac{\partial v}{\partial P} \right)_T$$
+这个值总是不小于零。
+*体积膨胀系数*（Volume expansivity）定义为
+$$\gamma = \frac{1}{v} \left( \frac{\partial v}{\partial T} \right)_P$$
+这个值可能小于零。
+{: .definition}
+
+<small>（迈耶关系，Mayer's relation）</small>
+气体的比热满足
+$$c_p - c_v = \frac{v T \gamma^2}{\beta}$$
+对理想气体，有
+$$c_p - c_v = R_\text{spec}$$
+{: .proposition}
+
+根据上文的命题，我们有
+$$
+\begin{aligned}
+s_2 - s_1 &= \int_{T_1}^{T_2} \frac{c_v}{T} \d T + \int_{v_1}^{v_2} \left(\frac{\partial P}{\partial T}\right)_v \d v \\
+&= \int_{T_1}^{T_2} \frac{c_p}{T} \d T - \int_{P_1}^{P_2} \left(\frac{\partial v}{\partial T}\right)_P \d P
+\end{aligned}
+$$
+其微分形式为
+$$\d s = \frac{c_v}{T} \d T + \frac{\partial P}{\partial T} \d v = \frac{c_p}{T} \d T - \frac{\partial v}{\partial T} \d P$$
+从而
+$$\d T = \frac{T \frac{\partial P}{\partial T}}{c_p - c_v} \d v + \frac{T \frac{\partial v}{\partial T}}{c_p - c_v} \d P = \frac{\partial T}{\partial v} \d v + \frac{\partial T}{\partial P} \d P$$
+因此
+$$c_p - c_v = T \left(\frac{\partial P}{\partial T}\right)_v \left(\frac{\partial v}{\partial T}\right)_P = - T \left( \frac{\partial P}{\partial v} \right)_T \left(\frac{\partial v}{\partial T}\right)_P^2$$
+然后代入定义即可。
+对理想气体，代入理想气体状态方程即可得证。
+{: .proof}
+
+这个命题说明：等压比热总是不小于等容比热，而对完全不可压缩的物质，两者总是相同，因此对压缩性小的相如固相和液相两者可近似相等；此外，当温度靠近绝对零度时，两者的差距也会缩小。
+
+### 焦耳-汤姆逊系数
+
+在等焓过程中，温度对压强的偏导称为*焦耳-汤姆孙系数*（Joule-Thomson coefficient），有时简称焦-汤系数。
+$$\mu_\text{JT} = \left( \frac{\partial P}{\partial T} \right)_h$$
+{: .definition}
+
+对节流这一典型压强下降的等焓过程，焦汤系数小于零的工质的温度会上升，而大于零的温度会下降。
+
+上文中我们提到计算焓的方法：
+$$\d h = c_p \d T + \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right] \d P $$
+取焓变为零，移项即可得
+$$\mu_\text{JT} = \frac{\partial T}{\partial P} = - \frac{1}{c_p} \left[ v - T \left( \frac{\partial v}{\partial T} \right)_P \right]$$
+
+代入理想气体状态方程，不难发现理想气体的焦耳-汤姆逊系数为零，因此其焓只是温度的函数，从而内能也只是温度的函数。
+满足这种性质，即内能只是温度的函数，的气体称为焦耳气体，而理想气体正是最常见的焦耳气体。
