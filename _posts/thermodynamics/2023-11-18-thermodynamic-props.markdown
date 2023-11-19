@@ -1,7 +1,6 @@
 ---
 title: "纯净物的热力学属性"
-categories: ["热力学"]
-layout: single
+categories: ["热力学", "工程热力学"]
 ---
 
 本文将阐述纯净物的热力学属性及其之间的关系。
@@ -49,33 +48,33 @@ layout: single
 ### 不同相的属性
 
 对于纯净物的属性，尤其是广延量，我们使用不同的下标来表示不同相下的值。
-下标\\( f \\)表示饱和液体的属性，下标\\( g \\)表示饱和气体的属性，下标\\( fg \\)表示两个相的属性之差。
+下标$f$表示饱和液体的属性，下标$g$表示饱和气体的属性，下标$fg$表示两个相的属性之差。
 例如，相变潜热，即相变焓，就可以用下标的形式写为：
-\\[h_\mathit{fg} = h_g - h_f\\]
+$$h_\mathit{fg} = h_g - h_f$$
 
-我们使用质量分数\\(x\\)来表示不同相之间的质量关系。
+我们使用质量分数$x$来表示不同相之间的质量关系。
 以气液相变为例，质量分数常定义为：
-\\[ x = \frac{m_\text{气相}}{m_\text{总}} \\]
+$$ x = \frac{m_\text{气相}}{m_\text{总}} $$
 
 双相纯净物系统的*任何广延量*（此处以焓为例）都可以用质量分数表示为：
-\\[ h_\text{系统} = h_f + x \cdot h_\mathit{fg} \\]
+$$ h_\text{系统} = h_f + x \cdot h_\mathit{fg} $$
 
 #### 过热蒸汽和压缩液体
 
-过热蒸汽相较于饱和蒸汽，其在相同温度下压强更小（\\(P < P_\text{饱和}\\)）；在相同压强下温度更高；在给定温度或压强下比容、内能和焓都更高。
+过热蒸汽相较于饱和蒸汽，其在相同温度下压强更小（$P < P\_\text{饱和}$）；在相同压强下温度更高；在给定温度或压强下比容、内能和焓都更高。
 
 相较而言，由于液体具有很强的不可压缩性，温度对其性质的影响远大于压强的。
 因此其属性往往可以用对应温度下的饱和液体的属性近似。
 
 对于压缩液体的焓，有时可以通过增加对压强的修正项来取得更好的结果：
-\\[ h \approx h_{f} + v_f (P - P_\text{饱和}) \\]
+$$ h \approx h_{f} + v_f (P - P_\text{饱和}) $$
 
 ### 气体的状态方程
 
 气体的状态方程就是描述气体的各个属性之间的关系的方程。
 可能最为人所熟知的状态方程就是理想气体状态方程（Ideal gas equation）了：
-\\[ P V = n R T \iff P v = R_\text{spec} T \\]
-其中\\(R\\)是普适气体常数、\\(R_\text{spec}\\)是特殊气体常数。
+$$ P V = n R T \iff P v = R_\text{spec} T $$
+其中$R$是普适气体常数、$R\_\text{spec}$是特殊气体常数。
 
 通常来讲，气体的压强不太大，温度较高时可以比较好地被理想气体状态方程近似。
 满足理想气体状态方程的气体称为理想气体（Ideal gas）。
@@ -83,15 +82,15 @@ layout: single
 #### 压缩因子
 
 气体的压缩因子（Compressibility factor）表征了气体偏离理想气体的程度，定义为：
-\\[ Z = \frac{Pv}{R_\text{spec} T} \iff Z = \frac{v_\text{实际}}{v_\text{理想}} \\]
+$$ Z = \frac{Pv}{R_\text{spec} T} \iff Z = \frac{v_\text{实际}}{v_\text{理想}} $$
 
 尽管气体的性质各不相同，其压缩因子只与两个参数密切相关：对比压强（Reduced pressure）和对比温度（Reduced temperature），定义为
-\\[ P_R = \frac{P}{P_\text{临界}}, \quad T_R = \frac{T}{T_\text{临界}} \\]
+$$ P_R = \frac{P}{P_\text{临界}}, \quad T_R = \frac{T}{T_\text{临界}} $$
 
 只要气体的对比压强和对比温度相同，无论其种类是否相同，它们的压缩因子都是一样的。这一命题称为对应状态原理（principle of corresponding states）。
 
 对比比容定义为
-\\[ v_R = \frac{v_\text{实际}}{\frac{R_\text{spec} T_\text{临界}}{P_\text{临界}}} \\]
+$$ v_R = \frac{v_\text{实际}}{\frac{R_\text{spec} T_\text{临界}}{P_\text{临界}}} $$
 通常情况下，气体的压缩因子和对比比容都可以通过查表或查图求出。
 我们可以利用对比比容在只知道温度和比容或压强和比容的情况下求出压缩因子，而不必知道压强或温度。
 
@@ -101,12 +100,12 @@ layout: single
 这节中将列出几个。
 
 范德华状态方程为
-\\[ \left( P + \frac{an^2}{V^2} \right) (V - nb) = nRT \\]
-其中\\( a,b \\)是两个待确定的常数。
-理论确定的\\( a,b \\)两个参数的精度不佳，因此往往使用拟合的值。
+$$ \left( P + \frac{an^2}{V^2} \right) (V - nb) = nRT $$
+其中$ a,b $是两个待确定的常数。
+理论确定的$ a,b $两个参数的精度不佳，因此往往使用拟合的值。
 
 维里状态方程是理想气体方程的幂级数形式
-\\[ \frac{PV_m}{RT} = 1 + \frac{B}{V_m} + \frac{C}{V_m^2} + \cdots \\]
+$$ \frac{PV_m}{RT} = 1 + \frac{B}{V_m} + \frac{C}{V_m^2} + \cdots $$
 这个方程能直接由统计力学方式得出。
 只要恰当的选择系数，该方程能取得极高的精度。
 
@@ -115,75 +114,73 @@ layout: single
 接下来我们关心这些热力学属性之间的关系。
 首先我们引入两个偏微分恒等式：
 
-设\\( z(x,y) \\)是可微的函数，则
-\\[ \left( \frac{\partial x}{\partial z} \right)_y = \frac{1}{\left( \frac{\partial z}{\partial x} \right)_y} \\]
-对性质良好的函数\\( z \\)，我们可将\\( x \\)变为\\(y,z\\)的函数：\\( x = x(y, z) \\)，从而得到
-\\[ \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z = \textcolor{red}{-} \left( \frac{\partial z}{\partial y} \right)_x \\]
+设$ z(x,y) $是可微的函数，则
+$$ \left( \frac{\partial x}{\partial z} \right)_y = \frac{1}{\left( \frac{\partial z}{\partial x} \right)_y} $$
+对性质良好的函数$ z $，我们可将$ x $变为$y,z$的函数：$ x = x(y, z) $，从而得到
+$$ \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z = \textcolor{red}{-} \left( \frac{\partial z}{\partial y} \right)_x $$
 {: .proposition}
 
-注意到第二条命题和链式法则不同：设\\(z(x(y), k)\\)是一个可微的函数，且\\(k\\)与\\(x\\)无关，则
-\\[ \left( \frac{\partial z}{\partial y} \right)_k = \left(  \frac{\partial z}{\partial x} \right)_k \left(  \frac{\partial x}{\partial y} \right)_k \\]
+注意到第二条命题和链式法则不同：设$z(x(y), k)$是一个可微的函数，且$k$与$x$无关，则
+$$ \left( \frac{\partial z}{\partial y} \right)_k = \left(  \frac{\partial z}{\partial x} \right)_k \left(  \frac{\partial x}{\partial y} \right)_k $$
 这两个命题在省略表示不变量的下标时容易混淆。
 
 ### 麦克斯韦关系
 
 和描述电磁场的麦克斯韦方程不同，麦克斯韦关系表示了几个热力学属性之间的偏微分关系。
 
-（麦克斯韦关系，Maxwell relations）
+<small>（麦克斯韦关系，Maxwell relations）</small>
 简单可压缩热力学系统满足
-{% raw %}
-\[
+$$
     \begin{aligned}
     \left( \frac{\partial T}{\partial v} \right)_s &= - \left( \frac{\partial P}{\partial s} \right)_v \\
     \left( \frac{\partial T}{\partial P} \right)_s &= \left( \frac{\partial v}{\partial s} \right)_P \\
     \left( \frac{\partial s}{\partial v} \right)_T &= \left( \frac{\partial P}{\partial T} \right)_v \\
     \left( \frac{\partial s}{\partial P} \right)_T &= - \left( \frac{\partial v}{\partial T} \right)_P \\
     \end{aligned} 
-\]
-{% endraw %}
-其中\\(T\\)是温度、\\(P\\)是压强、\\(v\\)是比容、\\(T\\)是单位质量的熵。
+$$
+其中$T$是温度、$P$是压强、$v$是比容、$T$是单位质量的熵。
 {: .proposition}
 
 我们已经知道：
-\\[ 
+$$ 
     \def\d{\mathrm{d}}
     \d u = T \d S - P \d v, \quad
     \d h = T \d S + v \d P
-\\]
+$$
 定义系统的亥姆霍次和吉布斯函数分别为
-\\[ a = u - T s, \quad g = h - T s \\]
+$$ a = u - T s, \quad g = h - T s $$
 两者均是状态函数，因此具有恰当微分
-\\[ \d a = \d u - (T \d s + s \d T), \quad \d g = \d h - (T \d s + s \d T) \\]
+$$ \d a = \d u - (T \d s + s \d T), \quad \d g = \d h - (T \d s + s \d T) $$
 代入内能和焓的微分，可得
-\\[ \d a = - s \d T - P \d v, \quad \d g = - s \d T + v \d P \\]
+$$ \d a = - s \d T - P \d v, \quad \d g = - s \d T + v \d P $$
 这两个方程和开头的两个方程合称吉布斯关系（Gibbs relations）。
 这四个方程均具有全微分的形式，而我们知道
-\\[ \d z = \frac{\partial z}{\partial x} \d x + \frac{\partial z}{\partial y} \d y\\]
+$$ \d z = \frac{\partial z}{\partial x} \d x + \frac{\partial z}{\partial y} \d y$$
 同时
-\\[ \frac{\partial^2 z}{\partial x \partial y} = \frac{\partial^2 z}{\partial y \partial x} \\]
+$$ \frac{\partial^2 z}{\partial x \partial y} = \frac{\partial^2 z}{\partial y \partial x} $$
 从而，以亥姆霍次函数的微分为例，可得
-\\[ \frac{\partial s}{\partial v} = \frac{\partial P}{\partial T} \\]
+$$ \frac{\partial s}{\partial v} = \frac{\partial P}{\partial T} $$
 {: .proof}
 
 利用能量这一量纲可以容易地记忆麦克斯韦关系，注意到
-\\[ [u] = [T][s] = [P][v] \\]
+$$ [u] = [T][s] = [P][v] $$
 从而
-\\[ \frac{[T]}{[v]} = \frac{[P]}{[s]},\ \frac{[T]}{[P]} = \frac{[v]}{[s]},\ \frac{[s]}{[v]} = \frac{[P]}{[T]},\ \frac{[s]}{[P]} = \frac{[v]}{[T]}\\]
-现在为所有\\([T], [v]\\)出现在同一侧的方程加上负号并将量纲替换为偏导即可。
+$$ \frac{[T]}{[v]} = \frac{[P]}{[s]},\ \frac{[T]}{[P]} = \frac{[v]}{[s]},\ \frac{[s]}{[v]} = \frac{[P]}{[T]},\ \frac{[s]}{[P]} = \frac{[v]}{[T]}$$
+现在为所有$[T], [v]$出现在同一侧的方程加上负号并将量纲替换为偏导即可。
 
 ### 克拉佩龙方程
 
-（克拉佩龙方程）系统饱和压强和温度的微分和相变焓具有以下关系：
-\\[ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_{12}}{T v_{12}} \\]
+<small>（克拉佩龙方程[^1]，Clapeyron equation）</small>系统饱和压强和温度的微分和相变焓具有以下关系：
+$$ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_{12}}{T v_{12}} $$
 下标$12$表示两相之间属性的差。
 {: .proposition}
 
 考虑麦克斯韦方程：
-\\[ \left( \frac{\partial s}{\partial v} \right)_T = \left( \frac{\partial P}{\partial T} \right)_v \\]
+$$ \left( \frac{\partial s}{\partial v} \right)_T = \left( \frac{\partial P}{\partial T} \right)_v $$
 我们已经知道，相变中的压力就是饱和压力，而其只是饱和温度的函数，因此可将偏微分替代为全微分。
 这个微分的值与比容没有关系，因此直接对上式积分可得
-\\[ \int \d s = \left( \frac{\d P}{\d T} \right)_\text{饱和} \int \d v \implies s_{12} = \left( \frac{\d P}{\d T} \right)_\text{饱和} v_{12}\\]
+$$ \int \d s = \left( \frac{\d P}{\d T} \right)_\text{饱和} \int \d v \implies s_{12} = \left( \frac{\d P}{\d T} \right)_\text{饱和} v_{12}$$
 相变过程的压力和温度维持不变，根据热力学基本关系
-\\[ \int \d h = \int T \d s + \cancel{v \d P} \implies h_{12} = T s_{12} \\]
+$$ \int \d h = \int T \d s + \cancel{v \d P} \implies h_{12} = T s_{12} $$
 代入即可得到欲证的方程。
 {: .proof}
