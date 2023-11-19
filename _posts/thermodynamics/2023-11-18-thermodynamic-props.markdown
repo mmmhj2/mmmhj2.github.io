@@ -194,14 +194,14 @@ $$ \int \d h = \int T \d s + \cancel{v \d P} \implies h_{12} = T s_{12} $$
 
 <small>（克劳修斯-克拉佩龙方程，Clausius–Clapeyron relation）</small>
 若发生气液相变的气体能被视为理想气体，则有
-$$\ln \left( \frac{P_2}{P_1} \right)_\text{饱和} = \frac{h_\text{fg}}{R_\text{spec}} \left( \frac{1}{T_1} - \frac{1}{T_2} \right)_\text{饱和}$$
+$$\ln \left( \frac{P_2}{P_1} \right)_\text{饱和} = \frac{h_\mathit{fg}}{R_\text{spec}} \left( \frac{1}{T_1} - \frac{1}{T_2} \right)_\text{饱和}$$
 {: .proposition}
 
-注意到通常而言气体的体积远大于液体的，因此$v\_\text{fg}$可用气体的体积$v\_\text{g}$代替。
+注意到通常而言气体的体积远大于液体的，因此$v\_\mathit{fg}$可用气体的体积$v\_\text{g}$代替。
 然后利用理想气体状态方程，可得
-$$ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_\text{fg}}{T v_\text{g}} = \frac{P h_\text{fg}}{T^2 R_\text{spec}} $$
+$$ \left( \frac{\d P}{\d T} \right)_\text{饱和} = \frac{h_\mathit{fg}}{T v_\text{g}} = \frac{P h_\mathit{fg}}{T^2 R_\text{spec}} $$
 简单变换可得
-$$\left( \frac{\d P}{P} \right)_\text{饱和} = \frac{h_\text{fg}}{R_\text{spec}} \left( \frac{\d T}{T^2} \right)_\text{饱和} $$
+$$\left( \frac{\d P}{P} \right)_\text{饱和} = \frac{h_\mathit{fg}}{R_\text{spec}} \left( \frac{\d T}{T^2} \right)_\text{饱和} $$
 积分即可得到原式。
 {: .proof}
 
@@ -275,7 +275,7 @@ $$
 我们使用*偏离因数*（Departure factor）来简化这样的计算。
 
 焓的偏离因数定义为相同温度下理想气体和真实气体焓的差距的无量纲量
-$$Z_h = \frac{(h^* - h)_T}{R T_{cr}}$$
+$$Z_h = \frac{(h^* - h)_T}{R T_\text{临界}}$$
 熵的偏离因数定义为
 $$Z_s = \frac{(s^* - s)_{T,P}}{R}$$
 {: .definition}
@@ -291,7 +291,7 @@ $$
 而求出这两个系数之后，对应的焓变、内能变和熵变可以表示为
 $$
 \begin{aligned}
-h_2 - h_1 &= (h_2^* - h_1^*) - R_\text{spec} T_{cr} ({Z_h}_2 - {Z_h}_1) \\
+h_2 - h_1 &= (h_2^* - h_1^*) - R_\text{spec} T_\text{临界} ({Z_h}_2 - {Z_h}_1) \\
 u_2 - u_1 &= (h_2^* - h_1^*) - R_\text{spec} (Z_2 T_2 - Z_1 T_1) \\
 s_2 - s_1 &= (s_2^* - s_1^*) - R_\text{spec} ({Z_s}_2 - {Z_s}_1)
 \end{aligned}
