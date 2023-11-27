@@ -115,13 +115,13 @@ $$\hat \sigma : \nabla \tilde \bu = \frac{1}{2} (\hat \sigma : \mathbf H + \hat 
 
 这个引理的方程由三个部分组成：
 $$\textcolor{red}{\int_V \hat \sigma : \tilde \bu} = \underbrace{\textcolor{blue}{\int_V \rho \mathbf f \cdot \tilde \bu + \int_{S_F} \bT^D \cdot \tilde \bu}}_{W^D_f (\bu)} + \underbrace{\textcolor{green}{\int_{S_U} (\hat \sigma \vec n) \cdot \tilde\bu^D}}_{W^D_u(\sigma)}$$
-红色的部分是形变能的两倍，在边界条件给定的情况下，蓝色的部分只与位移场有关，而绿色的部分只与应力场有关。
+红色的部分是应变能的两倍，在边界条件给定的情况下，蓝色的部分只与位移场有关，而绿色的部分只与应力场有关。
 
 ### 最小势能原理
 
 若能够将系统的可行位移场以解析的形式表示出来，则可使用最小势能原理进行求解。
 
-正规问题中一个运动学可行的位移场$\tilde \bu$对应的总势能为形变能与外力做功之差：
+正规问题中一个运动学可行的位移场$\tilde \bu$对应的总势能为应变能与外力做功之差：
 $$
 \begin{aligned}
 \mathcal U(\tilde \bu) 
@@ -143,7 +143,7 @@ $$\tilde \bu = \bu + \delta \bu$$
 $$\delta \bu = 0, \quad \forall P \in S_U$$
 然后对$\sigma$和$\delta \bu$应用能量基本引理，化简可得：
 $$\mathcal U(\tilde \bu) = \mathcal U(\bu) + \frac{1}{2} \int_V \delta \sigma : \delta \bu$$
-注意到最后一项是形变能，因此必然大于等于零，从而证明该命题。
+注意到最后一项是应变能，因此必然大于等于零，从而证明该命题。
 {: .proof}
 
 如果我们可以将可行的位移场以解析的形式近似（通常是以多项式函数的形式近似），那么就可以直接使用微分的方法求解最小值，从而得出和解析解最接近的估计，这就是有限元分析的原理。
@@ -152,7 +152,7 @@ $$\mathcal U(\tilde \bu) = \mathcal U(\bu) + \frac{1}{2} \int_V \delta \sigma : 
 
 若能够将系统的应力表示出来，则可使用最大余能原理。
 
-正规问题中一个静力学可行的应力场$\hat \sigma$对应的总余能为外力做功与形变能之差：
+正规问题中一个静力学可行的应力场$\hat \sigma$对应的总余能为外力做功与应变能之差：
 $$
 \begin{aligned}
 \mathcal H(\hat \sigma) &= W_u^D(\hat \sigma) - W(\hat \sigma) \\
@@ -173,7 +173,7 @@ $$\mathcal U(\bu) - \mathcal H(\sigma) = 0 \iff \mathcal U(\bu) = \mathcal H(\si
 
 从而我们有以下几个命题。
 
-对正规问题的解，其形变能一定满足：
+对正规问题的解，其应变能一定满足：
 $$W = \frac{1}{2} \left(W_u^D (\sigma) + W_F^D(\bu) \right)$$
 {: .proposition}
 

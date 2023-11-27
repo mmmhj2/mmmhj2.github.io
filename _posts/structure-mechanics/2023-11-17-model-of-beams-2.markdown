@@ -59,8 +59,8 @@ $$\frac{1}{S_j} = \frac{1}{J_j^2} \int \frac{\mu_j(x_j)^2}{b(x_j)^2} \d S$$
 
 首先根据梁模型的假设，我们认为应力和应变之间存在一线性关系，因此一个$6 \times 6$的矩阵$L$存在。我们以四个$3 \times 3$的分块矩阵研究它：
 $$L = \begin{pmatrix} A & B \\ D & C \end{pmatrix}$$
-同时使用张量积和积分计算形变能的线密度，然后让两者对应。
-用张量积求得的形变能线密度为：
+同时使用张量积和积分计算应变能的线密度，然后让两者对应。
+用张量积求得的应变能线密度为：
 $$w = - \frac{1}{2} [T(s)] \otimes [D(s)] = \frac{1}{2} T^\top LT$$
 而由积分求得的线密度为：
 $$w = \frac{1}{2} \int \sigma_{ij} \varepsilon_{ij} \d x_2 \d x_3 = \frac{1}{2E} \int \sigma^2_{11} \d S + \frac{1}{2G} \int (\sigma_{12}^2 + \sigma_{13}^2) \d S$$
@@ -77,11 +77,11 @@ $$L = \begin{pmatrix} A & \mathbf 0 \\ \mathbf 0 & C \end{pmatrix}$$
 按照类似的方法将几个系数分别对应，即可求出$A,C$，此处不再赘述。
 {: .proof}
 
-#### 形变能密度
+#### 应变能密度
 
-利用上文的公式，我们给出形变能的表达式。
+利用上文的公式，我们给出应变能的表达式。
 
-形变能线密度利用内力的表达式为：
+应变能线密度利用内力的表达式为：
 $$w = \frac{1}{2} \left( \frac{N^2}{ES} + \textcolor{blue}{ \frac{M_{f3}^2}{EJ_2} + \frac{M_{f2}^2}{EJ_3} + \frac{M_t^2}{GI}} + \frac{T_2^2}{GS_2} + \frac{T_3^2}{GS_3} \right)$$
 利用形变的表达式为：
 $$w = \frac{1}{2} \left( ES \varepsilon_1^2 + \textcolor{blue}{EJ_2 \chi_3^2 + EJ_3 \chi_2^2+ GI \chi_1^2} + GS_2 \varepsilon_2^2 + GS_3 \varepsilon_3^2 \right)$$
@@ -159,9 +159,10 @@ $[\hat R\_A]$是约束处的反作用力，即约束力。
 和在连续介质力学中一样，我们也可以应用最小势能原理和最大余能原理。
 
 梁的势能定义为
-$$\mathcal U([\tilde U]) = \frac{1}{2} \int (L^{-1}[\tilde D])\otimes [\tilde U] \d s - W_f^d([\tilde U])$$
+$$\mathcal U([\tilde U]) = \underbrace{\frac{1}{2} \int (L^{-1}[\tilde D])\otimes [\tilde U] \d s}_{W([\tilde U])} - W_f^d([\tilde U])$$
 余能定义为
-$$\mathcal H([\hat T]) = W_u^d([\hat T]) - \frac{1}{2} \int [\hat T] \otimes (L [\hat T]) \d S$$
+$$\mathcal H([\hat T]) = W_u^d([\hat T]) - \underbrace{\frac{1}{2} \int [\hat T] \otimes (L [\hat T]) \d S}_{W[\hat T]}$$
+其中$W$表示总应变能。
 所有运动学许可的位移场中，解对应的场势能最小；
 所有静力学许可的内力场中，解对应的场余能最大。
 {: .theorem}
@@ -174,7 +175,7 @@ $$\mathcal H([\hat T]) = W_u^d([\hat T]) - \frac{1}{2} \int [\hat T] \otimes (L 
 
 <small>(梅纳布雷亚定理，Menabrea's theorem)</small>
 在超静定度为$h$的系统中，利用静力学平衡方程可将内力场$[\hat T]$表示为$h$个未知外力的函数。
-这些外力的值总是使得$W\_u^f([\hat T])$最小。
+这些外力的值总是使得总应变能$W([\hat T])$最小。
 {: .proposition}
 
 静定系统有且仅有一个静力学许可的内力场，而超静定度为$h$的超静定问题的静力学许可的内力场的集合是$h$个线性独立的场张成的$h$维仿射空间。
@@ -186,7 +187,7 @@ $$\mathcal H([\hat T]) = W_u^d([\hat T]) - \frac{1}{2} \int [\hat T] \otimes (L 
 互易性定理允许我们用一个人为构造的简单的问题的解来求解更加复杂的问题。
 
 <small>(麦克斯韦-贝蒂互易定理，Maxwell-Betti reciprocity theorem)</small>
-设两个完全相同的系统上施加了不同的负载，从而得到两个不同的解$[U\_1], [U\_2]$，则第一个系统的负载在第二个位移场上做的功等于第二个系统的负载在第一个位移场上做的功。
+设两个完全相同的系统上施加了不同的负载，从而得到两个不同的位移场解$[U\_1], [U\_2]$，则第一个系统的负载在第二个位移场上做的功等于第二个系统的负载在第一个位移场上做的功。
 {: .proposition}
 
 #### 卡氏定律

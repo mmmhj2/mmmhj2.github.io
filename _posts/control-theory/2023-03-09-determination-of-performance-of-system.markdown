@@ -297,7 +297,7 @@ $$
 此时我们画出简化的框图，注意到因为$e(t) = 0$，所以$R$的输出直接变成$-\epsilon$，代替$u_r$。
 
 ![](/assets/system/block-diagram-robustness.svg)
-{: .aligned-center}
+{: .align-center}
 
 我们依然要让$\epsilon(\infty) = 0$，所以需要求出这个系统的传递函数。
 使用反馈环的传递函数公式，可知：
@@ -334,7 +334,7 @@ $$
 | 0 | $\frac{A e\_0}{1 + K\_{BO}}$ | $\infty$ | $\infty$ |
 | 1 | $0$ | $\frac{Aa}{K\_{BO}}$ | $\infty$ |
 | 2 | $0$ | $0$ | $\frac{A\gamma}{K\_{BO}}$ |
-{: .aligned-center}
+{: .align-center}
 
 同样地，我们也可以为扰动计算表格：
 

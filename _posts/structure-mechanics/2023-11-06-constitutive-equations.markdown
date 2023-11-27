@@ -12,8 +12,10 @@ tags: ["连续介质力学", "固体力学"]
 为了寻找不同材质的特点，人们设计了拉伸试验（Tensile testing）。
 
 通过在均匀的材料上施加拉力并测量其形变，我们可以取得以下几个物理量之间的关系：
-- 应力：$$\sigma = \frac{|\vec F|}{S}$$
-- 应变：$$\varepsilon_L = \frac{\Delta L}{L}, \quad \varepsilon_T = \frac{\Delta D}{D}$$
+- 应力：
+$$\sigma = \frac{|\vec F|}{S}$$
+- 应变：
+$$\varepsilon_L = \frac{\Delta L}{L}, \quad \varepsilon_T = \frac{\Delta D}{D}$$
 其中$L$表示长度，$D$表示直径，两个应变分别称为纵向应变（Longitudinal strain）和横向应变（Transversal strain）。
 
 ### 延性材料
@@ -21,10 +23,10 @@ tags: ["连续介质力学", "固体力学"]
 若某种材料在受到拉伸应力时，先发生弹性应变，再发生塑性应变，则称该材料为延性材料（Ductile material）。
 
 延性材料的应力与纵向应变的曲线如下所示。
-![](/assets/structmech/Metal_yield.svg)
+![](/assets/structmech/Metal_yield.svg){: .align-center}
 
 在1、2点之间的线性区称为弹性区，此外的区域称为塑性区，该区域中直线的斜率称为*杨氏模量*（Young's modulus），记为$E$。
-该区域中横向与纵向应变的比值称为泊松系数（Poisson's ratio），记为$\nu$。
+该区域中横向与纵向应变的比值称为*泊松系数*（Poisson's ratio），记为$\nu$。
 $$\sigma = E \cdot \varepsilon_L, \quad \varepsilon_T = - \nu \varepsilon_L$$
 
 
@@ -112,15 +114,15 @@ $$
 \mu = \frac{E}{2(1+\nu)}
 $$
 
-### 形变能
+### 应变能
 
-形变能的体积密度可由应力和应变的向量形式表示：
+应变能（Strain energy，亦称变形能）的体积密度可由应力和应变的向量形式表示：
 $$w = \frac{1}{2} \tilde \sigma^\top \tilde \varepsilon$$
 或者写成张量的形式：
 $$w = \frac{1}{2} \sigma : \varepsilon$$
 {: .definition}
 
-形变能在之后的数值方法中会得到大量的使用。
+应变能在之后的数值方法中会得到大量的使用。
 
 ## 弹性限度
 
@@ -128,14 +130,16 @@ $$w = \frac{1}{2} \sigma : \varepsilon$$
 
 ### 冯·米塞斯判据
 
-对延性材料，冯·米塞斯（Von Mises）给出了如下判据。
+对延性材料，冯·米塞斯（Von Mises）[^vm]给出了如下判据。
 
-延性材料处于弹性区域中，当：
+[^vm]: 理查德·冯·米塞斯（Richard von Mises，1883年4月19日—1953年7月14日）是知名经济学家路德维希·冯·米塞斯（Ludwig Heinrich Edler von Mises, 1881年9月29日—1973年10月10日）的弟弟。
+
+若延性材料的偏应力张量$s$满足
 $$s : s \le \frac{2}{3} \sigma_e^2$$
-其中$s$是偏应力张量，$\sigma_e$是弹性限度。
+则可认为其仍处于弹性区中。
 {: .proposition}
 
-定义冯·米塞斯等效应力为：
+定义冯·米塞斯等效应力（也称范式等效应力）为：
 $$\sigma_\text{VM} = \sqrt{\frac{3}{2} s : s}$$
 
 则该判据也可写为
@@ -148,6 +152,13 @@ $$\sigma_\text{VM} \le \sigma_e$$
 
 对脆性材料，朗肯（Rankine）给出了如下判据。
 
-脆性材料处于弹性区域中，当其第一主应力小于弹性限度：
+当脆性材料的第一主应力不大于弹性限度时，即
 $$\sigma_1 \le \sigma_r$$
+时，可认为该材料仍然处于弹性区中。
 {: .proposition}
+
+该判据也称最大拉应力理论，适用于脆性材料的脆断。
+
+注意到两种判据的弹性限度的下标不同。
+下标$e$取自`elastic`，而下标$r$取自`rupture`。
+这是因为脱离弹性区后延性材料仍能发生塑性形变，而不会立刻断裂。
