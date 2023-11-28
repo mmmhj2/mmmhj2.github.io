@@ -91,8 +91,8 @@ $$\varepsilon = \frac{1+\nu}{E} \sigma - \frac{\nu}{E} \Tr(\sigma) \mathbf I$$
 
 首先介绍联系运动学许可的位移场和静力学许可的应力场之间的能量的一条引理。
 
-设$\tilde \bu$为一运动学许可的位移场，$\hat \sigma$为一静力学许可的应力场，则其满足：
-$$\int_V \hat \sigma : \tilde \bu = \int_V \rho \mathbf f \cdot \tilde \bu + \int_{S_F} \bT^D \cdot \tilde \bu + \int_{S_U} (\hat \sigma \vec n) \cdot \tilde\bu^D$$
+设$\tilde \bu$为一运动学许可的位移场，$\tilde \varepsilon$是其对应的变形场，$\hat \sigma$为一静力学许可的应力场，则其满足：
+$$\int_V \hat \sigma : \tilde \varepsilon = \int_V \rho \mathbf f \cdot \tilde \bu + \int_{S_F} \bT^D \cdot \tilde \bu + \int_{S_U} (\hat \sigma \vec n) \cdot \tilde\bu^D$$
 {: .proposition}
 
 利用局部平衡方程，我们有：
@@ -114,7 +114,7 @@ $$\hat \sigma : \nabla \tilde \bu = \frac{1}{2} (\hat \sigma : \mathbf H + \hat 
 {: .proof}
 
 这个引理的方程由三个部分组成：
-$$\textcolor{red}{\int_V \hat \sigma : \tilde \bu} = \underbrace{\textcolor{blue}{\int_V \rho \mathbf f \cdot \tilde \bu + \int_{S_F} \bT^D \cdot \tilde \bu}}_{W^D_f (\bu)} + \underbrace{\textcolor{green}{\int_{S_U} (\hat \sigma \vec n) \cdot \tilde\bu^D}}_{W^D_u(\sigma)}$$
+$$\textcolor{red}{\int_V \hat \sigma : \tilde \varepsilon} = \underbrace{\textcolor{blue}{\int_V \rho \mathbf f \cdot \tilde \bu + \int_{S_F} \bT^D \cdot \tilde \bu}}_{W^D_f (\bu)} + \underbrace{\textcolor{green}{\int_{S_U} (\hat \sigma \vec n) \cdot \tilde\bu^D}}_{W^D_u(\sigma)}$$
 红色的部分是应变能的两倍，在边界条件给定的情况下，蓝色的部分只与位移场有关，而绿色的部分只与应力场有关。
 
 ### 最小势能原理

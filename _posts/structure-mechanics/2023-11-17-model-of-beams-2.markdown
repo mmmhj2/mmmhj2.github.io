@@ -41,21 +41,28 @@ $$
 
 设梁在$s$处截面所受的内力为$T(s)$，形变为$D(s)$，定义为：
 $$D = \begin{bmatrix} \varepsilon_1 \\ \chi_2 \\ \chi_3 \\ \chi_1 \\ \varepsilon_2 \\ \varepsilon_3 \end{bmatrix}, \quad
-T = \begin{bmatrix} N \\ M_2 \\ M_3 \\ M_t \\ T_2 \\ T_3 \end{bmatrix}$$
+T = \begin{bmatrix} N \\ M_{f2} \\ M_{f2} \\ M_t \\ T_2 \\ T_3 \end{bmatrix}$$
 则其本构方程为：
-$$D = -L T \iff \begin{bmatrix} \varepsilon_1 \\ \chi_2 \\ \chi_3 \\ \chi_1 \\ \varepsilon_2 \\ \varepsilon_3 \end{bmatrix} = \begin{bmatrix}
+$$
+\begin{multline}
+D = -L T \\ \iff
+\begin{bmatrix} \varepsilon_1 \\ \chi_2 \\ \chi_3 \\ \chi_1 \\ \varepsilon_2 \\ \varepsilon_3 \end{bmatrix} = - \begin{bmatrix}
  \frac{1}{ES} & 0 & 0 & 0 & 0 & 0 \\
  0 & \frac{1}{EJ_3} & 0 & 0 & 0 & 0 \\
  0 & 0 & \frac{1}{EJ_2} & 0 & 0 & 0 \\
  0 & 0 & 0 & \frac{1}{GI} & 0 & 0 \\
  0 & 0 & 0 & 0 & \frac{1}{GS_2} & 0 \\
  0 & 0 & 0 & 0 & 0 & \frac{1}{GS_3} \\
-\end{bmatrix} \cdot \begin{bmatrix} N \\ M_2 \\ M_3 \\ M_t \\ T_2 \\ T_3 \end{bmatrix}$$
-其中$J\_i$定义为沿$i$轴的转动惯量：
-$$J_i = \int x_i \d S$$
+\end{bmatrix} \cdot \begin{bmatrix} N \\ M_{f2} \\ M_{f2} \\ M_t \\ T_2 \\ T_3 \end{bmatrix}
+\end{multline}
+$$
+其中$J\_i$定义为沿$i$轴的转动惯量（惯性矩）[^mmi]：
+$$J_i = \int x_i^2 \d S$$
 而$S\_i$定义为在该轴上对剪力的等效面积：
 $$\frac{1}{S_j} = \frac{1}{J_j^2} \int \frac{\mu_j(x_j)^2}{b(x_j)^2} \d S$$
 {: .proposition}
+
+[^mmi]: 正式的名称是*面积二次轴矩*（second axial moment of area），是横截面抵抗弯曲变形的能力的度量，略不同于刚体的转动惯量。
 
 首先根据梁模型的假设，我们认为应力和应变之间存在一线性关系，因此一个$6 \times 6$的矩阵$L$存在。我们以四个$3 \times 3$的分块矩阵研究它：
 $$L = \begin{pmatrix} A & B \\ D & C \end{pmatrix}$$
@@ -67,7 +74,7 @@ $$w = \frac{1}{2} \int \sigma_{ij} \varepsilon_{ij} \d x_2 \d x_3 = \frac{1}{2E}
 然后可将应力按引起应力的原因不同拆分：
 $$
 \begin{aligned}
-\sigma_{11} &= \sigma_{11}^N + \sigma_{11}^{M_3} + \sigma_{11}^{M_2} \\ 
+\sigma_{11} &= \sigma_{11}^N + \sigma_{11}^{M_{f3}} + \sigma_{11}^{M_{f2}} \\ 
 \sigma_{1j} &= \sigma_{1j}^{M_t} + \sigma_{1j}^{T_2} + \sigma_{1j}^{T_3}
 \end{aligned}
 $$
@@ -82,9 +89,9 @@ $$L = \begin{pmatrix} A & \mathbf 0 \\ \mathbf 0 & C \end{pmatrix}$$
 利用上文的公式，我们给出应变能的表达式。
 
 应变能线密度利用内力的表达式为：
-$$w = \frac{1}{2} \left( \frac{N^2}{ES} + \textcolor{blue}{ \frac{M_{f3}^2}{EJ_2} + \frac{M_{f2}^2}{EJ_3} + \frac{M_t^2}{GI}} + \frac{T_2^2}{GS_2} + \frac{T_3^2}{GS_3} \right)$$
+$$w = \frac{1}{2} \left( \frac{N^2}{ES} + \textcolor{blue}{ \frac{M_{f3}^2}{EJ_2} + \frac{M_{f2}^2}{EJ_3} + \frac{M_t^2}{GI}} + \textcolor{red}{\frac{T_2^2}{GS_2} + \frac{T_3^2}{GS_3}} \right)$$
 利用形变的表达式为：
-$$w = \frac{1}{2} \left( ES \varepsilon_1^2 + \textcolor{blue}{EJ_2 \chi_3^2 + EJ_3 \chi_2^2+ GI \chi_1^2} + GS_2 \varepsilon_2^2 + GS_3 \varepsilon_3^2 \right)$$
+$$w = \frac{1}{2} \left( ES \varepsilon_1^2 + \textcolor{blue}{EJ_2 \chi_3^2 + EJ_3 \chi_2^2+ GI \chi_1^2} + \textcolor{red}{GS_2 \varepsilon_2^2 + GS_3 \varepsilon_3^2}\right)$$
 其中$E$为杨氏模量；
 $$G = \frac{E}{2(1+\nu)}$$
 为剪切模量；$S$是横截面积；
@@ -96,13 +103,13 @@ $$\frac{1}{S_j} = \frac{1}{J_j^2} \int \frac{\mu_j(x_j)^2}{b(x_j)^2} \d S$$
 为等效面积。
 {: .proposition}
 
-其中标蓝的项的数量级往往大于其他项。
+其中标<span style="color: blue;">蓝色</span>的项的数量级往往大于其他项。
 
 二维情况下，方程简化为
 $$w = \frac{1}{2} \left( \frac{N^2}{ES} +  \frac{M_{f3}^2}{EJ_2} + \textcolor{red}{\frac{T_2^2}{GS_2}} \right)$$
 和
 $$w = \frac{1}{2} \left( ES \varepsilon_1^2 + EJ_2 \chi_3^2 + \textcolor{red}{GS_2 \varepsilon_2^2}\right)$$
-在满足欧拉-伯努利假设的情况下，标红色的项为零。
+在满足欧拉-伯努利假设的情况下，标<span style="color: red;">红色</span>的项为零，因为滑移量无穷小。
 
 ### 求解系统
 
@@ -115,7 +122,7 @@ $$w = \frac{1}{2} \left( ES \varepsilon_1^2 + EJ_2 \chi_3^2 + \textcolor{red}{GS
 2. 计算内力旋量；
 3. 积分求解本构方程：
 $$\frac{\d [U]}{\d s} = - L [T]$$
-4. 确定积分常数：使用约束处的运动学边界条件和连续性方程
+4. 确定积分常数：使用约束处的运动学边界条件和连续性方程，根据约束的不同，连续性方程可能是以下三个的任意组合
 $$v(s^-) = v(s^+),\ u(s^-) = u(s^+),\ \omega(s^-) = \omega(s^+)$$
 
 在求解内力和位移旋量时，我们并不需要使用内应力张量。
