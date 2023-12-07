@@ -35,6 +35,7 @@ M_{f3} &= \int_\Sigma x_2 \sigma_{11} \d P
 \end{aligned}
 $$
 
+我们又知道在受点负载的位置，内力应当等于外力，因此可以得到偏微分方程的边界条件。
 利用圣维南定律进行计算时，需要使用到这些边界条件。
 
 ### 圣维南定律
@@ -45,6 +46,9 @@ $$
 {: .proposition}
 
 此处奇点是指梁的性质不连续的点，如受到集中力（包括约束力）的点或横截面积突变的点。
+
+我们能够利用这条定律来求解应力，只需要先利用外力解出内力，然后再用内力解出应力即可。
+已知外力求解应力的问题称为圣维南问题。
 
 #### 圣维南问题
 
@@ -61,13 +65,13 @@ $$
 $$
 
 梁的法向应力和切向应力（剪力）都可以利用该矩阵表示出来。
-$$\sigma_n = \sigma_{11},\ \vec \tau = \sigma_{12} \vec x_2 + \sigma_{13} \vec x_3$$
+$$\sigma_N = \sigma_{11},\ \vec \tau = \sigma_{12} \vec x_2 + \sigma_{13} \vec x_3$$
 
 圣维南问题的方程可写为：
 $$
 \begin{aligned}
 \partial_j \sigma_{ij} &= 0 & \text{（局部平衡方程）} \\
-\partial_{ll} \sigma_{ij} + \frac{1}{1+\nu} \partial_{kk} \sigma_{ij} &= 0 & \text{（相容性方程）} \\
+\partial_{ll} \sigma_{ij} + \frac{1}{1+\nu} \partial_{ij} \sigma_{kk} &= 0 & \text{（相容性方程）} \\
 \end{aligned}
 $$
 
@@ -90,14 +94,15 @@ $$
 $$
 J_i = \int_\Sigma x_i^2 \d S, \quad I = 2 \int_\Sigma \Phi \d S
 $$
-$\Phi$是一个满足以下条件的标量函数：
+$\partial \Sigma$表示$\Sigma$的边界。
+$\Phi$是一个满足以下条件的标量函数，称为应力函数（Stress function）：
 $$
 \begin{aligned}
 \nabla^2 \Phi(x_2, x_3) + 2 &= 0 & \forall P \in \Sigma \\
 \Phi(x_2, x_3) &= 0 &\forall P \in \partial \Sigma
 \end{aligned}
 $$
-$\partial \Sigma$表示$\Sigma$的边界。
+这个函数通常使用数值方法求出。
 {: .proposition}
 
 不出意料地，尽管圣维南问题的约束条件众多，得出的结论能够很好地应用于许多并不满足该要求的梁上。
@@ -153,11 +158,11 @@ $$|\tau|_\text{max} = \frac{3T_2}{2bH}$$
 
 （冯·米塞斯判据）
 延性材料构成的梁的冯·米塞斯判据为：
-$$\sigma_\text{VM} = \sqrt{\frac{2}{3} s_{ij} s_{ij}} = \sqrt{\sigma_{11}^2 + 3 (\sigma_{12}^2 + \sigma_{13}^2)} < \sigma_e$$
+$$\sigma_\text{VM} = \sqrt{\frac{3}{2} s_{ij} s_{ij}} = \sqrt{\sigma_{11}^2 + 3 (\sigma_{12}^2 + \sigma_{13}^2)} = \sqrt{\sigma_N^2 + 3 \tau^2} \le \sigma_e$$
 {: .proposition}
 
 （朗肯判据）
 脆性材料构成的梁的朗肯判据为：
-$$\sigma_\text{I} = \frac{1}{2}\left( \sigma_{11} + \sqrt{\sigma_{11}^2 + 4 \tau^2} \right) < \sigma_{rt}$$
+$$\sigma_\text{I} = \frac{1}{2}\left( \sigma_{11} + \sqrt{\sigma_{11}^2 + 4 \tau^2} \right) \le \sigma_{r}$$
 {: .proposition}
 

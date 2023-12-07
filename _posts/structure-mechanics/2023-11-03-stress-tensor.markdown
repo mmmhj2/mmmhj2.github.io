@@ -38,7 +38,7 @@ $$\mathbf T(P, \vec n) = - \mathbf T (P, - \vec n)$$
 接下来我们希望给出任何一个面上内力的数学表述。
 我们考虑构造一个如下图所示的四面体，同时考虑体积力和面积力，假设处于平衡状态($\mathbf a = 0$)，应用牛顿定律：
 
-![](/assets/structmech/Cauchy_tetrahedron.svg "From https://commons.wikimedia.org/wiki/File:Cauchy_tetrahedron.svg licensed under Creative Commons Attribution-Share Alike 3.0 Unported")
+![](/assets/structmech/Cauchy_tetrahedron.svg "From https://commons.wikimedia.org/wiki/File:Cauchy_tetrahedron.svg licensed under Creative Commons Attribution-Share Alike 3.0 Unported"){: .align-center}
 
 $$
 \begin{aligned}
@@ -131,7 +131,7 @@ $$
 $$\sum_{i=1}^3 (\mathbf T(x_i + \d x_i, \vec e_i) - \mathbf T(x_i, \vec e_i)) \d S_i + \rho (\mathbf f - \mathbf a) \d V = 0$$
 两边同时除以$\d V$，从而得到：
 $$\sum_{i=1}^3 \frac{\partial \mathbf T(P, \vec e_i)}{\partial x_i} + \rho (\mathbf f - \mathbf a) = 0$$
-注意到第一个积分正是散度，从而得到局部平衡方程。
+注意到第一个偏微分正是散度，从而得到局部平衡方程。
 
 对任何介质中的应力张量，其和体积力的关系为：
 $$\nabla \cdot \sigma + \rho (\mathbf f - \mathbf a) = 0$$
@@ -202,7 +202,9 @@ $$
 $$
 
 如果以$\sigma$为横轴、$\tau$为纵轴，则这三个不等式给出了三个圆形区域，如下图所示：
-![](/assets/structmech/Mohr_Circle.svg)
+
+![](/assets/structmech/Mohr_Circle.svg){: .align-center}
+
 这个图形称为莫尔圆（Mohr's circle）。
 如果知道主应力，则可利用莫尔圆判定应力和剪力的取值范围。
 
