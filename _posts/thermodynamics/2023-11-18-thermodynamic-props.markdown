@@ -336,7 +336,7 @@ $$c_p - c_v = T \left(\frac{\partial P}{\partial T}\right)_v \left(\frac{\partia
 ### 焦耳-汤姆逊系数
 
 在等焓过程中，温度对压强的偏导称为*焦耳-汤姆孙系数*（Joule-Thomson coefficient），有时简称焦-汤系数。
-$$\mu_\text{JT} = \left( \frac{\partial P}{\partial T} \right)_h$$
+$$\mu_\text{JT} = \left( \frac{\partial T}{\partial P} \right)_h$$
 {: .definition}
 
 对节流这一典型压强下降的等焓过程，焦汤系数小于零的工质的温度会上升，而大于零的温度会下降。
