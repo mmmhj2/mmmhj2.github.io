@@ -37,6 +37,10 @@ $$
 
 根据梁的欧拉-伯努利假设，其滑移量应无穷小。
 
+对二维系统，只有
+$$\chi_3,\quad \varepsilon_1 = \varepsilon_N, \quad \varepsilon_2 = \varepsilon_T$$
+三个量具有物理意义。
+
 ### 本构方程
 
 设梁在$s$处截面所受的内力为$T(s)$，形变为$D(s)$，定义为：
