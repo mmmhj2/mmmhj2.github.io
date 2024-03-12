@@ -114,6 +114,8 @@ $$w = \frac{1}{2} \left( \frac{N^2}{ES} +  \frac{M_{f3}^2}{EJ_2} + \textcolor{re
 和
 $$w = \frac{1}{2} \left( ES \varepsilon_1^2 + EJ_2 \chi_3^2 + \textcolor{red}{GS_2 \varepsilon_2^2}\right)$$
 在满足欧拉-伯努利假设的情况下，标<span style="color: red;">红色</span>的项为零，因为滑移量无穷小。
+特别地，欧拉梁二维情况下的角速度$\omega$只与纵向位移有关
+$$\omega \approx \tan \omega = \frac{\mathrm d v}{\mathrm d x}$$
 
 ### 求解系统
 

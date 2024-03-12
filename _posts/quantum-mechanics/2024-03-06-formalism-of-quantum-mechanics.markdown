@@ -21,6 +21,8 @@ categories: ["量子力学"]
 $$ (\psi, \phi) = \psi^\dagger \cdot \phi = \langle \psi | \phi \rangle $$
 其中$\cdot^\dagger$表示矩阵的共轭转置。
 
+对量子态的更准确的描述是：量子态是射线(Ray)定义的等价类的代表元。
+
 量子力学中，所有可观测的物理量都由一个*可观测量*（Observable）表述。
 可观测量是一个自伴线性算子，也称厄米算子。
 与物理量有关的可观测量算子用$\hat \cdot$符号标记。
@@ -49,7 +51,7 @@ $$i \hbar \frac{\partial}{\partial t} \psi (\vec r, t) = \hat H \psi (\vec r, t)
 若可观测量的特征值的重数不均为一，则称该可观测量的特征值是*退化*的或*简并*的（Degenerate），重数称为该特征值的简并度（Degeneracy）。
 {: .definition}
 
-如果特征值的重数大于一，就说明一个特征值具有多个特征向量，因此即使确定了该物理量，仍然不能确定该系统具体处于什么状态。
+如果特征值的重数大于一，就说明一个特征值具有多个线性独立的特征向量，因此即使确定了该物理量，仍然不能确定该系统具体处于什么状态。
 这样的状态就是简并的。
 
 物理量在测量后为某一特征值的概率为：
@@ -66,7 +68,7 @@ $$p_n = \sum | c_{n,d} |^2$$
 非简并态的概率化简为
 $$p_n = |c_n|^2$$
 
-对物理量进行测量后，对应的波函数立刻被投影至测量出的特征值的特征空间中，这一现象称为*坍缩*（Reduction）。
+对物理量进行测量后，对应的波函数立刻被投影至测量出的特征值的特征空间中，这一现象称为*坍缩*（Collapse, Reduction）。
 新的波函数为
 $$| \psi' \rangle = \frac{\sum_d c_{n,d} | \varphi_{n,d} \rangle }{\sqrt{\sum_d |c_{n,d}|^2}}$$
 其中$c_{n,d}$即位于该状态的概率。
@@ -110,6 +112,18 @@ $$[\hat A, \hat B] = \hat A \hat B - \hat B \hat A$$
 显然，对易子为零的两个算符可对易，因此至少由一个相同的特征向量。
 {: .definition}
 
+位移和动量的对易子为：
+$$
+\begin{aligned}
+\forall \psi, \quad [\hat x, \hat p] \psi &= (\hat x \hat p - \hat p \hat x) \psi \\
+&= x (\frac{\hbar}{i} \frac{\partial}{\partial x} \psi) - \frac{\hbar}{i} \frac{\partial}{\partial x} (x \psi) \\
+&= i \hbar \psi
+\end{aligned}
+$$
+从而
+$$[\hat x, \hat p] = i \hbar \hat{\mathbb{1}}$$
+{: .exampl}
+
 ### 对易可观测量完全集
 
 设$(\hat A, \hat B, \cdots)$为一组两两可对易的算符，则其至少含有一个相同的特征向量。
@@ -143,3 +157,6 @@ $$\Delta_\psi (A) \Delta_\psi (B) \ge \frac{\hbar}{2} \langle C \rangle_\psi $$
 
 参考柯西-施瓦茨不等式的证明方法，构造二次多项式后用判别式证明。
 {: .proof}
+
+带入位移与向量的对易子，即可得
+$$\Delta (x) \Delta (p) \ge \frac{\hbar}{2} = \frac{h}{4\pi}$$
