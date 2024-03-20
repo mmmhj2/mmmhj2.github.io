@@ -1,6 +1,7 @@
 ---
-title: "哈密顿原理与简正模"
+title: "哈密顿原理与模态"
 categories: ["结构力学"]
+tags: ["振动力学"]
 ---
 
 本文主要根据哈密顿原理研究简单结构的性质。
@@ -125,4 +126,157 @@ EJ \frac{\partial^3 v}{\partial x^3} (L, t) &= F_0 & \text{(外力)}
 $$
 {: .exampl}
 
-## 简正模
+## 模态
+
+本章主要关注振动的模态，尤其是特征模态。
+
+系统的*特征模态*（eigenmode）是齐次方程的自由时间谐波解，具有
+$$u(x,t) = \phi (x) \exp (i \omega t)$$
+的形式。
+{: .definition}
+
+### 特征模态的表示
+
+齐次系统的运动方程总是具有以下的形式：
+$$
+\begin{aligned}
+D u & = - \rho \ddot u & \text{(强形式)} \\
+\int_\Omega D u \cdot v \, d \Omega &= - \int_\Omega \rho \ddot u \cdot v \, d \Omega, \ \forall v & \text{(弱形式)}
+\end{aligned}
+$$
+其中$D$是一个微分算子，以上文的弯曲梁为例，微分算子$D = \frac{EJ}{S} \frac{\partial^4}{\partial x^4}$。
+对弱形式左侧应用分部积分，得到
+$$
+\cancelto{v(\partial \Omega) = 0}{\left[ (\int D u) \cdot v \right]_{\partial\Omega}} -
+\int_\Omega (\int Du) \cdot \frac{\partial v}{\partial \Omega} \, d \Omega
+$$
+通过这种方式，我们总是可以将$Du$的导数阶数降低一阶，而时$v$的导数升高一阶，从而使得$u,v$的导数阶数相等。
+此时，左边可写为$\int K \frac{\partial^n u}{\partial \Omega^n} \frac{\partial^n v}{\partial \Omega^n}$。
+现在，令
+$$B(u,v) = \int_\Omega K \frac{\partial^n u}{\partial \Omega^n} \frac{\partial^n v}{\partial \Omega^n} \, d \Omega, \quad (u,v) = \int_\Omega u\cdot v \, d \Omega$$
+则原方程可写为
+$$B(u,v) = - (\rho \ddot u, v), \quad \forall v$$
+显然，$B(\cdot, \cdot)$和$(\cdot, \cdot)$是两个对称双线性形。
+现在代入特征模态的定义，得到
+$$B(\phi \exp (i \omega t), v) = \omega^2 (\rho \phi \exp (i \omega t), v)$$
+注意到两边的积分和导数都是关于空间而非时间的，将时间项提出并消去，得到
+$$B(\phi , v) = \omega^2 (\rho \phi, v)$$
+根据这一表述，我们有特征模态的等价定义。
+
+称有序对$(\phi, \omega)$是一个特征模态，若其满足
+$$B(\phi , v) = \omega^2 (\rho \phi, v)$$
+其中$B(\cdot, \cdot)$和$(\cdot, \cdot)$是两个由物体固有性质确定的对称双线性形。
+{: .definition}
+
+### 特征模态的性质
+
+<small>(正交性)</small>两个不同的特征模态具有正交性，即
+$$(\rho \phi_i, \phi_j) = (\rho \phi_j, \phi_i) = 0$$
+{: .proposition}
+
+利用定义，先令$v = \phi\_j$，得到
+$$B(\phi_i, \phi_j) = \omega_i^2 (\rho \phi_i, \phi_j)$$
+再令$v = \phi\_i$，得到
+$$B(\phi_j, \phi_i) = \omega_j^2 (\rho \phi_j, \phi_i)$$
+两等式相减，得到
+$$0 = (\omega_i^2 - \omega_j^2) (\rho \phi_i, \phi_j)$$
+从而$\omega\_i \neq \omega\_j$时，两者内积为零，因此正交。
+{: .proof}
+
+<small>(基底)</small>
+特征模态的线性组合仍是原方程的解，归一化（$(\rho \phi, \phi) = 1$）的特征模态构成解空间的一组基底。
+{: .proposition}
+
+### 模态叠加
+
+我们知道特征模态的构成了方程解的基底，因此无外力下的运动方程的任何解总是可以由其表出：
+$$Du = - \rho \ddot u \implies u(x,t) = \sum_{i=0}^\infty q_i(t) \phi_i(x)$$
+注意到特征模态的对应项中不含有时间，这意味着任何负载导致的动态变化均与特征模态无关，从而即使施加了额外的外力，新的解依然能由特征模态表出
+$$Du = -\rho \ddot u + \textcolor{red}{f} \implies u(x,t) = \sum_{i=0}^\infty q_i(t) \phi_i(x)$$
+然后，我们可以通过代入运动方程来求解系数$q\_i(t)$，从而解出受负载下的结构的响应。
+通常情况下，将解代入原方程并利用特征模态的正交性，可使得原方程变为无穷个特征模态的系数方程，它们都具有如下形式
+$$\ddot q_i + \omega_i^2 q_i = \underbrace{F_i}_\text{约束力} + \underbrace{f_i}_\text{外力}$$
+这种分析方法称为模态叠加法（Modal synthesis）。
+
+通常情况下，高频的特征模态对低频负载的响应影响极弱，因此可以通过只使用低频模态计算的方法降低运算复杂度并得到近似解，这种方法称为模态截断（Modal truncation）。
+
+### 例子：拉压梁的特征模态
+
+考虑一端固连、另一端附有一质点的只受拉压形变的梁。
+设梁长度为$L$，质点质量为$M$，截面积为$S$，密度为$\rho$，杨氏模量为$E$。
+试求其特征模态并验证其正交性，忽略重力。 </br>
+设其轴向应变为$u(x,t)$，则动能为
+$$E_k =\frac{1}{2} (\int_0^L \rho S \dot u^2 \, d x + M \dot u^2 (L, t))$$
+势能为形变能与质点重力势能之和
+$$V = \frac{1}{2} \int_0^L ES {u'}^2 \, dx$$
+应用哈密顿原理，进行分部积分，可得运动方程以及边界条件：
+$$
+\begin{aligned}
+ES u'' - \rho S \ddot u &= 0 \\
+u(0, t) &= 0 \\
+M \ddot u (L,t) + ES u'(L, t) &= 0
+\end{aligned}
+$$
+其中$\circ'$表示对空间的偏导，$\dot \circ$表示对时间的偏导。
+接下来使用分离变量法求解，且设时间解为谐波解
+$$u(x,t) = X(x) \cdot T(t), \quad \ddot T(t) = - \omega^2 T(t)$$
+我们主要关心空间解$X(x)$，可得方程及其边界条件为：
+$$
+\begin{aligned}
+ES X'' + \rho S \omega^2 X &= 0 \\ -
+M \omega^2 X(L) + ES X'(L) &= 0\\
+X(0) &= 0 \\
+\end{aligned}
+$$
+下面进行无量纲化，令$k^2 = \frac{\rho}{E} \omega^2, \mu = \frac{M}{\rho S L}$，重新整理，可得
+$$
+\begin{aligned}
+X'' + k^2 X &= 0 \\
+X'(L) - \mu k^2 L X(L) &= 0\\
+X(0) &= 0 \\
+\end{aligned}
+$$
+这是一个简单的二阶常系数齐次微分方程，且判别式为正，通解为
+$$X(x) = A \cos k x + B \sin k x$$
+代入第二个边界条件，易得$A = 0$，再代入第一个边界条件，得
+$$B k \cos k L - B \mu k^2 L \sin k L = 0 \implies \tan kL = \frac{1}{\mu k L}$$
+这就求出了所有特征模态的角频率（$k \to \omega$）。
+特别地，在$\mu$趋近于零或无穷时，该方程有解析解。
+以$\mu \to \infty$为例，有$\tan kL = 0$，从而
+$$kL = \frac{\pi}{2} + n \pi \implies k_n = \frac{2n - 1}{2L} \pi$$
+接下来验证模态的正交性，这就是说要找到满足正交性定义的对称双线性形式。
+我们从运动方程开始，尝试构造出满足正交性的双线性形。
+$$
+\begin{aligned}
+X_n'' + k^2_n X_n &= 0 \\
+\int_0^L (X_n'' + k^2_n X_n) X_p \, d x &= 0\\
+\int_0^L X_n'' X_p \, d x + \int_0^L k^2_n X_n X_p \, d x &= 0
+\end{aligned}
+$$
+我们已经得到了两个双线性形式，但是其中一个是不对称的。
+接下来考虑利用分部积分法重新分配导数的阶数，如同之前的定义中说明的一样。
+$$
+\begin{aligned}
+& \int_0^L X_n'' X_p \, d x  \\
+= & \left[ X_n' X_p \right]_0^L - \int_0^L X_n' X_p ' \, d x \\
+= & X_n'(L) X_p(L) - X_n'(0) X_p(0) - \int_0^L X_n' X_p ' \, d x \\
+= & \mu k^2 L X_n (L) X_p(L) - \int_0^L X_n' X_p ' \, d x
+\end{aligned}
+$$
+从而原方程可全部变为对称的形式：
+$$\mu k^2 L X_n (L) X_p(L) - \int_0^L X_n' X_p ' \, d x + \int_0^L k^2_n X_n X_p \, d x = 0$$
+因此定义两个对称的双线性形式，其中一个具有微分形式：
+$$
+\begin{aligned}
+B(f, g) &= \int_0^L f' g' \, d x \\
+(f, g) &= \mu L f(L) g(L) + \int_0^L f g \, d x
+\end{aligned}
+$$
+从而
+$$B(X_n, X_p) - k_n^2 (X_n, X_p) = 0$$
+交换$n, p$的位置，并将两方程相减，可得
+$$(k_n^2 - k_p^2) (X_n, X_p) = 0 $$
+从而
+$$ (X_n, X_p) = 0 \iff n = p$$
+因此正交性得到验证。
+{: .exampl}
