@@ -72,8 +72,9 @@ kramdown:
 #   - vendor/ruby/
 
 exclude:
-    - graphviz/
-    - inkscape/
+    - illustrations/
+    - .vscode/
+    - _site/
     - .sass-cache/
     - .jekyll-cache/
     - gemfiles/
