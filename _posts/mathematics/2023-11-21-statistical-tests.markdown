@@ -68,10 +68,10 @@ $$D = \frac{L(\theta_1 | x)}{L(\theta_0 | x)} > k$$
 $$F(x) = 1 - e^{- \frac{x}{a}} \iff f(x) = \frac{1}{a} e^{- \frac{x}{a}}$$
 零假设和备择假设为：
 $$H_0:\ a = a_0, \quad H_1:\ a = a_1 > a_0$$
-试确定其一个决策变量及其拒绝域。 </br>
+试确定其一个决策变量及其拒绝域。 <br/>
 考虑似然比：
 $$D^* = \frac{L(a_1 | x)}{L(a_0 | x)} = \frac{\frac{1}{a_1^n} \exp \left[ - \frac{\sum x_i}{a_1} \right]}{\frac{1}{a_0^n} \exp \left[ - \frac{\sum x_i}{a_0} \right]} = \frac{a_0^n}{a_1^n} \exp \left[ (\frac{1}{a_0} - \frac{1}{a_1}) (\sum x_i) \right]$$
-似然比$D^*$大于临界值$k^*$的一个充分条件是：
+似然比$D^\*$大于临界值$k^\*$的一个充分条件是：
 $$D = \sum x_i > k$$
 因此，我们可以选择$\sum x\_i$作为决策变量。
 注意到$X \sim \exp (a)$，因此$D$服从伽马分布，$2D / a$服从卡方分布，可根据$\alpha$查表求出临界值$k$。

@@ -37,6 +37,10 @@ $$
 
 根据梁的欧拉-伯努利假设，其滑移量应无穷小。
 
+对二维系统，只有
+$$\chi_3,\quad \varepsilon_1 = \varepsilon_N, \quad \varepsilon_2 = \varepsilon_T$$
+三个量具有物理意义。
+
 ### 本构方程
 
 设梁在$s$处截面所受的内力为$T(s)$，形变为$D(s)$，定义为：
@@ -110,6 +114,8 @@ $$w = \frac{1}{2} \left( \frac{N^2}{ES} +  \frac{M_{f3}^2}{EJ_2} + \textcolor{re
 和
 $$w = \frac{1}{2} \left( ES \varepsilon_1^2 + EJ_2 \chi_3^2 + \textcolor{red}{GS_2 \varepsilon_2^2}\right)$$
 在满足欧拉-伯努利假设的情况下，标<span style="color: red;">红色</span>的项为零，因为滑移量无穷小。
+特别地，欧拉梁二维情况下的角速度$\omega$只与纵向位移有关
+$$\omega \approx \tan \omega = \frac{\mathrm d v}{\mathrm d x}$$
 
 ### 求解系统
 
