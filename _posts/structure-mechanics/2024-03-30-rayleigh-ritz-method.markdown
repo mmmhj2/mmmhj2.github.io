@@ -14,7 +14,7 @@ tags: ["振动力学"]
 
 我们利用分离变量的方法，将近似解设为具有以下形式的解：
 $$\overline u (x,t) = \sum_{i=0}^n \lambda_i(t) \psi_i(x)$$
-其中$\psi\_i$是一个*满足边界条件*的简单函数，通常是多项式函数。
+其中$\psi\_i$是一个*满足边界条件（运动学许可）*的简单函数，通常是多项式函数。
 
 利用这种形式，我们将原问题表述成另一个优化问题：
 $$\text{最小化} \ \mathcal L(u) = 0 \iff \text{最小化} \ \mathcal L(\overline u) \iff \text{最小化} \ \mathcal L(\lambda_i)$$
@@ -36,7 +36,7 @@ $$
 利用瑞利-里兹法时，结构的势能具有以下的形式：
 $$V = \frac{1}{2} \begin{bmatrix} \lambda_1 & \cdots & \lambda_n \end{bmatrix} \cdot \mathbf S \cdot \begin{bmatrix} \lambda_1 \\ \vdots \\ \lambda_n \end{bmatrix} = \frac{1}{2} \Lambda^\top \mathbf S \Lambda$$
 动能具有以下的形式：
-$$E_k = \frac{1}{2} \begin{bmatrix} \dot \lambda_1 & \cdots & \dot \lambda_n \end{bmatrix} \cdot \mathbf M \cdot \begin{bmatrix} \dot \lambda_1 \\ \vdots \\ \dot \lambda_n \end{bmatrix} = \frac{1}{2} \dot\Lambda^\top \mathbf S \dot\Lambda$$
+$$E_k = \frac{1}{2} \begin{bmatrix} \dot \lambda_1 & \cdots & \dot \lambda_n \end{bmatrix} \cdot \mathbf M \cdot \begin{bmatrix} \dot \lambda_1 \\ \vdots \\ \dot \lambda_n \end{bmatrix} = \frac{1}{2} \dot\Lambda^\top \mathbf M \dot\Lambda$$
 其中$\mathbf{S}, \mathbf{M}$是两个对称矩阵，分别称为*刚度矩阵*和*质量矩阵*。
 {: .proposition}
 
@@ -120,6 +120,161 @@ $$
 $$
 这是模态正交性的一种体现。
 
+## 有限元方法初步
+
+瑞利-里兹法给出了求解结构问题的数值方法，但是该方法要求寻找满足约束条件的函数以进行估计，对复杂的结构，找到这种函数是非常困难的。
+为解决这种问题，可将复杂的结构离散化为相连的简单几何体的组成的网格，将复杂的约束转化为简单几何体上的约束，从而进行化简。
+这种简单的几何体体称为*元素*（Element），几何体的顶点称为节点（Node），有限元方法（Finite Element Method）因此得名。
+
+有限元方法使用以下函数作为单个元素内解的近似：
+$$\tilde u(x,t) = \sum_{i = 0}^n u_i(t) N_i(x)$$
+$n$是节点个数，通常为三个，$u\_i$是节点处的系数，$N\_i$是该节点使用的插值函数（Interpolation function）。
+{: .proposition}
+
+这个近似也具有矩阵形式。
+考虑三角形元素中的二维问题，其矩阵形式可写为
+$$
+\tilde {\mathbf U} =
+\begin{bmatrix} \tilde u \\ \tilde v \end{bmatrix} =
+\begin{bmatrix}
+N_1 & 0 & N_2 & 0 & N_3 & 0 \\
+0 & N_1 & 0 & N_2 & 0 & N_3 \\
+\end{bmatrix}
+\begin{bmatrix}
+u_1 \\ v_1 \\ u_2 \\ v_2 \\ u_3 \\ v_3
+\end{bmatrix} =
+\mathbf N \mathbf U
+$$
+
+### 确定插值函数
+
+对于单个元素内的插值函数，若我们确定了每个顶点处的取值，则可以利用重心坐标插值确定可以选择的插值函数。
+以三角形为例：
+$$\tilde u(x) = \lambda_1(x) u_1 + \lambda_2(x) u_2 + \lambda_3(x) u_3$$
+其中$\lambda\_i$是点$x$处的重心坐标。
+直角坐标与重心坐标之间存在以下关系：
+$$
+\begin{bmatrix}
+1 & 1 & 1 \\
+x_1 & x_2 & x_3 \\
+y_1 & y_2 & y_3 
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_1 \\ \lambda_2 \\ \lambda_3
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\ x \\ y
+\end{bmatrix}
+$$
+令
+$$\mathbf C^\top = \begin{bmatrix}
+1 & 1 & 1 \\
+x_1 & x_2 & x_3 \\
+y_1 & y_2 & y_3 
+\end{bmatrix}$$
+而$\mathbf {C^\top}^{-1}$为其逆（或广义逆），则
+$$\begin{bmatrix}
+\lambda_1 \\ \lambda_2 \\ \lambda_3
+\end{bmatrix} = \mathbf {C^{\top}}^{-1}
+\begin{bmatrix}
+1 \\ x \\ y
+\end{bmatrix}$$
+从而
+$$
+\tilde {\mathbf U} = \begin{bmatrix}
+\lambda_1 & \lambda_2 & \lambda_3
+\end{bmatrix} \begin{bmatrix}
+u_1 \\ u_2 \\ u_3
+\end{bmatrix} = \begin{bmatrix}
+1 & x & y
+\end{bmatrix}
+\mathbf C^{-1}
+\begin{bmatrix}
+u_1 \\ u_2 \\ u_3
+\end{bmatrix}
+$$
+根据定义，我们求得了一个可能的插值函数。
+
+若已知元素顶点处的解，则可能的插值函数可由重心坐标插值确定。
+以三角形元素为例，此时：
+$$\mathbf N = \begin{bmatrix} 1 & x & y \end{bmatrix} \cdot \mathbf C^{-1}$$
+其中
+$$\mathbf C = \begin{bmatrix}
+1 & x_1 & y_1 \\
+1 & x_2 & y_2 \\
+1 & x_3 & y_3 \\
+\end{bmatrix}$$
+{: .proposition}
+
+### 能量的矩阵表示
+
+和瑞利-里兹法一样，我们也寻求将能量表示为矩阵的形式：
+$$
+\begin{aligned}
+E_k 
+&= \frac{1}{2} \int_\Omega \rho \dot {\tilde{\mathbf U}}^\top \dot{\tilde{\mathbf U}} \, dV = \frac{1}{2} \int_\Omega \rho \dot{\mathbf U}^\top \mathbf N^\top \mathbf N \dot{\mathbf U} \\
+&= \frac{1}{2} \dot{\mathbf U}^\top \mathbf M \dot{\mathbf U} \\
+V
+&= \frac 1 2 \int_\Omega (D \tilde{\mathbf U})^\top \mathbf A (D \tilde{\mathbf U}) \, dV \\
+&= \frac 1 2 \int_\Omega \mathbf U^\top (D \mathbf N)^\top  \mathbf A (D \mathbf N) \mathbf U \\
+&= \frac 1 2 \mathbf U^\top \mathbf S \mathbf U \\
+W 
+&= \mathbf U^\top \mathbf F
+\end{aligned}
+$$
+从而有以下命题：
+
+有限元方法中能量的矩阵表示为
+$$E_k = \frac{1}{2} \dot{\mathbf U}^\top \mathbf M \dot{\mathbf U}, \quad V = \frac 1 2 \mathbf U^\top \mathbf S \mathbf U, \quad W = \mathbf U^\top \mathbf F$$
+其中
+$$
+\begin{aligned}
+\mathbf M &= \int_\Omega \rho \mathbf N^\top \mathbf N \, d V \\
+\mathbf S &= \int_\Omega (D \mathbf N)^\top \mathbf A (D \mathbf N) \, d V \\
+\mathbf F &= \int_\Omega N^\top f \, d V + \int_{\partial \Omega} N^\top T \, dS
+\end{aligned}
+$$
+三个矩阵分别是质量矩阵、刚度矩阵和表示外力的矩阵，$D$是关于空间坐标的一个微分算子。
+{: .proposition}
+
+以二维欧拉梁为例，其能量为
+$$
+\begin{aligned}
+V &= \frac 1 2 \int_0^L ES \left( \frac{\partial u}{\partial x} \right)^2 \, d x + \frac 1 2 \int_0^L EJ \left( \frac{\partial^2 v}{\partial x^2} \right)^2 \, d x \\
+E_c &= \frac 1 2 \int_0^L \rho S (\dot u^2 + \dot v^2) \, dx
+\end{aligned}
+$$
+令$\mathbf U = [u\ v]^\top$，从而
+$$\mathbf A = \begin{bmatrix} ES & 0 \\ 0 & EJ  \end{bmatrix}, \quad D = \begin{bmatrix} \frac{\partial}{\partial x} & 0 \\ 0 & \frac{\partial^2}{\partial x^2}\end{bmatrix}, \quad \mathbf F = 0$$
+质量矩阵和刚度矩阵须根据插值函数确定。
+{: .exampl}
+
+### 组装方程
+
+之前我们考虑的都是单个有限元内的方程，接下来考虑如何将这些方程组装起来求解整个模型的问题。
+我们将单个有限元中的矩阵以下标$e$表示，且假设它们都位于统一的坐标系中，若不位于同一坐标系中，可使用过渡矩阵将其变换至同一坐标系中。
+考虑这样一个分块矩阵：
+$$\mathbf B = \begin{bmatrix} \mathbf 0 & \cdots & \mathbf 0 & \mathbf I & \mathbf 0 & \cdots & \mathbf 0
+ \end{bmatrix}^\top \in \mathcal M_{d,nd}$$
+其中$\mathbf 0$和$\mathbf I$都是维数与问题维数$d$相同的方块矩阵，$n$是有限元的个数。
+
+将这个矩阵左乘总问题的任何矩阵，即可产生一个$d \times d$的矩阵。
+这就相当于从总问题中提取出了单个有限元的子问题。
+同时，将这个矩阵的转置和其本身左乘并右乘至单个有限元的矩阵，即可产生一个$nd \times nd$的矩阵。
+将这些矩阵求和，即可得到总的矩阵。
+
+利用这个矩阵，可以组装出以下方程
+$$
+\begin{aligned}
+\mathbf U_e &= \mathbf B_e \mathbf U \\
+\mathbf M \ddot {\mathbf U} + \mathbf S \mathbf U &= \mathbf F \\
+\mathbf M &= \sum_e \mathbf B_e^\top \mathbf M_e \mathbf B_e \\
+\mathbf S &= \sum_e \mathbf B_e^\top \mathbf S_e \mathbf B_e \\
+\mathbf F &= \sum_e \mathbf B_e^\top \mathbf F_e + \mathbf F_n \\
+\end{aligned}
+$$
+其中$\mathbf F\_n$是节点处的受力。
+
 ## 附录：常系数微分方程组的解
 
 本章主要介绍求解常系数微分方程组，这是各种数值方法的重要一步。
@@ -160,10 +315,10 @@ $$\frac{d^4 x}{d t^4} - k^4 x = 0$$
 $$
 \left\{
 \begin{aligned}
-\frac{d^4 x}{d t^4} &= k^4 x \\
-\frac{d^4 x}{d t^4} &= \frac{d}{dt} \frac{d^3 x}{d t^3} \\
-\frac{d^3 x}{d t^3} &= \frac{d}{dt} \frac{d^2 x}{d t^2} \\
-\frac{d^2 x}{d t^2} &= \frac{d}{dt} \frac{d x}{d t} \\
+\frac{d}{dt} x &= \frac{d x}{d t} \\
+\frac{d}{dt} \frac{d x}{d t} &= \frac{d^2 x}{d t^2} \\
+\frac{d}{dt} \frac{d^2 x}{d t^2} &= \frac{d^3 x}{d t^3}  \\
+\frac{d}{dt} \frac{d^3 x}{d t^3} &= k^4 x \\
 \end{aligned}
 \right.
 \iff
@@ -173,6 +328,15 @@ $$
 0 & 0 & 0 & 1 \\
 k^4 & 0 & 0 & 0
 \end{pmatrix} \mathbf X
+$$
+其中
+$$
+\mathbf X = \begin{pmatrix}
+x \\ x^{(1)} \\ x^{(2)} \\ x^{(3)}
+\end{pmatrix}, \quad
+\mathbf X' = \begin{pmatrix}
+x^{(1)} \\ x^{(2)} \\ x^{(3)} \\ x^{(4)}
+\end{pmatrix}
 $$
 注意到该方程实际上可以非常容易地对角化。
 该矩阵的特征方程——同时也是该微分方程的特征方程——为：
