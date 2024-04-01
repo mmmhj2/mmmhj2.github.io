@@ -68,6 +68,8 @@ $$ 0 = \int \sum_n \left(- \frac{d}{dt} \frac{\partial E_k}{\partial \dot q_n} +
 $$-\frac{d}{dt} \frac{\partial E_k}{\partial \dot q_n} + \frac{\partial E_k}{\partial q_n} + Q_n + F_n = 0$$
 {: .proof}
 
+在应用变分的任意性时，注意检查约束条件，只有在没有约束的情况下才能直接取得强形式。
+
 #### 例子：弯曲梁的运动方程
 
 设一横置、一端固定、另一端受向上的力$F\_0$、只发生弯折的二维梁的长度为$L$，试求其运动方程。<br/>
@@ -78,7 +80,7 @@ $$u(x,y,t) = - \omega y = - \frac{\partial v}{\partial x}$$
 从而应变和应力为
 $$\epsilon = \frac{\partial u}{\partial x} = - y \frac{\partial^2 v}{\partial x^2}, \quad \sigma = E \epsilon =  E y \frac{\partial^2 v}{\partial x^2}$$
 而总的形变能为
-$$V = \frac{1}{2} \int_0^L \int_\Omega \sigma : \epsilon \, d\Omega dx = \int_0^L E J \left( \frac{\partial^2 v}{\partial x^2} \right)^2\,dx$$
+$$V = \frac{1}{2} \int_0^L \int_\Omega \sigma : \epsilon \, d\Omega dx = \frac 1 2 \int_0^L E J \left( \frac{\partial^2 v}{\partial x^2} \right)^2\,dx$$
 也可直接使用之前求过的形变能公式。
 动能容易求解：
 $$E_k = \frac{1}{2} \int_0^L \rho S \dot v^2 \, d x$$
@@ -86,21 +88,21 @@ $$E_k = \frac{1}{2} \int_0^L \rho S \dot v^2 \, d x$$
 $$
 \begin{aligned}
 0 & = \int_{t_0}^{t_1} \delta E_k - \delta V + \delta W \, dxdt \\
-&= \int_{t_0}^{t_1} \int_0^L \rho S \delta (\dot v^2) \, dx  + \int_0^L EJ \delta \left( \frac{\partial^2 v}{\partial x^2} \right)^2 \,dx + F_0 \delta u(L, t) \, dt
+&= \int_{t_0}^{t_1}  \frac 1 2  \int_0^L \rho S \delta (\dot v^2) \, dx  + \frac 1 2 \int_0^L EJ \delta \left( \frac{\partial^2 v}{\partial x^2} \right)^2 \,dx + F_0 \delta u(L, t) \, dt
 \end{aligned}
 $$
 对于动能项，有
 $$
 \begin{aligned}
-&\int_{t_0}^{t_1}\int_0^L \rho S \delta (\dot v^2) \, dtdx \\
-=& \int_{t_0}^{t_1} \int_0^L \rho S \dot v \delta \dot v \, dtdx \\
+&\int_{t_0}^{t_1} \frac 1 2 \int_0^L \rho S \delta (\dot v^2) \, dtdx \\
+=& \int_{t_0}^{t_1}\int_0^L \rho S \dot v \delta \dot v \, dtdx \\
 =&\cancel{\left[ \int_0^L \rho S \dot v \delta v dx \right]_{t_0}^{t_1}} + \int_{t_0}^{t_1} \int_0^L \rho S \ddot v \delta v \, dxdt
 \end{aligned}
 $$
 对于势能项，反复利用分部积分可得
 $$
 \begin{aligned}
-& \int_{t_0}^{t_1}\int_0^L EJ \delta \left( \frac{\partial^2 v}{\partial x^2} \right)^2 \,dxdt \\
+& \int_{t_0}^{t_1} \frac 1 2 \int_0^L EJ \delta \left( \frac{\partial^2 v}{\partial x^2} \right)^2 \,dxdt \\
 = & - \left[ \int_{t_0}^{t_1} EJ \frac{\partial^2 v}{\partial x^2} \delta \frac{\partial v}{\partial x} \, dt \right]_0^L  + \left[ \int_{t_0}^{t_1} EJ \frac{\partial^3 v}{\partial x^3} \delta v \, dt \right]_0^L \\ -
 & \int_{t_0}^{t_1}\int_0^L EJ \frac{\partial^4 v}{\partial x^4} \delta v \, dx dt 
 \end{aligned}
@@ -124,6 +126,7 @@ EJ \frac{\partial^2 v}{\partial x^2} (L, t) &= 0 & \text{(力矩平衡)} \\
 EJ \frac{\partial^3 v}{\partial x^3} (L, t) &= F_0 & \text{(外力)}
 \end{aligned}
 $$
+注意第一个和第三个方程，由于边界约束条件，不能直接取得强形式，只能说明变分为零。
 {: .exampl}
 
 ## 模态
