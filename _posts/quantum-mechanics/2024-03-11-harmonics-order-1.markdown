@@ -52,7 +52,7 @@ $$
 \hat N &= \frac{1}{2}(\tilde x - i \tilde p)(\tilde x + i \tilde p) = \hat a^\dagger \hat a \\
 \end{aligned}
 $$
-其中$\hat a$称为*产生算符*（creation operator），$\hat a^\dagger$称为*湮没算符*（annihilation operator）。
+其中$\hat a$称为*湮没算符*（annihilation operator），$\hat a^\dagger$称为*产生算符*（creation operator）。
 {: .definition}
 
 这些算符的几个有关的对易子为
@@ -80,7 +80,7 @@ $$\hat N \vert\nu\rangle = \nu \vert \nu \rangle, \quad \langle \nu \vert \hat N
 {: .proposition}
 
 又注意到
-$$\hat N (\hat a \vert \nu \rangle) = (\hat N \hat a - \hat a) \vert \nu \rangle = (\hat a \hat N - \hat a) \vert \nu \rangle = (\nu - 1) \hat a \vert \nu \rangle$$
+$$\hat N (\hat a \vert \nu \rangle) = (\hat a \hat N + [\hat N, \hat a]) \vert \nu \rangle = (\hat a \hat N - \hat a) \vert \nu \rangle = (\nu - 1) \hat a \vert \nu \rangle$$
 这意味着$\hat a \vert \nu \rangle$也是$\hat N$的特征向量，特征值（量子数）为$\nu - 1$。
 又注意到
 $$\Vert \hat a \vert \nu \rangle \Vert^2 = \langle \nu \vert \hat N \vert \nu \rangle = \nu$$
