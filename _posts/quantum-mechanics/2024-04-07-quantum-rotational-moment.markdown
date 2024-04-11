@@ -43,7 +43,7 @@ $$
 $$
 {: .definition}
 
-为研究转动，我们常常将坐标系变换为球坐标系，在此坐标系下，动量矩算符也可求得。
+为研究转动，我们常常将坐标系变换为球坐标系。在此坐标系下，我们只考虑角度的变动而非半径的变动，从而动量矩算符也可容易地求得。
 
 球坐标系下的动量矩算符为：
 $$
@@ -215,5 +215,65 @@ $$\exists n \in \mathbb N ,\quad \mu_\min \hbar + n \hbar = \mu_\max \hbar$$
 从而
 $$\mu_\max = - \mu_\min = \frac n 2 \hbar, \ n \in \mathbb N$$
 
-量子数$\mu$的最值是$\frac \hbar 2$的正整数倍。
+更进一步地，注意到
+$$
+\begin{multline}
+\hat L_+ | \lambda^2, \mu_\max \rangle = | \varnothing \rangle \\
+\implies \hat L_- \hat L_+ | \lambda^2, \mu_\max \rangle = | \varnothing \rangle \\
+\implies (\hat L^2 - \hat L_z^2 - \hbar \hat L_z) | \lambda^2, \mu_\max \rangle = | \varnothing \rangle
+\end{multline}
+$$
+从而
+$$
+\begin{aligned}
+\lambda^2 \hbar^2 | \lambda^2, \mu_\max \rangle 
+&= \hat L^2 | \lambda^2, \mu_\max \rangle \\
+&= (\hat L_z^2 + \hbar \hat L_z) | \lambda^2, \mu_\max \rangle \\
+&= \mu_\max (\mu_\max + 1) \hbar^2 | \lambda^2, \mu_\max \rangle \\
+\implies \lambda^2 &= \mu_\max (\mu_\max + 1)
+\end{aligned}
+$$
+以上分析给出了以下命题。
+
+量子数$\mu$的最值是$\frac \hbar 2$的正整数倍，且其最值与另一个量子数$\lambda$之间存在一一对应的关系。
+因此我们可以使用$| \mu\_\max, \mu \rangle$来表示一个本征态。
 {: .proposition}
+
+### 轨动量矩
+
+利用微分方程的边界条件，我们还能更进一步地限制量子数的取值。
+利用本征态的定义，我们有：
+$$
+\begin{multline}
+\hbar \mu | \mu_\max, \mu \rangle = \hat L_z | \mu_\max, \mu \rangle = - i \hbar \frac{\partial}{\partial \varphi} |\mu_\max, \mu \rangle \\
+\iff \hbar \mu \psi (\theta, \varphi) = - i \hbar \frac{\partial}{\partial \varphi} \psi(\theta, \varphi)
+\end{multline}
+$$
+利用分离变量法得到这个偏微分方程的解：
+$$\psi_{\mu_\max, \mu}(\theta, \varphi) = A(\theta) e^{i \mu \varphi}$$
+利用循环边界条件，得到
+$$\psi_{\mu_\max, \mu}(\theta, \varphi) = \psi_{\mu_\max, \mu}(\theta, \varphi + 2 \pi) \iff e^{i \mu \varphi} = e^{i \mu (\varphi + 2\pi)}$$
+这意味着$\mu$只能是整数。
+
+轨动量矩的量子数$\mu$只能为整数，其最值也只能为整数。
+这两个整数$\mu\_\max$和$\mu$分别称为轨量子数（orbital quantum number）和磁量子数（magnetic quantum number），通常记为$l$和$m\_l$。
+{: .proposition}
+
+这个命题说明了轨道动量矩的量子化。
+然而，单个粒子的总动量矩中还要包括其自旋动量矩，自旋动量矩算符（通常表示为$\hat S$）的特征值和总动量矩算符（通常表示为$\hat J$）的特征值均是半整数。
+这些算符也具有和动量矩算符相似的形式，尤其是其对易子具有一致的形式。
+实际上，动量矩算符正是根据对易子定义的。
+
+#### 球谐函数
+
+## 自旋算符
+
+### 磁矩与自旋
+
+#### Uhlenbeck-Goudsmit 阐释
+
+### 自旋算符
+
+### 泡利矩阵
+
+### 不相容原理
