@@ -1,6 +1,7 @@
 ---
 title: "类氢原子"
 categories: ["量子力学"]
+published: false
 ---
 
 本文主要介绍量子力学中的类氢原子（Hydrogenic atoms），即任何只具有一个电子的原子或离子的模型。
