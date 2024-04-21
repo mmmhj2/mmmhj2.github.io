@@ -1,0 +1,152 @@
+---
+title: "傅里叶变换与采样"
+categories: "信号处理"
+---
+
+本文主要介绍从连续信号到离散信号的采样以及其和傅里叶变换之间的相互作用。
+
+## 傅里叶变换
+
+首先我们介绍几个常见的傅里叶变换。
+
+### 连续时间傅里叶变换
+
+连续时间傅里叶变换，即一般的傅里叶变换，是其他形式的傅里叶变换的基础。
+相较于傅里叶级数，傅里叶变换能够作用于非周期的函数（也称为信号）上，这是通过将周期视作正无穷实现的。
+
+函数$x(t)$的傅里叶变换为：
+$$X(\nu) = \int_{-\infty}^{+\infty} x(t) e^{-j 2 \pi \nu t} \, \mathrm d t = \int_{-\infty}^{+\infty} x(t) e^{-j \omega t} \, \mathrm d t$$
+而函数$X(j\omega)$的傅里叶逆变换为：
+$$x(t) = \int_{-\infty}^{+\infty} X(j \omega) e^{j 2\pi\nu t} \, \mathrm d \nu = \frac{1}{2 \pi} \int_{-\infty}^{+\infty} X(j \omega) e^{j \omega t} \, \mathrm d \omega$$
+这两个式子合称为傅里叶变换对。
+我们也记
+$$X(\nu) = \mathcal F [x(t)], \ x(t) = \mathcal F^{-1}[X(\nu)]$$
+{: .definition}
+
+注意到傅里叶逆变换中多了一个$\frac{1}{2\pi}$的系数，这个系数只在使用角频率（$\omega$）而非频率（$f, \nu$）时出现，用于保证一个函数经过傅里叶变换后再经过逆变换能够回到原函数。
+实际上，只需变换对中两个积分前系数之积为$\frac{1}{2\pi}$即可。
+出于对称的考虑，有时将变换对定义为
+$$
+\begin{aligned}
+X(j\omega) &= \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} x(t) e^{-j \omega t} \, \mathrm d t \\
+x(t) &= \frac{1}{\sqrt{2 \pi}} \int_{-\infty}^{+\infty} X(j \omega) e^{j \omega t} \, \mathrm d \omega
+\end{aligned}
+$$
+这会导致同一函数的傅里叶变换对不同，但傅里叶变换的所有性质均不会改变。
+本文不使用这种约定。
+
+#### 傅里叶变换的性质
+
+接下来我们不加证明地列出一些傅里叶变换的性质。
+
+<small>（卷积定理）</small>
+对任何两个傅里叶变换对$x(t), X(\nu)$和$y(t), Y(\nu)$，有
+$$\mathcal F[x \star y] = X(\nu) \times Y(\nu), \quad \mathcal F[x] \times \mathcal F[y] = X \star Y$$
+其中
+$$x \star y = \int_{\mathbb R} x(\tau) y(t - \tau) \mathrm d \tau$$
+表示卷积。
+{: .proposition}
+
+<small>（帕塞瓦尔等式）</small>
+对任何两个傅里叶变换对$x(t), X(\nu)$和$y(t), Y(\nu)$，有
+$$\int_{\mathbb R} x(t) y^*(t) \mathrm d t = \int_{\mathbb R} X(\nu) Y^*(\nu) \mathrm d \nu$$
+这意味着傅里叶变换是保内积的酉变换。
+{: .proposition}
+
+常见函数的傅里叶变换如下表
+
+| $x(t)$ | $X(\nu)$ | 备注 |
+|:---:|:---:|---|
+| $x^*(t)$ | $X(-\nu)$ | |
+| $x(t - \tau)$ | $X(\nu) e^{-j2\pi\nu\tau}$ | 时移性质 |
+| $x(t) e^{j 2 \pi \nu_0 t}$ | $X(\nu - \nu_0)$ | 频移性质 |
+| $x(at)$ | $\frac{1}{\vert a \vert} X(\frac{\nu}{a})$ | 缩放性质 |
+| $\delta(t)$ | $1$ | |
+| $1$ | $\delta(\nu)$| |
+| $\delta(t - \tau)$ | $e^{-j 2 \pi \nu \tau}$ | 可由时移性质得出 |
+| $e^{j 2 \pi \nu_0 \tau}$ | $\delta(\nu - \nu_0)$| 可由频移性质得出 |
+| $\cos 2\pi\nu_0 t$ | $\frac{1}{2} (\delta(\nu - \nu_0) + \delta(\nu + \nu_0))$| 可由欧拉公式得出 |
+| $\sin 2\pi\nu_0 t$ | $\frac{1}{2i} (\delta(\nu - \nu_0) - \delta(\nu + \nu_0))$ | 可由欧拉公式得出 |
+| $\mathrm{rect}_T(t)$ | $T \mathrm{sinc}(\pi \nu T)$ | $\mathrm{rect}_T$是关于Y轴对称、时长为$T$的矩形窗函数。|
+| $\mathrm ш_T(t)$ | $\frac{1}{T} \mathrm ш_{\frac{1}{T}}(\nu)$ | $\mathrm ш_T$[^sha]是间隔为$T$的狄拉克梳子函数。 |
+
+[^sha]: 用西里尔字母ш（Sha）表示梳子函数。
+
+### 离散时间傅里叶变换
+
+处理离散信号时，我们使用离散时间傅里叶变换（Discrete-time Fourier Transform，DTFT）。
+
+离散信号$x[n]$的离散时间傅里叶变换定义为
+$$X(\nu) = \sum_{n = -\infty}^{+\infty} x[n] e^{-j 2
+\pi\nu n} = \sum_{n = -\infty}^{+\infty} x[n] e^{-j \omega n}$$
+其逆变换为
+$$x[n] = \int_{2\pi} X(\nu) e^{j 2\pi\nu n} \, \mathrm d \nu = \frac{1}{2\pi} \int_{2\pi} X(\nu) e^{j \omega n} \, \mathrm d \omega$$
+积分域为*任何*长度为$2\pi$的区间。
+我们也记
+$$X(\nu) = \mathcal{DF}[x[n]]$$
+{: .definition}
+
+值得注意的是，离散时间傅里叶变换将离散的信号变为连续的频谱，而非离散的频谱。
+
+如果离散信号是从某一连续信号上*采样*得出的，那么离散信号的离散时间傅里叶变换和连续信号的连续时间傅里叶变换之间存在以下重要的关系：
+
+对离散信号$x\_d[n]$和连续信号$x\_c(t)$，若
+$$x_d[n] = x_c(nT)$$
+则
+$$\mathcal{DF}[x_d[n]](T\nu) = \mathcal F[\sum_{n = -\infty}^{\infty} x_c(nT) \delta(t - nT) ](\nu) = \mathcal F[x_{c,T}^*(t)](\nu)$$
+其中
+$$x_{c,T}^* = \sum_{n = -\infty}^{\infty} x_c(nT) \delta(t - nT) = x_c(t) \sum_{n = -\infty}^{\infty} \delta(t - nT) = x_c(T) \mathrm ш_T(t)$$
+表示对原信号的冲激采样（Impulse sampling），$\nu\_s = \frac{1}{T}$称为采样频率。
+{: .proposition}
+
+注意到
+$$\mathcal F[\delta(t - nT)] = e^{-j 2\pi\nu nT}$$
+从而
+$$
+\begin{aligned}
+X_{c,T}^*(\nu) &= \mathcal F[\sum_{n = -\infty}^{\infty} x_c(nT) \delta(t - nT) ] \\
+&= \sum_{n=-\infty}^{\infty}x_c(nT) e^{-j 2 \pi\nu nT} \\
+&= \sum_{n=-\infty}^{\infty} x_d[n] e^{-j 2 \pi (\nu T) n} \\
+&= X_d(T\nu)
+\end{aligned}
+$$
+通常，连续信号和离散信号对应模拟信号和数字信号，因此$f\_d = T\nu$有时被称为数字频率[^digital]，而$\nu$则称为模拟频率。
+{: .proof}
+
+[^digital]: 数字频率通常使用角频率表示，此时$\omega\_d = 2 \pi \nu T$
+
+注意到冲激采样是对采样的数学表述，
+这意味着，对采样后的信号进行离散时间傅里叶变换，
+相当于对原信号先进行冲激采样，再应用连续时间傅里叶变换。
+这就将两种变换联系了起来。
+这也突出了离散时间傅里叶变换的重要性：任何信号如果需要转为数字信号，则必然经过采样，因此这条性质保证了对采样后信号进行傅里叶变换和对原信号进行傅里叶变换的一致性。
+
+### 离散傅里叶变换
+
+如果我们希望得到离散的频谱，则可进一步对连续的频谱进行采样，这一过程也可直接用离散傅里叶变换（Discrete Fourier Transform，DFT）得到。
+
+有限长度的离散信号$x[n],\ n = 0, \dots, N-1$的离散傅里叶变换定义为：
+$$X[n] = \sum_{k = 0}^{N-1} x[k] e^{-j 2\pi \frac{n}{N} k}$$
+逆变换定义为
+$$x[n] = \sum_{k = 0}^{N-1} X[k] e^{j 2\pi \frac{n}{N} k}$$
+{: .definition}
+
+若我们使用填充零的方式将信号延拓到无穷远，即令
+$$\tilde x[n] = \begin{cases}
+x[n] &, n = 0, \dots, N-1 \\
+0 &, \text{otherwise}
+\end{cases}$$
+则离散傅里叶变换$X[n]$就是对离散时间傅里叶变换在频谱上的采样：
+$$X_\text{DFT}[n] = \sum_{k = 0}^{N-1} x[k] e^{-j 2\pi \frac{n}{N} k} = \sum_{k = -\infty}^{+\infty} \tilde x[k] e^{-j 2\pi \frac{n}{N} k} = \tilde X_\text{DTFT}(\frac{n}{N})$$
+这意味着离散傅里叶变换的分辨力——即频谱上最近两个点的频率之差——为
+$$\Delta f_\text{digital} = \frac{1}{N} \implies \Delta \nu_\text{analog} = \frac{1}{NT} = \frac{f_s}{N}$$
+
+若采样频率过大或样本个数过小而分辨力不足，则离散傅里叶变换的结果会产生扇形损失（Scalloping loss，该效应也称栅栏效应），即频谱上的峰可能落在两个采样点之间而导致其不可见。
+我们将在下一节重点研究采样导致的各种后果。
+
+离散傅里叶变换也是快速傅里叶变换的基础。
+实际上，快速傅里叶变换就是一大类能够快速计算离散傅里叶变换的算法的统称，其中最经典的算法为 Toom-Cook 算法。
+快速傅里叶变换的加速思路往往也可用于有限域上的傅里叶变换，例如对数论变换（Number Theory Transform，NTT，作用在$\mathbb Z/p$这一有限域上）进行加速，从而构造快速数论变换算法。
+该类算法的一大重要应用就是加速计算机中高阶多项式和大整数的乘法计算，其中以 Schönhage–Strassen 算法（要求$p$为费马素数）最为知名，渐进复杂度可达$O(n \lg n \lg \lg n)$。
+
+## 采样与窗口函数
