@@ -147,7 +147,9 @@ $$\Delta f_\text{digital} = \frac{1}{N} \implies \Delta \nu_\text{analog} = \fra
 离散傅里叶变换也是快速傅里叶变换的基础。
 实际上，快速傅里叶变换就是一大类能够快速计算离散傅里叶变换的算法的统称，其中最经典的算法为 Toom-Cook 算法。
 快速傅里叶变换的加速思路往往也可用于有限域上的傅里叶变换，例如对数论变换（Number Theory Transform，NTT，作用在$\mathbb Z/p$这一有限域上）进行加速，从而构造快速数论变换算法。
-该类算法的一大重要应用就是加速计算机中高阶多项式和大整数的乘法计算，其中以 Schönhage–Strassen 算法（要求$p$为费马素数）最为知名，渐进复杂度可达$O(n \lg n \lg \lg n)$。
+该类算法的一大重要应用就是加速计算机中高阶多项式和大整数的乘法计算[^exampl]，其中以 Schönhage–Strassen 算法（要求$p$为费马素数）最为知名，渐进复杂度可达$O(n \lg n \lg \lg n)$。
+
+[^exampl]: [这里](https://github.com/mmmhj2/code-competitive/blob/master/HDU/1402/14248002_AC_904ms_14920kB.cpp#L98)有一个利用Toom-Cook算法计算大整数乘法的例子。
 
 ## 采样与窗口函数
 
