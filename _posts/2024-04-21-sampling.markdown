@@ -254,3 +254,9 @@ $\alpha$通常取$0.16$。
 
 ![](\assets\signal\blackman_window_fourier.png)
 {: .center-image}
+
+下图是该窗函数在示波器下的表现。
+可见频谱泄露的高频分量明显减少。
+
+![](\assets\signal\blackman_window_oscilloscope.jpg)
+{: .center-image}
