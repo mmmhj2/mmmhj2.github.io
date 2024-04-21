@@ -62,7 +62,7 @@ $$\hat L^2 = - \hbar^2 \left( \frac{\partial^2}{\partial \theta^2} + \frac{1}{\t
 从而
 $$\nabla^2 = \frac{1}{r} \frac{\partial^2}{\partial r^2} r - \frac{1}{\hbar^2 r^2} \hat L^2$$
 将带电粒子动量${\hat p}$中的哈密顿算符替换，从而得到
-$$\hat H_e = \frac{{\hat p}^2}{2m} - \frac{Ze^2}{4 \pi \epsilon_0 r} = - \frac{\hbar^2}{2mr} \frac{\partial^2}{\partial r^2}r + \frac{\hat L^2}{2mr^2} - \frac{Ze^2}{4 \pi \epsilon_0 r}$$
+$$\hat H_e = \frac{ {\hat p}^2 }{2m} - \frac{Ze^2}{4 \pi \epsilon_0 r} = - \frac{\hbar^2}{2mr} \frac{\partial^2}{\partial r^2}r + \frac{\hat L^2}{2mr^2} - \frac{Ze^2}{4 \pi \epsilon_0 r}$$
 我们之前已经说明了动量平方算符和任何单个方向的动量算符都是对易的，简单的计算说明，哈密顿算符和动量平方算符以及单方向动量算符都是对易的。
 这意味着以下命题：
 
