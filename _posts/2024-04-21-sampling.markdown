@@ -234,6 +234,9 @@ $$P(\nu) = \sum_{k=-n}^n e^{-j 2\pi\nu \frac{kT}{2n+1}}$$
 然而，这种提升只是表面上的。
 我们已经说明，离散傅里叶变换是对离散时间傅里叶变换的采样，因此其对实际频谱的分辨力还受到DTFT的约束——更进一步地，受到采样函数的约束。
 通过补零，我们只提升了从DTFT到DFT采样的分辨力，而没有提升采样函数的分辨力，因此可以使DTFT的结果更清晰，但是不能恢复采样中损失的信息，对频谱泄露没有缓解作用。
+实际上，对于矩形窗采样，DTFT的分辨力只与采样函数中最远的两个狄拉克函数的距离——即采样时间有关。
+可以证明其分辨力为
+$$\Delta \nu_\text{DTFT} = \frac{1}{T_s} = f_s$$
 
 ### 其他窗函数
 
@@ -245,10 +248,11 @@ $$P(\nu) = \sum_{k=-n}^n e^{-j 2\pi\nu \frac{kT}{2n+1}}$$
 我们此处介绍布莱克曼函数。
 
 布莱克曼函数定义为：
-$$p(t) = \alpha_0 - \alpha_1 \cos \frac{2\pi t}{T} + \alpha_2 \cos \frac{4\pi t}{T}$$
+$$B(t) = \alpha_0 - \alpha_1 \cos \frac{2\pi t}{T} + \alpha_2 \cos \frac{4\pi t}{T}$$
 其中
 $$\alpha_0 = \frac{1 - \alpha}{2},\ \alpha_1 = \frac{1}{2},\ \alpha_2 = \frac{\alpha}{2}$$
 $\alpha$通常取$0.16$。
+欲得到该窗函数对应的采样函数，还需要乘与样本数对应的狄拉克梳子函数。
 {: .definition}
 
 下图展示了布莱克曼窗函数和矩形窗函数的频谱对比。
@@ -262,3 +266,4 @@ $\alpha$通常取$0.16$。
 
 ![](\assets\signal\blackman_window_oscilloscope.jpg)
 {: .center-image}
+
