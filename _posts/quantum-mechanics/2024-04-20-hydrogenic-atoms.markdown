@@ -1,7 +1,6 @@
 ---
 title: "类氢原子"
 categories: ["量子力学"]
-published: false
 ---
 
 本文主要介绍量子力学中的类氢原子（Hydrogenic atoms），即任何只具有一个电子的原子或离子的模型。
@@ -10,7 +9,7 @@ published: false
 
 原子核和单个电子的总能量是容易写出的：
 $$E = \frac{p_Z^2}{2 m_Z} + \frac{p_e^2}{2 m_e} - \frac{Z e^2}{4 \pi \epsilon_0 \Vert r_e - r_Z \Vert}$$
-其中下标$Z$表示原子核，下标$e$表示电子，这三项分别代表原子核的动量、电子的动量和原子核与电子之间的电势能。
+其中$Z$是原子核的电荷数（即原子数），下标$Z$表示原子核，下标$e$表示电子，这三项分别代表原子核的动量、电子的动量和原子核与电子之间的电势能。
 从而其哈密顿量为
 $$\hat H = \frac{\hat p_Z^2}{2 m_Z} + \frac{\hat p_e^2}{2 m_e} - \frac{Z e^2}{4 \pi \epsilon_0 \Vert \hat r_e - \hat r_Z \Vert}$$
 
@@ -88,7 +87,7 @@ $$
 \begin{aligned}
 \frac{\hat L^2}{2mr^2} \psi_e (\vec r)
 &= \frac{\hat L^2}{2mr^2} R(r) Y_{l}^{m_l}(\theta, \varphi) \\
-&= \frac{\hbar^2 l (l+1)}{2mr^2} R(r) Y(\theta, \varphi)
+&= \frac{\hbar^2 l (l+1)}{2mr^2} R(r) Y_{l}^{m_l}(\theta, \varphi)
 \end{aligned}
 $$
 从而我们可以进行化简、重组，得到简化的薛定谔方程。
@@ -99,3 +98,47 @@ $$- \frac{\hbar^2}{2mr} \frac{\partial^2}{\partial r^2} r R(r) + V_l(r) R(r) = \
 $$V_l(r) = \frac{\hbar^2 l (l+1)}{2mr^2} + \frac{Ze^2}{4 \pi \epsilon_0 r}$$
 是电子绕原子核转动和电场产生的势能。
 {: .proposition}
+
+## 电子能级
+
+我们已经知道了类氢原子电子的两个量子数：角量子数$l$和磁量子数$m\_l$
+$$\hat L^2 \psi = \hbar^2 l(l+1) \cdot \psi, \quad \hat L_z \psi = \hbar m_l \cdot \psi$$
+由于该电子的对易物理量完备集合具有三个元素，我们还需要一个对应哈密顿量——即总能量——的量子数，这个量子数就是主量子数（Principle quantum number）。
+
+类氢原子中电子的总能量对应的量子数为主量子数，总能量满足
+$$\varepsilon_n = - \frac{m}{\hbar^2} \left( \frac{Ze^2}{4 \pi \epsilon_0} \right)^2 \frac{1}{2n^2}$$
+主量子数$n$为自然数，且角量子数$l$小于主量子数。
+主量子数代表了电子能处于的能级。
+{: .proposition}
+
+通常我们令玻尔半径
+$$a_0 = \frac{4 \pi \epsilon_0 \hbar^2}{m e^2} \approx 0.529 \, \text{Å}$$
+从而总能量可改写为
+$$\varepsilon_n = - \frac{1}{2m} \frac{\hbar^2}{a_0^2} \frac{Z^2}{n^2} \approx - 13.6 \frac{Z^2}{n^2} \, \text{eV}$$
+
+### 氢原子谱
+
+以氢原子为例，电子每个能级的能量为
+$$\varepsilon_n = - \frac{\hbar^2}{2m a_0^2} \frac{1}{n^2} \approx - \frac{13.6}{n^2} \, \text{eV}$$
+从而，电子在两个能级之间跃迁发出的电磁波波长反比例于能级平方倒数之差
+$$\frac{1}{\lambda} = R_\infty \left( \frac{1}{n^2} - \frac{1}{m^2} \right)$$
+其中$R\_\infty$称为里德伯常量。
+
+根据其中一个能级的主量子数，氢原子光谱有不同的命名。
+如$n=2$时称为巴尔末系。
+
+### 简并度
+
+注意到电子具有四个量子数——主量子数、角量子数、磁量子数和自旋量子数，而其能量只与主量子数有关，因此其能级一定是简并的。
+
+回忆到简并度定义为特征空间的重数，即相同特征值下的不同特征向量的组合，我们尝试计算其简并度。
+注意到除主量子数之外的其他量子数的取值范围：
+$$
+\begin{cases}
+m_s & = + \frac{1}{2}, - \frac{1}{2} \\
+l  &= 0, \dots, n-1\\
+m_l &= -l, \dots, l
+\end{cases}
+$$
+利用乘法原理和加法原理，可得
+$$g_n = 2 \sum_{l = 0}^{n-1} (2l +1) = 2 n^2$$
