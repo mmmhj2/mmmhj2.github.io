@@ -60,7 +60,7 @@ $$\gamma_{xx}(\tau) = \gamma_{xx}(t + \tau, 0), \forall t$$
 
 随机信号$x\_\omega(t)$的时间均值定义为
 $$\overline{x_\omega(t)} = \lim_{T_1 \to +\infty, T_2 \to -\infty} \frac{1}{T_1 - T_2} \int_{T_2}^{T_1} x_\omega(t) \, \mathrm d t$$
-其自相关函数定义为
+其时间自相关函数定义为
 $$R_{xx}(\tau) = \overline{x_\omega(t) x_\omega(t-
 \tau)}$$
 中心化自相关函数（central autocorrelation function）定义为
@@ -80,6 +80,12 @@ $$c_{xx}(\tau) = \overline{x_\omega(t) x_\omega(t - \tau)} - \overline{x_\omega(
 $$m(t) = \overline{x_\omega(t)}, \quad \gamma_{xx}(\tau) = c_{xx}(\tau)$$
 这意味着对该随机信号在时间上平均和在随机变量上平均具有相同的统计学意义。
 {: .proposition}
+
+对非遍历、非平稳的信号，自相关函数的定义为
+$$R_{xx}(t, \tau) = \mathbf E[x(t) x(t-\tau)]$$
+对平稳的信号，该函数只与$\tau$有关。
+对平稳且遍历的信号，该函数还可以定义为时间平均
+$$R_{xx}(\tau) = \lim_{T \to \infty} \frac{1}{T} \int_{0}^{T} x(t) x(t-\tau) \, \mathrm d t$$
 
 ### 随机信号的谱
 
@@ -115,9 +121,9 @@ $$
 的傅里叶变换。
 {: .definition}
 
-随机信号的功率谱密度与自协方差密切相关。
+随机信号的功率谱密度与自相关系数密切相关。
 
 <small>（维纳-辛钦定理）</small>
-中心化且平稳的随机信号$x\_\omega(t)$的功率谱密度与自协方差之间存在以下关系：
-$$S_{xx}(\nu) = \int_{\mathbb R} \gamma_{xx}(\tau) e^{-j 2\pi \nu \tau}\, \mathrm d \tau$$
+中心化且平稳的随机信号$x\_\omega(t)$的功率谱密度与自相关系数之间存在以下关系：
+$$S_{xx}(\nu) = \int_{\mathbb R} R_{xx}(\tau) e^{-j 2\pi \nu \tau}\, \mathrm d \tau$$
 {: .theorem}
