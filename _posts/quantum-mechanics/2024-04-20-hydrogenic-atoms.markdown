@@ -95,7 +95,7 @@ $$
 类氢原子的薛定谔方程为
 $$- \frac{\hbar^2}{2mr} \frac{\partial^2}{\partial r^2} r R(r) + V_l(r) R(r) = \varepsilon_e R(r)$$
 其中
-$$V_l(r) = \frac{\hbar^2 l (l+1)}{2mr^2} + \frac{Ze^2}{4 \pi \epsilon_0 r}$$
+$$V_l(r) = \frac{\hbar^2 l (l+1)}{2mr^2} - \frac{Ze^2}{4 \pi \epsilon_0 r}$$
 是电子绕原子核转动和电场产生的势能。
 {: .proposition}
 

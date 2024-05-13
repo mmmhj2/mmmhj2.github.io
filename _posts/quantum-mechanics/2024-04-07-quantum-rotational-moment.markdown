@@ -178,7 +178,7 @@ $$\hat L_+ \vert \lambda^2, \mu \rangle = \hbar \sqrt{\lambda^2 - \mu (\mu + 1)}
 $$
 \begin{aligned}
 \hat L_+ \vert \lambda^2, \mu \rangle &= \hbar \sqrt{\lambda^2 - \mu (\mu + 1)} \vert \lambda^2, \mu + 1 \rangle \\
-\hat L_- \vert \lambda^2, \mu \rangle &= \hbar \sqrt{\lambda^2 - \mu (\mu - 1)} \vert \lambda^2, \mu + 1 \rangle \\
+\hat L_- \vert \lambda^2, \mu \rangle &= \hbar \sqrt{\lambda^2 - \mu (\mu - 1)} \vert \lambda^2, \mu - 1 \rangle \\
 \end{aligned}
 $$
 {: .proposition}
