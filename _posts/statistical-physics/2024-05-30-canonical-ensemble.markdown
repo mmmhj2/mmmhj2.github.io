@@ -42,6 +42,8 @@ $$P(a) = \frac{\exp \left( -\frac{E_a}{kT} \right)}{\sum_{a' \in A} \exp \left( 
 其中$k$为玻尔兹曼常数，$T$为系统的温度，则称该系综为**正则系综**（Canonical ensemble）。
 {: .definition}
 
+系统的温度即是由与其达成平衡的热库的温度确定的。
+
 通常我们记$\beta = \frac{1}{kT}$，且令归一化系数
 $$Z = \sum_{a' \in A} \exp \left( - \frac{E_{a'}}{kT} \right)$$
 则该概率测度可简写为
@@ -102,7 +104,7 @@ $$<E> = F - T \frac{\partial F}{\partial T}$$
 有
 $$
 \begin{aligned}
-<E> &= \sum_{a \in A} E(a) P(a) = \sum_{a\in A} E(a) \frac{\exp \big(-\beta E(a)\big)}{Z} \\
+\langle E \rangle &= \sum_{a \in A} E(a) P(a) = \sum_{a\in A} E(a) \frac{\exp \big(-\beta E(a)\big)}{Z} \\
 &= \frac{1}{Z} \sum_{a \in A} E(a) \exp \big( - \beta E(a) \big) = - \frac{1}{Z} \frac{\partial Z}{\partial \beta}
 \end{aligned}
 $$
@@ -136,7 +138,7 @@ $$
 ### 自由能函数与内参量
 
 热力学基本关系可由自由能表出：
-$$\mathrm d F = \mathcolor{red}{- S \mathrm d T} - p \mathrm d V + \mu \mathrm d N$$
+$$\mathrm d F = \textcolor{red}{- S \mathrm d T} - p \mathrm d V + \mu \mathrm d N$$
 {: .proposition}
 
 我们已经知道
@@ -177,22 +179,3 @@ s &= - k \sum_{E_\mathcal S} P_\mathcal S(E_\mathcal S) P_\mathcal T(E_\text{tot
 而$s\_\mathcal T$是一个常数，因此$F_\mathcal S$必然减少。
 {: .proof}
 
-## 正则系综与微正则系综
-
-下表总结了微正则系综与正则系综的重要参数。
-
-| | 微正则系综 | 正则系综 |
-|---|:---:|:---:|
-| 外参量 | $E, V, N$ | $T, V, N$ |
-| 特征函数 | $S = k \ln \Omega$ | $F = -kT \ln Z$ |
-| 内参量 | $T, p, \mu$ | $E, p, \mu$ |
-| 热力学势 | $-S$ | $F$ |
-
-两个系综在一定情况下是等价的。
-
-当宏观系统处于**热力学极限**（Thermodynamic limit）时，即
-$$V \to \infty, \quad N \to \infty, \quad \frac{V}{N} \to \text{Const.}$$
-时，平衡态下的正则系综与微正则系综等价，两个系综给出相同的结果。
-{: .proposition}
-
-在热力学极限下，不同系综产生的微观的不同不再有显著的影响。
