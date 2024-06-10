@@ -204,7 +204,7 @@ $$
 
 对玻色子，处于状态$\lambda$的量子的数量为
 $$N^\text{BE}_\lambda = \langle N^\text{BE}_\lambda \rangle = \frac{1}{\exp (\beta (\varepsilon_\lambda - \mu)) - 1}$$
-这种分布称为**玻色-爱因斯坦分布**（Bose-Einstein distribution）
+这种分布称为**玻色-爱因斯坦分布**（Bose-Einstein distribution）。
 该函数仅在$\varepsilon\_\lambda > \mu$时有意义。
 {: .theorem}
 
@@ -235,7 +235,7 @@ $$N_\lambda^\text{BE} = k T \frac{\partial \ln \xi_\lambda}{\partial \mu} = \fra
 对同一系统，分别考虑粒子可辨与不可辨下的正则配分函数，若某一状态下的粒子数极小，则其满足
 $$Z_\text{不可辨} = \frac{1}{N!} Z_\text{可辨}^N$$
 其中$Z\_\text{不可辨}$是整个系统的配分函数，而$Z\_\text{可辨}$是被视为可辨的单个粒子组成的系统的配分函数。这种近似称为麦克斯韦-玻尔兹曼近似。
-可辨的粒子满足**麦克斯韦-玻尔兹曼分布**（Maxwell-Boltzmann distribution），即粒子数为
+可辨的粒子组成的系统满足**麦克斯韦-玻尔兹曼分布**（Maxwell-Boltzmann distribution），即粒子数为
 $$N_\lambda^\text{MB} = \langle N_\lambda^\text{MB} \rangle = \exp \big[ -\beta (\varepsilon_\lambda - \mu) \big]$$
 {: .theorem}
 
