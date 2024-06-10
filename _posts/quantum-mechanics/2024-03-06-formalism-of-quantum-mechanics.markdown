@@ -13,12 +13,12 @@ categories: ["量子力学"]
 
 为描述物理系统的状态，在量子力学中通常使用狄拉克记号来表示希尔伯特空间中的各种元素。
 
-希尔伯特空间中的列向量表示物理系统的量子态，称为*右矢*（ket），记为$| \psi \rangle$；
-其共轭转置称为*左矢*（bra），记为$\langle \psi |$。
+希尔伯特空间中的列向量表示物理系统的量子态，称为*右矢*（ket），记为$\vert \psi \rangle$；
+其共轭转置称为*左矢*（bra），记为$\langle \psi \vert$。
 {: .definition}
 
 利用左矢与右矢，可以非常方便地表示一些常见的运算，如内积：
-$$ (\psi, \phi) = \psi^\dagger \cdot \phi = \langle \psi | \phi \rangle $$
+$$ (\psi, \phi) = \psi^\dagger \cdot \phi = \langle \psi \vert \phi \rangle $$
 其中$\cdot^\dagger$表示矩阵的共轭转置。
 
 对量子态的更准确的描述是：量子态是射线(Ray)定义的等价类的代表元。
@@ -55,31 +55,31 @@ $$i \hbar \frac{\partial}{\partial t} \psi (\vec r, t) = \hat H \psi (\vec r, t)
 这样的状态就是简并的。
 
 物理量在测量后为某一特征值的概率为：
-$$p_n = \sum_d | \langle \varphi_{n,d} | \psi \rangle |^2 = \sum_d \langle \varphi_{n,d} | \psi \rangle \langle \psi | \varphi_{n,d} \rangle$$
+$$p_n = \sum_d \vert \langle \varphi_{n,d} \vert \psi \rangle \vert^2 = \sum_d \langle \varphi_{n,d} \vert \psi \rangle \langle \psi \vert \varphi_{n,d} \rangle$$
 其中$d$为简并度，$\varphi\_{n,d}$为特征向量。
 若该特征值不是简并的，则可简写为
-$$p_n = \langle \varphi_{n} | \psi \rangle \langle \psi | \varphi_{n} \rangle$$
+$$p_n = \langle \varphi_{n} \vert \psi \rangle \langle \psi \vert \varphi_{n} \rangle$$
 {: .proposition}
 
 注意到特征向量组成希尔伯特空间的一组基底，任何状态向量可写为特征向量的线性组合：
-$$|\psi\rangle = \sum c_{n,d} | \varphi_{n,d} \rangle$$
+$$\vert\psi\rangle = \sum c_{n,d} \vert \varphi_{n,d} \rangle$$
 因此取得特征值的概率为
-$$p_n = \sum | c_{n,d} |^2$$
+$$p_n = \sum \vert c_{n,d} \vert^2$$
 非简并态的概率化简为
-$$p_n = |c_n|^2$$
+$$p_n = \vert c_n \vert^2$$
 
 对物理量进行测量后，对应的波函数立刻被投影至测量出的特征值的特征空间中，这一现象称为*坍缩*（Collapse, Reduction）。
 新的波函数为
-$$| \psi' \rangle = \frac{\sum_d c_{n,d} | \varphi_{n,d} \rangle }{\sqrt{\sum_d |c_{n,d}|^2}}$$
+$$\vert \psi' \rangle = \frac{\sum_d c_{n,d} \vert \varphi_{n,d} \rangle }{\sqrt{\sum_d \vert c_{n,d} \vert^2}}$$
 其中$c_{n,d}$即位于该状态的概率。
 非简并态下，新的波函数为
-$$| \psi' \rangle = | \varphi_n \rangle$$
+$$\vert \psi' \rangle = \vert \varphi_n \rangle$$
 {: .proposition}
 
 ### 薛定谔方程
 
 哈密顿算符为$\hat H$的系统的量子态随时间的变化由薛定谔方程完全描述：
-$$\hat H(t) | \psi(t) \rangle = i \hbar \frac{d}{d t} | \psi(t) \rangle$$
+$$\hat H(t) \vert \psi(t) \rangle = i \hbar \frac{d}{d t} \vert \psi(t) \rangle$$
 {: .proposition}
 
 薛定谔方程还给出了概率流的表述。
@@ -89,14 +89,14 @@ $$\hat H(t) | \psi(t) \rangle = i \hbar \frac{d}{d t} | \psi(t) \rangle$$
 
 ### 投影算符
 
-向向量$| \varphi_n \rangle$投影产生投影向量的算子为
-$$| \varphi_n \rangle \langle \varphi_n |$$
+向向量$\vert \varphi_n \rangle$投影产生投影向量的算子为
+$$\vert \varphi_n \rangle \langle \varphi_n \vert$$
 且
-$$\sum_n | \varphi_n \rangle \langle \varphi_n| = \hat{\mathbb{1}}$$
+$$\sum_n \vert \varphi_n \rangle \langle \varphi_n \vert = \hat{\mathbb{1}}$$
 {: .proposition}
 
-考虑任意向量$| \psi \rangle$，向$|\varphi_n\rangle$投影并产生投影向量可表示为
-$$| \varphi_n \rangle \langle \varphi_n | \psi \rangle$$
+考虑任意向量$\vert \psi \rangle$，向$\vert \varphi_n\rangle$投影并产生投影向量可表示为
+$$\vert \varphi_n \rangle \langle \varphi_n \vert \psi \rangle$$
 利用矩阵乘法的结合律即可得到投影向量算子。
 注意到厄米算子的特征值构成了空间的一组基底，该算子的和就是全同映射。
 {: .proof}
@@ -133,7 +133,7 @@ $$[\hat x, \hat p] = i \hbar \hat{\mathbb{1}}$$
 ### 均值与不确定度
 
 某物理量的均值——即其期望，可用狄拉克记号表示为
-$$\langle A \rangle_\psi = \langle \psi | \hat A | \psi \rangle$$
+$$\langle A \rangle_\psi = \langle \psi \vert \hat A \vert \psi \rangle$$
 其不确定度——即标准差，可用狄拉克记号表示为
 $$\Delta_\psi (A) = \sqrt{ \langle (\hat A - \langle A \rangle_\psi)^2 \rangle_\psi } = \sqrt{\langle A^2 \rangle_\psi- \langle A \rangle_\psi^2}$$
 不确定度的算子$\Delta (\cdot)$也是厄米算子。
@@ -142,10 +142,10 @@ $$\Delta_\psi (A) = \sqrt{ \langle (\hat A - \langle A \rangle_\psi)^2 \rangle_\
 标准差的公式在概率论中已经得到证明，我们只证明期望的公式。
 $$
 \begin{aligned}
-\langle A \rangle_\psi &= \sum_n p_n a_n = \sum_n |\langle \varphi_n | \psi \rangle|^2 a_n \\
-&= \sum_n \langle \psi | \varphi_n \rangle \langle \varphi_n | \psi \rangle a_n \\
-&= \sum_n \langle \psi | \hat A (| \varphi_n \rangle \langle \varphi_n |) \psi \rangle \\
-&= \langle \psi | \hat A | \psi \rangle 
+\langle A \rangle_\psi &= \sum_n p_n a_n = \sum_n \vert \langle \varphi_n \vert \psi \rangle \vert^2 a_n \\
+&= \sum_n \langle \psi \vert \varphi_n \rangle \langle \varphi_n \vert \psi \rangle a_n \\
+&= \sum_n \langle \psi \vert \hat A (\vert \varphi_n \rangle \langle \varphi_n \vert) \psi \rangle \\
+&= \langle \psi \vert \hat A \vert \psi \rangle 
 \end{aligned}
 $$
 {: .proof}
