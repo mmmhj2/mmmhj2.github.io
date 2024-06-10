@@ -8,5 +8,5 @@ permalink: /about/
 所有与主题相关的内容以*MIT 协议*发布。
 {: .text-center}
 
-文章内容按*署名-非商业性使用-相同方式共享 2.0 通用* (CC BY-NC-SA 2.0) 协议发表。
+文章内容按*署名-相同方式共享 4.0 国际* (CC BY-SA 4.0) 协议发表。
 {: .text-center}
