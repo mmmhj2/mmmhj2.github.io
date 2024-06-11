@@ -28,6 +28,8 @@ $$P(a) = \frac{\exp \left( -\frac{E_a - \mu N_a}{kT} \right)}{\sum_{a' \in A} \e
 {: .definition}
 
 系统的温度和化学势是通过与其达成平衡的巨正则库的温度与化学势确定的。
+此处特别注意，由于定义中显式地使用了每个状态的粒子数量，巨正则系综*不能*处理粒子可辨的情况。
+对粒子可辨的情况，要么使用微正则系综，要么使用正则系综和后文介绍的麦克斯韦-玻尔兹曼近似。
 
 巨正则系综概率的正规化系数称为这个系综的配分函数，即巨配分函数$\Xi$：
 $$\Xi = \sum_{a \in A} \exp \left( - \frac{E_{a} - \mu N_a}{kT} \right)$$
@@ -103,6 +105,23 @@ p &= - \frac{\partial J}{\partial V}
 \end{aligned}
 $$
 
+此外，巨正则系综的能量也可由巨配分函数表出：
+
+巨正则系综的能量为
+$$\langle E \rangle = - \frac{\partial \ln \Xi}{\partial \beta} + \mu \langle N \rangle$$
+{: .proposition}
+
+考虑期望的定义
+$$
+\begin{aligned}
+\langle E \rangle &= \sum_{a \in A} P(a) E_a \\
+&= \sum_{a \in A} \frac{\exp(-\beta(E_a - \mu N_a))}{\Xi} E_a \\
+&= \sum_{a \in A} \frac{\exp(-\beta(E_a - \mu N_a))}{\Xi} (E_a-\mu N_a) + P(a) \mu N_a \\
+&= - \frac{1}{\Xi} \frac{\partial \Xi}{\partial \beta} + \mu \langle N \rangle = - \frac{\partial \ln \Xi}{\partial \beta} + \mu \langle N \rangle
+\end{aligned}
+$$
+{: .proof}
+
 ### 几个系综的比较
 
 下表总结了微正则系综、正则系综和巨正则系综的重要参数。
@@ -115,7 +134,7 @@ $$
 | 特征函数 | $S = k \ln \Omega$ | $F = -kT \ln Z$ | $J = - k T \ln \Xi$ | 
 | 热力学势 | $-S$ | $F$ | $J$ |
 | 重要内参量 | $T = \frac{1}{\frac{\partial S}{\partial E}}$ <br/> $p = T \frac{\partial S}{\partial V}$ <br/> $\mu = - T \frac{\partial S}{\partial N}$ | $S = - \frac{\partial F}{\partial T}$ <br/> $p = - \frac{\partial F}{\partial V}$ <br/> $\mu = \frac{\partial F}{\partial N}$ | $S = - \frac{\partial J}{\partial T}$ <br/> $p = - \frac{\partial J}{\partial V}$ <br/> $N = - \frac{\partial J}{\partial \mu}$ <br/>  |
-| 能量关系 | N/A | $E = F - TS$ | $E = J - TS - \mu N$ |
+| 能量关系 | N/A | $F = E - TS$ <br/> $E = - \frac{\partial \ln Z}{\partial \beta}$ | $J = E - TS - \mu N$ <br/> $E = - \frac{\partial \ln \Xi}{\partial \beta} + \mu N$ |
 
 利用三种特征函数，可以写出三个不同的热力学恒等式：
 $$
