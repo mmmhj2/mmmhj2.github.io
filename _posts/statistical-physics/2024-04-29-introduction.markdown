@@ -70,6 +70,36 @@ $$\rho(E) = \frac{\delta N(E)}{\mathrm d E} = \frac{\mathrm d \Phi(E)}{\mathrm d
 
 ### 例子：无限势阱的状态密度
 
+考虑困在三维无穷势阱（长宽高为$L\_x, L\_y, L\_z$）中的量子，给出其状态密度。<br/>
+首先考虑势阱中量子的（定态）薛定谔方程：
+$$\hat H \psi(\vec r) = - \frac{\hbar^2}{2m} \nabla^2 \psi (\vec r) = E \psi (\vec r)$$
+分离变量，得到
+$$\psi(\vec r) = \psi_x(x) \cdot \psi_y(y) \cdot \psi_z(z)$$
+以X轴为例，有
+$$- \frac{\hbar^2}{2m} \frac{\mathrm d^2}{\mathrm d x^2} \psi_x(x) = E_x \psi(x)$$
+求解，可得
+$$\psi_x(x) = A_x \exp(i K_x x), \quad K_x = \sqrt{\frac{2m E_x}{\hbar^2}}$$
+这里利用循环边界条件，而非势阱外波函数为零的边界条件以简化计算，得到
+$$\psi_x(0) = \psi_x(L_x) \implies K_x = \frac{2 \pi n_x}{L_x}, \, n_x \in \mathbb Z$$
+其余两轴同理，得到波函数的解
+$$\psi(\vec r) = A \exp(i \vec K \cdot \vec r), \quad \vec K = \begin{bmatrix} \frac{2 \pi n_x}{L_x} \\ \frac{2 \pi n_y}{L_y} \\ \frac{2 \pi n_z}{L_z} \end{bmatrix}$$
+总能量为
+$$E = E_x + E_y + E_z = \frac{\hbar^2}{2m} K^2$$
+接下来计算状态密度，首先计算$\Phi(E)$，即计算
+$$\frac{\hbar^2}{2m} K^2 \le E \iff K^2 \le \frac{2mE}{\hbar^2}$$
+的状态总数。
+注意到上式相当于将矢量$\vec K$限制在半径为$\frac{2mE}{\hbar^2}$的球中，球的体积为
+$$V_\text{球} = \frac{4}{3} \pi \left(\frac{2mE}{\hbar^2}\right)^3$$
+观察向量$\vec K$，单个状态占据的等效体积为
+$$V_\text{状态} = \frac{8 \pi^3}{L_x L_y L_z} = \frac{8 \pi^3}{V}$$
+其中$V$为势阱的体积。从而
+$$\Phi(E) = \frac{V_\text{球}}{V_\text{状态}} = \frac{1}{6 \pi^2} \left( \frac{2mE}{\hbar^2} \right)^{\frac{3}{2}} V$$
+最后，求导可得
+$$\rho(E) = \frac{\mathrm d \Phi(E)}{\mathrm d E} = \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \sqrt{E}$$
+注意此处只考虑了粒子的平动，没有考虑转动和自旋。
+加上自旋后，使用该公式导出的结论只适用于单原子分子（没有转动自由度）。
+{: .exampl}
+
 ## 各态经历假设
 
 即使我们利用简并度简化了系综平均的计算，列举所有可能的能量仍不是一项可轻易完成的工作。

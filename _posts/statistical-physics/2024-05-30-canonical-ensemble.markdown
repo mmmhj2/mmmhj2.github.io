@@ -179,3 +179,79 @@ s &= - k \sum_{E_\mathcal S} P_\mathcal S(E_\mathcal S) P_\mathcal T(E_\text{tot
 而$s\_\mathcal T$是一个常数，因此$F_\mathcal S$必然减少。
 {: .proof}
 
+## 例子：量子势阱与理想气体
+
+本节中我们将利用正则系综的各项性质将无限深势阱中的量子与理想气体联系起来。
+
+考虑困在三维无穷势阱（长宽高为$L\_x, L\_y, L\_z$）中的量子，利用正则系综的性质给出其压强与温度的关系。<br/>
+首先利用之前的结论得到势阱中单个粒子的状态密度：
+$$\rho(E) = \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} \sqrt{E}$$
+注意此处我们还需要考虑自旋，因此实际的状态密度为
+$$\rho(E) = \frac{V}{4 \pi^2} \left( \frac{2m}{\hbar^2} \right)^{\frac{3}{2}} (2s + 1) \sqrt{E} = A V \sqrt{E}$$
+因为粒子可能的自旋数量是自旋数的两倍（正自旋和负自旋）加一。
+注意导出该等式时未考虑角动量，因此下面的推导只适用于单原子分子。
+其配分函数为
+$$
+\begin{aligned}
+z &= \int_0^\infty \rho(E) \exp(-\beta E) \, \mathrm d E \\
+&=  \int_0^\infty A V \sqrt{E} \exp(-\beta E) \, \mathrm d E \\
+&= \frac{\sqrt{\pi} }{2 \beta^{3/2}} AV
+\end{aligned}
+$$
+令$\Lambda$为
+$$\Lambda = \sqrt{\frac{2 \hbar^2 \beta \pi}{m}} = \sqrt\frac{2 \pi \hbar^2 }{k_B T m}$$
+则
+$$z = \frac{V}{\Lambda^3} (2s + 1)$$
+该常量称为热德布罗意波长（Thermal de Broglie wavelength）。
+这是单个粒子的配分函数。
+对于整个量子系统，其中的粒子都是不可辨的，因此我们需要将配分函数除以排列数来得到正确的配分函数。
+$$Z = \frac{z^N}{N!}$$
+这个近似叫做麦克斯韦-玻尔兹曼近似[^mb]。
+有了配分函数之后，其他物理量是容易求出的。
+$$
+\begin{aligned}
+E &= - \frac{\partial \ln Z}{\partial \beta} = - \frac{\partial}{\partial \beta}(N \ln z - \ln N!) \\
+&= - N \frac{\partial \ln z}{\partial \beta} = \frac{3}{2} \frac{N}{\beta} = \frac{3}{2} N k_B T
+\end{aligned}
+$$
+这和分子动理论中给出的结论完全一致。
+为求出压强，首先考虑自由能：
+$$
+\begin{aligned}
+    F &= - k T \ln Z = - k T (N \ln z - \ln N!) \\
+    &= kT\ln N! - k T N(\ln V - 3 \ln \Lambda - \ln (2s+1))
+\end{aligned}
+$$
+然后有
+$$p = - \frac{\partial F}{\partial V} = k T N \frac{1}{V}$$
+移项后得到
+$$p V = k_B N T$$
+注意到$N$是粒子个数，将其换为摩尔数
+$$p V = k_B (N_A n) T = n R T$$
+这就得到了理想气体状态方程。
+最后考虑化学势
+$$\mu = \frac{\partial F}{\partial N}$$
+这里需要用到斯特林近似：
+$$
+\begin{aligned}
+    \ln N! &= \ln 1 + \ln 2 + \cdots + \ln N \\
+    & \approx \int_1^N \ln x \, \mathrm d x \\
+    &=  x \ln x - x \Big|_1^N \\ 
+    & = N \ln N - N + 1 \approx N \ln N
+\end{aligned}
+$$
+因此
+$$\frac{\partial \ln N!}{\partial N} \approx \ln N - 1 \approx \ln N$$
+从而
+$$\mu = k T \ln N - k T \ln \frac{V}{\Lambda^3}(2s+1) = - kT \ln \frac{V}{N \Lambda^3}(2s+1)$$
+考虑位于同温度$T$、另一压强$p^\circ$下的化学势$\mu^\circ$，两者相减，设物质的量均为一摩尔，并重写原式，可得
+$$\mu = \mu^\circ + RT \ln \frac{p}{p^\circ}$$
+这和化学反应的摩尔吉布斯自由能变具有相同的形式
+$$\Delta_r G_m = \Delta_r G_m^\circ + RT \ln \prod (p / p^\circ)^{\nu}$$
+实际上，化学势就是偏摩尔吉布斯自由能。
+{: .exampl}
+
+值得注意的是，为使微观的结论与宏观的结论一致，不一定要选择正则系综。
+在恰当的前提下，无论选择何种系综，均能得出一致的结果，至于要选择何种系综，则需根据待研究的系统确定。
+
+[^mb]: 证明参见巨正则系综一章。
