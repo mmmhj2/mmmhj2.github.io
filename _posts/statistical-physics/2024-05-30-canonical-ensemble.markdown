@@ -98,24 +98,25 @@ $$F = - k T \ln Z$$
 例如，能量的系综平均可由自由能函数导出。
 
 正则系综能量的系综平均与自由能函数之间满足
-$$<E> = F - T \frac{\partial F}{\partial T}$$
+$$\langle E \rangle = - \frac{\partial \ln Z}{\partial \beta} = F - T \frac{\partial F}{\partial T}$$
 {: .proposition}
 
 有
 $$
 \begin{aligned}
 \langle E \rangle &= \sum_{a \in A} E(a) P(a) = \sum_{a\in A} E(a) \frac{\exp \big(-\beta E(a)\big)}{Z} \\
-&= \frac{1}{Z} \sum_{a \in A} E(a) \exp \big( - \beta E(a) \big) = - \frac{1}{Z} \frac{\partial Z}{\partial \beta}
+&= \frac{1}{Z} \sum_{a \in A} E(a) \exp \big( - \beta E(a) \big) = - \frac{1}{Z} \frac{\partial Z}{\partial \beta} \\
+&= - \frac{\partial \ln Z}{\partial \beta}
 \end{aligned}
 $$
 注意到
 $$\frac{\partial F}{\partial T} = - k \ln Z - k T \frac{\partial \ln Z}{\partial \beta} \frac{\partial \beta}{\partial T} = - k \ln Z + \frac{1}{T} \frac{\partial \ln Z}{\partial \beta}$$
 从而
-$$<E> = - \frac{\partial \ln Z}{\partial \beta} = F - T \frac{\partial F}{\partial T}$$
+$$\langle E \rangle = - \frac{\partial \ln Z}{\partial \beta} = F - T \frac{\partial F}{\partial T}$$
 {: .proof}
 
 同理，能量的方差为
-$$(\Delta E)^2 = <E^2> - <E>^2 = \frac{\partial^2 \ln Z}{\partial \beta^2}$$
+$$(\Delta E)^2 = \langle E^2 \rangle - \langle E \rangle^2 = \frac{\partial^2 \ln Z}{\partial \beta^2}$$
 而热容为
 $$C_V = \frac{\partial E}{\partial T} = \frac{\partial F}{\partial T} - \frac{\partial F}{\partial T} - T \frac{\partial^2 F}{\partial T^2} = - T \frac{\partial^2 F}{\partial T^2}$$
 
