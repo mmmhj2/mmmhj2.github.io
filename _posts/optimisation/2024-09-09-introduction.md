@@ -52,7 +52,7 @@ $$Df(x): h \mapsto f'(x) h$$
 注意$Df$是一个从向量$x$到$x$处导数的线性映射，而$Df(x)$本身也是一个映射，将方向$h$映射至$h$方向上的导数值，并且由于是有界的，还一定是连续的。
 由于难以表示，一般不直接写出$Df$或$Df(x)$，而是写成
 $$Df(x) \cdot h = \cdots$$
-的形式。
+的形式，除非$Df(x) \cdot h = 0$，此时可直接将其写为$Df(x) = 0$。
 
 计算函数
 $$
@@ -82,6 +82,9 @@ $$Df(x) \cdot h = \left< Ax-b, h \right>$$
 称映射$F: V \to W$在$x$处加托可微（Gateaux differentiable），若对于$x$，存在一线性映射$DF(x): V \to W$，满足
 $$\left. \frac{\mathrm d}{\mathrm d \lambda} F(x + \lambda h) \right|_{\lambda = 0} = DF(x) \cdot h, \quad \forall h \in V$$
 {: .definition}
+
+有些对于加托可微的定义只要求$DF(x)$存在，我们对其额外施加一个线性的约束，以避免病态的情况。
+算子空间的加托导数和变分法的关系密切。
 
 若映射$F$弗雷歇可微，则一定加托可微。
 其逆命题非真。
@@ -166,6 +169,19 @@ $$\mathbf H F(x) = \mathbf J (\nabla F(x)) = \begin{bmatrix}
 黑塞矩阵可用于表示二阶方向导数：
 $$\left. \frac{\mathrm d^2 }{\mathrm d \lambda^2} F(x + \lambda h) \right|_{\lambda = 0}= \left< \mathbf H(x) h, h \right>$$
 
+二次型函数
+$$F(x) = \frac{1}{2} \left< Ax, x \right> - \left< b, x\right>$$
+的梯度为
+$$\nabla F(x) = A x - b$$
+黑塞矩阵为
+$$\mathbf H F(x) = \mathbf J (A x - b) = A$$
+最后一步可利用矩阵计算，也可利用弗雷彻微分的定义计算：
+令$f(x) = \nabla F(x) = A x - b$，则
+$$f(x + h) = Ax - b + A h = f(x) + A h$$
+从而
+$$DL(x) \cdot h = A h$$
+{: .exampl}
+
 ## 微分与优化
 
 接下来我们通过一个例子将微分与优化联系起来。
@@ -189,3 +205,45 @@ $$g''(\lambda) = \left< \mathbf HF(\overline x + \lambda h) h, h \right> \ge 0, 
 从而，我们要求所有点的黑塞矩阵半正定。
 
 如果我们只需要找到极小值，则仅需要求黑塞矩阵在$\overline x$附近的一个球内半正定即可。
+
+计算
+$$\mathcal J(v) = \int_0^1 g(x, v, v') \,\mathrm d x$$
+的加托导数，其中$g$定义在$v \in \mathcal C^1$，$v(0) = v(1) = 0$上，定义域记为$V\_0$。
+利用此结论计算
+$$\mathcal J(v) = \int_0^1 \frac{1}{2} v'(x)^2 + \frac{1}{4} v(x)^4 - f(x) v(x) \, \mathrm d x$$
+的极值点，并证明其极值点是初值问题
+$$- u'' + u^3 + f = 0, u(0) = u(1) = 0$$
+的解。<br/>
+注意$g$有三个独立的参数$x, v, v'$，可将其改写为$g(x, u\_0, u\_1)$
+令$h \in V\_0$，则根据定义，其加托导数为
+$$\begin{aligned}
+D \mathcal J(v) \cdot h &= \frac{\mathrm d}{\mathrm d t} \left( \int_0^1 g(x, v + t h, v' + t h') \,\mathrm d x \right)_{t = 0} \\
+&= \int_0^1 \left( \frac{\partial g(x, v+th, v' + th')}{\partial u_0} h + \frac{\partial g(x, v + th, v' + th')}{\partial u_1} h' \right)_{t = 0} \,\mathrm d x \\
+&= \int_0^1 \frac{\partial g(x, v, v')}{\partial u_0} h +  \frac{\partial g(x, v, v')}{\partial u_1} h' \, \mathrm d x
+\end{aligned}$$
+这是一个关于$h$的线性函数，从而其加托导数存在。
+现在令
+$$g(x, u_0, u_1) = \frac{u_1^2(x)}{2}  + \frac{u_0^4(x)}{4} - f(x) u_0(x) $$
+计算可得
+$$
+\begin{aligned}
+\frac{\partial g}{\partial u_0} &= u_0^3 - f \\
+\frac{\partial g}{\partial u_1} &= u_1 \\
+\implies D\mathcal J(x) \cdot h &= \int_0^1 v^3 h - f h + v' h' \,\mathrm d x
+\end{aligned}
+$$
+然后利用分部积分
+$$\int_0^1 v' h' = \left[ v' h \right]_0^1 + \int_0^1 v'' h$$
+由于$h(0) = h(1) = 0$，从而
+$$ D\mathcal J(x) \cdot h = \int_0^1 v^3 h - f h + v'' h \,\mathrm d x $$
+对于极值点，有
+$$D \mathcal J(x) \cdot h = 0,\quad \forall h \in V_0 \iff D \mathcal J(x) = 0$$
+利用$h$的任意性，可得
+$$v^3 - f + v'' = 0$$
+{: .exampl}
+
+直接对
+$$D \mathcal J(v) \cdot h = \int_0^1 \frac{\partial g(x, v, v')}{\partial u_0} h +  \frac{\partial g(x, v, v')}{\partial u_1} h' \, \mathrm d x$$
+利用分部积分，可得
+$$D \mathcal J(v) \cdot h = \int_0^1 \left(\frac{\partial g(x, v, v')}{\partial u_0}+  \frac{\mathrm d}{\mathrm d x}\frac{\partial g(x, v, v')}{\partial u_1}\right) h\, \mathrm d x$$
+这实际上完成了[拉格朗日方程]({% post_url /2023-08-01-intro-to-analytic-mechanics %}#结论)或[哈密顿原理]({% post_url /structure-mechanics/2024-03-11-hamiltonian-principle %})的证明。
