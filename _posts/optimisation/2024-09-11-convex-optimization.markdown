@@ -1,6 +1,6 @@
 ---
 title: "凸函数优化"
-categories: ["组合优化"]
+categories: ["建模与优化"]
 ---
 
 ## 凸函数
