@@ -96,7 +96,7 @@ $$F(x) = F(\overline x) + DL(\overline x) \cdot (x - \overline x) + \left< \math
 $$C = \frac{K-1}{K+1} = \frac{1 - \frac{1}{K}}{1 + \frac{1}{K}}$$
 收敛，即
 $$\Vert x^k - \overline x \Vert \le C^k \Vert x^0 - \overline x \Vert,$$
-其中$K$是对称正定矩阵$A$的最大特征值与最小特征值之比，这个比值也叫条件数（Condition number），表征了该优化问题的容易程度。
+其中$K$是对称正定矩阵$A$的最大特征值与最小特征值之比，这个比值也叫条件数（Condition number），表征了该优化问题的容易程度：条件数越接近一，矩阵在各个方向上的变换就越均匀。
 {: .proposition}
 
 ### 松弛法
@@ -109,3 +109,84 @@ $$\Vert x^k - \overline x \Vert \le C^k \Vert x^0 - \overline x \Vert,$$
 $$F(x_1^k, \dots, x_i^{k+1}, \dots, x_n^k) \le F(x_1^k, \dots, x_i, \dots, x_n^k)$$
 4. 当$i = n$，即处理最后一维时，更新梯度$g^{k+1} = \nabla F(x^k)$并自增$k$；
 6. 若$\Vert g^{k+1} \Vert \le \epsilon \Vert g^0 \Vert$，则已找到局部最优解，否则令$k$自增并返回第二步。
+
+### 预处理
+
+我们可以通过在原问题的矩阵上乘另一个矩阵，通过将问题变换到另一个基底下以求解该问题。
+然而，梯度算子的结构取决于坐标基底的选择，因此
+
+设$A,B$为同一向量空间的两组基底，$x,y$为两个向量在$A$下的坐标表示；
+设$\left< \cdot, \cdot \right>\_A$为一个坐标基底下的内积，$\left<\cdot, \cdot\right>\_B$为另一个坐标基底下的内积。
+则必然存在一对称的正定矩阵$M$，使得
+$$\left< x, y \right>_A = \left< Mx, y \right>_B$$
+$M$可能是过渡矩阵与其转置的乘积：
+$$M = P_{A \to B}^\top P_{A \to B}$$
+{: .proposition}
+
+借助以上命题，我们也可以将微分变到另一个坐标系下：
+$$DF(x) \cdot h = \left< \nabla_A F(x), h \right>_A = \left< M \nabla_B F(x), h \right>_B$$
+
+从而，固定步长的梯度下降法可以从
+$$x^{k+1} = x^k - \rho \nabla_B F(x^k)$$
+变为
+$$Mx^{k+1} = M x^k - \rho M \nabla_B F(x^k)$$
+而进一步变为
+$$M\underbrace{(x^{k+1} - x^k)}_{g^{k+1}} = - \rho \nabla_A F(x^k)$$
+这种通过预先乘一个矩阵来改进条件数的方法称为预处理法（Preconditioning），矩阵$M$称为预处理矩阵（Preconditioner）。
+迭代时，一般不通过同时乘$M^{-1}$来求解$g^{k+1}$，而是利用高斯消元或LU分解等方法进行求解。
+若$M$的选择较好（如上三角矩阵等），则这种方法的效率更高。
+
+<div class="exampl">
+<p>
+利用预处理的梯度下降法求优化问题的解：
+$$
+\min_x F(x) = \frac{1}{2} \left< Ax, x \right> - \left<b, x\right> + \frac{1}{4} \Vert x \Vert_4^4
+$$
+其梯度为
+$$
+\nabla F(x) = Ax + x^3 - b
+$$
+</p>
+<p>
+使用$A$作为预处理矩阵，则有
+$$A \delta^{k+1} = - \rho \nabla_A F(x^k),~ x^{k+1} = x^k + \rho \delta^{k+1}$$
+</p>
+</div>
+
+## 牛顿迭代法
+
+牛顿迭代法是求解非线性方程的解的有力方法。
+
+### 一维情况
+
+牛顿迭代法利用以下事实：
+在第$k$步迭代的$x^k$附近，有
+$$f(x) = f(x^k) + f'(x^k) (x - x^k) + \cdots$$
+设$f(x^{k+1}) = 0$，利用以上展开，可得
+$$f(x^k) + f'(x^k)(x^{k+1} - x^k) = 0$$
+从而
+$$x^{k+1} = x^k - \frac{f(x^k)}{f'(x^k)}$$
+
+若待求解函数二阶可微，且解处微分非零，即
+$$f \in \mathcal C^2, f'(\overline x) \neq 0$$
+则牛顿迭代法以二次速度收敛：
+$$|x^{k+1} - \overline x| \le C | x^k - \overline x |^2$$
+其中$C$为某一常数。
+{: .proposition}
+
+### 高维情形
+
+在高维情形下，展开变为
+$$f(x) = f(x^k) + \mathbf J f(x^k) \cdot (x - x^k) + \cdots$$
+从而递推式变为
+$$x^{k+1} = x^k - (\mathbf J f(x^k))^{-1} \cdot f(x^k)$$
+
+迭代算法如下：
+1. $$M^k \gets \mathbf J f(x^k)$$
+2. $$g^k \gets f(x^k)$$
+3. 求解线性方程组$$M^k \delta ^k = - g^k$$
+4. $$x^{k+1} \gets x^k + \delta^k$$
+
+重复直到$\Vert g^k \Vert \le \epsilon \Vert g^0 \Vert$
+
+计算雅可比矩阵并求解线性方程组较为费时，可在迭代次数足够大后使用固定的矩阵近似以进行估计。
