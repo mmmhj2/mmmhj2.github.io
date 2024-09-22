@@ -83,10 +83,21 @@ $$\rho < \frac{2}{\mu_\max}$$
 则其在步长为$\rho$的梯度下降法中收敛，其中$\mu\_\max$是$A$最大的特征值。
 {: .proposition}
 
-$$M = I - \rho A$$
-$\lambda\_i \in \mathrm{Spec}(M)$
+注意到原二次型函数的梯度为
+$$\nabla F(x) = Ax + b$$
+令$M = I - \rho A$，则梯度下降法的递推式变为
+$$x^{k+1} = f(x^k) = Mx^k - \rho b$$
+现在，考虑李普希茨连续的定义
+$$\Vert f(x) - f(x') \Vert = \Vert M x - b - M x' + b \Vert = \Vert M (x - x') \Vert$$
+考虑到$A$是对称的正定矩阵，从而$A,M$均一定可对角化（实际上，由于它们可交换，是同时可对角化），我们仅考虑$M$的最大的特征值即可：
+$$\Vert M(x - x') \Vert \le \lambda_\max \Vert x - x' \Vert$$
+又因为
 $$\lambda_i = 1 - \rho \mu_i, \mu_i \in \mathrm{Spec}(A)$$
+从而
 $$|\lambda_i| < 1 \iff |1 - \rho \mu_i| < 1$$
+从而当
+$$\rho < \frac{2}{\mu_\max}$$
+时，李普希茨常数小于一，从而根据不动点定理，该递推数列必收敛至唯一的不动点。
 {: .proof}
 
 这个命题尤其有用，因为在极小值点的邻域内，对原函数进行泰勒展开，总是能得到一个二次型函数：
