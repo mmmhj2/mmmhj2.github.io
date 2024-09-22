@@ -1,5 +1,6 @@
 ---
 title: "MSYS2 使用指北"
+categories: ["闲笔"]
 ---
 
 本文主要介绍 Windows 上使用 GCC 编译器的 state-of-the-art 方案，即 MSYS2 方案。
