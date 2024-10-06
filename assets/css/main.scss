@@ -5,6 +5,45 @@ search: false
 
 @charset "utf-8";
 
+@font-face{
+    font-family: chinese-main;
+    font-style: italic;
+    src:
+        local("Zhuque Fangsong Regular"),
+        url("/assets/fonts/zhuquefangsong/ZhuqueFangsong-Regular.ttf");
+}
+
+@font-face {
+    font-family: chinese-main;
+    font-weight: bold;
+    font-style: normal;
+    src:
+        local("Source Han Sans SC Bold"),
+        url("/assets/fonts/sourcehan/SourceHanSansSC-Bold.otf");
+}
+
+@font-face {
+    font-family: chinese-main;
+    src: 
+        local("Source Han Serif CN Regular"),
+        url("/assets/fonts/sourcehan/SourceHanSerifCN-Regular.otf");
+}
+
+@font-face {
+    font-family: chinese-sans;
+    src: 
+        local("Source Han Sans SC Regular"),
+        url("/assets/fonts/sourcehan/SourceHanSansSC-Regular.otf");
+}
+
+$serif: Georgia, Times, chinese-main, serif;
+$sans-serif: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+  "Helvetica Neue", "Lucida Grande", Arial, chinese-sans, sans-serif;
+
+$global-font-family: $serif;
+$header-font-family: $sans-serif;
+$caption-font-family: $sans-serif;
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
