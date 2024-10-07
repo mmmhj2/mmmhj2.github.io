@@ -7,7 +7,7 @@ categories: ["建模与优化"]
 
 和例子类似，若希望让二次的势能最小，则有以下等价的问题：
 
-在$V\_0 = \left\{ v\in\mathcal C^1([0,1]), v(0) = v(1) = 0 \right\}$中最小化二次势能函数：
+在$V\_0 = \left\\\{ v\in\mathcal C^1([0,1]), v(0) = v(1) = 0 \right\\\}$中最小化二次势能函数：
 $$J(v) = \int_0^1 \frac{k}{2} v'^2 + \frac{c}{2} v^2 - fv \, \mathrm d x, \quad k, c > 0$$
 等价于求解以下变分方程：
 $$0 = \int_0^1 k u'v' + cuv - fv \, \mathrm d x ,\quad\forall v \in V_0$$

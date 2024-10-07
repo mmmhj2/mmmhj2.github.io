@@ -29,7 +29,7 @@ categories: ["统计物理"]
 
 微正则系综是最简单的一种系综，其只具有一个能量，因此易于研究。
 
-设系综的能量为$E^*$，若该概率空间的概率测度为
+设系综的能量为$E^\*$，若该概率空间的概率测度为
 $$P(a) = \begin{cases} 0 &, E(a) \neq E^* \\ \frac{1}{\Omega(E^*)} &,  E(a) = E^*
 \end{cases}$$
 则称该系综为*微正则系综*（Microcanonical ensemble）。
