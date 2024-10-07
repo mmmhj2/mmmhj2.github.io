@@ -17,9 +17,15 @@ $caption-font-family: $sans-serif;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
-citalics {
+cem {
     font-family: $kaiti;
     font-style: normal;
+}
+
+cstrong {
+    font-family: $sans-serif;
+    font-style: normal;
+    font-weight: bold;
 }
 
 .exampl {
