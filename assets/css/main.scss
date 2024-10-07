@@ -5,40 +5,10 @@ search: false
 
 @charset "utf-8";
 
-@font-face{
-    font-family: chinese-main;
-    font-style: italic;
-    src:
-        local("Zhuque Fangsong Regular"),
-        url("/assets/fonts/zhuquefangsong/ZhuqueFangsong-Regular.ttf");
-}
-
-@font-face {
-    font-family: chinese-main;
-    font-weight: bold;
-    font-style: normal;
-    src:
-        local("Source Han Sans SC Bold"),
-        url("/assets/fonts/sourcehan/SourceHanSansSC-Bold.otf");
-}
-
-@font-face {
-    font-family: chinese-main;
-    src: 
-        local("Source Han Serif CN Regular"),
-        url("/assets/fonts/sourcehan/SourceHanSerifCN-Regular.otf");
-}
-
-@font-face {
-    font-family: chinese-sans;
-    src: 
-        local("Source Han Sans SC Regular"),
-        url("/assets/fonts/sourcehan/SourceHanSansSC-Regular.otf");
-}
-
-$serif: Georgia, Times, chinese-main, serif;
+$serif: Georgia, Times, serif;
 $sans-serif: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
-  "Helvetica Neue", "Lucida Grande", Arial, chinese-sans, sans-serif;
+  "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+$kaiti: STKaiti, Kaiti, fangsong;
 
 $global-font-family: $serif;
 $header-font-family: $sans-serif;
@@ -46,6 +16,11 @@ $caption-font-family: $sans-serif;
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+citalics {
+    font-family: $kaiti;
+    font-style: normal;
+}
 
 .exampl {
     display: block;
@@ -58,8 +33,9 @@ $caption-font-family: $sans-serif;
 }
 .exampl:before {
     content: "例子";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     text-decoration: underline;
     display: inline-block;
     margin-right: 10px;
@@ -76,8 +52,9 @@ $caption-font-family: $sans-serif;
 }
 .proposition:before {
     content: "命题";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -94,8 +71,9 @@ $caption-font-family: $sans-serif;
 
 .remark::before {
     content: "注意";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     text-decoration: underline;
     display: inline-block;
     margin-right: 10px;
@@ -112,8 +90,9 @@ $caption-font-family: $sans-serif;
 }
 .theorem:before {
     content: "定理" ;
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -129,8 +108,9 @@ $caption-font-family: $sans-serif;
 }
 .lemma:before {
     content: "引理" ;
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -145,7 +125,8 @@ $caption-font-family: $sans-serif;
 }
 .proof:before {
     content: "证明";
-    font-style: italic;
+    // font-style: italic;
+    font-family: $kaiti;
     display: inline-block;
     margin-right: 10px;
 }
@@ -161,8 +142,9 @@ $caption-font-family: $sans-serif;
 }
 .definition:before {
     content: "定义";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
