@@ -81,8 +81,19 @@ $$
 设$V\_h$的基底为$w\_i(x)$，则原问题的近似可转化为$N$个线性方程组：
 $$\sum_{j = 1}^N a(w_j, w_i) u_j = L(w_i), \quad i \in [\![0, N]\!] \iff AU = F$$
 其中$u\_j$是$u\_h$在基底$w\_j$下的坐标，$A$是对称的正定矩阵，且
-$$A_{i,j} = a(w_i, w_j), U = (u_1, \dots, u_N)^\top, F = (L(w_1), \dots, L(w_N))^\top$$
+$$
+\begin{aligned}
+A_{i,j} &= a(w_j, w_i), \\
+U &= (u_1, \dots, u_N)^\top, \\
+F &= (L(w_1), \dots, L(w_N))^\top
+\end{aligned}
+$$
+其中$A$称为*刚度矩阵*（Stiffness matrix）。
 {: .proposition}
+
+刚度矩阵通常是对称的，因此这个定义等价于
+$$A_{i,j} = a(w_j, w_i) = a(w_i, w_j)$$
+在非对称的情况，则一般使用前一种形式。
 
 将原问题写为该基底下坐标形式即可得证。
 {: .proof}
@@ -257,7 +268,7 @@ $$a(u,v) = \int_0^1 k \nabla u \cdot \nabla v,\, L(v) = \int_0^1 fv$$
 $$KU = F,$$
 其中
 $$K_{i,j} = a(w_j, w_i)$$
-这个矩阵称为“刚度矩阵”。
+这个矩阵就是刚度矩阵。
 
 这个子空间的选择通常与离散化的方式有关，最通用的情况是分段多项式组成的空间，可用于三角形网格化的情况，这个空间是索伯列夫空间$H^1$的子空间。
 使用这个空间的方法称为**有限元方法**。
@@ -296,3 +307,6 @@ $$K_{ij} = k (x_i x_j + y_i y_j)\int_\Omega \, \mathrm d \Omega$$
 三角形的面积恰好可由$P$给出，从而
 $$K_{ij} = k (x_i x_j + y_i y_j) \frac{\det(P)}{2}$$
 {: .exampl}
+
+对于由多个三角形组成的网格，在单个三角形单元上计算的刚度矩阵通常称为*单元刚度矩阵*（Element stiffness matrix），记为$K^e$。
+完整网格上的刚度矩阵则通常由这些矩阵组装起来得到。
