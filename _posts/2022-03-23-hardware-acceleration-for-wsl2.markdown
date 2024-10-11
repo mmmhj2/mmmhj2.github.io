@@ -1,7 +1,7 @@
 ---
 title: "在WSL2中启用显卡硬件加速"
 date: 2022-03-24 00:20:00 +0800
-categories:
+categories: ["闲笔"]
 --- 
 
 近日需要在 Ubuntu 下运行 Gazebo 模拟，但是主力机上装的是 Windows 系统，考虑到各种因素，最终选择了WSL2作为虚拟机平台。

@@ -5,8 +5,22 @@ search: false
 
 @charset "utf-8";
 
+$serif: Georgia, Times, serif;
+$sans-serif: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI",
+  "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+$kaiti: STKaiti, Kaiti, fangsong;
+
+$global-font-family: $serif;
+$header-font-family: $sans-serif;
+$caption-font-family: $sans-serif;
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+citalics {
+    font-family: $kaiti;
+    font-style: normal;
+}
 
 .exampl {
     display: block;
@@ -19,8 +33,9 @@ search: false
 }
 .exampl:before {
     content: "例子";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     text-decoration: underline;
     display: inline-block;
     margin-right: 10px;
@@ -37,8 +52,9 @@ search: false
 }
 .proposition:before {
     content: "命题";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -55,8 +71,9 @@ search: false
 
 .remark::before {
     content: "注意";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     text-decoration: underline;
     display: inline-block;
     margin-right: 10px;
@@ -73,8 +90,9 @@ search: false
 }
 .theorem:before {
     content: "定理" ;
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -90,8 +108,9 @@ search: false
 }
 .lemma:before {
     content: "引理" ;
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }
@@ -106,7 +125,8 @@ search: false
 }
 .proof:before {
     content: "证明";
-    font-style: italic;
+    // font-style: italic;
+    font-family: $kaiti;
     display: inline-block;
     margin-right: 10px;
 }
@@ -122,8 +142,9 @@ search: false
 }
 .definition:before {
     content: "定义";
-    font-weight: bold;
+    // font-weight: bold;
     font-style: normal;
+    font-family: $sans-serif;
     display: inline-block;
     margin-right: 10px;
 }

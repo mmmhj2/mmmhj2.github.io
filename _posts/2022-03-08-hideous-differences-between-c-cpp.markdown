@@ -1,7 +1,7 @@
 ---
 title: "C 与 C++ 的微妙不同"
 date: 2022-03-15 19:15:00 +0800
-categories:
+categories: ["闲笔"]
 --- 
 
 以下测试环境为MSYS2 MINGW-W64 GCC 11.2.0

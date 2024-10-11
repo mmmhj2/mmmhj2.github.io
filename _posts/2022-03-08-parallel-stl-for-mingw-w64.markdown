@@ -1,7 +1,7 @@
 ---
 title: "在Mingw-w64中启用PSTL"
 date: 2022-03-08 22:11:00 +0800
-categories:
+categories: ["闲笔"]
 --- 
 
 TL;DR: 下载对应版本的Intel TBB库，并在链接时加上对应的选项`-ltbb`即可。
