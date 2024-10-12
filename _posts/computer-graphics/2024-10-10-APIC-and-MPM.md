@@ -114,8 +114,8 @@ C_p = \frac 4 {\Delta x^2} \sum_i w_{ip} \mathbf{v}_i (\mathbf{x}_i - \mathbf{x}
 $$
 
 其中系数$\frac  4 {\Delta x^2}$是在Quadratic B-Spline插值权重生效，对于Cubic形式，系数为$\frac 3 {\Delta x^2}$。
+
 APIC原论文作者在[2017年的论文](https://arxiv.org/pdf/1603.06188)第20页5.6.3节进行了非常复杂的推导得出该系数。我推测作者是最初是通过实现了一个更复杂的[基础版本](https://dl.acm.org/doi/pdf/10.1145/2766996)$C\_p = B\_p \left( D\_p \right)^{-1}$，通过观察得出的一个简洁的系数版本，再去推出证明。
-{: .remark}
 
 有了仿射矩阵$C\_p$后，将粒子动量传输到网格上时，就需要通过仿射矩阵计算邻域速度的形式，来计算粒子贡献给格点的速度
 
