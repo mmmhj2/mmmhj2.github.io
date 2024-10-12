@@ -96,9 +96,11 @@ defaults:
     values:
       layout: single_legacy
       author_profile: true
+      author: mmmhj2
       read_time: false
       comments: true
       share: true
       related: true
       toc: true
+
 
