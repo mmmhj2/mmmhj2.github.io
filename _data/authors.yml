@@ -1,5 +1,6 @@
 mmmhj2:
   name: "mmmhj2"
+  bio: "Es kommt darauf an, sie zu <strong>verändern</strong>."
   links:
     - label: "E-mail"
       icon: "fas fa-fw fa-envelope-square"
@@ -10,6 +11,7 @@ mmmhj2:
 
 CaptainChen:
   name: "Captain Harry Chen"
+  bio: "I solemnly swear that I am up to no good."
   links:
     - label: "E-mail"
       icon: "fas fa-fw fa-envelope-square"
