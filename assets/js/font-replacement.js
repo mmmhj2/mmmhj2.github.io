@@ -1,7 +1,7 @@
 
 function replace_emstrong() {
     console.log("Replacing chinese fonts")
-    const regex_chinese = /\p{Script=Han}+/ug
+    const regex_chinese = /[\p{Unified_Ideograph}（）。，！？“”]+/ug
 
     const em_list = document.querySelectorAll('em')
     console.log("Found", em_list.length, "<em> tags.")
