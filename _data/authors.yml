@@ -6,7 +6,7 @@ mmmhj2:
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:vincent.lee.0410@outlook.com"
     - label: Github
-      icon: "fas fa-fw fa-code"
+      icon: "fab fa-fw fa-github"
       url: "https://github.com/mmmhj2"
 
 CaptainChen:
@@ -17,5 +17,5 @@ CaptainChen:
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:captainharrychen@qq.com"
     - label: Github
-      icon: "fas fa-fw fa-code"
+      icon: "fab fa-fw fa-github"
       url: "https://github.com/CaptainHarryChen"
