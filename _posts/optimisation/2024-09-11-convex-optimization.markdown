@@ -5,11 +5,17 @@ categories: ["建模与优化"]
 
 ## 凸函数
 
+首先回忆突集合的定义。
+
+向量空间$V$的子集$C$称为*凸集合*（Convex），若其中任意两点连线均在该集合中，即：
+$$\forall x, y \in C, \forall \lambda \in [0,1],\quad \lambda x + (1 - \lambda) y \in C$$
+{: .definition}
+
 ### 一元凸函数
 
 若某一元函数$F: \mathbb R \to \mathbb R$对定义域上的所有$x,y$满足
 $$F(\lambda x + (1-\lambda) y) \le \lambda F(x) + (1 - \lambda) F(y), \ \forall \lambda \in [0,1]$$
-则称该函数是凸函数（Convex）；若满足
+则称该函数是凸函数（Convex function）；若满足
 $$F(\lambda x + (1-\lambda) y) < \lambda F(x) + (1 - \lambda) F(y), \ \forall \lambda \in ]0, 1[$$
 则称其为严格凸函数。
 {: .definition}
@@ -34,7 +40,42 @@ $$F(\lambda x + (1-\lambda) y) < \lambda F(x) + (1 - \lambda) F(y), \ \forall \l
 则称其为严格凸函数。
 {: .definition}
 
-从图像上看，这意味着向量空间$V$中端点在函数$F$上的任何两点之间的线段均在函数图像的上方。
+从图像上看，这意味着向量空间$V$中端点在函数$F$上的任何两点之间的线段均在函数图像的上方，即：
+
+一个函数在$V$上是（严格）凸的，当且仅当其在$V$中的任意线段上是（严格）凸的。
+{: .proposition}
+
+这意味着对任何函数$f(x)$，我们总是可以通过研究$g\_h(\lambda) = f(x + \lambda h)$来研究$f$的凸性。
+若$g$对所有$h$都是凸的，那么$f$就是凸的。
+
+特别地，对二次型函数，我们有：
+
+向量空间$V$上的二次型函数
+$$J(u) = \frac{1}{2} a(u, u) + L(u)$$
+是严格凸的，当且仅当$a$是对称的正定二次型；
+是凸的，当且仅当$a$是对称的半正定二次型。
+{: .proposition}
+
+注意到函数
+$$J(u + \lambda v) = \frac{\lambda^2}{2} a(v, v) + \lambda (a(u,v) + L(v)) + \frac{1}{2} a(u, u) - L(u)$$
+是关于$\lambda$的二次多项式，其凸性仅由二次项系数$\frac{a(v,v)}{2}$决定。
+{: .proof}
+
+一维情况的许多结论也可直接推广：
+
+（Kachurovskii）设$V$为一希尔伯特空间，则可微函数$F: V \to \mathbb R$是其上的凸函数，当且仅当其一阶导单调：
+$$\forall x, y \in V, \quad \left< \nabla F(x) - \nabla F(y), x - y \right> \ge 0$$
+或者，写成弗雷歇微分的形式：
+$$(DF(x) - DF(y)) \cdot (x-y) \ge 0$$
+{: .proposition}
+
+注意在希尔伯特空间中，我们不再区别单调增和单调减，而只使用单调，这相当于一维情况的单调增。
+
+在欧几里得空间中，二阶可微函数$F$是凸函数，当且仅当其黑塞矩阵$\mathbf HF$半正定；
+若其黑塞矩阵正定，则其为严格凸函数。
+{: .proposition}
+
+注意，和一维情况一样，后半部分的逆命题非真。
 
 ## 凸优化
 

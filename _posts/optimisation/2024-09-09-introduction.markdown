@@ -119,6 +119,8 @@ $$f(t, t^3) = \begin{cases}
     \frac{t^6}{t^6 + t^9} &, t \neq 0 \\
     0 &, \text{否则}
 \end{cases}$$
+从而
+$$\lim_{t \to 0} f(t, t^3) = \lim_{t \to 0} \frac{1}{1+t^3} = 1 \neq f(0, 0)$$
 {: .proof}
 
 设$V = C([0,1])$，计算函数
@@ -141,8 +143,24 @@ $$DL(x) \cdot h = \int_0^1 v^3 h \,\mathrm d x$$
 
 弗雷歇导数和加托导数都遵守一般的微分映射的规则：
 
-弗雷歇导数和加托导数都具有线性，且满足链式法则。
+弗雷歇导数和加托导数都具有线性。
+且对*良态*的函数满足链式法则：
+$$D(G \circ F(x)) \cdot h = D G(F(x)) \cdot (DF(x) \cdot h)$$
 {: .proposition}
+
+下一命题直接给出任意二次型的加托导数，可直接用于许多计算。
+
+设$V$为一任意维度的向量空间，其上一泛函定义为
+$$J(u) = \frac{1}{2} a(u, u) + L(u)$$
+其中$a$为对称二次型，$L$为线性函数，则其加托导数为
+$$DJ(u) \cdot v = a(u, v) + L(v)$$
+{: .proposition}
+
+考虑
+$$J(u + \lambda v) = J(u) + \lambda(a(u, v) + L(v)) + \frac{\lambda^2}{2} a(v, v)$$
+从而
+$$\left. \frac{\mathrm d}{\mathrm d \lambda} J(u + \lambda v) \right|_{\lambda = 0} = a(u, v) + L(v)$$
+{: .proof}
 
 ### 有限维情形
 

@@ -5,7 +5,7 @@ categories: ["建模与优化"]
 
 ## 线性问题与二次函数
 
-和例子类似，若希望让二次的势能最小，则有以下等价的问题：
+若希望让二次的势能最小，则有以下等价的问题：
 
 在$V\_0 = \left\\\{ v\in\mathcal C^1([0,1]), v(0) = v(1) = 0 \right\\\}$中最小化二次势能函数：
 $$J(v) = \int_0^1 \frac{k}{2} v'^2 + \frac{c}{2} v^2 - fv \, \mathrm d x, \quad k, c > 0$$
@@ -176,6 +176,22 @@ $$
 $$
 即其梯度与法向量之内积。
 
+对一般的二阶偏微分方程问题，我们可根据其特征方程对其进行分类：
+
+一般的二维二阶偏微分方程为
+$$-a \frac{\partial^2 u}{\partial x^2} -2b \frac{\partial^2 u}{\partial x \partial y} -c \frac{\partial^2 u}{\partial y^2} +d \frac{\partial u}{\partial x} +e \frac{\partial u}{\partial y} + fu = 0$$
+而其特征方程具有以下形式
+$$ax^2 + 2bxy + cy^2 = \text{const.}$$
+设矩阵
+$$A = \begin{pmatrix} a&b \\ b&c \end{pmatrix}$$
+微分方程根据其行列式分类：若$\det A > 0$，则该方程为*椭圆方程*（elliptic equation）；若$\det A = 0$，该方程为*抛物方程*（parabolic equation）；若$\det A < 0$，该方程为*双曲方程*（hyperbolic equation）。
+{: .definition}
+
+一般来说，椭圆方程常在势能最小的静力学和稳态方程中出现（如拉普拉斯方程和泊松方程）；
+抛物方程通常在表示能量耗散的问题中出现（如傅里叶热传导方程）；
+而双曲方程通常在能量守恒的情况中出现（如波动方程）。
+因此，我们主要研究椭圆方程。
+
 ### 向量分析的常用命题
 
 对于一向量场$\vec \Phi$与标量场$u$，其散度有如下关系
@@ -191,6 +207,34 @@ $$\Phi_n = \left<\vec \Phi, \vec n \right>$$
 $$\int_\Omega \left< \nabla u, \nabla v \right> \, \mathrm d \Omega = \int_\Omega - (\Delta u) \cdot v \,\mathrm d \Omega + \int_\Gamma \frac{\partial u}{\partial n} v \,\mathrm d \Gamma
 $$
 {: .proposition}
+
+这是广义斯托克斯公式
+$$\int_{\partial \Omega} w = \int_{\Omega} \mathrm d w$$
+的推广，此处$\mathrm d w$是一个*微分形式*。
+我们不会过于深入微分几何的领域，但是仍在此处提供一个简单的等价性的证明。
+
+我们尝试使用广义斯托克斯公式证明该公式在三维空间中的最一般形式：
+$$\int_\Omega \frac{\partial u}{\partial x_i} v + u \frac{\partial v}{\partial x_i} \, \mathrm d \Omega = \int_{\partial \Omega} u v n_i \mathrm d S$$
+可使用这个公式推出上述所有命题。
+将其写为向量形式：
+$$\int_\Omega (\nabla u) v + u (\nabla v) \, \mathrm d \Omega = \int_{\partial \Omega} uv \, \mathrm d S$$
+令$f = uv$，有：
+$$\int_\Omega \nabla f \, \mathrm d \Omega = \int_{\partial \Omega} f \, \mathrm d S$$
+接下来证明
+$$\mathrm d(f \mathrm d S) = \nabla f \mathrm d \Omega$$
+重写左侧：
+$$
+\begin{aligned}
+\mathrm d(f \mathrm d S) &= \mathrm d(f \wedge \mathrm d S) \\
+&= \mathrm d f \wedge \mathrm d S + \cancel{f \wedge \mathrm d (\mathrm d S)} \\
+&= (\partial_x f \mathrm d x + \partial_y f \mathrm d y + \partial_y f \mathrm d y) \\
+& \wedge (\mathrm d x \wedge \mathrm d y + \mathrm d y \wedge \mathrm d z + \mathrm d z \wedge \mathrm d x) \\
+&= (\partial_x f + \partial_y f + \partial_z f) \cdot (\mathrm d x \wedge \mathrm d y \wedge \mathrm d z) \\
+&= \nabla f \, \mathrm d \Omega
+\end{aligned}
+$$
+从而得证。
+{: .proof}
 
 ### 椭圆问题
 

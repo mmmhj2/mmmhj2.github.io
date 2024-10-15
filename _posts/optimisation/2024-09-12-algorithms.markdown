@@ -135,14 +135,24 @@ $$M = P_{A \to B}^\top P_{A \to B}$$
 {: .proposition}
 
 借助以上命题，我们也可以将微分变到另一个坐标系下：
-$$DF(x) \cdot h = \left< \nabla_A F(x), h \right>_A = \left< M \nabla_B F(x), h \right>_B$$
+$$
+\begin{aligned}
+DF(x) \cdot h &= \left< \nabla_A F(x), h \right>_A \\
+&= \left< M \nabla_A F(x), h \right>_B \\
+&= \left< \nabla_B F(x), h \right>_B
+\end{aligned}
+$$
+从而
+$$\nabla_A F(x) = M^{-1} \nabla_B F(x)$$
 
-从而，固定步长的梯度下降法可以从
-$$x^{k+1} = x^k - \rho \nabla_B F(x^k)$$
+从而，固定步长的梯度下降法可以写为
+$$x^{k+1} = x^k - \rho \nabla_A F(x^k) = x^k - \rho M^{-1} \nabla_B F(x^k)$$
 变为
-$$Mx^{k+1} = M x^k - \rho M \nabla_B F(x^k)$$
+$$Mx^{k+1} = M x^k - \rho \nabla_B F(x^k)$$
 而进一步变为
-$$M\underbrace{(x^{k+1} - x^k)}_{g^{k+1}} = - \rho \nabla_A F(x^k)$$
+$$M\underbrace{(x^{k+1} - x^k)}_{g^{k+1}} = - \rho \nabla_B F(x^k)$$
+这就完成了整个梯度下降法的基底变换。
+
 这种通过预先乘一个矩阵来改进条件数的方法称为预处理法（Preconditioning），矩阵$M$称为预处理矩阵（Preconditioner）。
 迭代时，一般不通过同时乘$M^{-1}$来求解$g^{k+1}$，而是利用高斯消元或LU分解等方法进行求解。
 若$M$的选择较好（如上三角矩阵等），则这种方法的效率更高。
