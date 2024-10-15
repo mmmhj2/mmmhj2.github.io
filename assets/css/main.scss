@@ -28,6 +28,10 @@ cstrong {
     font-weight: bold;
 }
 
+body {
+    counter-reset: proposition theorem definition lemma;
+}
+
 .exampl {
     display: block;
     margin: 20px 0 20px 0;
@@ -57,7 +61,8 @@ cstrong {
     padding:10px 10px 10px 20px;
 }
 .proposition:before {
-    content: "命题";
+    counter-increment: proposition;
+    content: "命题 " counter(proposition);
     // font-weight: bold;
     font-style: normal;
     font-family: $sans-serif;
@@ -95,7 +100,8 @@ cstrong {
     padding:10px 10px 10px 20px;
 }
 .theorem:before {
-    content: "定理" ;
+    counter-increment: theorem;
+    content: "定理 " counter(theorem);
     // font-weight: bold;
     font-style: normal;
     font-family: $sans-serif;
@@ -113,7 +119,8 @@ cstrong {
     padding:10px 10px 10px 20px;
 }
 .lemma:before {
-    content: "引理" ;
+    counter-increment: lemma;
+    content: "引理 " counter(lemma);
     // font-weight: bold;
     font-style: normal;
     font-family: $sans-serif;
@@ -147,7 +154,8 @@ cstrong {
     padding:10px 20px 10px 20px;
 }
 .definition:before {
-    content: "定义";
+    counter-increment: definition;
+    content: "定义 " counter(definition);
     // font-weight: bold;
     font-style: normal;
     font-family: $sans-serif;
