@@ -34,6 +34,7 @@ plugins:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-sitemap
+paginate: 10
 
 feed:
   excerpt_only: true
