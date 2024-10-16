@@ -24,7 +24,7 @@ $$
 
 能量均分定理的简单推论为，任何物质的比热都是常数。
 这是因为，根据玻尔兹曼分布，分子在单自由度上的动能总是$\frac{1}{2} k_B T$，从而总的能量和温度呈线性关系。
-然而，这一推论已被实验证伪，这意味着我们需要更加精确的模型。
+然而，这一推论已被实验证伪——一般来讲，在$0\, \text{K}$附近，半导体与绝缘体的比热与温度的三次方成正比；而导体的与温度成线性关系——这意味着我们需要更加精确的模型。
 
 ### 特鲁德模型 
 
@@ -78,9 +78,119 @@ $$E = - \frac{\partial \ln Z}{\partial \beta} = \frac{3}{2} N k_B T$$
 我们尝试引入部分量子力学的概念，在此之前，首先回忆如何计算势阱中量子的状态数：
 
 困在三维无穷势阱（长宽高为$L\_x, L\_y, L\_z$）中的量子的状态数（不考虑自旋）为
-$$N = \frac{1}{6 \pi^2} \left( \frac{2mE}{\hbar^2} \right)^{\frac{3}{2}} V$$
+$$N = \frac{L_x L_y L_z k_{x,\max} k_{y,\max} k_{z,\max}}{6\pi^2} = \frac{1}{6 \pi^2} \left( \frac{2mE}{\hbar^2} \right)^{\frac{3}{2}} V,$$
+其中$k$是波矢：
+$$k_{x,y,z} = \frac{2 \pi n_{x,y,z}}{L_{x,y,z}}, \, n \in \mathbb N.$$
+根据波矢与能量的关系，还有
+$$k_{x,\max}^2 + k_{y,\max}^2 + k_{z,\max}^2 = \frac{2mE}{\hbar^2}.$$
 {: .proposition}
 
 参见[例子：无限势阱的状态密度]({% post_url statistical-physics/2024-04-29-introduction %}#例子无限势阱的状态密度)。
 注意边界条件可选择波函数势阱外为零或首尾相等，后者称为周期边界条件（或玻恩-冯·卡门条件）。
 {: .proof}
+
+一般认为该问题在三个方向上是对称的，此时单个状态占据的空间为
+$$V_\text{状态} = \frac{8 \pi^3}{L^3} = \frac{8 \pi^3}{V},$$
+从而总状态数为
+$$N = \frac{\frac{4}{3} \pi k_{\max}^3}{V_\text{状态}} = \frac{4\pi}{3} k_{\max}^3 \frac{V}{(2\pi)^3}.$$
+若考虑电子的自旋，则状态数还需乘二：
+$$N = 2 \frac{4\pi}{3} k_{\max}^3 \frac{V}{(2\pi)^3}.$$
+
+### 量子理想气体
+
+**索末菲模型**认为，在$0\,\text{K}$下，电子量子仍呈类似理想气体的分布：
+$N$个电子在状态空间中从低能量状态（波矢为零）向上堆积，每个状态（含自旋）仅含有一个电子，且电子之间互不影响。
+这种模型称为*自由电子气*（Free electron gas）模型或*费米气体*（Fermi gas）模型，因为电子是费米子，满足泡利不相容原理。
+
+索末菲模型预测，绝对零度下导体中电子的最大波矢为
+$$k_f = \left( 3 n \pi \right)^{1/3},$$
+其中$n$为电子密度。
+该波矢即最大能量电子与最小能量电子的波矢之差，也称为*费米波矢*（Fermi wavevector）。
+从而其最大能量为
+$$\epsilon_f = \frac{\hbar^2}{2m}\left( 3 n \pi \right)^{2/3}，$$
+称为*费米能量*(Fermi energy)。
+{: .proposition}
+
+费米能量对应的温度称为*费米温度*(Fermi temperature)：
+$$T_f = \frac{\epsilon_f}{k_B}.$$
+从物理意义上讲，费米温度是最低能量电子通过热运动到达最高能量激发态所需的温度。
+
+根据泡利不相容原理，每个电子只能占据一个状态，因此状态数即为电子数，从而电子密度为
+$$n = \frac{N_\text{电子}}{V} = \frac{2 \frac{4\pi}{3} k_{\max}^3 \frac{V}{(2\pi)^3}}{V} = 2 \frac{4\pi}{3} k_{\max}^3 \frac{1}{(2\pi)^3}.$$
+移项即得
+$$k_{\max} = \left( 3 n \pi \right)^{1/3}.$$
+又
+$$\epsilon = \frac{\hbar^2 k^2}{2m} = \frac{\hbar^2}{2m}\left( 3 n \pi \right)^{2/3}.$$
+{: .proof}
+
+### 计算比热
+
+接下来利用索末菲模型计算比热，首先我们求解绝对零度下电子的总能量。
+直接对单个电子的能量求和过于复杂，我们可以考虑直接在状态空间上进行积分：
+$$E = \int_\Omega \frac{\hbar^2 k^2}{2m} 2 g(k) \, \mathrm d^3 k,$$
+其中
+$$g(k) = \frac{V}{(2 \pi)^3},$$
+表示状态密度（不含自旋）。
+根据对称性，换元到球坐标系下求解：
+$$ \mathrm d^3 k = 4 \pi r^2 \, \mathrm d r,$$
+从而
+$$E = \int_0^{k_f} \frac{\hbar^2 k^2}{2m} 2\frac{V}{(2 \pi)^3} 4 \pi r^2 \, \mathrm d r.$$
+解为
+$$E = \frac{5}{3} n \epsilon_f V \iff \overline \epsilon = \frac{3}{5} \epsilon_f.$$
+
+对非零度的情况，我们使用费米-狄拉克统计为电子数加权，并将积分域拓展到正无穷：
+$$E = \int_0^\infty \epsilon(k) \frac{2V}{(2 \pi)^3} \frac{1}{\exp[\beta(\epsilon(k) - \mu)]+1} 4 \pi r^2 \, \mathrm d r,$$
+其中$\epsilon$即为电子能量。
+
+值得注意的一点是，我们可以将状态密度$\frac{2V}{(2\pi)^3}$表示为与能量相关的函数：
+$$g(\epsilon) \, \mathrm d \epsilon = 2 g(k) 4\pi k^2 \,\mathrm d k = \frac{2V}{(2\pi)^3} 4\pi k^2 \mathrm d k.$$
+从而
+$$g(\epsilon) = \frac{8\pi k^2 g(k)}{\mathrm d \epsilon / \mathrm d k} = \frac{V}{2\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \sqrt{\epsilon}.$$
+注意，自旋产生了额外的二倍系数。
+这种密度称为系统的*能态密度*（Density of states）。
+重写后的积分为
+$$E = \int_0^\infty \epsilon g(\epsilon) \frac{1}{\exp[\beta(\epsilon - \mu)] + 1} \, \mathrm d \epsilon.$$
+提取常数，可得
+$$E = \frac{V}{2\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \int_0^\infty \frac{\epsilon^{3/2} \, \mathrm d \epsilon}{\exp[\beta(\epsilon - \mu)] + 1}.$$
+这个积分称为*费米-狄拉克积分*（Fermi-Dirac intergral），在一般情况下没有解析解。
+
+我们可利用*索末菲展开*（Sommerfeld expansion）进行近似。
+
+当$\beta \to \infty$时，有：
+$$
+\begin{multline}
+\int_{-\infty}^\infty \frac{H(\epsilon) \, \mathrm d \epsilon}{\exp[\beta(\epsilon - \mu)] + 1} \\
+= \int_{-\infty}^\mu H(\epsilon) \,\mathrm d \epsilon + \frac{\pi^2}{6 \beta^2} H'(\mu) + O\left(\frac{1}{\beta \mu}\right)^4.
+\end{multline}
+$$
+{: .proposition}
+
+我们先对电子数应用此展开，有
+$$N = \frac{V}{2\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2}  \int_0^\infty \frac{\sqrt{\epsilon} \, \mathrm d \epsilon}{\exp[\beta(\epsilon - \mu)] + 1}.$$
+从而
+$$
+\begin{aligned}
+N &= \frac{V}{2\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \left[ \int_0^\mu \sqrt{\epsilon} \,\mathrm d \epsilon + \frac{\pi^2}{6\beta^2} \frac{1}{2\sqrt{\mu}} + \cdots \right] \\
+& \approx \frac{V}{3\pi^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \mu^{3/2} + \frac{V}{24 \beta^2} \left( \frac{2m}{\hbar^2} \right)^{3/2} \mu^{-1/2}.
+\end{aligned}
+$$
+提取常数并重写方程，可得
+$$\left[\frac{\hbar^2}{2m} \left( 3 \pi^2 \frac{N}{V} \right)^{2/3}\right]^{3/2} = \epsilon_f^{3/2} \approx \mu^{3/2} + \frac{\pi^2}{8\beta^2} \mu^{-1/2}.$$
+利用泰勒展开将方程线性化，然后求解，这直接给出以下命题。
+
+索末菲模型预测，金属电子的化学势为
+$$\mu \approx \epsilon_f \left[ 1 - \frac{\pi^2}{12\beta^2 \epsilon_f^2} \right]^{-2/3},$$
+其中
+$$\epsilon_f = \frac{\hbar^2}{2m} \left( 3 \pi^2 n\right)^{2/3}$$
+为费米能量。
+{: .proposition}
+
+按照类似的步骤，我们也可求出金属电子的能量。
+
+索末菲模型预测，金属电子的总能量为
+$$E \approx \frac{3}{5} N \epsilon_f + \frac{\pi^2}{4 \beta^2} \frac{N}{\mu_f}.$$
+从而其比热为
+$$C_v = \frac{\pi^2}{2} k_B n \frac{k_BT}{\epsilon_f} = \frac{\pi^2}{2} \frac{n T}{T_f}$$
+{: .proposition}
+
+这成功解释了绝对零度附近比热和温度的线性关系。
