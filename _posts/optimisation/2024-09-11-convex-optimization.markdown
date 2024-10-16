@@ -124,15 +124,21 @@ g(\lambda) &= \frac{1}{2} \left< A(x+\lambda h), x+h \right> - \left< b, x + \la
 
 <div class="exampl">
 <p>
-证明函数
+利用函数
 $$F(x) = \frac{1}{2} \left< Ax,x \right> + \frac{1}{4} \Vert x \Vert_4^4 - \left< b,x \right>$$
+证明
+$$f(x) = Ax + x^3 + b$$
 至少有一个零点，其中$b,x \in \mathbb R^n$，$A \in M_n$是对称的正定矩阵。
 </p>
 <p>
+首先注意到
+$$\nabla F(x) = f$$
+从而我们可利用函数$F$的凸性证明$f$零点的存在性。
 设$g(\lambda) = F(x + \lambda h)$，其中$h \in \mathbb R^n$，则
 $$
 \begin{aligned}
-g(\lambda) &= \frac{1}{2}\left< A(x+\lambda h),x + \lambda h \right> + \frac{1}{4} \sum_i (x_i + \lambda h_i)^4 - \left< b, x+\lambda h \right> \\
+g(\lambda) &= \frac{1}{2}\left< A(x+\lambda h),x + \lambda h \right> \\
+&+ \frac{1}{4} \sum_i (x_i + \lambda h_i)^4 - \left< b, x+\lambda h \right> \\
 g'(\lambda) &= \left< Ah, x + \lambda h\right> + \sum_i (x_i + \lambda h_i)^3 h_i - \left< b, h \right> \\
 g''(\lambda) &= \left<Ah, h \right> + 3 \sum_i (x_i + \lambda h_i)^2 h_i^2
 \end{aligned}
@@ -149,6 +155,6 @@ F(x) &\ge \frac{\lambda_1}{2} \Vert x \Vert_2^2 + \frac{1}{4} \Vert x \Vert_4^4 
 \end{aligned}
 $$
 显然，放缩后的函数是强函数，从而原函数是强函数。
-这就证明了原函数至少有一个零点。
+这就证明了原函数$F$至少有最小值点，从而$f$至少有一个零点。
 </p>
 </div>
