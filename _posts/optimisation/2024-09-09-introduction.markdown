@@ -127,9 +127,11 @@ $$\lim_{t \to 0} f(t, t^3) = \lim_{t \to 0} \frac{1}{1+t^3} = 1 \neq f(0, 0)$$
 $$F(v) = \int_0^1 \frac{v^4(x)}{4} \mathrm d x$$
 的加托导数。<br/>
 有
+$$F(v + \lambda h) = \int_0^1 \frac{(v + \lambda h)^4}{4} \,\mathrm d x$$
+从而
 $$
 \begin{aligned}
-\left. \frac{\mathrm d}{\mathrm d \lambda} F(v + \lambda h) \right|_{\lambda = 0} &= \int_0^1 \frac{(v + \lambda h)^4}{4} \,\mathrm d x \\
+\left. \frac{\mathrm d}{\mathrm d \lambda} F(v + \lambda h) \right|_{\lambda = 0}
 &= \int_0^1 \left. \frac{\mathrm d}{\mathrm d \lambda} \frac{(v + \lambda h)^4}{4} \right|_{\lambda = 0} \,\mathrm d x \\
 &= \int_0^1 v^3 h \,\mathrm d x
 \end{aligned}
