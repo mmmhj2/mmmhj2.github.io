@@ -47,6 +47,7 @@ $$F(\lambda x + (1-\lambda) y) < \lambda F(x) + (1 - \lambda) F(y), \ \forall \l
 
 这意味着对任何函数$f(x)$，我们总是可以通过研究$g\_h(\lambda) = f(x + \lambda h)$来研究$f$的凸性。
 若$g$对所有$h$都是凸的，那么$f$就是凸的。
+因此，我们只需要研究函数的高阶加托导数即可。
 
 特别地，对二次型函数，我们有：
 
@@ -77,13 +78,25 @@ $$(DF(x) - DF(y)) \cdot (x-y) \ge 0$$
 
 注意，和一维情况一样，后半部分的逆命题非真。
 
+关于凸函数，有几个保凸的运算可用于进行判定：
+
+凸函数的非负线性组合是凸函数；特别地，（严格）凸函数加常数是（严格）凸函数：
+$$f_i \text{ convex}, w_i \ge 0, g(x) = \sum w_i f_i(x) \implies g \text{ convex}.$$
+凸函数的最大值组成的函数是凸函数：
+$$f_i \text{ convex}, g(x) = \max\{f_1(x), \dots, f_n(x)\} \implies g \text{ convex}.$$
+凸函数与单调不减函数的复合是凸函数：
+$$g \text{ non-decreasing}, f \text{ convex} \implies g(f (x)) \text{ convex}$$
+{: .proposition}
+
+特别地，由于三角不等式，任何范数都是凸函数。
+
 ## 凸优化
 
 ### 极小值
 
 设$F$为向量空间$V$上一可微的凸函数，则其微分为零的点就是极（最）小值点：
 $$DF(\overline x) = 0 \iff F(\overline x) \le F(y), \quad \forall y \in V$$
-凸函数的极小值点就是最小值点。
+凸函数的极小值点就是最小值点；严格凸函数*至多仅有一个*最小值点。
 {: .proposition}
 
 凸函数不一定存在最小值，其存在性可由以下命题判定：
@@ -94,7 +107,7 @@ $$DF(\overline x) = 0 \iff F(\overline x) \le F(y), \quad \forall y \in V$$
 $$\lim_{\Vert x \Vert \to \infty} f(x) = +\infty$$
 {: .proposition}
 
-以上命题*不能*推广至无限维空间。
+上一个命题*不能*推广至无限维空间。
 
 #### 极值与根
 
