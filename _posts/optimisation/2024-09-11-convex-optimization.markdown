@@ -102,7 +102,7 @@ $$DF(\overline x) = 0 \iff F(\overline x) \le F(y), \quad \forall y \in V$$
 凸函数不一定存在最小值，其存在性可由以下命题判定：
 
 有限维空间上的连续强凸函数一定具有至少一个最小值点。
-若函数是严格凸的，则该最小值是唯一的。
+若函数是严格凸的，*有且仅有*一个最小值点。
 强函数（Coercive function）指在无穷处极限为无穷的函数：
 $$\lim_{\Vert x \Vert \to \infty} f(x) = +\infty$$
 {: .proposition}
