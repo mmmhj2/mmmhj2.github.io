@@ -47,13 +47,14 @@ $$F(\lambda x + (1-\lambda) y) < \lambda F(x) + (1 - \lambda) F(y), \ \forall \l
 
 这意味着对任何函数$f(x)$，我们总是可以通过研究$g\_h(\lambda) = f(x + \lambda h)$来研究$f$的凸性。
 若$g$对所有$h$都是凸的，那么$f$就是凸的。
+因此，我们只需要研究函数的高阶加托导数即可。
 
 特别地，对二次型函数，我们有：
 
 向量空间$V$上的二次型函数
 $$J(u) = \frac{1}{2} a(u, u) + L(u)$$
-是严格凸的，当且仅当$a$是对称的正定二次型；
-是凸的，当且仅当$a$是对称的半正定二次型。
+是严格凸的，当且仅当$a$是对称的正定双线性型；
+是凸的，当且仅当$a$是对称的半正定双线性型。
 {: .proposition}
 
 注意到函数
@@ -77,24 +78,36 @@ $$(DF(x) - DF(y)) \cdot (x-y) \ge 0$$
 
 注意，和一维情况一样，后半部分的逆命题非真。
 
+关于凸函数，有几个保凸的运算可用于进行判定：
+
+凸函数的非负线性组合是凸函数；特别地，（严格）凸函数加常数是（严格）凸函数：
+$$f_i \text{ convex}, w_i \ge 0, g(x) = \sum w_i f_i(x) \implies g \text{ convex}.$$
+凸函数的最大值组成的函数是凸函数：
+$$f_i \text{ convex}, g(x) = \max\{f_1(x), \dots, f_n(x)\} \implies g \text{ convex}.$$
+凸函数与单调不减函数的复合是凸函数：
+$$g \text{ non-decreasing}, f \text{ convex} \implies g(f (x)) \text{ convex}$$
+{: .proposition}
+
+特别地，由于三角不等式，任何范数都是凸函数。
+
 ## 凸优化
 
 ### 极小值
 
 设$F$为向量空间$V$上一可微的凸函数，则其微分为零的点就是极（最）小值点：
 $$DF(\overline x) = 0 \iff F(\overline x) \le F(y), \quad \forall y \in V$$
-凸函数的极小值点就是最小值点。
+凸函数的极小值点就是最小值点；严格凸函数*至多仅有一个*最小值点。
 {: .proposition}
 
 凸函数不一定存在最小值，其存在性可由以下命题判定：
 
 有限维空间上的连续强凸函数一定具有至少一个最小值点。
-若函数是严格凸的，则该最小值是唯一的。
+若函数是严格凸的，*有且仅有*一个最小值点。
 强函数（Coercive function）指在无穷处极限为无穷的函数：
 $$\lim_{\Vert x \Vert \to \infty} f(x) = +\infty$$
 {: .proposition}
 
-以上命题*不能*推广至无限维空间。
+上一个命题*不能*推广至无限维空间。
 
 #### 极值与根
 
@@ -124,15 +137,21 @@ g(\lambda) &= \frac{1}{2} \left< A(x+\lambda h), x+h \right> - \left< b, x + \la
 
 <div class="exampl">
 <p>
-证明函数
+利用函数
 $$F(x) = \frac{1}{2} \left< Ax,x \right> + \frac{1}{4} \Vert x \Vert_4^4 - \left< b,x \right>$$
+证明
+$$f(x) = Ax + x^3 + b$$
 至少有一个零点，其中$b,x \in \mathbb R^n$，$A \in M_n$是对称的正定矩阵。
 </p>
 <p>
+首先注意到
+$$\nabla F(x) = f$$
+从而我们可利用函数$F$的凸性证明$f$零点的存在性。
 设$g(\lambda) = F(x + \lambda h)$，其中$h \in \mathbb R^n$，则
 $$
 \begin{aligned}
-g(\lambda) &= \frac{1}{2}\left< A(x+\lambda h),x + \lambda h \right> + \frac{1}{4} \sum_i (x_i + \lambda h_i)^4 - \left< b, x+\lambda h \right> \\
+g(\lambda) &= \frac{1}{2}\left< A(x+\lambda h),x + \lambda h \right> \\
+&+ \frac{1}{4} \sum_i (x_i + \lambda h_i)^4 - \left< b, x+\lambda h \right> \\
 g'(\lambda) &= \left< Ah, x + \lambda h\right> + \sum_i (x_i + \lambda h_i)^3 h_i - \left< b, h \right> \\
 g''(\lambda) &= \left<Ah, h \right> + 3 \sum_i (x_i + \lambda h_i)^2 h_i^2
 \end{aligned}
@@ -149,6 +168,6 @@ F(x) &\ge \frac{\lambda_1}{2} \Vert x \Vert_2^2 + \frac{1}{4} \Vert x \Vert_4^4 
 \end{aligned}
 $$
 显然，放缩后的函数是强函数，从而原函数是强函数。
-这就证明了原函数至少有一个零点。
+这就证明了原函数$F$至少有最小值点，从而$f$至少有一个零点。
 </p>
 </div>
