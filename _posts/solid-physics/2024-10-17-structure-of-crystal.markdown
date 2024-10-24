@@ -68,8 +68,26 @@ $$\mathbf G \cdot \mathbf R = 2 n \pi, \quad n \in \mathbb Z$$
 {: .proposition}
 
 这些关系都是根据傅里叶变换构造出的。
+$\mathbf a\_i^*$实际上在$\mathbb R^n$的对偶空间之中。
 
-#### 晶面
+### 密勒指数
+
+*密勒指数*(Miller index)是确定晶格中一个平面（称为晶面）的一组有序数组。
+
+密勒指数$hkl$对应倒易空间中与矢量
+$$\mathbf g_{hkl} = h\mathbf a_1^* + k\mathbf a_2^* + l\mathbf a_3^*, \, h,k,l \in \mathbb Z$$
+垂直的一个平面。
+一般约定$h,k,l$三个数应当互质，且不能同时为零。
+{: .definition}
+
+在正空间中，这相当于通过
+$$
+(\frac{1}{h}, 0, 0), \,
+(0, \frac{1}{k}, 0), \,
+(\frac{1}{l}, 0, 0),
+$$
+三个点的平面；
+若某一的轴的指数为零，则说明指定的晶面平行于该轴。
 
 ## 电子衍射
 
@@ -154,7 +172,7 @@ $$
 若入射电磁场满足
 $$\mathbf k_d - \mathbf k_i = \mathbf G \in \text{倒空间},$$
 即
-$$n \lambda = 2 d_{h,k,l} \sin \theta,$$
+$$n \lambda = 2 d_{hkl} \sin \theta,$$
 其中$d$表示两个晶面的距离，则能够产生衍射信号。
 {: .proposition}
 
