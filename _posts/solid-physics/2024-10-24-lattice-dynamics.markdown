@@ -95,8 +95,8 @@ $$
 求解该特征值问题，得到
 $$\omega_q = \sqrt{\Omega_S^2 + \Omega_L^2 \pm \sqrt{\Omega_S^4 + \Omega_L^4 + 2 \Omega_S^2 \Omega_L^2 \cos qa}}.$$
 这两个特征值对应的色散关系，根据$q$趋于零时的行为，分别称为声学支和光学支：
-- 若$q \to 0$时，$\omega\_q \to 0$，则称为声学支，该色散关系类似于声波等物质波；
-- 否则，称为光学支，该色散关系类似于电磁波。
+- 若$q \to 0$时，$\omega\_q \to 0$，则称为声学支，此时原子同向振动，该色散关系类似于声波等物质波；
+- 否则，称为光学支，此时原子反向振动，该色散关系类似于电磁波。
 
 ![](/assets/solidphysics/1d-phonon-modes.png)
 {: .center-image}
