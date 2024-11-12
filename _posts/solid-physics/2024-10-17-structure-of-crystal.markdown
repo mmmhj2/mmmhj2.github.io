@@ -70,6 +70,8 @@ $$\mathbf G \cdot \mathbf R = 2 n \pi, \quad n \in \mathbb Z$$
 这些关系都是根据傅里叶变换构造出的。
 $\mathbf a\_i^*$实际上在$\mathbb R^n$的对偶空间之中。
 
+第一布里渊区由倒空间晶格中格点之间连线的垂直平分线围出。
+
 ### 密勒指数
 
 *密勒指数*(Miller index)是确定晶格中一个平面（称为晶面）的一组有序数组。
