@@ -48,10 +48,17 @@ $$
 
 称函数
 $$
-\phi_{\mathbf k}(\mathbf r + \mathbf R) = \exp[i \mathbf k \cdot \mathbf R] \phi_{\mathbf k}(\mathbf r)
+\psi(\mathbf r) = \exp[i\mathbf k \cdot \mathbf r] u_{\mathbf k}(\mathbf r)
 $$
-为*布洛克函数*。
+为*布洛赫函数*，其中$u$是一个与晶格具有相同周期的函数，即满足
+$$u_{\mathbf k}(\mathbf r + \mathbf R) = u_{\mathbf k}(\mathbf r),$$
+其中$\mathbf R$即为晶格向量。
 {: .definition}
+
+显然，布洛赫函数也具有类似周期性的性质，即
+$$
+\psi(\mathbf r + \mathbf R_n) = \exp[ik\mathbf R_n] \psi(\mathbf r).
+$$
 
 波函数即可视为布洛赫函数的级数和，根据傅里叶方程的线性，这意味着单个布洛赫函数也是原方程的解，这称为布洛赫定理，将在下一节证明。
 
@@ -62,6 +69,15 @@ $$
 {: .proposition}
 
 ### 布洛赫定理
+
+布洛赫定理说明，布洛赫函数是周期晶格中电子的薛定谔方程的解。
+
+<small>（布洛赫定理）</small>
+周期性晶格中的电子的薛定谔方程的解，总可以由布洛赫函数组成的基底表出，即基函数中的每一个函数均具有以下性质：
+$$\psi(\mathbf r) = \exp[i\mathbf k \cdot \mathbf r] u_{\mathbf k}(\mathbf r),$$
+且
+$$u_{\mathbf k}(\mathbf r) = u_{\mathbf k}(\mathbf r + \mathbf R).$$
+{: .theorem}
 
 接下来求解定态薛定谔方程的特征值$\epsilon$，并证明布洛赫函数确为原傅里叶方程的解。
 直接代入，可得
@@ -167,22 +183,54 @@ $$
 
 ### 紧束缚电子的计算
 
-我们现在考虑最简单的情况，即原胞中只具有一个原子的一维单原子链，则单个原子的某轨道上的零阶波函数为
+本节简要说明紧束缚电子模型的计算方式。
+
+在紧束缚模型中，认为电子紧紧围绕在一个原子核附近，因此仅受一个原子核的影响，而晶格中其他原子对其的影响可视为微扰。
+对于每个*孤立的*原子，通过[之前的计算]({% post_url quantum-mechanics/2024-04-20-hydrogenic-atoms %})，我们已经知道围绕它的电子是按轨道分立的，即
 $$
-\hat H_0 \phi_j(x) = \epsilon_j \phi_j(x), \quad j = s, p, \dots
+\hat H_0 \phi_j(\mathbf x) = \epsilon_j \phi_j(\mathbf x), \quad j = s, p, \dots
 $$
-而总的波函数可由线性叠加组成
+
+利用微扰的假设，电子总的波函数可所有远处原子的轨道波函数的线性叠加组成
 $$
-\psi_{j,k}(x) = \sum_n \phi_j(x - na) \exp[ikna],
+\psi_{j,k}(\mathbf x) = k \sum_n \phi_j(\mathbf x - n\mathbf a) \exp[i\mathbf k \cdot n\mathbf a],
 $$
-其中每一项具有额外的相位，这是为了遵守布洛赫定理，即满足周期性。
-其解取一阶近似，则为
+其中$k$是归一化系数。
+每一项具有额外的相位，这是由布洛赫定理给出的。
+其解取一阶近似，则具有类似
 $$
-\epsilon_j(k) \approx \epsilon_s + V_{jj} \cos k a,
+\epsilon_j(\mathbf k) \approx \epsilon_s + V_{jj} \cos \mathbf k \cdot \mathbf a
 $$
-其中
+的形式，其中
 $$V_{jj} = V_{ss} = V_{pp} = \cdots,$$
 表示轨道成键对应的势能，即键能。
+
+值得注意的是，在孤立自由原子的情况下，每个原子轨道形成了分离的能级。
+而当多个原子形成晶体等更加复杂的结构时，由于不同原子之间的微扰，能量的分布变为连续的，形成了能带。
+
+我们可利用该模型计算一维单原子链中形成的 s-s σ 键的能量。
+设原子之间间距为$a$，原子链中共有$N$个原子，则某处的电子波函数为
+$$\psi_k(x) = \frac{1}{\sqrt{N}} \sum_{n=1}^N \exp[i k n a] \phi_n(x - n a),$$
+其中$k$是倒空间晶格中的位置，我们假设$N$的值很大，因此能够连续取值；此外，根据周期边界条件，$k$应在区间$[-\frac{\pi}{a}, \frac{\pi}{a}]$中。
+我们可将其写成本征态的形式，即
+$$\left| k \right> = \frac{1}{\sqrt{N}} \sum_{n=1}^N \exp[i k n a] \left| n \right>.$$
+现在我们定性的研究哈密顿矩阵中的元素。
+我们认为，仅有相邻的两个原子之间能够相互影响，则哈密顿矩阵必为三对角矩阵，根据其物理意义，有
+$$\left< n \right| \hat H \left| n \right> = E_0 = E_i - U,\, \left< n + 1 \right| \hat H \left| n \right> = E_1 = V_{ss\sigma}$$
+其中$E\_i$是该层的电离能，即电子的势能，而$U$是由于原子相互作用产生的微扰项，$V\_{ss\sigma}$是该σ键的键能。
+从而
+$$
+\begin{aligned}
+\left< k \right| \hat H \left| k \right> &= \frac{1}{N} \sum_{n=1}^N \sum_{m=1}^N \exp[ik(n-m)a] \left< m \right| \hat H \left| n \right> \\
+&= E_i - U + 2 V_{ss\sigma} \exp[ika] \\
+&= E_0 + 2 V_{ss\sigma} \cos ka.
+\end{aligned}
+$$
+{: .exampl}
+
+根据以上计算，有两个特别的轨道值得注意：当$k = 0$时，该处的能量最高，电子很难进入该轨道，这条轨道称为*反键轨道*（Anti-bonding orbital）；当$k = \frac{\pi}{a}$时，能量最低，电子通常位于该轨道中，这条轨道称为*成键轨道*（Bonding orbital）。
+
+在更加复杂的计算中，$E\_1$可能被多种轨道影响，此时该值可通过查表得出，该表格称为*原子间矩阵*（Interatomic matrix）。
 
 ## 能带
 
