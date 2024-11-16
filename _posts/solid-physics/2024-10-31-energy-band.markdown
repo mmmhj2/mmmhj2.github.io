@@ -218,7 +218,7 @@ $$\left| k \right> = \frac{1}{\sqrt{N}} \sum_{n=1}^N \exp[i k n a] \left| n \rig
 我们认为，仅有相邻的两个原子之间能够相互影响，则哈密顿矩阵必为三对角矩阵，根据其物理意义，有
 $$\left< n \right| \hat H \left| n \right> = E_0 = E_i - U,\, \left< n + 1 \right| \hat H \left| n \right> = E_1 = V_{ss\sigma}$$
 其中$E\_i$是该层的电离能，即电子的势能，而$U$是由于原子相互作用产生的微扰项，$V\_{ss\sigma}$是该σ键的键能。
-从而
+从而[^normalization]
 $$
 \begin{aligned}
 \left< k \right| \hat H \left| k \right> &= \frac{1}{N} \sum_{n=1}^N \sum_{m=1}^N \exp[ik(n-m)a] \left< m \right| \hat H \left| n \right> \\
@@ -228,7 +228,12 @@ $$
 $$
 {: .exampl}
 
+[^normalization]: 这里我们忽略了$\left<k\middle|k\right>$是否是归一化的这一问题。
+
+这里值得注意的是余弦项之前的系数$2$，这是因为在原子链中原子同时受两端的影响而产生的，在两个原子成键的情况下则不存在这个系数，如前文所示。
+
 根据以上计算，有两个特别的轨道值得注意：当$k = 0$时，该处的能量最高，电子很难进入该轨道，这条轨道称为*反键轨道*（Anti-bonding orbital）；当$k = \frac{\pi}{a}$时，能量最低，电子通常位于该轨道中，这条轨道称为*成键轨道*（Bonding orbital）。
+若仅有两个原子成键，则仅形成这两个轨道；而多个原子互相影响时，这些轨道都会展宽，形成能带。
 
 在更加复杂的计算中，$E\_1$可能被多种轨道影响，此时该值可通过查表得出，该表格称为*原子间矩阵*（Interatomic matrix）。
 
