@@ -178,7 +178,7 @@ $$
 注意此处展示的是成键杂化轨道，与之对应的还有反键轨道，两者共计八条。
 化学中使用这种方式进行计算的模型称为原子轨道线性组合（Linear Combination of Atomic Orbitals, LCAO）模型。
 
-当多个原子成键形成分子时，原子之间的轨道也会发生杂化，形成分子轨道。
+当多个原子成键形成更复杂的结构、形成分子时，原子之间的轨道也会发生杂化，形成分子轨道。
 最高的被占据的分子轨道(Highest Occupied Molecular Orbital, HOMO)在分子中具有和原子中费米面相似的性质，而该轨道与最低未占据分子轨道（Lowest Unoccupied Molecular Orbital，LUMO）之间的间距，若存在，即为这种分子的能隙（Gap）。
 
 ### 紧束缚电子的计算
