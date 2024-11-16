@@ -16,8 +16,7 @@ categories: ["材料学"]
 在研究铁碳合金之前，我们首先考虑铁的结构。
 固态的纯铁具有三个相：α相、γ相与δ相，三者的晶体结构分别为体心立方、面心立方与体心立方。
 
-![](/assets/material/Pure_iron_phase_diagram.svg "Translated from https://commons.wikimedia.org/wiki/File:Pure_iron_phase_diagram_(EN).svg under Creative Commons Attribution-Share Alike 3.0 Unported license")
-{: .align-center}
+![](/assets/material/Pure_iron_phase_diagram.svg "Translated from https://commons.wikimedia.org/wiki/File:Pure_iron_phase_diagram_(EN).svg under Creative Commons Attribution-Share Alike 3.0 Unported license"){: .align-center}
 
 在高中的化学选修中我们学习过，面心立方与体心立方的配位数和致密度分别为$12, 74\%$和$8,68\%$，这意味着，理论上，属于体心立方的α相与δ相似乎更容易渗入碳从而形成合金。
 然而，应当注意到，面心立方晶系中，晶胞中央的空格更加集中，而体心立方晶系虽然致密度更低，空闲的空间却均匀地分布在晶胞中，因此难以容下碳原子。
@@ -36,8 +35,7 @@ $$F = C - P + n,$$
 
 以液体的蒸馏为例，简单的计算表明自由度为二，这意味着系统可以位于一个平面上的任意一点，其相图具有以下形式：
 
-![](/assets/material/Binary_Boiling_Point_Diagram.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Binary_Boiling_Point_Diagram_new.svg under Creative Commons Attribution-Share Alike 2.5 Generic license")
-{: .align-center}
+![](/assets/material/Binary_Boiling_Point_Diagram.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Binary_Boiling_Point_Diagram_new.svg under Creative Commons Attribution-Share Alike 2.5 Generic license"){: .align-center}
 
 该相图上可利用物料衡算得出杠杆规则：
 
@@ -59,16 +57,14 @@ $$
 若混合系统在相变时发生且仅发生匀晶转变，即固态和液体均可完全互溶，则其相图与蒸馏时的相图相同，这种相图称为匀晶相图。
 若混合系统仅在液态可互溶，而在固态不可完全互溶，则可能发生多种转变，这种相图称为共晶相图。
 
-![](/assets/material/Eutectic_system_phase_diagram.svg "Translated from https://commons.wikimedia.org/wiki/File:Eutectic_system_phase_diagram.svg under Creative Commons Attribution-Share Alike 2.5 Generic license")
-{: .align-center}
+![](/assets/material/Eutectic_system_phase_diagram.svg "Translated from https://commons.wikimedia.org/wiki/File:Eutectic_system_phase_diagram.svg under Creative Commons Attribution-Share Alike 2.5 Generic license"){: .align-center}
 
 共晶相图中，重要的点是共晶点（Eutetic point）。
 在该组分下逐渐冷却系统，形成的合金称为共晶合金；否则，若合金中主要组分的分数较低，则称为亚共晶合金；反之称为超共晶合金。
 
 一般的相图可能是多个相图的组合，如铁碳合金的相图就是典型的共晶相图的组合。
 
-![](/assets/material/Iron_carbon_phase_diagram.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Iron_carbon_phase_diagram.svg under Creative Commons Attribution-Share Alike 4.0 International license")
-{: .align-center}
+![](/assets/material/Iron_carbon_phase_diagram.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Iron_carbon_phase_diagram.svg under Creative Commons Attribution-Share Alike 4.0 International license"){: .align-center}
 
 图中的C点即为共晶点；
 相对地，J点发生匀晶转变，称为匀晶点；
@@ -119,8 +115,7 @@ $$
 利用这些浓度，我们可以确定一种特定的电极在，某一状态下，发生电化学反应后的产物的主要组成部分。
 在某一金属与水接触发生腐蚀的情况下，一般水中的氢离子或氢氧根会参与反应，因此利用电势和pH值，即可确定腐蚀的产物，这种图称为布拜图（Pourbaix Diagram）。
 
-![](/assets/material/Pourbaix_Diagram_of_Iron.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Pourbaix_Diagram_of_Iron.svg under Creative Commons Attribution-Share Alike 2.5 Generic license")
-{: .align-center}
+![](/assets/material/Pourbaix_Diagram_of_Iron.svg "Reproduced from https://commons.wikimedia.org/wiki/File:Pourbaix_Diagram_of_Iron.svg under Creative Commons Attribution-Share Alike 2.5 Generic license"){: .align-center}
 
 布拜图中，由直线分割开的区域表示该平衡状态下的物质的主要组分，而直线则代表了两种组分之间的反应。
 特别地，纯的氧化还原反应的电极电势不受氢离子浓度影响，因此一般是横线，而纯的仅有氢离子参加的酸碱中和反应则不发生电子交换，因此是竖线。
