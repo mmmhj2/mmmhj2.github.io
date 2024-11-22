@@ -412,6 +412,41 @@ $$
 
 状态反馈控制器无法解决系统的稳态误差问题，我们可通过引入积分项来修正稳态误差。
 
+积分反馈的思想是比较简单的，我们可通过引入一个额外的状态变量来保存误差的积分信息。
+对单输入单输出系统，这个状态对应的状态方程写作
+$$
+\dot z(t) = r - y(t) = r - C x(t) - D u(t) = r - Cx(t)
+$$
+其中$r$是被控制器控制的新系统的输入。
+一般系统的前馈矩阵为零，因此最后一项可省略。
+
+新的系统的状态向量则为
+$$
+\mathbf x' = \begin{bmatrix} \mathbf x & z \end{bmatrix}^T
+$$
+这个系统称为增广系统（Augmented system）。
+该系统的状态方程为
+$$
+\dot {\mathbf x'} = \begin{bmatrix}
+A & 0 \\
+C & 0
+\end{bmatrix} \mathbf x' + u \begin{bmatrix} B \\ D \end{bmatrix} + \begin{bmatrix} 0 \\ r \end{bmatrix},
+$$
+输出方程为
+$$
+y = \begin{bmatrix} C & 0 \end{bmatrix} \mathbf x'.
+$$
+
+对控制器的设计，则使用与状态反馈控制器相同的方式，只是此时还要考虑新的状态：
+$$
+u = - F \mathbf x' = - \begin{bmatrix} F_1 & F_2 \end{bmatrix} \begin{bmatrix} \mathbf x \\ z \end{bmatrix}.
+$$
+从而整个系统的状态方程变为
+$$
+\dot {\mathbf x'} = \begin{bmatrix} A - B F_1 & - B F_2 \\ -C & 0 \end{bmatrix} \mathbf x' + \begin{bmatrix} 0 \\ r \end{bmatrix}.
+$$
+之后通过放置极点即可完成控制器的设计。
+
 ### 观测器
 
 有些时候，系统的状态不能直接被观测到，此时可使用*观测器*（Observer）来估计系统的状态。
@@ -433,3 +468,6 @@ $$
 我们希望，当$t \to \infty$时，观测器的误差趋近于零，这等价于系统渐进稳定，即矩阵$A+LC$稳定。
 这可以通过配置矩阵$A+LC$的极点实现，而这样的极点存在的一个充分条件是系统可观测。
 若$\mathcal O\_{A,C}$满秩，则可任意选定稳定的极点来构造$L$。
+
+实践上，一般通过系统的稳定极点（即位于负平面的极点）乘一个大系数（如$10$）来构造$L$。
+这样选择能够保证观测器收敛且响应速度较快。
