@@ -129,7 +129,7 @@ $$
 0 & 1 & 0 & \cdots & 0 \\
 0 & 0 & 1 & \cdots & 0 \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
--a_0 & -a_1 & -a_2 & \cdots & a_{n-1}
+-a_0 & -a_1 & -a_2 & \cdots & -a_{n-1}
 \end{bmatrix} \mathbf x + e \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1 \end{bmatrix},
 $$
 但输出方程有所不同，有
@@ -182,10 +182,10 @@ $$
 $$
 \left\{
     \begin{aligned}
-        \dot{\mathbf x} &= \begin{bmatrix} \lambda_n & 1 & \cdots & 0 \\
-        0 & \lambda_{n-1} & \cdots & 0 \\
-        \vdots & \vdots & \ddots & \vdots \\
-        0 & 0 & \cdots & \lambda_1
+        \dot{\mathbf x} &= \begin{bmatrix} \lambda_n & 1 & 0 & \cdots & 0 \\
+        0 & \lambda_{n-1} & 1 & \cdots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        0 & 0 & 0 & \cdots & \lambda_1
         \end{bmatrix} \mathbf x + e \begin{bmatrix} 0 \\ \vdots \\ 0 \\ 1
         \end{bmatrix} \\
         y &= \begin{bmatrix} 1 & 0 & \cdots & 0 \end{bmatrix} \mathbf x
@@ -339,6 +339,13 @@ $$
 
 #### 对偶关系
 
+能控性与能观性之间具有以下的对偶关系：
+
+线性时不变系统$(A,B,C,D)$能控，当且仅当系统$(A^T, C, B^T, D)$能观。
+{: .proposition}
+
+带入能控性与能观性矩阵即可证明。
+
 #### 状态空间变换
 
 同一传递函数$H(p)$可具有无穷多的实现，然而其中的一些实现在某些情况下可能比其他实现更易于分析。
@@ -359,3 +366,70 @@ $$
 容易验证新的状态空间表示的传递函数与原传递函数相同。
 
 ## 状态空间的控制器设计
+
+本节中我们将说明常见的状态空间中的控制器的设计方法。
+
+### 状态反馈控制器
+
+我们已经知道，系统状态空间表示中的系统矩阵的特征值与传递函数的极点密切相关，因此我们可以通过设计一个利用状态$x$进行控制的控制器，来调整系统矩阵及其极点，从而实现控制。
+这种控制器称为*状态反馈控制器*（State feedback controller），这种设计方法叫做*极点配置法*（Pole placement）。
+
+状态反馈控制器的控制律非常简单。
+我们只考虑单输入的系统，则系统的输入$u$由以下线性方程决定：
+$$
+u = - K x + G r
+$$
+其中$r$称为参考输入，$G$是参考输入的增益。
+
+考虑引入该控制器的系统的状态方程，有
+$$
+\begin{aligned}
+\dot x &= A x + B u \\
+&= A x + B(-Kx + Gr) \\
+&= (A - BK) x + BG r
+\end{aligned}
+$$
+设系统的初始状态为零，进行拉普拉斯变换，得到
+$$
+sX(s) = s(A-BK)X(s) + BGR(s)
+$$
+从而其特征方程为
+$$\det(s \mathbf I - A + BK) = 0$$
+当系统的所有极点均已给定时，利用待定系数法求解多项式方程即可得到$K$向量的所有值。
+
+若系统的状态空间表示恰好是可控标准型，则矩阵$A - BK$为
+$$
+A-BK = \begin{bmatrix}
+0 & 1 & 0 & \cdots & 0 \\
+0 & 0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+-(a_0 + k_0) & -(a_1+k_1) & -(a_2+k_2) & \cdots & (a_{n-1}+k_{n-1})
+\end{bmatrix},
+$$
+利用这个矩阵可以容易地算出所有极点。
+
+### 积分反馈控制器
+
+状态反馈控制器无法解决系统的稳态误差问题，我们可通过引入积分项来修正稳态误差。
+
+### 观测器
+
+有些时候，系统的状态不能直接被观测到，此时可使用*观测器*（Observer）来估计系统的状态。
+
+最常见的观测器设计为龙倍格观测器（Luenberger observer），该观测器以系统状态的估计$\hat x$作为状态变量，系统的状态方程为
+$$
+\dot {\hat x} = A \hat x + B u - L(\hat y - y),
+$$
+其中$\hat y = C \hat x + D u$为估计的系统的输出。
+
+观测器的误差，定义为$\epsilon = x - \hat x$，的状态方程为
+$$
+\begin{aligned}
+\dot \epsilon &= \dot x - \dot{\hat x} \\
+&= Ax + Bu - (A\hat x + Bu - L(\hat y - y)) \\
+&= (A + LC) (x - \hat x) \\ &= (A + LC) \epsilon
+\end{aligned}
+$$
+我们希望，当$t \to \infty$时，观测器的误差趋近于零，这等价于系统渐进稳定，即矩阵$A+LC$稳定。
+这可以通过配置矩阵$A+LC$的极点实现，而这样的极点存在的一个充分条件是系统可观测。
+若$\mathcal O\_{A,C}$满秩，则可任意选定稳定的极点来构造$L$。
