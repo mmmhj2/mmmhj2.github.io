@@ -397,6 +397,33 @@ $$
 $$\det(s \mathbf I - A + BK) = 0$$
 当系统的所有极点均已给定时，利用待定系数法求解多项式方程即可得到$K$向量的所有值。
 
+然后确定参考输出的增益，设前馈矩阵$D = 0$，有
+$$
+Y(s) = CX(s) = C(s\mathbf I - A + BK)^{-1} BG \cdot R(s),
+$$
+我们希望输出$y$应尽量与输入$r$相同，即
+$$
+\lim_{t \to \infty} y(t) - r(t) = 0,
+$$
+利用终值定理，有
+$$
+\lim_{t \to \infty} y(t) = \lim_{s \to 0} sY(s),
+$$
+从而
+$$
+\begin{multline}
+\lim_{t \to \infty} y(t) - r(t) = 0 \\ \implies \\ \left.\frac{Y(s)}{R(s)}\right|_{s \to 0} = C(s\mathbf I - A + BK)^{-1} BG = 1.
+\end{multline}
+$$
+这就是说
+$$
+G = \left(C(- A + BK)^{-1} \right)^{-1},
+$$
+对于单输入、单输出的情况，即
+$$
+G = \frac{1}{C(- A + BK)^{-1}}.
+$$
+
 若系统的状态空间表示恰好是可控标准型，则矩阵$A - BK$为
 $$
 A-BK = \begin{bmatrix}
