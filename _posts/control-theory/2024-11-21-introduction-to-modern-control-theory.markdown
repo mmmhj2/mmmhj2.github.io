@@ -428,11 +428,11 @@ $$
 $$
 这就是说
 $$
-G = \left(C(- A + BK)^{-1} \right)^{-1},
+G = \left(C(- A + BK)^{-1}B \right)^{-1},
 $$
 对于单输入、单输出的情况，即
 $$
-G = \frac{1}{C(- A + BK)^{-1}}.
+G = \frac{1}{C(- A + BK)^{-1}B}.
 $$
 
 若系统的状态空间表示恰好是可控标准型，则矩阵$A - BK$为
@@ -457,8 +457,8 @@ $$s^2 + 2\xi\omega_n s + \omega_n^2 = 0$$
 对二阶系统的设计，可参考[前文]({% post_url control-theory/2022-12-01-system-order-1-and-2 %})，或使用以下指标：
 1. 上升时间：
 $$\tau_\text{rising} = \frac{1 + 1.1 \xi + 1.4 \xi^2}{\omega_n}$$
-2. 稳定时间：
-$$\tau_\text{settling} = \frac{3}{\xi \omega_n}$$
+2. 稳定时间（$\xi < 0.8$）：
+$$\tau_\text{settling, 5%} = \frac{3.5}{\xi \omega_n}, \tau_\text{settling, 2%} = \frac{4.5}{\xi \omega_n}$$
 3. 峰值时间：
 $$t_p = \frac{\pi}{\omega_n \sqrt{1-\xi^2}} = \frac{\pi}{\omega_d}$$
 3. 最大超调：
@@ -473,6 +473,59 @@ J(x, u) = \int_0^\infty x^T(t) Q x(t) + u^T(t) R u(t) \, \mathrm d t,
 $$
 即可通过优化来寻找使代价函数最小的极点和对应的反馈矩阵。
 这种控制方法称为设计的控制器称为*线性二次控制器*（Linear-quadratic regulator）。
+
+#### 例子：控制器设计
+
+设系统的传递函数为
+$$
+H(s) = \frac{1}{s^2 - 2s - 2}
+$$
+给出其状态空间表示，分析其开环性能并设计一状态反馈控制器，使其超调量为$16.3\%$、响应时间（5%）为7s。[^source]
+{: .exampl}
+
+[^source]: 题目改编自：状态空间分析方法 习题 9-32[M]//王艳东, 程鹏 等. 自动控制原理（第3版）. 北京: 高等教育出版社. 2021: 402.
+
+利用 Octave 进行控制器设计。
+首先给出状态空间表示。
+```matlab
+clc; close; clear;
+pkg load symbolic
+pkg load signal
+pkg load control
+
+num = [1];
+den = [1 -2 -2];
+sys_tf = tf(num, den);
+[A, B, C, D] = tf2ss(sys_tf);
+sys_ss = ss(A, B, C, D)
+```
+
+分析开环性能可利用`step`或`stepinfo`完成，也可根据特征值求解。
+```matlab
+poles_a = eig(A)
+% 或 poles_a = pole(sys_ss)
+step(sys_ss)
+```
+系统具有非负特征值，因此是不稳定的。
+
+建立参考系统来计算极点。
+```matlab
+overshot = 0.163;
+tau5 = 7;
+xi = sym('xi');
+eq1 = exp(- pi * xi / sqrt(1 - xi * xi)) == 0.163;
+xi = double(solve(eq1));
+omega = 3.5 / (xi * pi);
+poles = roots([1 2*omega*xi omega*omega])
+```
+
+通过极点配置法来求解，并验证正确性。
+```matlab
+K = place(A, B, poles);
+G = 1 / (C * inv(-A + B * K) * B);
+sys_controlled = series(tf([G], []), ss(A - B * K, B, C, D));
+step(sys_controlled)
+```
 
 ### 积分反馈控制器
 
@@ -554,7 +607,7 @@ $$
 
 此外，通过观测器设计的闭环系统的特征多项式为
 $$
-\det(s \mathbf I - (A - BK)) \det (s \mathbf I (A - LC))
+\det(s \mathbf I - (A - BK)) \det (s \mathbf I - (A - LC))
 $$
 这意味着观测器的引入极点不会影响被控系统本身的动态特性，这一命题称为分离定理。
 分离定理说明，我们总是可以分开设计观测器和控制器，而不必担心两者互相干扰。
