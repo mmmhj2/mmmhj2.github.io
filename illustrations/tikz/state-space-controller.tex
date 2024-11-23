@@ -10,13 +10,13 @@
 \begin{document}
 	\begin{tikzpicture}[node distance=1.5cm, >=latex']
 		\node[coordinate] (input) at (2, 0) {};
-        \node[gain, right of=input, node distance=1cm] (ctlgain) {$Gr$};
+        \node[gain, right of=input, node distance=1cm] (ctlgain) {$G$};
 		\node[sum, right of=ctlgain] (sub) {};
 		\node[block, right of=sub, node distance=2cm] (stateequ) {$\dot x = Ax + Bu$};
         \node[coordinate, right of=stateequ] (feedback) {};
         \node[block, right of=feedback] (outputequ) {$y = Cx$};
         \node[coordinate, right of=outputequ] (output) {};
-        \node[gain, below of=stateequ, shape border rotate=180] (ctlfeedback){$Kx$};
+        \node[gain, below of=stateequ, shape border rotate=180] (ctlfeedback){$K$};
 
         \draw[->] (input) -- node [above] {$r$} (ctlgain);
         \draw[->] (ctlgain) -- (sub);
@@ -30,14 +30,14 @@
         \node[coordinate] (input2) at (0, -5) {};
         \node[sum, right of=input2, node distance=1cm] (error2) {};
         \node[block, right of=error2, minimum width=3em] (preint2) {$\int$};
-        \node[gain, right of=preint2] (errorgain2) {$F_2 z$};
+        \node[gain, right of=preint2] (errorgain2) {$F_2$};
         \node[sum, right of=errorgain2] (sub2) {};
         \node[block, right of=sub2, node distance=2cm] (stateequ2) {$\dot x = Ax + Bu$};
         \node[coordinate, right of=stateequ2] (feedback2) {};
         \node[block, right of=feedback2] (outputequ2) {$y = Cx$};
         \node[coordinate, right of=outputequ2] (output2) {};
         \node[coordinate, right of=output2, node distance=1cm] (output3) {};
-        \node[gain, below of=stateequ2, shape border rotate=180] (stategain2) {$F_1 x$};
+        \node[gain, below of=stateequ2, shape border rotate=180] (stategain2) {$F_1$};
         \node[coordinate, below of=stategain2] (waypoint2) {};
 
         \draw[->] (input2) -- node [above] {$r$} (error2);
