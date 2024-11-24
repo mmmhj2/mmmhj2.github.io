@@ -1,15 +1,16 @@
 \documentclass[tikz,dvisvgm]{standalone}
 \usetikzlibrary{decorations.markings}
 \usetikzlibrary{decorations.text}
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes,arrows,backgrounds,fit}
 
 \tikzstyle{block} = [draw, fill=white, rectangle, minimum height=3em, minimum width=6em]
-\tikzstyle{gain} = [draw, fill=white, isosceles triangle, node distance=2cm]
-\tikzstyle{sum} = [draw, fill=white, circle, node distance=2cm]
+\tikzstyle{blocksq} = [draw, fill=white, rectangle, minimum height=3em, minimum width=3em]
+\tikzstyle{gain} = [draw, fill=white, isosceles triangle]
+\tikzstyle{sum} = [draw, fill=white, circle]
 
 \begin{document}
 	\begin{tikzpicture}[node distance=1.5cm, >=latex']
-		\node[coordinate] (input) at (2, 0) {};
+		\node[coordinate] (input) at (0, 0) {};
         \node[gain, right of=input, node distance=1cm] (ctlgain) {$G$};
 		\node[sum, right of=ctlgain] (sub) {};
 		\node[block, right of=sub, node distance=2cm] (stateequ) {$\dot x = Ax + Bu$};
@@ -27,7 +28,7 @@
         \draw[->] (feedback) |- (ctlfeedback);
         \draw[->] (ctlfeedback) -| node[pos=0.99, below left] {$-$} (sub);
 
-        \node[coordinate] (input2) at (0, -5) {};
+        \node[coordinate] (input2) at (1.5, -5) {};
         \node[sum, right of=input2, node distance=1cm] (error2) {};
         \node[block, right of=error2, minimum width=3em] (preint2) {$\int$};
         \node[gain, right of=preint2] (errorgain2) {$F_2$};
@@ -56,6 +57,41 @@
 
         % Error feedback
         \draw[->] (output2) |- (waypoint2) -| node [pos=0.99, below left] {$-$} (error2);
+
+        \begin{scope}[node distance=1.2cm]
+            \node[coordinate, right of=output, node distance=2cm] (input3) {};
+            \node[blocksq, right of=input3] (inputmat) {$B$};
+            \node[sum, right of=inputmat, node distance=1.2cm] (sumstate) {};
+            \node[blocksq, right of=sumstate] (intstate) {$\int$};
+            \node[coordinate, right of=intstate] (feedbackstate) {};
+            \node[blocksq, right of=feedbackstate] (outputmat) {$C$};
+            \node[coordinate, right of=outputmat] (outputstate) {};
+            \node[blocksq, below of=intstate] (statemat) {$A$};
+            \node[coordinate, above of=feedbackstate, node distance = 0.5cm] (outputstate2) {};
+
+            \node[block, below of=statemat, align=left] (fullequ) {$\dot x = Ax+Bu$\\$y = Cx$};
+
+            \draw[->] (input3) -- node[above] {$u$} (inputmat);
+            \draw[->] (inputmat) -- (sumstate);
+            \draw[->] (sumstate) -- (intstate);
+            \draw[-] (intstate) -- (feedbackstate);
+            \draw[->] (feedbackstate) -- (outputmat);
+            \draw[->] (outputmat) -- node[at end, right] {$y$} (outputstate);
+
+            \draw[->] (feedbackstate) |- (statemat);
+            \draw[->] (statemat) -| (sumstate);
+
+            \draw[->] (feedbackstate) -- node[at end, above] {$x$} (outputstate2);
+
+        \end{scope}
+
+        \begin{scope}[on background layer]
+            \node[draw,
+                densely dotted,
+                inner sep=0.5cm,
+                fit= (input3) (statemat) (outputstate) (outputstate2)
+            ] {};
+        \end{scope}
 
 
 	\end{tikzpicture}

@@ -37,7 +37,7 @@ $$
 矩阵$A,B,C,D$分别称为状态矩阵（state matrix，也称系统矩阵，system matrix）、输入矩阵（input matrix）、输出矩阵（output matrix）和前馈矩阵（feedforward matrix）。
 这四个矩阵的维度分别为$n \times n$、$n \times m$、$n \times p$和$m \times p$。
 
-![](/assets/system/Typical_State_Space_model.svg){: .center-image}
+![](/assets/system/Typical_State_Space_model.svg){: .align-center}
 
 上图展示了典型的状态空间表示的系统的方块图。
 
@@ -512,10 +512,9 @@ step(sys_ss)
 ```matlab
 overshot = 0.163;
 tau5 = 7;
-xi = sym('xi');
-eq1 = exp(- pi * xi / sqrt(1 - xi * xi)) == 0.163;
-xi = double(solve(eq1));
-omega = 3.5 / (xi * pi);
+fn = @(xi) (exp(- pi * xi / sqrt(1 - xi^2)) - overshot);
+xi = fzero(fn, 0.5);
+omega = 3.5 / (xi * tau5);
 poles = roots([1 2*omega*xi omega*omega])
 ```
 
@@ -566,7 +565,7 @@ $$
 $$
 之后通过计算特征方程并配置极点即可完成控制器的设计。
 
-![](/assets/system/state-space-controller.svg){: .image-center}
+![](/assets/system/state-space-controller.svg){: .align-center}
 
 上图展示了两种状态反馈控制器的设计框图，可供参考。
 
