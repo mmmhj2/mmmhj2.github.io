@@ -167,7 +167,7 @@ $$
 下面是这个文法的所有项集及其转移。
 
 ![](/assets/compilers/LR1-automaton.svg)
-{: .center-image}
+{: .align-center}
 
 ### 构造LR(1)语法分析表
 

@@ -27,7 +27,7 @@ tags: ["中间代码生成"]
 如果我们重用这些子树，就会把抽象语法树转化成一个有向无环图，如下图所示：
 
 ![](/assets/compilers/dag-exp.svg)
-{: .center-image}
+{: .align-center}
 
 我们知道，可以用以下SDD生成抽象语法树：
 

@@ -50,7 +50,7 @@ B-Spline原本是用于通过函数插值若干个控制点得到一个平滑的
 在这里我们一般使用2阶(Quadratic，下图红色)或3阶(Cubic，下图蓝色)的B-Spline核函数。
 
 ![](/assets/cg/mpm01.png)
-{: .center-image}
+{: .align-center}
 
 这里的2阶B-Spline核函数实际上是通过3阶B样条参数改造得来，在使用Quadratic时：$N(x)=B\_{0,3}(\frac x 2+1)$。
 
@@ -106,7 +106,7 @@ APIC原作者发了两篇文章，一篇在[2015年](https://dl.acm.org/doi/pdf/
 仿射矩阵$C\_p$将会从粒子周围的格点来估计，从直观上理解，2维情况下的该矩阵每个位置的意义如下图：
 
 ![](/assets/cg/mpm02.png)
-{: .center-image}
+{: .align-center}
 
 但是在实践过程中，求速度场关于位置的导数过于复杂并且低效，所以用了一种近似的方法，通过格点的速度与到粒子位移的张量积来估计：(这里以Quadratic B-Spline为例)
 $$

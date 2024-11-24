@@ -53,7 +53,7 @@ $F$为*接受状态*的集合，可以为空。
 自动机的转换图和状态转移图之间的区别就是对同一输入和状态，可以有多条出边，同时空串$\epsilon$也可以出现在标号上。
 
 ![](/assets/compilers/transition-diagram-regular.svg)
-{: .center-image}
+{: .align-center}
 上图就是一个NFA的转换图。
 可以注意到对于状态`0`，输入`a`，有两条不同的出边。
 这个NFA可以接受所有满足正则表达式`(a|b)*abb`的输入。
@@ -164,7 +164,7 @@ return closure;
 这个NFA对应正则表达式`(a|b)*abb`。
 
 ![](/assets/compilers/trans-nfa2dfa-nfa.svg)
-{: .center-image}
+{: .align-center}
 
 首先我们计算初始状态的闭包：$A=\\\{0,1,2,4,7\\\}$。
 然后我们计算这个状态的转移函数。
@@ -265,7 +265,7 @@ while(!newStack.empty())
 此前在介绍NFA向DFA的转换时使用过一个例子：
 
 ![](/assets/compilers/trans-nfa2dfa-nfa.svg)
-{: .center-image}
+{: .align-center}
 
 这个自动机就是用上述算法构造出来的，对应的正则表达式为`(a|b)*abb`。
 可以注意到我们先生成了`a|b`的自动机，又生成了`(a|b)*`的自动机，最后把它们拼接在一起。

@@ -220,7 +220,7 @@ $$
 在读入任何输入之前，其总是处于开始状态。
 
 ![](/assets/compilers/transition-diagram-relop.svg)
-{: .center-image}
+{: .align-center}
 
 上图所示的状态转移图可以用来识别上文中的所有`relop`定义，并给出所识别的运算的属性。
 需要注意的是几个状态上的星号。如果某个词素的前缀是另一个词素，那么为了区别这两个词素就需要用星号将`forward`指针回退。

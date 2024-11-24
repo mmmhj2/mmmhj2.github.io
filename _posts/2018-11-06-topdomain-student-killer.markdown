@@ -50,7 +50,7 @@ sc stop TDFileFilter
 即可结束这个服务。
 
 ![](/assets/td-file-filter.png)
-{: .center-image}
+{: .align-center}
 
 ## 网络限制
 
@@ -66,7 +66,7 @@ sc stop TDFileFilter
 [^pchunter]: PCHunter 早已停止更新，现可使用火绒剑、[OpenArk](https://github.com/BlackINT3/OpenArk) 或 [Sysinternals Suite](https://learn.microsoft.com/zh-cn/sysinternals/downloads/) 等工具作为代替。
 
 ![](/assets/pc-hunter.png)
-{: .center-image}
+{: .align-center}
 
 然而擅自修改内核驱动会造成十分严重的后果：<span style="color: blue;">蓝屏</span>。
 虽然这个过滤驱动并非是关键的驱动，不会造成立刻蓝屏，但是后果还是有可能非常严重。
