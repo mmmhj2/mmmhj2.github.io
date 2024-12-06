@@ -149,84 +149,171 @@ $$
 
 ## Material Point Method (MPM)
 
-这里的MPM方法将着重处理弹性体。
+现在我们在粒子-网格中添加仿真，即计算受力，进行时间积分。这一步骤主要发生在粒子-网格之间，可以放在网格操作上（Grid operation）里面。
 
-首先定义弹性体初始每个点的位置为$X$，弹性体每个点变化后当前的位置为$\mathbf{x} = \phi(X)$，一个重要的参数是应变张量$F = \frac {\partial \phi (X)} {\partial X} = \frac {\partial \mathbf{x}} {\partial X}$ 。
+网格的属性使其天然能够处理碰撞等复杂情况，而粒子更容易计算相关属性。为了结合他们的优势，MPM计算粒子对网格格点的施力，再在网格上进行时间积分计算速度，并在网格上处理碰撞等更新速度，最后传回粒子。
+
+### 弹性体
+
+#### 基础定义
+
+首先定义弹性体初始每个点的位置为$X$，弹性体每个点变化后当前的位置为$\mathbf{x} = \phi(X)$，一个重要的参数是应变张量
+$$
+F = \frac {\partial \phi (X)} {\partial X} = \frac {\partial \mathbf{x}} {\partial X}
+$$
 对于弹性体，整体移动并不会产生内部弹力，所以函数$\phi$的梯度，即表示相邻位置移动的不同会产生形变，所以弹性体的内部能量一般根据$F$来定义。
 
-定义弹性体的能量密度为$\Psi (\phi, X)$，即位置$X$在形变为$\phi$函数时的能量密度。
-在各种弹性物质模型下，往往直接用应变张量定义能量密度$\Psi(F)$。
-此时弹性体总能量为$E(\phi) = \int \Psi(F) \mathrm{d}X$
+定义弹性体的能量密度为$\Psi (\phi, X)$，即位置$X$在形变为$\phi$函数时的能量密度。在各种弹性物质模型下，往往直接用应变张量定义能量密度$\Psi(F)$。此时弹性体总能量为$U(\phi) = \int \Psi(F) \mathrm{d}X$.
 
-在弹性力学中有时候为了表示某一截面微元上的应力，定义了PK1数（The First Piola-Kirchhoff stress tensor），$P(F) = \frac {\partial \Psi(F)} {\partial F}$。
-这在3维下是一个3×3的矩阵，其乘一个法向量之后就可以表示$X$位置与法向量垂直截面微元的应力。
-PK1的推导是在计算内力时，用能量对位置求导的中间变量，不在这里详细叙述，只需知道许多弹性体模型会直接定义出$P(F)$，抄公式就可以了。
+在弹性力学中有时候为了表示某一截面微元上的应力，定义了PK1数（The First Piola-Kirchhoff stress tensor）
+$$
+P(F) = \frac {\partial \Psi(F)} {\partial F}
+$$
+这在3维下是一个3×3的矩阵，其乘一个法向量之后就可以表示$X$位置与法向量垂直截面微元的应力。PK1的推导是在计算内力时，用能量对位置求导的中间变量，不在这里详细叙述，只需知道许多弹性体模型会直接定义出$P(F)$，抄公式就可以了。
 
-在MPM中，我们的粒子不仅存储质量$m\_p$，动量$(m \mathbf{v})\_i$，还需要存储应变张量$F\_p$。在迭代过程中，应变张量可以按如此迭代$F\_p^{n+1} = (I + \Delta t \nabla \mathbf{v}) F\_p^n$。由于我们使用了$C\_p$来近似粒子$p$邻域的速度梯度，则可以使用这个公式迭代：
-$$F_p^{n+1} = (I + \Delta t C_p^n) F_p^n $$
+在MPM中，我们的粒子不仅存储质量$m_p$，动量$(m \mathbf{v})_i$，还需要存储应变张量$F_p$. 在迭代过程中，应变张量可以按如此迭代$F_p^{n+1} = (I + \Delta t \nabla \mathbf{v}) F_p^n$，即形变更新时我们只需要知道粒子$p$周围比上一个仿真步多了哪些形变就行。由于我们使用了$C_p$来近似粒子$p$邻域的速度梯度，则可以使用这个公式迭代：
+$$
+F_p^{n+1} = (I + \Delta t C_p^{n+1}) F_p^n
+$$
 
-在粒子将动量传递给网格时，应先将弹性内力处理了，因为这是粒子更容易操作的事情。所以我们需要通过粒子计算周围格点所受的内力$\mathbf{f}\_i$，内力一般用弹性势能对位置的梯度来求。
+#### 格点受力计算
 
-粒子能量：$U\_i = \sum_p V\_p^0 \Psi\_p(F\_p^{n+1})$，其中$V\_p^0$为该粒子在初始状态代表的弹性体部分体积。
+一个反直觉的地方在于：虽然格点位置在$\mathbf{x}_i$是永远不变的，但是我们在计算受力时，需要将其看作在仿真物体上的某个点，只是在当前仿真步正好移动到了$\mathbf{x}_i$这个位置，可以用下图理解：
 
-格点内力计算时用弹性势能对位置求梯度，注意格点位置本来是不变的，但我们现在需要的位置是其在弹性体上的位置，可以假定其会根据格点的速度变化：$\hat{\mathbf{x}}\_i = \mathbf{x}\_i + \Delta t \mathbf{v}\_i$
+![](/assets/cg/mpm03.png)
+{: .center-image}
+
+计算内力一般用能力对位置的梯度来求，即：
+$$
+\mathbf{f} (\mathbf{x}) = - \frac {\partial U(\mathbf{x})} {\partial \mathbf{x}}
+$$
+我们令$\mathbf{f}_i$为格点$i$在当前仿真步的受力。为了求上面的梯度，我们需要定义
+
+函数$\mathbf{f}_i (\mathbf{x})$为如果格点$i$所在材料上的点位置移动到$\mathbf{x}$，其所受到的力。
+
+函数$U_i (\mathbf{x})$为如果格点$i$所在材料上的点位置移动到$\mathbf{x}$，整个材料的势能。
+
+函数$F_{ip}^n(\mathbf{x})$为如果格点$i$所在材料上的点位置移动到$\mathbf{x}$，粒子$p$的形变梯度$F$. 需要确保$F_{ip}^n (\mathbf{x}_i) = F_p^n$
+
+则总势能可以用所有粒子的体积乘以能量密度求和得到：
+$$
+U_i(\mathbf{x}) = \sum_p V_p^0 \Psi(F_{ip}^n(\mathbf{x})) \\
+$$
+对于粒子的形变梯度，我们可以仿照$F_p^n$的迭代公式写为：
 $$
 \begin{align}
-\mathbf{f}_i & = - \frac {\partial U} {\partial \hat{\mathbf{x}}_i} \\
-& = - \sum_p V_p^0 \frac {\partial \Psi(F_p^{n+1})} {\partial \hat{\mathbf{x}}_i} \\\
-& = - \sum_p \frac {V_p^0} {\Delta t} \frac {\partial \Psi(F_p^{n+1})} {\partial \mathbf{v}_i} \\
-& = - \sum_p \frac {V_p^0} {\Delta t} \frac {\partial \Psi(F_p^{n+1})} {\partial F_p^{n+1}} \frac {\partial F_p^{n+1}} {\partial C_p^n} \frac {\partial C_p^n} {\partial \mathbf{v}_i} \\
-& = - \sum_p \frac {V_p^0} {\Delta t} \cdot P_p(F_p^{n+1}) \cdot \Delta t \left({F_p^{n+1}}\right)^T \cdot \frac {4 w_{ip}} {\Delta x^2} (\mathbf{x}_i - \mathbf{x}_p^n) \\
-& = - \frac {4} {\Delta x^2} \sum_p {V_p^0} \cdot P_p(F_p^{n+1}) \cdot \left({F_p^{n+1}}\right)^T \cdot w_{ip} (\mathbf{x}_i - \mathbf{x}_p^n)
+F_p^{n+1}& = (I + \Delta t C_p^n) F_p^n \\
+&= \left( I + \sum_i \Delta t\mathbf{v}^n_i \cdot \left(\nabla w^n_{ip}\right)^T \right) F_p^n \\
+&= \left( I + \sum_i \left(\mathbf{x}_i^n - \mathbf{x}_i^{n-1}\right) \cdot \left(\nabla w^n_{ip}\right)^T \right) F_p^n \\
+\text{仿照构造, }F_{ip}^n (\mathbf{x}) &= \left( I + \left(\mathbf{x} - \mathbf{x}_i\right) \cdot \left(\nabla w^n_{ip}\right)^T \right) F_p^n\\
 \end{align}
 $$
-在更新格点动量时，即可这样更新：
+现在来推导格点受力：
 $$
 \begin{align}
-\left( m \mathbf{v} \right)_i^{n+1} & = \sum_p w_{ip} \left[ m_p \mathbf{v}_p^n + \left( m_p C_p^n + \Delta t \mathbf{f}_i \right) \left(\mathbf{x}_i - \mathbf{x}_p^n \right) \right] \\
-& = \sum_p w_{ip} \left[ m_p \mathbf{v}_p^n + \left( m_p C_p^n - \frac {4 \Delta t} {\Delta x^2}{V_p^0} \cdot P_p(F_p^{n+1}) \cdot \left({F_p^{n+1}}\right)^T \right) \left(\mathbf{x}_i - \mathbf{x}_p^n \right) \right]
+\mathbf{f}_i (\mathbf{x}) & = - \frac {\partial U_i (\mathbf{x})} {\partial \mathbf{x}} \\
+& = - \sum_p V_p^0 \frac {\partial \Psi(F_{ip}^n(\mathbf{x}))} {\partial \mathbf{x}} \\
+& = - \sum_p V_p^0 \frac {\partial \Psi(F_{ip}^n(\mathbf{x}))} {\partial F_{ip}^n} \frac {\partial F_{ip}^n (\mathbf{x})} {\partial \mathbf{x}} \\
+& = - \sum_p V_p^0 P\left(F_{ip}^n(\mathbf{x})\right) \left(F^n_p\right)^T \nabla w^n_{ip} \\
 \end{align}
 $$
-于是MPM的总流程为：
 
-1. P2G：
+### 流体
+
+相比于弹性体，流体只需要考虑拉伸和压缩，而不需要考虑错切变换。我们不再需要为每个粒子更新应变张量$F$，而只需要一个体积变化分数$J = \text{det} (F)$.
+
+那么更新体积变化分数时，用如下公式
 $$
-F_p^{n+1} = (I + \Delta t C_p^n) F_p^n
+J_p^{n+1} = \left( 1 + \Delta t \cdot \text{tr}(C_p^{n+1}) \right) \cdot J_p^n
 $$
+同样类似弹性体可以构造一个：
 $$
-\left( m \mathbf{v} \right)_i^{n+1} = \sum_p w_{ip} \left[ m_p \mathbf{v}_p^n + \left( m_p C_p^n - \frac {4 \Delta t} {\Delta x^2}{V_p^0} \cdot P_p(F_p^{n+1}) \cdot \left({F_p^{n+1}}\right)^T \right) \left(\mathbf{x}_i - \mathbf{x}_p^n \right) \right]
+J_{ip}^n(\mathbf{x}) = \left(1 + \left[(\mathbf{x}-\mathbf{x}_i):\nabla w_{ip}^n\right]\right) \cdot J_p^n
 $$
+其中$[ : ]$表示内积。构造满足$J_{ip}^n(\mathbf{x}_i) = J_p^n$
+
+流体使用的能量公式为：
 $$
-m_i^{n+1} = \sum_p w_{ip} m_p 
+\Psi(J) = \frac 1 2 \lambda (J-1)^2
+$$
+可以推导出格点受力为：
+$$
+\mathbf{f}_i(\mathbf{x}) = - \sum_p V_p^0 \cdot \lambda (J_{ip}^n(\mathbf{x})-1) \cdot \nabla w_{ip}^n
 $$
 
-2. Grid opertaions
+### 时间积分
+
+*下面公式只考虑弹性体，流体可以类似推导出来*
+
+#### 显式
+
 $$
-\hat{\mathbf{v}}_i^{n+1} = \left( m \mathbf{v} \right)_i^{n+1} / m_i^{n+1}
-$$
-处理网格操作，如边界等：
-$$
-\mathbf{v}_i^{n+1} = \text {Project} \left(\hat{\mathbf{v}}_i^{n+1}\right)
+\begin{align}
+\mathbf{x}_i^{n+1} & = \mathbf{x}_i^n + \Delta t \mathbf{v}_i^{n+1} \\
+\mathbf{v}_i^{n+1} & = \mathbf{v}_i^n + \Delta t \cdot m^{-1} \mathbf{f}_i(\mathbf{x}_i^{n})
+\end{align}
 $$
 
-3. G2P
+显示时间积分视为格点不动，实际计算时只需要带入一个固定的格点位置$\mathbf{x}_i^n = \mathbf{x}_i$
 $$
-\mathbf{v} _p^{n+1} = \sum_i w_{ip} \mathbf{v}_i^{n+1}
+\begin{align}
+\mathbf{f}_i(\mathbf{x}_i) & = - \sum_p V_p^0 P\left(F_{ip}^n(\mathbf{x}_i)\right) \left(F^n_p\right)^T \nabla w^n_{ip} \\
+& \approx - \frac 4 {\Delta x^2}\sum_p V_p^0 \cdot P\left(F_p^n\right) \cdot \left(F^n_p\right)^T \cdot w_{ip}^n (\mathbf{x}_i - \mathbf{x}_p^n)\\
+\end{align}
 $$
+
+#### 隐式
+
+隐式时间积分公式如下：
 $$
-C_p^{n+1} = \frac 4 {\Delta x^2} \sum_i w_{ip} \mathbf{v}_i^{n+1} (\mathbf{x}_i - \mathbf{x}_p^n)^T 
+\begin{align}
+\mathbf{x}_i^{n+1} & = \mathbf{x}_i^n + \Delta t \mathbf{v}_i^{n+1} \\
+\mathbf{v}_i^{n+1} & = \mathbf{v}_i^n + \Delta t \cdot m^{-1} \mathbf{f}_i(\mathbf{x}_i^{n+1})
+\end{align}
 $$
-$$
-\mathbf{x}_p^{n+1} = \mathbf{x}_p^n + \mathbf{v}_p^{n+1} \Delta t
-$$
+此时$\mathbf{f}_i (\mathbf{x}_i^{n+1})$不能简单地带入，需要使用求解器求解方程
+
+### 算法流程
+
+1. P2G阶段，我们首先使用APIC的方法计算不考虑受力时，格点的动量和质量
+   $$
+   \begin{align}
+   \left( m \hat {\mathbf{v}} \right)_i^{n+1} & = \sum_p w_{ip} \left[m \mathbf{v}_p^n + m_p C_p^n \left(\mathbf{x}_i - \mathbf{x}_p^n \right) \right] \\
+    m_i^{n+1} & = \sum_p w_{ip} m_p 
+   \end{align}
+   $$
+   对于处理受力，主要分为三部分：弹性内力，外力，边界碰撞。在这个版本的MPM中，我们将弹性内力处理为计算粒子对网格的施力，而边界碰撞只在网格上处理。至于外力，怎么方便怎么来（重力可以全加在粒子上或者全加在网格上）
+
+   弹性内力在这一步处理：*若为隐式时间积分，则带入$\mathbf{f} (\mathbf{x}_i^{n+1})$* 
+   $$
+   \left( m \mathbf{v} \right)_i^{n+1} = \left( m \hat {\mathbf{v}} \right)_i^{n+1} + \Delta t \cdot \mathbf{f}_i (\mathbf{x}_i^{n})
+   $$
+   对于外力和边界碰撞，不再考虑隐式时间积分。
+
+2. Grid Opertaions阶段，主要处理边界碰撞
+   $$
+   \begin{align}
+   \hat{\mathbf{v}}_i^{n+1} & = \left( m \mathbf{v} \right)_i^{n+1} / m_i^{n+1} \\
+   \mathbf{v}_i^{n+1} & = \text {Project} \left(\hat{\mathbf{v}}_i^{n+1}\right)
+   \end{align}
+   $$
+
+3. G2P阶段，主要从网格信息重新计算回粒子信息
+   $$
+   \begin{align}
+   \mathbf{v} _p^{n+1} & = \sum_i w_{ip} \mathbf{v}_i^{n+1}\\
+   C_p^{n+1} & = \frac 4 {\Delta x^2} \sum_i w_{ip} \mathbf{v}_i^{n+1} (\mathbf{x}_i - \mathbf{x}_p^n)^T\\
+   F_p^{n+1} & = (I + \Delta t C_p^{n+1}) F_p^n \\
+   \mathbf{x}_p^{n+1} & = \mathbf{x}_p^n + \mathbf{v}_p^{n+1} \Delta t\\
+   \end{align}
+   $$
+
+   *如果使用FLIP方法，可以考虑在这一阶段按一定比例结合网格计算的速度和粒子本来的速度*
 
 ## 关于边界投影等额外操作
 
-对于边界，直接找到边界的格点，找到边界的法向量$\mathbf{n}$，把冲出边界的速度消掉即可。
-$$
-\mathbf{v}_i^{n+1} = \hat{\mathbf{v}}_i^{n+1} + \mathbf{n} \cdot \min(\mathbf{n}^T \hat{\mathbf{v}}_i^{n+1}, 0)
-$$
-或者使用各种动量守恒的反射操作也可以。
-对于外力，重力的添加，可以将其直接添加到粒子或者格点上：
-$$\hat{\mathbf{v}}_i^{n+1} += \Delta t g$$
+对于边界，直接找到边界的格点，找到边界的法向量$\mathbf{n}$，把冲出边界的速度消掉即可$\mathbf{v}_i^{n+1} = \hat{\mathbf{v}}_i^{n+1} + \mathbf{n} \cdot \min(\mathbf{n}^T \hat{\mathbf{v}}_i^{n+1}, 0)$
 
+或者使用各种动量守恒的反射操作也可以
+
+对于外力，重力的添加，可以将其直接添加到粒子或者格点上：$\hat{\mathbf{v}}_i^{n+1} += \Delta t g$
