@@ -211,7 +211,7 @@ $$
 如果我们规定保持一个环路的方向不变，那么一定有一个通量为负数，具体可见下图：
 
 ![](/assets/em/directed-surfaces.svg)
-{: .center-image}
+{: .align-center}
 
 $$
 \begin{aligned}
@@ -222,7 +222,7 @@ $$
 这里我们将侧面积展开成了长度微元和位移微元的积分，具体可见下图：
 
 ![](/assets/em/lateral-area.svg)
-{: .center-image}
+{: .align-center}
 
 我们知道，对于安培力，其元功为：
 $$
@@ -383,7 +383,7 @@ $$
 我们综合以上研究，给出电磁感应与自感的线圈的等效电路。
 
 ![](/assets/em/generalized-ohms-law.svg)
-{: .center-image}
+{: .align-center}
 
 对感应电动势，我们采用电源约定，即其电动势上升方向与电流方向相同。
 对线圈和电阻，我们采用用电器约定，即其电动势下降方向与电流方向相同。

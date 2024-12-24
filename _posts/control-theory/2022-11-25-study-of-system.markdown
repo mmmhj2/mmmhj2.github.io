@@ -6,7 +6,7 @@ categories: "控制理论"
 --- 
 
 ![](/assets/system/block-diagram-complete.svg)
-{: .center-image}
+{: .align-center}
 
 我们来研究上图所示的一个系统。
 图中$E(p)$表示输入量的拉普拉斯变换，$S(p)$表示输出量的，$P(p)$表示噪声或扰动。
@@ -38,7 +38,7 @@ $$
 首先解决反馈回路的问题。考虑以下简单的带反馈系统：
 
 ![](/assets/system/block-diagram-pursuit-simple.svg)
-{: .center-image}
+{: .align-center}
 
 对于这个系统，以下方程组成立：
 $$
@@ -64,7 +64,7 @@ $$
 系统就变成下图所示的简单负反馈系统。
 
 ![](/assets/system/block-diagram-pursuit-complete.svg)
-{: .center-image}
+{: .align-center}
 
 利用前述公式，这个系统的传递函数容易得出：
 $$
@@ -76,7 +76,7 @@ $$
 待研究的系统可以转化为如下系统：
 
 ![](/assets/system/block-diagram-regulation.svg)
-{: .center-image}
+{: .align-center}
 
 再次利用上述公式，求得：
 $$

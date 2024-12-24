@@ -26,7 +26,7 @@ date: 2022-12-26 21:19:00 +0800
 ### 相图
 
 ![水的相图](/assets/thdyn/Phase-diag-zh.svg "来自：https://commons.wikimedia.org/wiki/File:Phase-diag-zh.svg 按Creative Commons Attribution-Share Alike 3.0 Unported授权")
-{: .center-image}
+{: .align-center}
 
 上面是一张典型的相图，虚线部分是水的固液分界线，实线部分是通常情况。
 相图上最重要的部分就是“四区”、“三线”、“两点”。
@@ -78,7 +78,7 @@ $$
 我们把一些固定质量的液态水从气态缓慢恒温加压到液态，记录系统的体积和压强之间的关系，可以得到下图。
 
 ![水的PV图](/assets/thdyn/pv-diagram-of-real-non-polar-fluid-with-its-isotherms.png "来自：https://www.researchgate.net/figure/pv-diagram-of-real-non-polar-fluid-with-its-isotherms_fig1_26488993 按Creative Commons Attribution-NonCommercial 3.0 Unported授权")
-{: .center-image}
+{: .align-center}
 
 从右往左观察穿过气液平衡态的那根曲线。
 
@@ -164,7 +164,7 @@ $$
 由温度和熵之间的关系画成的图称为温熵图，温熵图中通常还有许多辅助线。
 
 ![水蒸气的温熵图](/assets/thdyn/TS-Wasserdampf_engl.png "来自：https://commons.wikimedia.org/wiki/File:TS-Wasserdampf_engl.png 按Creative Commons Attribution-Share Alike 3.0 Unported授权")
-{: .center-image}
+{: .align-center}
 
 ---
 

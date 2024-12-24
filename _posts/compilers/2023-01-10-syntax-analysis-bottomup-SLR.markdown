@@ -203,7 +203,7 @@ do{
 下图就是上文的增广文法生成的自动机。
 
 ![](/assets/compilers/LR0-automaton.svg)
-{: .center-image}
+{: .align-center}
 
 接下来我们将介绍如何使用这个自动机。
 

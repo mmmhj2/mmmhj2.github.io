@@ -216,14 +216,14 @@ $$P(\nu) = \sum_{k=-n}^n e^{-j 2\pi\nu \frac{kT}{2n+1}}$$
 其频谱如下。
 
 ![](\assets\signal\rect_window_fourier.png)
-{: .center-image}
+{: .align-center}
 
 显然，任何类似的过程必然产生额外的傅里叶变换对来与原信号进行卷积，从而导致频谱上出现不属于原信号的分量，这种现象称为频谱泄露（Spectral leakage）。
 
 下图展示了实际的示波器上的正弦信号波形，可见除了500 Hz的峰之外还有矩形窗导致的大量频谱泄露。
 
 ![](\assets\signal\rect_window_oscilloscope.jpg)
-{: .center-image}
+{: .align-center}
 
 ### 补零与分辨力
 
@@ -259,11 +259,11 @@ $\alpha$通常取$0.16$。
 可见布莱克曼窗函数的峰更加集中，因此可以缓解频谱泄露。
 
 ![](\assets\signal\blackman_window_fourier.png)
-{: .center-image}
+{: .align-center}
 
 下图是该窗函数在示波器下的表现。
 可见频谱泄露的高频分量明显减少。
 
 ![](\assets\signal\blackman_window_oscilloscope.jpg)
-{: .center-image}
+{: .align-center}
 

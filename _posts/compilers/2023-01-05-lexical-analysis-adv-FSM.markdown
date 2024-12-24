@@ -40,7 +40,7 @@ tags: ["词法分析"]
 下图就是一个可识别`a`、`abb`和`a*b+`的NFA，注意`a*b+`的NFA不是用前一篇文章中的算法构造出来的。
 
 ![](/assets/compilers/trans-merged-nfa.svg)
-{: .center-image}
+{: .align-center}
 
 现在我们还需要解决优先级的问题。
 对于字符串`abbbbb`，三个正则表达式都可以识别，此时应输出哪个词法单元呢？
@@ -154,7 +154,7 @@ $$
 以下是正则表达式`(a|b)*abb#`的抽象语法树（AST），注意`cat`表示字符串的拼接。
 
 ![](/assets/compilers/ast-regex.svg)
-{: .center-image}
+{: .align-center}
 
 抽象语法树的叶子节点的标号可以为空$\epsilon$或任何字母表中的字母。
 对于每个非空的叶子节点，我们赋予其一个独特的整数，称为这个叶子节点的**位置**（position）。
@@ -218,7 +218,7 @@ $$\forall i \in lastpos(n), \; firstpos(n) \subset followpos(i)$$
 下图是根据AST计算的$firstpos$和$lastpos$的值。
 
 ![](/assets/compilers/ast-regex-annotated.svg)
-{: .center-image}
+{: .align-center}
 
 接下来我们尝试计算$followpos$。
 首先，对所有`cat`结点，把右子节点的$firstpos$放到左子节点的$lastpos$的$followpos$中。

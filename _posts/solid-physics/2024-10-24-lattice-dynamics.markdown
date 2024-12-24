@@ -99,7 +99,7 @@ $$\omega_q = \sqrt{\Omega_S^2 + \Omega_L^2 \pm \sqrt{\Omega_S^4 + \Omega_L^4 + 2
 - 否则，称为光学支，此时原子反向振动，该色散关系类似于电磁波。
 
 ![](/assets/solidphysics/1d-phonon-modes.png)
-{: .center-image}
+{: .align-center}
 
 ## 格波的量子化
 

@@ -37,7 +37,7 @@ $$
 矩阵$A,B,C,D$分别称为状态矩阵（state matrix，也称系统矩阵，system matrix）、输入矩阵（input matrix）、输出矩阵（output matrix）和前馈矩阵（feedforward matrix）。
 这四个矩阵的维度分别为$n \times n$、$n \times m$、$n \times p$和$m \times p$。
 
-![](/assets/system/Typical_State_Space_model.svg){: .center-image}
+![](/assets/system/Typical_State_Space_model.svg){: .align-center}
 
 上图展示了典型的状态空间表示的系统的方块图。
 
@@ -277,7 +277,9 @@ $$H(s) = \frac{\mathrm{adj}(s \mathbf I - A) B}{\det(s \mathbf I - A)}$$
 
 #### 可控制性
 
-若通过改变系统的输入$u$，可以改变状态向量$x$的值，那么称该系统是*可控制的*（Controllable），数学上讲，即对所有可能的状态$x^\*$，均存在一时间$T$与输入向量$u(0 < t \le T)$，使得系统能从初始状态$x(0)$运动到$x(T) = x^\*$。
+对状态空间表示系统而言，一个重要的性质是系统的可控制性，即系统的状态能否被输入所控制。
+
+若通过改变系统的输入$u$，可以改变状态向量$x$的值，那么称该系统是*可控制的*（Controllable），数学上讲，即对所有可能的状态$x^\*$，均存在一有限的时间$T$与输入向量$u(0 < t \le T)$，使得系统能从初始状态$x(0)$运动到$x(T) = x^\*$。
 {: .definition}
 
 线性时不变系统的可控制性可由可控制性矩阵的秩确定。
@@ -299,7 +301,7 @@ $$f(x) = \sum_{k=0}^\infty a_k x^k,$$
 设方阵$A$的特征多项式为$\chi\_A(x)$，对解析函数应用长除法，可得
 $$f(x) = \chi_A(x) q(x) + r(x)$$
 其中$r$是一个次数小于$n$的多项式，即余数。
-现在，根据哈密顿-凯莱定理，方阵的多项式也是零化多项式，从而带入，得到
+现在，根据[哈密顿-凯莱定理]({% post_url mathematics/2022-11-25-lemma-of-kernel-and-th-of-HC %})，方阵的多项式也是零化多项式，从而带入，得到
 $$f(A) = \cancel{\chi_A(A) q(A)} + r(A)$$
 {: .proof}
 
@@ -320,7 +322,11 @@ $$x(t) = - \sum_{i=0}^{n-1} \left(A^i B  \int_0^t w_i(\tau) u(t - \tau') \; \mat
 若该子空间的秩与状态空间相同，则所有状态均可达，从而原系统可控。
 {: .proof}
 
+一个单输入单输出系统存在可控标准型表示，当且仅当该系统可控。
+
 #### 可观测性
+
+状态空间表示的系统的另一个性质是可观测性，即系统内部状态的变化能否通过外部输出观测到。
 
 若系统的一个初始状态$x(t\_0)$可由一段时间内观测的输出$y(t\_0 < t \le t\_f)$计算出，那么称该初始状态是*可观测的*（Observable）。
 若系统的所有初始状态均可由这种方式计算出，那么称该系统是*完全可观测的*，也简称可观测的。
@@ -374,6 +380,11 @@ $$
 我们已经知道，系统状态空间表示中的系统矩阵的特征值与传递函数的极点密切相关，因此我们可以通过设计一个利用状态$x$进行控制的控制器，来调整系统矩阵及其极点，从而实现控制。
 这种控制器称为*状态反馈控制器*（State feedback controller），这种设计方法叫做*极点配置法*（Pole placement）。
 
+极点配置法的可行性由以下命题揭示。
+
+矩阵$A-BK$的特征值可由$K$调整到复平面上的任意位置，当且仅当，矩阵$A,B$所描述的系统能控。
+{: .proposition}
+
 状态反馈控制器的控制律非常简单。
 我们只考虑单输入的系统，则系统的输入$u$由以下线性方程决定：
 $$
@@ -397,6 +408,33 @@ $$
 $$\det(s \mathbf I - A + BK) = 0$$
 当系统的所有极点均已给定时，利用待定系数法求解多项式方程即可得到$K$向量的所有值。
 
+然后确定参考输出的增益，设前馈矩阵$D = 0$，有
+$$
+Y(s) = CX(s) = C(s\mathbf I - A + BK)^{-1} BG \cdot R(s),
+$$
+我们希望输出$y$应尽量与输入$r$相同，即
+$$
+\lim_{t \to \infty} y(t) - r(t) = 0,
+$$
+利用终值定理，有
+$$
+\lim_{t \to \infty} y(t) = \lim_{s \to 0} sY(s),
+$$
+从而
+$$
+\begin{multline}
+\lim_{t \to \infty} y(t) - r(t) = 0 \\ \implies \\ \left.\frac{Y(s)}{R(s)}\right|_{s \to 0} = C(s\mathbf I - A + BK)^{-1} BG = 1.
+\end{multline}
+$$
+这就是说
+$$
+G = \left(C(- A + BK)^{-1}B \right)^{-1},
+$$
+对于单输入、单输出的情况，即
+$$
+G = \frac{1}{C(- A + BK)^{-1}B}.
+$$
+
 若系统的状态空间表示恰好是可控标准型，则矩阵$A - BK$为
 $$
 A-BK = \begin{bmatrix}
@@ -407,6 +445,86 @@ A-BK = \begin{bmatrix}
 \end{bmatrix},
 $$
 利用这个矩阵可以容易地算出所有极点。
+
+#### 极点的选择
+
+实践上极点通常通过一个参考系统来进行选择，一般首先通过调整阻力与响应时间设计一个满足要求的二阶系统，然后将极点配置在该二阶系统的极点处。
+根据定义，二阶系统的极点就是二次多项式
+$$s^2 + 2\xi\omega_n s + \omega_n^2 = 0$$
+的根。
+对更高阶的系统，则可选择使两个极点与二阶系统重合，然后将多余的极点放置在离实轴很远的位置，一般将二阶系统的极点的实部乘2-3倍即可。
+
+对二阶系统的设计，可参考[前文]({% post_url control-theory/2022-12-01-system-order-1-and-2 %})，或使用以下指标：
+1. 上升时间：
+$$\tau_\text{rising} = \frac{1 + 1.1 \xi + 1.4 \xi^2}{\omega_n}$$
+2. 稳定时间（$\xi < 0.8$）：
+$$\tau_\text{settling, 5%} = \frac{3.5}{\xi \omega_n}, \tau_\text{settling, 2%} = \frac{4.5}{\xi \omega_n}$$
+3. 峰值时间：
+$$t_p = \frac{\pi}{\omega_n \sqrt{1-\xi^2}} = \frac{\pi}{\omega_d}$$
+3. 最大超调：
+$$M = \exp[-\xi \omega_n t_p] = \exp[- \frac{\pi\xi}{\sqrt{1-\xi^2}}]$$
+
+若只关心响应时间，则可取阻尼为$\xi = 0.707$。
+
+另一种方法是利用优化来求解合适的反馈矩阵$K$。
+设代价函数为二次泛函
+$$
+J(x, u) = \int_0^\infty x^T(t) Q x(t) + u^T(t) R u(t) \, \mathrm d t,
+$$
+即可通过优化来寻找使代价函数最小的极点和对应的反馈矩阵。
+这种控制方法称为设计的控制器称为*线性二次控制器*（Linear-quadratic regulator）。
+
+#### 例子：控制器设计
+
+设系统的传递函数为
+$$
+H(s) = \frac{1}{s^2 - 2s - 2}
+$$
+给出其状态空间表示，分析其开环性能并设计一状态反馈控制器，使其超调量为$16.3\%$、响应时间（5%）为7s。[^source]
+{: .exampl}
+
+[^source]: 题目改编自：状态空间分析方法 习题 9-32[M]//王艳东, 程鹏 等. 自动控制原理（第3版）. 北京: 高等教育出版社. 2021: 402.
+
+利用 Octave 进行控制器设计。
+首先给出状态空间表示。
+```matlab
+clc; close; clear;
+pkg load symbolic
+pkg load signal
+pkg load control
+
+num = [1];
+den = [1 -2 -2];
+sys_tf = tf(num, den);
+[A, B, C, D] = tf2ss(sys_tf);
+sys_ss = ss(A, B, C, D)
+```
+
+分析开环性能可利用`step`或`stepinfo`完成，也可根据特征值求解。
+```matlab
+poles_a = eig(A)
+% 或 poles_a = pole(sys_ss)
+step(sys_ss)
+```
+系统具有非负特征值，因此是不稳定的。
+
+建立参考系统来计算极点。
+```matlab
+overshot = 0.163;
+tau5 = 7;
+fn = @(xi) (exp(- pi * xi / sqrt(1 - xi^2)) - overshot);
+xi = fzero(fn, 0.5);
+omega = 3.5 / (xi * tau5);
+poles = roots([1 2*omega*xi omega*omega])
+```
+
+通过极点配置法来求解，并验证正确性。
+```matlab
+K = place(A, B, poles);
+G = 1 / (C * inv(-A + B * K) * B);
+sys_controlled = series(tf([G], []), ss(A - B * K, B, C, D));
+step(sys_controlled)
+```
 
 ### 积分反馈控制器
 
@@ -429,8 +547,8 @@ $$
 $$
 \dot {\mathbf x'} = \begin{bmatrix}
 A & 0 \\
-C & 0
-\end{bmatrix} \mathbf x' + u \begin{bmatrix} B \\ D \end{bmatrix} + \begin{bmatrix} 0 \\ r \end{bmatrix},
+-C & 0
+\end{bmatrix} \mathbf x' + u \begin{bmatrix} B \\ -D \end{bmatrix} + \begin{bmatrix} 0 \\ r \end{bmatrix},
 $$
 输出方程为
 $$
@@ -445,7 +563,11 @@ $$
 $$
 \dot {\mathbf x'} = \begin{bmatrix} A - B F_1 & - B F_2 \\ -C & 0 \end{bmatrix} \mathbf x' + \begin{bmatrix} 0 \\ r \end{bmatrix}.
 $$
-之后通过放置极点即可完成控制器的设计。
+之后通过计算特征方程并配置极点即可完成控制器的设计。
+
+![](/assets/system/state-space-controller.svg){: .align-center}
+
+上图展示了两种状态反馈控制器的设计框图，可供参考。
 
 ### 观测器
 
@@ -455,19 +577,36 @@ $$
 $$
 \dot {\hat x} = A \hat x + B u - L(\hat y - y),
 $$
-其中$\hat y = C \hat x + D u$为估计的系统的输出。
+其中$\hat y = C \hat x + D u$为估计的系统的输出，则总的状态方程为
+$$
+\dot{\hat x} = (A - LC) \hat x + (B-LD) u + Ly.
+$$
+一般仅考虑前馈矩阵为零的系统，此时状态方程为
+$$
+\dot{\hat x} = (A - LC) \hat x + B u + Ly.
+$$
 
 观测器的误差，定义为$\epsilon = x - \hat x$，的状态方程为
 $$
 \begin{aligned}
 \dot \epsilon &= \dot x - \dot{\hat x} \\
-&= Ax + Bu - (A\hat x + Bu - L(\hat y - y)) \\
-&= (A + LC) (x - \hat x) \\ &= (A + LC) \epsilon
+&= Ax + Bu - ((A - LC) \hat x + B u + LCx) \\
+&= (A - LC) (x - \hat x) \\ &= (A - LC) \epsilon
 \end{aligned}
 $$
-我们希望，当$t \to \infty$时，观测器的误差趋近于零，这等价于系统渐进稳定，即矩阵$A+LC$稳定。
-这可以通过配置矩阵$A+LC$的极点实现，而这样的极点存在的一个充分条件是系统可观测。
-若$\mathcal O\_{A,C}$满秩，则可任意选定稳定的极点来构造$L$。
+我们希望，当$t \to \infty$时，观测器的误差趋近于零，这等价于系统渐进稳定，即矩阵$A-LC$稳定。
+这可以通过配置矩阵$A-LC$的极点实现，而这样的极点存在的充分必要条件是误差系统可控，而根据对偶原理，这又等价于原系统可观测。
+因此，若$\mathcal O\_{A,C}$满秩，则可任意选定稳定的极点来构造$L$。
 
 实践上，一般通过系统的稳定极点（即位于负平面的极点）乘一个大系数（如$10$）来构造$L$。
 这样选择能够保证观测器收敛且响应速度较快。
+
+我们可以使用观测器的输出作为状态反馈控制器的输入。
+通过计算容易证明，原开环系统加上观测器和反馈控制器一同构成的闭环系统的传递函数，与直接使用系统状态构成的反馈控制器形成的闭环系统等同。
+
+此外，通过观测器设计的闭环系统的特征多项式为
+$$
+\det(s \mathbf I - (A - BK)) \det (s \mathbf I - (A - LC))
+$$
+这意味着观测器的引入极点不会影响被控系统本身的动态特性，这一命题称为分离定理。
+分离定理说明，我们总是可以分开设计观测器和控制器，而不必担心两者互相干扰。

@@ -74,7 +74,7 @@ $$
 这说明对所有函数$f$，$f-S_n(f)$“垂直于”三角多项式构成的“平面”，如下图所示。
 
 ![](/assets/perpendicular.svg)
-{: .center-image}
+{: .align-center}
 
 类比于勾股定理，我们有：
 $$
