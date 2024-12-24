@@ -76,12 +76,15 @@ $$-\frac{d}{dt} \frac{\partial E_k}{\partial \dot q_n} + \frac{\partial E_k}{\pa
 考虑欧拉-伯努利梁条件，设梁的纵向位移为$v(x, t)$，则其弯折角为
 $$\omega \approx \tan \omega = \frac{\partial v}{\partial x}$$
 单个横截面刚体内每一点的横向位移为
-$$u(x,y,t) = - \omega y = - \frac{\partial v}{\partial x}$$
+$$u(x,y,t) = - \omega y = - y\frac{\partial v}{\partial x}$$
 从而应变和应力为
 $$\epsilon = \frac{\partial u}{\partial x} = - y \frac{\partial^2 v}{\partial x^2}, \quad \sigma = E \epsilon =  E y \frac{\partial^2 v}{\partial x^2}$$
 而总的形变能为
-$$V = \frac{1}{2} \int_0^L \int_\Omega \sigma : \epsilon \, d\Omega dx = \frac 1 2 \int_0^L E J \left( \frac{\partial^2 v}{\partial x^2} \right)^2\,dx$$
-也可直接使用之前求过的形变能公式。
+$$V = \frac{1}{2} \int_0^L \int_\Omega \sigma : \epsilon \, d\Omega dx = \frac 1 2 \int_0^L E J \left( \frac{\partial^2 v}{\partial x^2} \right)^2\,dx,$$
+其中
+$$J = \int_\Omega y^2 \, \mathrm d y$$
+是横截面刚体沿Y轴的转矩。
+这一步相当于使用之前求过的形变能公式。
 动能容易求解：
 $$E_k = \frac{1}{2} \int_0^L \rho S \dot v^2 \, d x$$
 代入哈密顿方程，得到
