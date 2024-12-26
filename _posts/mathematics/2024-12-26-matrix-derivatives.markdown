@@ -57,6 +57,26 @@ $$
 $$\nabla x^T A x = 2 Ax.$$
 这和常见的二次函数的一阶导非常相似。
 
+### 例子：最小二乘
+
+设$\mathbf X \in \mathbb R^{n \times p}, \mathbf y \in \mathbb R^n$，试求向量$\mathbf w \in \mathbb R^p$，使得
+$$\mathcal L(\mathbf w) = \frac{1}{2} \Vert \mathbf y -  \mathbf X \mathbf w \Vert^2 = \frac{1}{2} (\mathbf y - \mathbf X \mathbf w)^2$$
+最小。<br/>
+计算梯度，有
+$$
+\frac{\partial \mathcal L}{\partial \mathbf w} = \frac{\partial \mathcal L}{\partial \mathbf y - \mathbf X \mathbf w} \frac{\partial \mathbf y - \mathbf X \mathbf w }{\partial \mathbf w} = (\mathbf y - \mathbf X \mathbf w)^T \mathbf X.
+$$
+这里使用了恒等式
+$$\frac{\partial \Vert \mathbf x \Vert^2}{\partial \mathbf x} = \frac{\partial \mathbf x^T \cdot \mathbf x}{\partial \mathbf x} = 2 \mathbf x^T.$$
+现在令梯度为零，则
+$$\mathbf y \mathbf x^T - \mathbf W_{LS} \mathbf x \mathbf x^T = 0,$$
+解得
+$$\mathbf W_{LS} = \mathbf y \mathbf x^T (\mathbf x \mathbf x^T)^{-1} .$$
+{: .exampl}
+
+细心的读者会发现此处使用的二次型公式与上文介绍的相差一个转置，后文会介绍这一问题。
+实践上，矩阵$\mathbf X$会比实际数据多一行全一，这其实代表线性拟合中的截距。
+
 ## 矩阵的梯度
 
 接下来我们考虑矩阵的梯度。
@@ -90,11 +110,14 @@ $$\nabla_{\mathbf x} f = \left( \frac{\partial f}{\partial \mathbf x} \right)^T.
 
 使用分子记法的一大好处是我们可以定义矩阵的微元。
 
-矩阵$\mathbf A$的微元定义为
-$$\mathrm d \mathbf A = \begin{pmatrix}\mathrm d A_{11} & \cdots & \mathrm d A_{1m} \\ \vdots & \ddots & \vdots \\ \mathrm d A_{n1} & \cdots & \mathrm d A_{nm} \end{pmatrix}.$$
+矩阵$\mathbf X$的微元（微分形式）定义为
+$$\mathrm d \mathbf X = \begin{pmatrix}\mathrm d X_{11} & \cdots & \mathrm d X_{1m} \\ \vdots & \ddots & \vdots \\ \mathrm d X_{n1} & \cdots & \mathrm d X_{nm} \end{pmatrix}.$$
+欲在微元和微分之间转换，可使用
+$$\mathrm d y = \mathrm{tr}(\mathbf A \mathrm d \mathbf X) = \mathbf A^T : \mathrm d\mathbf X \iff \frac{\partial y}{\partial \mathbf X} = \mathbf A,$$
+其中$:$是二阶张量内积，即弗罗比尼乌斯内积。
 {: .definition}
 
-利用矩阵微元，能够简化许多计算，例如证明以下命题。
+利用矩阵微元，能够简化许多计算，例如证明以下几个命题。
 
 <small>（雅可比公式）</small>
 设$\mathbf A$为一非奇异方阵，则
@@ -125,7 +148,7 @@ $$
 &= \mathrm{tr}(\mathrm{adj}(\mathbf A) \cdot \mathrm d \mathbf A),
 \end{aligned}
 $$
-其中$\mathrm{adj}$表示伴随矩阵，$:$是二阶张量内积，即弗罗比尼乌斯内积。
+其中$\mathrm{adj}$表示伴随矩阵。
 最后注意到
 $$\mathrm{adj}(\mathbf A) = \det \mathbf A \cdot \mathbf A^{-1},$$
 带入即完成证明。
@@ -136,3 +159,21 @@ $$\mathrm{adj}(\mathbf A) = \det \mathbf A \cdot \mathbf A^{-1},$$
 设$\mathbf A, \mathbf B, \mathbf C$为三矩阵，且$\mathbf C = \mathbf A \circ \mathbf B$，其中$\circ$表示任意一种乘积，包括但不限于：矩阵乘法、弗罗比尼乌斯内积、阿达马积等，那么
 $$\mathrm d \mathbf C = \mathrm d \mathbf A \circ \mathbf B + \mathbf A \circ \mathrm d \mathbf B.$$
 {: .proposition}
+
+利用这一结论，我们可以证明以下命题。
+
+设$\mathbf a, \mathbf b$为二列向量，$\mathbf X$为一矩阵，则二次型对矩阵的偏导数为
+$$\frac{\partial \mathbf {a^\mathit{T} X b}}{\partial \mathbf X} = \mathbf b \mathbf a^T.$$
+{: .proposition}
+
+考虑矩阵微元
+$$
+\begin{aligned}
+\mathrm d (\mathbf a^T \mathbf{Xb}) &= \cancel{\mathrm d \mathbf a^T \cdot \mathbf{Xb}} + \mathbf a^T \cdot \mathrm d\mathbf X \cdot \mathbf b + \cancel{\mathbf a^T \mathbf X \cdot \mathrm d \mathbf b} \\
+&= a_i \mathrm d X_{ij} b_j = a_i b_j \mathrm d X_{ij} \\
+&= \mathbf a \mathbf b^T : \mathrm d \mathbf X \\
+\iff \frac{\partial \mathbf {a^\mathit{T} X b}}{\partial \mathbf X} &= (\mathbf a \mathbf b^T)^T= \mathbf b \mathbf a^T.
+\end{aligned}
+$$
+{: .proof}
+
