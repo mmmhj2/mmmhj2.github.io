@@ -1,5 +1,5 @@
 ---
-title: "微分几何初步——微分形式"
+title: "微分几何初步——微分形式的定义"
 categories: "分析"
 ---
 
@@ -53,14 +53,14 @@ $$\dif x_1 \cdots \dif x_n$$
 出于此原因，我们约定微分形式一定按脚标从小到大的顺序出现，这样，$n$维空间中的$k$-形式最多可能含有
 $$\binom{n}{k} = \frac{n!}{k! (n-k)!}$$
 项，而两个微分形式相等，当且仅当在这种排列下其系数函数逐个相等。
-我们可以将系数视为标量，将这样来看，开集合$U$上所有的$k$形式构成一个线性空间，记为$\Omega^k(U)$，而所有简单的微分形式
+我们可以将系数视为标量，将这样来看，开集合$U$上所有的$k$形式*构成一个线性空间*，记为$\Omega^k(U)$，而所有简单的微分形式
 $$\alpha_I = \bigwedge_I \dif x_i,$$
-其中$I$是递增的下标索引，构成了其一组基底。
+其中$I$是递增的下标索引，构成了其一组*基底*。
 例如，$\mathbb R^3$上的$2$-形式的基底为
 $$\dif x_1 \dif x_2, \, \dif x_1 \dif x_3, \, \dif x_2 \dif x_3.$$
 
 在定义给出了微分形式的基本定义后，我们可以给出其上定义的计算。
-在线性空间$\Omega^k$中的加法与内积的定义是显然的，我们现在考虑其外积。
+在线性空间$\Omega^k$中的加法与数乘的定义是显然的，我们现在考虑其外积。
 
 同一开集合上定义的$k$-形式$\alpha$与$l$-形式$\beta$的外积定义为
 $$\alpha \wedge \beta = \sum_{I,J} f_I g_J \dif x_I \dif x_J,$$
@@ -305,11 +305,86 @@ $$\dif F = 0, \dif \star F = J,$$
 其中$F$为电磁场张量，$J$为电流张量。
 {: .theorem}
 
+### 拉回
 
-## 微分形式与积分
+数学中常见对函数的复合，而这种复合可能可以改变函数的自变量。
+例如，若一个函数$f$的自变量为$y$，而$y$的自变量为$x$，那么存在一个复合函数
+$$g(x) = f \circ y (x) = f(y(x))$$
+的自变量为$x$。
+在这种情况下，我们可以说函数$f$被$y$*拉回*（pulled back）至$x$上，记为
+$$g(x) = y^* (f) (x).$$
+这种操作在微积分中常被称为“换元”。
+我们现在希望研究如何以微分形式来描述这种换元。
 
-### 1形式的积分
+设$\alpha$为欧氏空间$\mathbb R^n$的开子集$V$上定义的$k$-形式，即
+$$\alpha = \sum_I f_I \dif y_I,$$
+$\phi: U \to V$为$U \subset \mathbb R^n$开集合上的连续映射，那么$\alpha$沿$\phi$的*拉回*（pullback）是定义在$U$上的$k$-形式：
+$$\phi^* (\alpha) = \sum_I \phi^*(f_I) \phi^* (\dif y_I),$$
+其中
+$$\phi^*(f_I)(x) = f_I (\phi(x)), \; \phi^*(\dif y_I) = \dif \phi_I. $$
+从而拉回映射$\phi^*$是从$\Omega^k(V)$到$\Omega^k(U)$的线性映射。
+{: .definition}
 
-### 广义斯托克斯公式
+例如，我们可计算极坐标换元对微分形式的影响，记
+$$
+\phi(\rho, \theta) = \begin{pmatrix} \rho \cos \theta \\ \rho \sin \theta\end{pmatrix} = \begin{pmatrix} x \\ y \end{pmatrix}.
+$$
+则
+$$
+\begin{aligned}
+\dif x = \dif \phi_1^* &= \cos\theta\dif\rho - \rho\sin\theta\dif\theta \\
+\dif y = \dif \phi_2^* &= \sin\theta\dif\rho + \rho\cos\theta\dif\theta \\
+\dif x \dif y = \dif \phi_1^* \dif \phi_2^* &= \rho \dif\rho\dif\theta.
+\end{aligned}
+$$
 
-## 流形与微分形式
+微分形式上的拉回具有许多重要的性质，此处列举一些。
+
+拉回映射
+$$\phi^*: \Omega^k(V) \to \Omega^k(U)$$
+具有线性：
+$$\phi^*(a \alpha + b \beta) = a \phi^*(\alpha) + b \phi(\beta).$$
+具有保乘法性：
+$$\phi^*(\alpha \beta) = \phi^*(\alpha) \phi^*(\beta).$$
+具有保外微分性：
+$$\dif \phi^*(\alpha) = \phi^*(\dif \alpha).$$
+其复合满足：
+$$\phi^*(\psi^*(\alpha)) = (\psi \circ \phi)^*(\alpha).$$
+{: .proposition}
+
+保楔积和保外微分是拉回映射最重要的性质之一。
+
+这里只给出保微分性的证明，首先考虑$\alpha$为0-形式的情况，此时$\alpha = f$为一函数，有
+$$
+\begin{aligned}
+\phi^* (\dif f) &= \phi^* \sum_{i=1}^m \partial_i f \dif y_i \\
+&= \sum_{i=1}^m \phi^*\left(\frac{\partial f}{\partial y_i}\right) \sum_{j=1}^n \frac{\partial \phi_i}{\partial x_j} \dif x_j \\
+&= \sum_{i=1}^m \sum_{j=1}^n \phi^*\left(\frac{\partial f}{\partial y_i}\right)\frac{\partial \phi_i}{\partial x_j} \dif x_j \\
+&= \sum_{i=1}^m \sum_{j=1}^n \frac{\partial f(\phi(x))}{\partial \phi_i(x)} \frac{\partial \phi_i (x)}{\partial x_j} \dif x_j \\
+&= \sum_{j=1}^n \frac{\partial f(\phi(x))}{\partial x_j} \dif x_j = \dif \phi^*(f).
+\end{aligned}
+$$
+现在考虑任意微分形式$\alpha$，有
+$$\phi^* (\dif \alpha) = \sum_I \phi^* (\dif f_I \dif y_I) = \sum_I \dif \phi^*(f_I) \dif \phi_I.$$
+然后
+$$
+\begin{aligned}
+\dif (\phi^*(\alpha)) &= \dif \sum_I \phi^*(f_I) \dif \phi_I \\
+& = \sum_I \dif \phi^*(f_I) \dif \phi_I + \sum_I \phi^*(f_I) \dif (\dif \phi_I)
+\end{aligned}
+$$
+这里注意到$\dif \phi\_I$是一个微分形式，而不是外微分，因此在其上施加外微分并不能将其消去。
+但是，注意到$\dif \phi\_I$中每一项都是恰当的，因此都是闭合的，因此，由于乘法求导规则，它们的楔积也是闭合的，因此这一项确实为零，从而
+$$\dif (\phi^*(\alpha)) = \sum_I \dif \phi^*(f_I) \dif \phi_I = \phi^* (\dif \alpha).$$
+{: .proof}
+
+我们知道，行列式表示了变换导致的单位体积的变换，而这与拉回的几何意义非常相似。
+我们不加证明地给出下一个命题，可用行列式来求出任何拉回变换的表达式。
+
+设$\phi: U \to V$为一连续变换，$U \subset \mathbb R^n$、$V \subset \mathbb R^m$为开集合。
+设$\alpha$为$V$上的k阶微分形式，则$\phi^*(\alpha)$是$U$上的k阶微分形式：
+$$\phi^*(\alpha) = \sum_J g_J \dif x_J, \; g_J = \sum_I \phi^*(f_I) \det(J \phi_{I,J}),$$
+其中$\det(J \phi_{I,J})$表示取雅可比矩阵$J\phi$的$I$行、$J$列形成的子矩阵的行列式。
+特别地，若$n = m$，则
+$$\phi^*(\dif y_1 \cdots \dif y_n) = \det(J \phi) \dif x_1 \cdots \dif x_n.$$
+{: .theorem}
