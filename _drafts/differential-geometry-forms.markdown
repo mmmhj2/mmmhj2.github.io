@@ -38,6 +38,7 @@ $$\dif x_i \dif x_i = 0.$$
 
 微分形式之间的乘积实际上是张量积，有些作者会使用楔积记号来表示：
 $$\dif x_i \wedge \dif x_j = - \dif x_j \wedge \dif x_i.$$
+若不至于产生歧义，则本文一般将楔积符号略去。
 
 例如，$\mathbb R^n$上所有的1形式均可写为
 $$\alpha = f_1 \dif x_1 + f_2 \dif x_2 + \cdots + f_n \dif x_n.$$
@@ -156,7 +157,7 @@ $$\star \dif x_i = (-1)^{i+1} \dif x_1 \cdots \widehat{\dif x_i} \cdots \dif x_n
 其中$\widehat{\circ}$表示仅省略该项。
 
 若我们从微分形式是线性空间、且是算子空间的子空间这一视点出发，那么从几何上看，霍奇星算子类似于取原微分形式定义的子空间的正交子空间。
-这一视点须在以张量定义的现代微分形式中才能得到说明。
+这一视点须在以张量定义的现代微分形式中才能得到说明，但是蕴涵了一个重要的问题，即霍奇星算子的定义与线性空间的结构密切相关——更具体地说，与线性空间的内积的定义密切相关。
 
 利用微分形式和霍奇星算子，矢量分析中的所有微分算符均可重新定义并推广到更高的维度。
 
@@ -208,11 +209,102 @@ $$\Delta f = \nabla \cdot \nabla f = \star \dif \star \dif f.$$
 
 证明从略。
 
-设$F: \mathbb R^n \to \mathbb R^n$为一矢量场，则其旋度满足
+设$F: \mathbb R^3 \to \mathbb R^3$为一矢量场，则其旋度满足
 $$(\nabla \times F) \cdot \dif \mathbf x = \star \dif \alpha.$$
 {: .proposition}
 
+首先计算
+$$
+\begin{aligned}
+\dif \alpha &= \sum_{i,j=1}^n \frac{\partial F_i}{\partial x_j} \dif x_j \dif x_i \\
+&= \sum_{1 \le i < j \le n} \left( \frac{\partial F_j}{\partial x_i} - \frac{\partial F_i}{\partial x_j} \right) \dif x_i \dif x_j.
+\end{aligned}
+$$
+然后加上霍奇星算子，得到
+$$
+\begin{aligned}
+\star \dif \alpha &= \sum_{1 \le i < j \le n} (-1)^{i+j+1} \left( \frac{\partial F_j}{\partial x_i} - \frac{\partial F_i}{\partial x_j} \right) \dif x_1 \cdots \widehat{\dif x_i} \cdots \widehat{\dif x_j} \cdots \dif x_n.
+\end{aligned}
+$$
+对于三维的情况，可以验证
+$$
+\star \dif \alpha = \left(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\right) \dif x_1 + \left(\frac{\partial F_3}{\partial x_1} - \frac{\partial F_1}{\partial x_3}\right) \dif x_2 + \left(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\right) \dif x_3.
+$$
+而
+$$\nabla \times \mathbf F = \left(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\right) \mathbf e_1 + \left(\frac{\partial F_3}{\partial x_1} - \frac{\partial F_1}{\partial x_3}\right) \mathbf e_2 + \left(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\right) \mathbf e_3.$$
+从而证毕。
+{: .proof}
+
 #### 例子：麦克斯韦方程
+
+本节中我们考虑闵可夫斯基时空中的麦克斯韦方程。
+
+闵可夫斯基时空是一个特殊的$n+1$维线性空间，前$n$维是空间维度，最后一维是时间维度。
+闵可夫斯基空间中的内积定义为
+$$
+\langle a, b \rangle = - a_{n+1} b_{n+1} + \sum_{i = 1}^n a_i b_i.
+$$
+这个内积自然地导出一个范数。
+在该定义下，若一个向量的范数大于零，那么这个向量是“类空”的（spacelike）；若范数小于零，那么这个向量是“类时”的（timelike）；若范数等于零，那么这个向量是“类光”的（lightlike）。
+
+这个定义来自洛伦兹变换中的不变量：
+$$
+x^2 + y^2 + z^2 + (ict)^2 = C,
+$$
+其中$i$是虚数单位，$c$是光速，令$x\_4 = ct$即可得到这个范数。
+
+在该内积空间中，霍奇星算子的定义为
+$$\star\alpha = \sum_{I} f_{I} (\star \dif x_{I}), \; \star\dif x_I = \begin{cases}\mathrm{sgn}(\sigma) \dif x_{I^c} &, n+1 \not\in I \\ - \mathrm{sgn}(\sigma) \dif x_{I^c} &, n+1 \in I\end{cases}.$$
+这和正常的欧几里得空间几乎一致，仅在微分形式中含有时间维时不同。
+
+考虑高斯单位制下麦克斯韦方程组的经典形式：
+$$
+\begin{aligned}
+\nabla \times \mathbf E &= - \frac{1}{c} \frac{\partial \mathbf B}{\partial t}, \\
+\nabla \times \mathbf H &= - \frac{4\pi}{c}\mathbf J + \frac{1}{c} \frac{\partial \mathbf D}{\partial t}, \\
+\nabla \cdot \mathbf D &= 4 \pi \rho, \\
+\nabla \cdot \mathbf B &= \mathbf 0.
+\end{aligned}
+$$
+在真空中，有$\mathbf E = \mathbf D, \mathbf B = \mathbf H$。
+
+设
+$$
+F = (E_1 \dif x_1 + E_2 \dif x_2 + E_3 \dif x_3) \dif x_4 + B_1 \dif x_2 \dif x_3 + B_2 \dif x_3 \dif x_1 + B_3 \dif x_1 \dif x_2.
+$$
+有
+$$
+\begin{aligned}
+\dif F &= [(\partial_2 E_1 \dif x_2 + \partial_3 E_1 \dif x_3) \dif x_1 \\
+& + (\partial_1 E_2 \dif x_1 + \partial_3 E_2 \dif x_3) \dif x_2 \\
+& + (\partial_1 E_3 \dif x_1 + \partial_2 E_3 \dif x_2) \dif x_3] \dif x_4 \\
+& + (\partial_1 B_1 \dif x_1 + \partial_4 B_1 \dif x_4) \dif x_2 \dif x_3 \\
+& + (\partial_2 B_2 \dif x_2 + \partial_4 B_2 \dif x_4) \dif x_3 \dif x_1 \\
+& + (\partial_3 B_3 \dif x_3 + \partial_4 B_3 \dif x_4) \dif x_1 \dif x_2
+\end{aligned}
+$$
+重组，得到
+$$
+\begin{aligned}
+\dif F &= (\partial_1 B_1 + \partial_2 B_2 + \partial_3 B_3) \dif x_1 \dif x_2 \dif x_3 \\
+& + (\partial_1 E_2 - \partial_2 E_1 + \partial_4 B_3) \dif x_1 \dif x_2 \dif x_4 \\
+& + (\partial_2 E_3 - \partial_3 E_2 + \partial_4 B_1) \dif x_2 \dif x_3 \dif x_4 \\
+& + (\partial_3 E_1 - \partial_1 E_3 + \partial_4 B_2) \dif x_3 \dif x_1 \dif x_4 \\
+\end{aligned}
+$$
+该式为零，当且仅当各个分量均为零，即可得到
+$$\nabla \cdot \mathbf B = 0,\; \nabla \times \mathbf E = - \frac{\partial \mathbf B}{\partial x_4} = -\frac{1}{c} \frac{\partial \mathbf B}{\partial t}.$$
+
+现在，令
+$$J = - \frac{4\pi}{c} (J_1 \dif x_2 \dif x_3 + J_2 \dif x_3 \dif x_1 + J_3 \dif x_1 \dif x_2 ) \dif x_4 + 4\pi \rho \dif x_1 \dif x_2 \dif x_3.$$
+计算$F$的闵可夫斯基霍奇星算子，经过相似的计算，可以证明
+$$\dif \star F = J \iff \nabla \times \mathbf B = - \frac{4\pi}{c}\mathbf J + \frac{1}{c} \frac{\partial \mathbf D}{\partial t},\nabla \cdot \mathbf E = 4 \pi \rho.$$
+
+麦克斯韦方程的微分形式为
+$$\dif F = 0, \dif \star F = J,$$
+其中$F$为电磁场张量，$J$为电流张量。
+{: .theorem}
+
 
 ## 微分形式与积分
 
