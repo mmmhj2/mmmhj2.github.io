@@ -132,7 +132,7 @@ $$\dif \beta = \alpha,$$
 
 闭合形式是否一定是恰当形式呢？这一问题的答案取决于微分形式所在的空间的拓扑性质（称为“形状”）。
 作为一个特例，欧几里得空间中的1-闭合形式一定是恰当的。
-这实际上重述了物理学中的一个命题——向量场的旋度为零，当且仅当其是保守场。
+这实际上重述了物理学中的一个命题——保守场一定存在势函数。
 
 #### 霍奇星算子
 
@@ -186,8 +186,8 @@ $$
 根据该命题，标量场的梯度也可写为
 $$\nabla f = \frac{\partial f}{\partial \mathbf x}.$$
 
-设$F: \mathbb R^n \to \mathbb R^n$为一矢量场，则其散度为
-$$\nabla \cdot F = \star (\dif \star \alpha).$$
+设$\mathbf F: \mathbb R^n \to \mathbb R^n$为一矢量场，则其散度为
+$$\nabla \cdot \mathbf F = \star (\dif \star \alpha).$$
 {: .proposition}
 
 注意到
@@ -209,8 +209,8 @@ $$\Delta f = \nabla \cdot \nabla f = \star \dif \star \dif f.$$
 
 证明从略。
 
-设$F: \mathbb R^3 \to \mathbb R^3$为一矢量场，则其旋度满足
-$$(\nabla \times F) \cdot \dif \mathbf x = \star \dif \alpha.$$
+设$\mathbf F: \mathbb R^3 \to \mathbb R^3$为一矢量场，则其旋度满足
+$$(\nabla \times \mathbf F) \cdot \dif \mathbf x = \star \dif \alpha.$$
 {: .proposition}
 
 首先计算
@@ -234,6 +234,27 @@ $$
 $$\nabla \times \mathbf F = \left(\frac{\partial F_3}{\partial x_2} - \frac{\partial F_2}{\partial x_3}\right) \mathbf e_1 + \left(\frac{\partial F_3}{\partial x_1} - \frac{\partial F_1}{\partial x_3}\right) \mathbf e_2 + \left(\frac{\partial F_2}{\partial x_1} - \frac{\partial F_1}{\partial x_2}\right) \mathbf e_3.$$
 从而证毕。
 {: .proof}
+
+我们使用下一个命题总结上面关于梯度、散度和旋度的结论。
+
+设映射$c$是将向量场与其1-形式联系起来的双射：
+$$
+\begin{array}{cccc}
+c :& \mathbb R^3 \times \mathbb R^3 & \to & \Omega^1(\mathbb R^3) \\
+& f_1 \mathbf{e}_1 + f_2 \mathbf{e}_2 + f_3 \mathbf{e}_3 & \mapsto & f_1 \dif x_1 + f_2 \dif x_2 + f_3 \dif x_3,
+\end{array}
+$$
+即$\alpha = c(\mathbf F)$，则梯度、散度和旋度可写为
+$$
+\begin{aligned}
+\nabla f & = c^{-1} (\dif f) \\
+\nabla \cdot \mathbf F & = \star \dif \star c(\mathbf F) \\
+\nabla \times \mathbf F &= c^{-1} (\star \dif c(\mathbf F))
+\end{aligned}
+$$
+{: .proposition}
+
+也可以说，散度是$\Omega^2(\mathbb R^3)$的外导数、旋度是$\Omega^1(\mathbb R^3)$的外导数。
 
 #### 例子：麦克斯韦方程
 
@@ -332,9 +353,9 @@ $$
 则
 $$
 \begin{aligned}
-\dif x = \dif \phi_1^* &= \cos\theta\dif\rho - \rho\sin\theta\dif\theta \\
-\dif y = \dif \phi_2^* &= \sin\theta\dif\rho + \rho\cos\theta\dif\theta \\
-\dif x \dif y = \dif \phi_1^* \dif \phi_2^* &= \rho \dif\rho\dif\theta.
+\phi^*(\dif x) = \dif \phi_1^* &= \cos\theta\dif\rho - \rho\sin\theta\dif\theta \\
+\phi^*(\dif y) = \dif \phi_2^* &= \sin\theta\dif\rho + \rho\cos\theta\dif\theta \\
+\phi^*(\dif x \dif y) = \dif \phi_1^* \dif \phi_2^* &= \rho \dif\rho\dif\theta.
 \end{aligned}
 $$
 
