@@ -342,7 +342,8 @@ $$\alpha = \sum_I f_I \dif y_I,$$
 $\phi: U \to V$为$U \subset \mathbb R^n$开集合上的连续映射，那么$\alpha$沿$\phi$的*拉回*（pullback）是定义在$U$上的$k$-形式：
 $$\phi^* (\alpha) = \sum_I \phi^*(f_I) \phi^* (\dif y_I),$$
 其中
-$$\phi^*(f_I)(x) = f_I (\phi(x)), \; \phi^*(\dif y_I) = \dif \phi_I. $$
+$$\phi^*(f_I)(x) = f_I (\phi(x)), \; \phi^*(\dif y_I) = \dif \phi_I, $$
+其中$\dif \phi\_I$表示对该函数分量的外微分。
 从而拉回映射$\phi^*$是从$\Omega^k(V)$到$\Omega^k(U)$的线性映射。
 {: .definition}
 
