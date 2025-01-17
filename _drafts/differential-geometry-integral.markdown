@@ -43,12 +43,14 @@ $$p'(s) \neq 0, \quad \forall s \in [a', b'].$$
 则曲线$c \circ p$和$c$的像完全相同。映射$p$称为曲线的*重参数化映射*（Reparametrization）
 {: .definition}
 
+需要注意的是，重参数化总是复合在原曲线之前，这和拉回有些类似。
+
 根据界值定理，由于$p$导数不为零且连续，其导数必定恒正或恒负。
 若其导数恒正，则称该重参数化保持了原曲线的方向，否则称其反转了方向。
 
 符合直觉的是，函数在曲线的任何保持方向的重参数化上的积分的值相同。
 
-函数在曲线上的积分仅曲线的参数化方向无关，即
+函数在曲线上的积分仅曲线的参数化方向有关，即
 $$\forall p: [a', b'] \to [a, b], \quad \int_{c \circ p} \alpha = \begin{cases} \int_c \alpha &p \text{保持方向}, \\ - \int_c \alpha & p\text{反转方向}. \end{cases}$$
 {: .theorem}
 
@@ -146,4 +148,163 @@ $$
 
 ## 高阶微分形式的积分
 
+接下来我们将研究更高阶的微分形式的积分，并最终导出广义斯托克斯公式，从而给出高斯散度公式和斯托克斯旋度公式。
+
+首先，我们需要将区间和曲线的定义扩展到更高维。
+
+设$S$为$\mathbb R^k$上的一个紧密（有界闭）集合，若其具有以下形式：
+$$S = [a_1, b_1] \times [a_2, b_2] \times \cdots \times [a_k, b_k]$$
+则称其为一个$k$维超矩形（hyperrectangle）。
+该空间上的一个路径曲面定义为从矩形到开集合$U \subset \mathbb R^n$的光滑映射$c$
+$$c: S \to U.$$
+{: .definition}
+
+在定义中我们没有限制$k$与$n$的大小关系，因此矩形的维数和曲面所在空间的维数其实没有任何关系。
+但是我们希望研究微分形式的积分，而微分形式的阶数不能高于空间的维数，所以我们一般认为$k \le n$。
+
+根据定义，路径$c$对$k$-形式$\alpha$的拉回是$S$上的$k$-形式，可写为：
+$$c^*(\alpha) = h(\mathbf t) \dif t_1 \dif t_2 \cdots \dif t_k$$
+其中$h$是从$S$到$\mathbb R$的一个映射。
+利用这个拉回，我们可定义其积分。
+
+$k$-形式$\alpha$在路径$c$上的积分定义为
+$$\int_c \alpha = \int_S c^*(\alpha) = \int_{a_k}^{b_k} \cdots \int_{a_2}^{b_2} \int_{a_1}^{b_1} h(\mathbf t) \dif t_1 \dif t_2 \cdots \dif t_k.$$
+{: .definition}
+
+这个积分的定义可以自然地扩展到任何紧密集合上，而不一定需要是矩形。
+
+一个特别的情况是0阶微分形式，即光滑函数，的积分。
+若我们认为零维欧氏空间是仅含零的平凡空间，那么其上的任何一条路径都仅含一个点
+$$c(0) = \mathbf x.$$
+这样的积分为
+$$\int_c f = f(\mathbf x)$$
+即只有单个的函数值。
+
+### 重参数化
+
+高维曲线的重参数化与一维的差距不大。
+
+设$S, S'$为二相同维的矩形，则二阶可微的双射$p: S' \times S$可称为重参数化映射，若对$S'$上任意一点，皆有
+$$\det J(p) \neq 0.$$
+若$\det J(p) > 0$，则称其保持方向不变，否则称其反转了方向。
+{: .definition}
+
+函数在路径上的积分仅曲线的参数化方向有关，即
+$$\forall p: S' \to S, \quad \int_{c \circ p} \alpha = \begin{cases} \int_c \alpha &p \text{保持方向}, \\ - \int_c \alpha & p\text{反转方向}. \end{cases}$$
+{: .proposition}
+
+这个命题有助于我们理解交换积分次序的符号问题。
+我们知道，交换积分的次序不会改变积分的结果，即
+$$\int_J \int_I f(x,y) \dif x \dif y = \int_I \int_J f(x,y) \dif y \dif x.$$
+而这似乎与我们所学的有所矛盾，因为交换微分形式的次序会反转符号
+$$f \dif x \dif y = - f \dif y \dif x.$$
+这里要注意积分的路径实际上进行了一次重参数化，
+在左侧的积分路径$c$定义在$I \times J$上，而在右侧的路径$c' = c\circ p$定义在$J \times I$上。
+注意到重参数化映射
+$$p: J \times I \to I \times J, \; (y, x) \mapsto (x, y).$$
+反转了方向，因此产生了一个负号并消去了交换微分次序产生的负号。
+更一般地，可以证明交换次序产生的重参数化映射是否反转方向，正好由这个置换的符号决定，从而这两个负号一定能抵消。
+
+对任何$k$维矩形，我们均可对其每一维的自变量应用一个重参数化映射
+$$
+\begin{array}{cccc}
+p: & [0, 1]^k & \to & [a_1, b_1] \times \cdots \times [a_k, b_k] \\
+& \begin{pmatrix}x_1 \\ \vdots \\ x_k\end{pmatrix} & \mapsto & \begin{pmatrix} (b_1 - a_1) x_1 + a_1 \\ \vdots \\ (b_k - a_k) x_k + a_k\end{pmatrix}
+\end{array}
+$$
+从而将其定义域限制在单位立方体上。
+容易证明这个映射是保持方向的，因此积分的值不变。
+之后我们将不失一般性地只研究这种在单位立方体上的积分。
+
+### 链与链上的积分
+
+当前，我们将积分路径的定义域限制在单位立方体上。
+很多时候，我们可能需要在多个这样的立方体上积分，为此，我们引入链的概念。
+
+$k$维单位立方体的线性组合构成一个群
+$$C_k = \left\{ \sum_i a_i c_i; \; k_i \in \mathbb Z \right\},$$
+其中$c\_i$即为单位立方体，也称奇异k维立方（singular $k$-cube），因为该映射不一定是双射。
+这个群中的元素称为$k$维链（$k$-chain），$a\_i$称为该链的系数。
+{: .definition}
+
+在链
+$$c = \sum_{p=1}^q a_p c_p$$
+上的积分，定义为在链的各个部分上积分之和
+$$\int_c \alpha = \sum_{p=1}^q a_p \int_{c_p} \alpha.$$
+{: .definition}
+
+注意我们并不计算链这个映射的值，即我们不在路径$c$上积分，而是在链的各个组成部分上积分。
+以零阶积分为例，考虑链
+$$c = \mathbf x_1(t) + \mathbf x_2(t) + \mathbf x_3(t),$$
+其中$\mathbf x\_i(t)$表示映射到点$\mathbf x\_i$的路径：
+$$\mathbf x_i(t) = \mathbf x_i.$$
+在这个链上的积分为
+$$\int_c f = f(\mathbf x_1) + f(\mathbf x_2) + f(\mathbf x_3),$$
+而不是
+$$\int_c f \neq f(\mathbf x_1 + \mathbf x_2 + \mathbf x_3).$$
+
+我们可以将积分的路径视为点、面积或体积微元，而链则表示了这些微元组合成的图形，即整个积分域。
+
+对一维的积分，微积分基本定理说明我们需要关心函数在端点处的值。
+对一条链上的积分，按照类似的思路，我们希望考虑其边界。
+
+### 链的边界
+
+$k$维路径$c$的边界$\partial c$是以下$2k$个$k-1$-维超立方体组成的链：
+$$
+\begin{aligned}
+c_{i, 0}(\mathbf t) &= (t_1, \dots, t_{i-1}, 0, t_i, \dots, t_k), \\
+c_{i, 1}(\mathbf t) &= (t_1, \dots, t_{i-1}, 1, t_i, \dots, t_k), & i \in [\![1, k]\!].
+\end{aligned}
+$$
+一般定义边界为
+$$\partial c = \sum_{i = 1}^k (-1)^i (c_{i,0} - c_{i,1}).$$
+约定零维路径的边界为$0$。
+$k$维链的边界定义为组成链的路径的边界的线性组合：
+$$\partial c = \sum_i a_i \partial c_i.$$
+这样，边界算子$\partial$可视为$C\_k$到$C\_{k-1}$的线性算子。
+{: .definition}
+
+这样，一维的路径——曲线——的边界有两个部分（端点），二维的路径——平面——的边界有四个部分（边）。
+
+链和外微分有一些相似之处，例如：
+
+边界的边界为零，即
+$$\partial(\partial c) = 0.$$
+{: .proposition}
+
+接下来我们将研究一类特殊的链，这些链的边界一定首尾相连。
+
+若$k$维立方体$c(t\_1, \dots, t\_k)$与某一参数$t\_i$无关，那么称这个立方体是*退化*（degenerate）的。
+若$k$维链中所有立方体都是退化的，那么称这条链是退化的。
+{: .definition}
+
+设$c$为一$k$维退化链，$k$-形式$\alpha$在其上的积分定为零，即
+$$\int_c \alpha = 0.$$
+{: .proposition}
+
+我们只考虑立方体的情况，链的情况可由线性直接得出。
+设立方体$c$与参数$t\_i$无关，取二映射：
+$$
+\begin{array}{cccc}
+f: & [0,1]^k & \to & [0,1]^{k-1} \\
+& (t_1, \dots, t_k) & \mapsto & (t_1, \cdots, t_{i-1}, t_{i+1}, \cdots, t_k) \\
+g: & [0,1]^{k-1} & \to & U \\
+& (t_1, \cdots, t_{k-1}) & \mapsto & c(t_1, \cdots, t_{i-1}, 0, t_{i}, \cdots, t_{k-1})
+\end{array}
+$$
+由于$c$与参数$t\_i$无关，有$c = g(f(\mathbf t))$。
+从而
+$$\int_c \alpha = \int_{[0,1]^k} c^*(\alpha) = \int_{[0,1]^k} f^* g^*(\alpha).$$
+现在，注意到$g^\*(\alpha)$是$k$阶微分形式，但是其所处的空间只有$k-1$维，因此该微分形式为零，从而原积分为零。
+{: .proof}
+
 ### 广义斯托克斯公式
+
+这一节中，我们将证明以下命题：
+
+<small>（广义斯托克斯公式, generalized Stokes' theorem）</small>
+{: .theorem}
+
+...
+{: .proof}
