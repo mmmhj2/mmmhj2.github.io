@@ -253,11 +253,11 @@ $$\int_c f \neq f(\mathbf x_1 + \mathbf x_2 + \mathbf x_3).$$
 $k$维路径$c$的边界$\partial c$是以下$2k$个$k-1$-维超立方体组成的链：
 $$
 \begin{aligned}
-c_{i, 0}(\mathbf t) &= (t_1, \dots, t_{i-1}, 0, t_i, \dots, t_k), \\
-c_{i, 1}(\mathbf t) &= (t_1, \dots, t_{i-1}, 1, t_i, \dots, t_k), & i \in [\![1, k]\!].
+c_{i, 0}(\mathbf t) &= c(t_1, \dots, t_{i-1}, 0, t_i, \dots, t_k), \\
+c_{i, 1}(\mathbf t) &= c(t_1, \dots, t_{i-1}, 1, t_i, \dots, t_k), & i \in [\![1, k]\!].
 \end{aligned}
 $$
-一般定义边界为
+一般定义一条链$c$的边界为
 $$\partial c = \sum_{i = 1}^k (-1)^i (c_{i,0} - c_{i,1}).$$
 约定零维路径的边界为$0$。
 $k$维链的边界定义为组成链的路径的边界的线性组合：
@@ -273,11 +273,31 @@ $$\partial c = \sum_i a_i \partial c_i.$$
 $$\partial(\partial c) = 0.$$
 {: .proposition}
 
-接下来我们将研究一类特殊的链，这些链的边界一定首尾相连。
+接下来我们将研究一类对积分来讲特殊的链。
 
 若$k$维立方体$c(t\_1, \dots, t\_k)$与某一参数$t\_i$无关，那么称这个立方体是*退化*（degenerate）的。
 若$k$维链中所有立方体都是退化的，那么称这条链是退化的。
 {: .definition}
+
+关于退化的链的边界，有一条比较显然的定理。
+
+$k$维退化链$c$的边界$\partial c$是退化的$k-1$维链。
+{: .proposition}
+
+不失一般性地，我们只考虑超立方体的情况。
+假设链$c(t\_1, \dots, t\_k)$与参数$t\_i$无关，考虑其边界：
+$$\partial c = \sum_{j=1}^k (-1)^j (c_{j,0}-c_{j,1}).$$
+而由于链与$t\_i$无关，有
+$$c_{i, 0}(t'_1, \dots, t'_{k-1}) = c_{i, 1}(t'_1, \dots, t'_{k-1})$$
+从而
+$$\partial c = \sum_{j\neq i} (-1)^j (c_{j,0}-c_{j,1}).$$
+而所有这些链中，都存在一个无关的参数，即占据原映射$c$参数$t\_i$位置的那个参数：
+当$j < i$时，这个参数是$t'\_{i-1}$；而当$j > i$是，这个参数是$t'\_i$。
+从而，所有立方体都是退化的，因此该链是退化的。
+{: .proof}
+
+退化立方体的几何意义是维数不足$k$的曲线，例如，退化的一维链就是空间中的一个点。
+而如同1-形式在单一点上的积分为零一样，退化的链的积分也总是零。
 
 设$c$为一$k$维退化链，$k$-形式$\alpha$在其上的积分定为零，即
 $$\int_c \alpha = 0.$$
@@ -299,12 +319,105 @@ $$\int_c \alpha = \int_{[0,1]^k} c^*(\alpha) = \int_{[0,1]^k} f^* g^*(\alpha).$$
 现在，注意到$g^\*(\alpha)$是$k$阶微分形式，但是其所处的空间只有$k-1$维，因此该微分形式为零，从而原积分为零。
 {: .proof}
 
+这意味着如果某一条链由退化的链和非退化的链两个部分组成，那么退化的链的部分不会对积分的结果产生任何影响，从而可以简化计算。
+
+若$k$维链$c$的边界$\partial c$是$k-1$维的退化链，那么称$c$为$k$维*环*（cycle）。若$c$由两个部分组成：
+$$c = \partial b + a$$
+其中$b$是$k+1$维链，$a$是$k$维的退化链，那么称$c$为*边界*（boundary）。
+{: .definition}
+
+这一定义有助于我们研究链及其边界上的积分。
+例如，在环的边界上的积分总是零。
+从直观上理解，根据边界算子的定义，若曲线的边界的所有部分都与某一项无关，那么说明该链上有一些曲线被消去了，而链被消去说明它们在空间上重合而系数相反，这就形成了环。
+另一方面，由于在退化链上的积分为零，在边界上的积分总是能化简为
+$$\int_c \alpha = \int_{\partial b + a} \alpha = \int_{\partial b} \alpha.$$
+因此，在$k$维边界$c$上的积分总是等价于在某个$k-1$维的链的边界$\partial b$上的积分。
+
+例如，考虑$\mathbb R^3$上的单位球面
+$$c(t_1, t_2) = (\cos 2\pi t_1 \sin \pi t_2, \cos 2\pi t_1 \sin \pi t_2, \cos \pi t_2), \; t_1, t_2 \in [0,1].$$
+其边界为
+$$
+\begin{aligned}
+\partial c(t) &= -c(0, t) + c(1, t) + c(t, 0) - c(t, 1) \\
+& = -(\sin \pi t, \sin \pi t, \cos \pi t) \\
+& \ + (\sin \pi t, \sin \pi t, \cos \pi t) \\
+& \ + (0, 0, 1) - (0, 0, -1) \\
+&= (0, 0, 1) - (0, 0, -1)
+\end{aligned}
+$$
+即球的南极和北极两个点。
+注意我们不能将最后两项合成为
+$$(0,0,1) - (0,0,-1) \neq (0, 0, 2).$$
+显然$\partial c$是退化的，因此$c$是一个环。
+
+实际上，边界和环之间关系密切。
+
+若$c$为一边界，那么$c$一定是环，即$\partial c$一定是退化的。
+{: .proposition}
+
+从而，在边界的边界上的积分是零。
+
+根据定义，设
+$$c = \partial b + a,$$
+其中$a$是退化的链。有
+$$\partial c = \partial (\partial b) + \partial a = \partial a$$
+而由于退化链的边界还是退化链，因此$c$也是退化的。
+{: .proof}
+
+环与边界的关系和闭合与恰当微分的关系有些类似：边界一定是环，但环不一定是边界。
+
 ### 广义斯托克斯公式
 
 这一节中，我们将证明以下命题：
 
 <small>（广义斯托克斯公式, generalized Stokes' theorem）</small>
+设$\alpha$为$\mathbf R^n$的开子集$U$上的$k-1$阶微分形式，$c$为其上的$k$维链，那么
+$$\int_c \dif \alpha = \int_{\partial c} \alpha.$$
 {: .theorem}
 
-...
+我们仍只考虑$c$定义在立方体上的情况。
+根据在链上积分的定义和拉回形式的性质，有
+$$\int_c \dif \alpha = \int_{[0,1]^k} c^* (\dif \alpha) = \int_{[0,1]^k} \dif (c^*(\alpha)).$$
+由于$c^*(\alpha)$是定义在$[0, 1]^k$上的$k-1$-形式，其可写为
+$$c^*(\alpha) = \sum_{i=1}^k g_i \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \cdots \dif x_k,$$
+其中$g\_i$是$[0,1]^k$上的函数。
+计算其外微分，有
+$$
+\begin{aligned}
+\dif c^*(\alpha) &= \sum_{i=1}^k \dif g_i \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \cdots \dif x_k \\
+&= \sum_{i=1}^k \sum_{j=1}^k \frac{\partial g_i}{\partial x_j} \dif x_j \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \cdots \dif x_k \\
+&= \sum_{i=1}^k (-1)^{i+1} \frac{\partial g_i}{\partial x_i} \dif x_1 \cdots \dif x_k.
+\end{aligned}
+$$
+这是由于微分形式的反交换性。
+从而
+$$
+\begin{aligned}
+\int_c \dif \alpha &= \int_{[0,1]^k} \dif (c^*(\alpha)) \\
+&= \int_{[0,1]^k} \sum_{i=1}^k (-1)^{i+1} \frac{\partial g_i}{\partial x_i} \dif x_1 \cdots \dif x_k \\
+&= \sum_{i=1}^k (-1)^{i+1} \int_{[0,1]^k}\frac{\partial g_i}{\partial x_i} \dif x_1 \cdots \dif x_k.
+\end{aligned}
+$$
+现在考察求和符号内部的积分。
+我们之前已经说明过可以任意交换积分顺序而保持符号不变，因此
+$$
+\begin{aligned}
+&\int_{[0,1]^k}\frac{\partial g_i}{\partial x_i} \dif x_1 \cdots \dif x_k \\
+= &\int_{[0,1]^k}\frac{\partial g_i}{\partial x_i} \dif x_i \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \dif x_k \\
+= &\int_{[0,1]^{k-1}} g_i(x_1, \dots, 1, \dots, x_k) \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \dif x_k \\
+& - g_i(x_1, \dots, 0, \dots, x_k) \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \dif x_k
+\end{aligned}
+$$
+最后一步利用了一维的微积分基本定理。
+现在注意到
+$$c^*_{i, 0}(\alpha) = g(x_1, \dots, 0, \dots, x_k) \dif x_1 \cdots \dif x_{i-1} \dif x_{i+1} \dif x_k,$$
+因此
+$$\int_{[0,1]^k}\frac{\partial g_i}{\partial x_i} \dif x_1 \cdots \dif x_k = \int_{[0,1]^{k-1}} c^*_{i,1}(\alpha) - c^*_{i,0}(\alpha).$$
+代回原式，得到
+$$
+\begin{aligned}
+\int_c \dif \alpha &= \sum_{i=1}^k (-1)^{i+1} \int_{[0,1]^{k-1}} c^*_{i,1}(\alpha) - c^*_{i,0}(\alpha) \\
+&= \int_{[0,1]^{k-1}} (\partial c)^*(\alpha) = \int_{\partial c} \alpha
+\end{aligned}
+$$
 {: .proof}
