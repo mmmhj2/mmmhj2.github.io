@@ -85,7 +85,7 @@ $$\alpha = \mathbf F \cdot \dif \mathbf x = \dif g.$$
 $$\int_c \alpha = \int_c \dif g = g(c(b)) - g(c(a)).$$
 {: .theorem}
 
-这说明了保守场上力所做的功与路径无关。
+这说明了恰当形式上——即有势场——上力所做的功与路径无关，因此有势场一定是保守场。
 
 注意到
 $$c^*(\alpha) = c^*(\dif g) = \dif c^*(g) = \dif g(c(t)).$$
