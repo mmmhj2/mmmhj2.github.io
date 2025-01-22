@@ -110,15 +110,77 @@ $$\phi^{-1}(\mathbf c) = \{ \phi(\mathbf x) = \mathbf c, \mathbf x \in \mathbb R
 
 根据水平集中每个点附近的情况，向量$\mathbf c$可分为两类：
 
-若对向量$\mathbf c$的水平集中的每一个元素$\mathbf x$，其雅可比矩阵$D \phi(\mathbf x): \mathbb R^N \to \mathbb R^m$均为满秩（秩为$m$），那么称该向量为*正则值*（regular value）；否则称为*奇异值*（singular value）。
+若对向量$\mathbf c$的水平集中的每一个元素$\mathbf x$，其雅可比矩阵$D \phi(\mathbf x): \mathbb R^N \to \mathbb R^m$均为满秩（秩为$m$，满射），那么称该向量为*正则值*（regular value）；否则称为*奇异值*（singular value）。
 {: .definition}
 
 一个方程组的每一个正则值，均可定义一个流形。
 这个命题称为正则值定理（regular value theorem）或原像定理（preimage theorem）。
 
-设$V \subset \mathbb R^N$为一开集合，且$\phi: V \to \mathbb R^m$为一光滑映射，则对于每一个正则值$\mathbf c$，若其水平集非空，则可构成一个$N - m$维流形$M \subset V$。
+设$V \subset \mathbb R^N$为一开集合，且$\phi: V \to \mathbb R^m$为一光滑映射，则对于每一个正则值$\mathbf c$，若其水平集$M \subset V$非空，则其可构成一个$N - m$维流形。
 该流形在某一点$x$处的切空间即为雅可比矩阵的核空间：
 $$T_x M = \ker(D\phi(x)).$$
 {: .theorem}
 
+我们只简单介绍一下证明的思路。
+由于雅可比矩阵$D \phi$满秩，其$m$列构成$\mathbb R^m$的一组基底。
+通过另外选择一组$\mathbb R^n$的基底，即可组成空间$\mathbb R^N = \mathbb R^m \times \mathbb R^n$的基底。从而，对任何$\mathbf x \in M \subset \mathbb R^N$，我们均可以将其写为
+$$\mathbf x = (\mathbf u_0, \mathbf v_0), \; \mathbf u_0 \in \mathbb R^m, \mathbf v_0 \in \mathbb R^n.$$
+由于$\phi$在$\mathbb R^m$空间中可逆，根据隐函数定理，在$u\_0$和$v\_0$的邻域$U,V$内，定存在唯一的光滑函数$f: U \to V$，使
+$$\mathbf v = f(\mathbf u) \ \text{且}\ \phi(\mathbf u, f(\mathbf u)) = \mathbf c.$$
+从而，可以证明光滑函数的图像形成的图像$M \cap U \times V$是一个流形，该处的嵌入为
+$$\psi_{\mathbf x}: U \to \mathbb R^N, \; \mathbf u \mapsto \mathbf x = (\mathbf u, f(\mathbf u)).$$
+该嵌入对每一个$\mathbf x \in V$均成立，从而$M$构成一流形。
+对于切空间，注意到
+$$\phi(\psi_{\mathbf x}(\mathbf u)) = \mathbf u$$
+从而
+$$D (\phi(\psi_{\mathbf x}(\mathbf u_0))) = D \phi(\mathbf x) D \psi_{\mathbf x}(\mathbf u_0) = 0.$$
+根据定义，切空间是$D \psi\_{\mathbf x}(\mathbf u\_0)$的列空间，从而对任何切向量$\mathbf v$，均存在向量$\mathbf a$，使得
+$$\mathbf v = D\psi_{\mathbf x}(\mathbf u_0) \mathbf a.$$
+注意到
+$$D \phi(\mathbf x) \mathbf v = D \phi(\mathbf x) D\psi_{\mathbf x}(\mathbf u_0) \mathbf a,$$
+从而
+$$\mathbf v \in \ker D \phi(\mathbf x) \implies T_x M \subset \ker D \phi(\mathbf x).$$
+最后，利用秩定理可证明二者维度相同，从而两空间相等。
+{: .proof}
+
 这个定理说明了为何梯度一定与切线方向垂直。
+
+在应用这个定理时，正确地选择$\mathbb R^m$空间非常重要。
+我们马上就能看到，对一些映射而言，在一些空间中$D \phi(x)$不是满射，但在其一个子空间中就可能是满射。
+
+#### 例子：正交变换群
+
+在这一小节中，我们将利用正则值定理证明任意维度的正交变换（以及特殊正交变换）都是流形。
+
+考虑映射
+$$\phi: \mathcal M_n(\mathbb R) \to \mathcal M_n(\mathbb R), \; A \mapsto A^T A,$$
+显然正交矩阵群$\mathcal O\_n$为
+$$\mathcal O_n = \phi^{-1}(I),$$
+其中$I$是单位阵。
+那么$I$是否是该映射的正规值呢？
+答案是否定的。首先计算其（加托）导数：
+$$
+\begin{aligned}
+D \phi(A) B &= \left. \frac{\mathrm d}{\mathrm d \lambda} \phi(A + \lambda B) \right|_{\lambda = 0} \\
+&= A^T B + B^T A.
+\end{aligned}
+$$
+这只能组成对称矩阵，因此该导数对任何$A \in \mathcal O\_n$都不是满射，从而单位阵是奇异值而非正规值。
+然而，我们可以将映射限制到对称矩阵群中。
+记
+$$\tilde \phi: \mathcal M_n(\mathbb R) \to \mathcal O_n, \; A \mapsto \phi(A),$$
+其中$S\_n$是对称矩阵的集合，我们非常容易地可以证明$D\tilde \phi(A) B$对任何$A \in \mathcal O\_n$都是满射：
+设$C \in S\_n$为一对称矩阵，取$B = \frac{1}{2} AC$，
+容易证明
+$$A^T B + B^T A = \frac{1}{2} (A^TAC + CA^TA) = C.$$
+从而对$I$的原像中的每一个$A$，该映射均是满射，从而$I$是一个正则值。
+
+现在，由于$\mathcal M\_n$是$n^2$维的，而$\mathcal O\_n$是$\frac{1}{2} n(n+1)$维的，从而正则值定理说明原像$\mathcal O\_n$是一个$\frac{1}{2} n(n-1)$维的流形。
+按照类似的论证，特殊正交群$\mathcal {SO}\_n$也是同一维数的流形。
+
+以三维空间中的旋转$\mathcal {SO}\_3$为例，其维数为三，因此所有旋转均可用三个实数表示——欧拉角、轴角表示等均利用了这个原理。
+然而，由于其拓扑结构与实数空间不同，所有只使用三个实数的表示方法均有奇异点。
+可视化$\mathcal {SO}\_3$最简单的方式就是使用轴角表示，并将旋转向量的长度限制为$|\mathbf r| \le \pi$，这就形成了三维空间中一个半径为$\pi$的球。
+然而，球上相对的两点——对跖点——总是表示相同的旋转，因此这实际上是一个“首尾相连”的球，这种球实际上是射影空间$\mathbb{RP}^3$的一种表示。
+
+像这种既是流形又是群的结构称为*李群*（Lie group），特殊正交群——即旋转变换——组成了典型的李群。
