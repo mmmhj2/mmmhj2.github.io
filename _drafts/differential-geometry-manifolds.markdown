@@ -168,14 +168,14 @@ $$
 这只能组成对称矩阵，因此该导数对任何$A \in \mathcal O\_n$都不是满射，从而单位阵是奇异值而非正规值。
 然而，我们可以将映射限制到对称矩阵群中。
 记
-$$\tilde \phi: \mathcal M_n(\mathbb R) \to \mathcal O_n, \; A \mapsto \phi(A),$$
+$$\tilde \phi: \mathcal M_n(\mathbb R) \to S_n, \; A \mapsto \phi(A),$$
 其中$S\_n$是对称矩阵的集合，我们非常容易地可以证明$D\tilde \phi(A) B$对任何$A \in \mathcal O\_n$都是满射：
 设$C \in S\_n$为一对称矩阵，取$B = \frac{1}{2} AC$，
 容易证明
 $$A^T B + B^T A = \frac{1}{2} (A^TAC + CA^TA) = C.$$
 从而对$I$的原像中的每一个$A$，该映射均是满射，从而$I$是一个正则值。
 
-现在，由于$\mathcal M\_n$是$n^2$维的，而$\mathcal O\_n$是$\frac{1}{2} n(n+1)$维的，从而正则值定理说明原像$\mathcal O\_n$是一个$\frac{1}{2} n(n-1)$维的流形。
+现在，由于$\mathcal M\_n$是$n^2$维的，而$S\_n$是$\frac{1}{2} n(n+1)$维的，从而正则值定理说明原像$\mathcal O\_n$是一个$\frac{1}{2} n(n-1)$维的流形。
 按照类似的论证，特殊正交群$\mathcal {SO}\_n$也是同一维数的流形。
 
 以三维空间中的旋转$\mathcal {SO}\_3$为例，其维数为三，因此所有旋转均可用三个实数表示——欧拉角、轴角表示等均利用了这个原理。
@@ -184,3 +184,49 @@ $$A^T B + B^T A = \frac{1}{2} (A^TAC + CA^TA) = C.$$
 然而，球上相对的两点——对跖点——总是表示相同的旋转，因此这实际上是一个“首尾相连”的球，这种球实际上是射影空间$\mathbb{RP}^3$的一种表示。
 
 像这种既是流形又是群的结构称为*李群*（Lie group），特殊正交群——即旋转变换——组成了典型的李群。
+
+### 流形上的微分形式
+
+实数空间$\mathbb R^N$中的微分形式与函数的关系依赖于该函数$f$的偏微分或方向导数：
+$$\frac{\partial f}{\partial x_i} = \lim_{t \to 0} \frac{f(\mathbf x + t \mathbf e_i) - f(\mathbf x)}{t}, \; i \in [\![1, N]\!].$$
+然而定义在流形上的函数不一定具有偏微分的定义，因为$\mathbf x + t \mathbf e\_i$不一定在流形上。
+幸运的是，利用嵌入或局部坐标卡，我们总是能在某点附近找到一个线性空间（切空间），使得该函数在这个切空间上具有定义。
+
+设$M \subset \mathbb R^N$为一$n$为流形，若存在一系列（可能无穷多）的开集合$U\_i$以及其上对于的嵌入$\psi\_i$，使得
+$$M = \bigcup_i \psi_i (U_i).$$
+那么对函数$f: M \to \mathbb R$，可定义一系列新函数
+$$f_i: U_i \to \mathbb R, \; \mathbf x \mapsto f(\psi_i(\mathbf x)).$$
+这些函数称为函数$f$在$U\_i$上的代表元（representitive）。
+显然，某个函数流形上的所有代表元和该函数本身是一一对应的。
+
+若某两个开集合$U\_i$和$U\_j$之间有交集，那么这两个开集合上的代表元满足
+$$f_j(\mathbf u) = f_i(\psi_i^{-1} \circ \psi_j (\mathbf u)) \iff f_j(\mathbf u) = (\psi_i^{-1} \circ \psi_j)^* f_i(\mathbf u).$$
+从而，拉回映射$(\psi\_i^{-1} \circ \psi\_j)^*$可实现两个代表元之间的变换，称为坐标变换。
+
+基于代表元定义在线性空间$\mathbb R^n$的开集合上这一点，我们可以利用线性空间给出流形上微分的定义。
+
+流形$M$上的$k$阶微分形式$\alpha$是一系列满足以下变换关系的微分形式的集合：
+$$\alpha_j = (\psi_i^{-1} \circ \psi_j)^* \alpha_i.$$
+这些微分形式均定义在实数空间的子集$U\_j \subset \mathbb R^N$上。
+{: .definition}
+
+容易发现“满足该变换关系”实际上是一个等价关系，因此流形上的微分形式实际上是一个等价类。
+
+同一等价类$\alpha$中的不同微分形式可用不同的坐标写出：
+$$
+\newcommand\dif{\mathop{} \! \mathrm d}
+\alpha_i = \sum_I f_I \dif x_I, \quad \alpha_j = \sum_J g_J \dif x_J,
+$$
+而其中的每一个函数满足
+$$g_j = \sum_I (\psi_i^{-1} \circ \psi_j)^* \Big(f_I \det\big(D(\psi_i^{-1} \circ \psi_j)_{I,J}\big) \Big).$$
+
+微分形式在流形上的楔积和外微分定义为对等价类的每一个相同开集合上定义的每一个微分形式去楔积或外微分，即
+$$
+\begin{aligned}
+\gamma = \alpha \wedge \beta &\iff \gamma_i = \alpha_i \wedge \beta_i,& \quad\forall i. \\
+\gamma = \dif \alpha &\iff \gamma_i = \dif \alpha_i,& \quad\forall i.
+\end{aligned}
+$$
+容易验证这个定义维持了等价关系。
+
+## 外代数
