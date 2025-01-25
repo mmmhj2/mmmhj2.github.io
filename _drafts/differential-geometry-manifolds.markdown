@@ -230,3 +230,128 @@ $$
 容易验证这个定义维持了等价关系。
 
 ## 外代数
+
+在这一节中，我们将简单介绍微分形式的现代理论——外代数理论，并给出现代的微分形式的定义。
+
+首先我们回忆有关对偶空间的内容，这与外代数密切相关。
+
+设$V$为域$\mathbb F$上定义的向量空间，则由线性泛函
+$$f: V \to \mathbb F$$
+全体组成的集合，加上映射的加法与数乘，即
+$$
+(f+g)(x) = f(x) + g(x), \; (cf)(x) = c \cdot f(x)
+$$
+也是一个向量空间，称为原向量空间的*对偶空间*（dual space），记为$V^\*$。
+对偶空间中的向量也称为*协向量*（covector）。
+{: .definition}
+
+在张量分析中，原向量空间中的向量称为反变张量（contravariant tensor），对偶空间中的向量称为协变张量（covariant tensor）。
+
+我们现在只考虑有限维的实线性空间。
+如果已知任何一组原向量空间中的基底，那么则可根据这组基底给出一组对偶空间中的基底。
+
+设$(\mathbf b\_1, \cdots, \mathbf b\_n)$为原空间$V$的一组基底，那么该基底下所有的坐标函数
+$$\pi_i: V \to \mathbb R, \; \sum_j c_j \mathbf b_j \mapsto c_i.$$
+组成了一组对偶空间中的基底，称为*对偶基底*（dual basis）。
+{: .proposition}
+
+以三维欧氏空间为例，标准正交基
+$$\mathbf e_1, \mathbf e_2, \mathbf e_3$$
+对应的坐标函数组成的基底为行向量
+$$\mathbf e_1^T, \mathbf e_2^T, \mathbf e_3^T.$$
+可以验证这正是坐标函数。
+
+### 多线性变换与外代数
+
+接下来考虑多线性变换。
+
+设泛函$\mu: V^k \to \mathbb R$对每个元素都是线性的，即
+$$
+\begin{multline}
+\mu(x_1, \dots, a x_i + b x_i', \dots, x_k) = \\
+a \mu(x_1, \dots, x_i, \dots, x_k) + b \mu(x_1, \dots, x_i', \dots, x_k)
+\end{multline}
+$$
+那么称这个泛函是$k$-线性的，或统称*多线性*（multilinear）的。
+若该泛函还对任何置换$\sigma \in S\_k$满足
+$$\mu(x_{\sigma(1)}, \dots, x_{\sigma(k)}) = \mathrm{sgn}(\sigma) \mu(x_1, \dots, x_k),$$
+那么称这个置换是*交错*的（alternating）或*反交换*的。
+多线性映射关于上文所述的相加和数乘构成向量空间，这一空间记为$\wedge^k(V)$，交错的多线性映射也构成向量空间，记为$A^k(V)$。
+{: .definition}
+
+例如，欧氏空间上的内积是双线性的，但不是交换的；
+而在任何空间$\mathbb R^{n\times n}$上定义的行列式
+$$\det (\mathbf v_1, \dots, \mathbf v_n)$$
+都是交换的$n$线性变换。
+
+一个特别的例子是张量积（tensor product）：
+设$\mu\_1, \dots, \mu\_k$为协向量（线性泛函），则其张量积定义为
+$$\mu_1 \otimes \cdots \otimes \mu_k(\mathbf x_1, \dots, \mathbf x_k) = \mu_1(\mathbf x_1) \cdots \mu_k(\mathbf x_k).$$
+这是一个$k$线性变换。
+
+我们还可以利用楔积来从任意的线性泛函生成*交错的*多线性变换。
+
+$V^*$上的*楔积*（wedge product）定义为
+$$
+\bigwedge(\mu_1, \dots, \mu_k) = \mu_1 \wedge \cdots \wedge \mu_k \in \wedge^k (V)
+$$
+其中
+$$
+\begin{array}{cccc}
+\mu_1 \wedge \cdots \wedge \mu_k: & V^k & \to & \mathbb R \\
+&\mathbf v_1, \dots, \mathbf v_k & \mapsto & \det(\mu_i(\mathbf v_j))
+\end{array}
+$$
+即矩阵
+$$
+\begin{pmatrix}
+\mu_1 (\mathbf v_1) & \cdots & \mu_1 (\mathbf v_k) \\
+\vdots & \ddots & \vdots \\
+\mu_k (\mathbf v_1) & \cdots & \mu_k (\mathbf v_k)
+\end{pmatrix}
+$$
+的行列式。
+{: .definition}
+
+显然，楔积也具有反交换性，即
+$$\bigwedge(\mu_{\sigma(1)}, \dots, \mu_{\sigma(k)}) = \mathrm{sgn}(\sigma) \bigwedge(\mu_1, \dots, \mu_k).$$
+
+注意到对任何$n$线性映射$\mu$，复合一个坐标函数即可得到一个线性泛函，即
+$$\mu_1(\mathbf x) = \mu(\mathbf x, 0, \dots, 0)$$
+从而将多线性映射拆分成线性泛函组成的分量。
+因此，楔积的定义可任意扩展到任意两个交错的多线性映射之间，即
+$$\mu \wedge \lambda = \mu_1 \wedge \cdots \wedge \mu_i \wedge \lambda_1 \wedge \cdots \wedge \lambda_j,\; \mu \in A^i, \lambda \in A^j.$$
+同理，张量积也可推广到任意两个多线性映射之间。
+这种多个代数，装备上其中定义的楔积之后，即形成一个外代数（exterior algebra）。
+
+这一段话总的来说蕴涵了下一个命题：
+
+设$V$的对偶空间$V^*$中，某一组基底的对偶基底为
+$$\{ \mathbf b_1, \dots, \mathbf b_n \} \xleftrightarrow{\text{对偶}} \{ \pi_1, \cdots \pi_n \}$$
+那么所有递增的$k$下标序列的楔积
+$$\mu_I = \mu_{i,1} \wedge \cdots \wedge \mu_{i,k}$$
+组成了交错$k$线性空间的一组基底，从而该空间的维数为$\binom{n}{k}$。
+{: .theorem}
+
+这里仅说明证明思路。
+假设$\beta \in A^k(V)$确能写为$\beta\_I$的线性组合，那么设
+$$\beta = \sum_I c_I \beta_I,$$
+并计算
+$$\beta(\mathbf b_J) = \sum_I c_I \beta_I(\mathbf b_J) = c_J$$
+这里$I,J$都是递增的下标序列。
+从而我们知道若该命题成立，那么每个系数均只能为上式计算出的值。
+接下来需证明其确实能生成整个空间。
+设$\beta \in A^k(V)$为任意交错多线性映射，并设
+$$\beta' = \sum_I \beta(\mathbf b_I) \beta_I,$$
+计算可得
+$$\beta'(b_I) - \beta(b_I) = 0 \implies \beta' = \beta.$$
+从而其是生成整个空间的极大线性无关组，证毕。
+{: .proof}
+
+例如，$A^2(\mathbb R^3)$在标准正交基底下的一组基底为
+$$\pi_1 \wedge \pi_2, \pi_1 \wedge \pi_3, \pi_2 \wedge \pi_3.$$
+
+不难发现，所谓的交错$k$线性映射与微分形式之间由极高的相似性。
+我们马上就利用这些知识来给出微分形式的形式定义。
+
+### 微分形式的定义
