@@ -210,7 +210,7 @@ $$\alpha_j = (\psi_i^{-1} \circ \psi_j)^* \alpha_i.$$
 这些微分形式均定义在实数空间的子集$U\_j \subset \mathbb R^N$上。
 {: .definition}
 
-容易发现“满足该变换关系”实际上是一个等价关系，因此流形上的微分形式实际上是一个等价类。
+容易发现“满足该变换关系”实际上是一个等价关系，因此流形上的微分形式实际上是一个等价类，这种等价类称为*芽*（germs）。
 
 同一等价类$\alpha$中的不同微分形式可用不同的坐标写出：
 $$
@@ -276,7 +276,7 @@ $$
 若该泛函还对任何置换$\sigma \in S\_k$满足
 $$\mu(x_{\sigma(1)}, \dots, x_{\sigma(k)}) = \mathrm{sgn}(\sigma) \mu(x_1, \dots, x_k),$$
 那么称这个置换是*交错*的（alternating）或*反交换*的。
-多线性映射关于上文所述的相加和数乘构成向量空间，这一空间记为$\wedge^k(V)$，交错的多线性映射也构成向量空间，记为$A^k(V)$。
+多线性映射关于上文所述的相加和数乘构成向量空间，这一空间记为$T^k(V)$，交错的多线性映射也构成向量空间，记为$A^k(V)$。
 {: .definition}
 
 例如，欧氏空间上的内积是双线性的，但不是交换的；
@@ -291,9 +291,9 @@ $$\mu_1 \otimes \cdots \otimes \mu_k(\mathbf x_1, \dots, \mathbf x_k) = \mu_1(\m
 
 我们还可以利用楔积来从任意的线性泛函生成*交错的*多线性变换。
 
-$V^*$上的*楔积*（wedge product）定义为
+$V^\*$上的*楔积*（wedge product）定义为
 $$
-\bigwedge(\mu_1, \dots, \mu_k) = \mu_1 \wedge \cdots \wedge \mu_k \in \wedge^k (V)
+\bigwedge(\mu_1, \dots, \mu_k) = \mu_1 \wedge \cdots \wedge \mu_k \in T^k (V)
 $$
 其中
 $$
@@ -353,5 +353,116 @@ $$\pi_1 \wedge \pi_2, \pi_1 \wedge \pi_3, \pi_2 \wedge \pi_3.$$
 
 不难发现，所谓的交错$k$线性映射与微分形式之间由极高的相似性。
 我们马上就利用这些知识来给出微分形式的形式定义。
+
+### 外代数的定义
+
+这一节中我们将简单说明一些代数知识，并给出张量积、外代数和楔积的形式定义。
+
+首先回忆一下理想的定义。
+
+环$(R, +, \times)$上关于群$(R, +)$的一个子群$(I, +)$，若其本身对群中所有元素关于乘法封闭，则称为一个*理想*（ideal）。特别地，若
+$$\forall r \in R, \forall i \in I, r \times i \in I,$$
+则称其为右理想；若
+$$\forall r \in R, \forall i \in I, i \times r \in I,$$
+则称其为左理想；若同时满足，则称其为双边理想。
+{: .definition}
+
+我们现在只研究双边理想。显然，对于交换环以及域，所有理想都是双边理想。
+
+设$I$为一双边理想，则环$R$中的二元关系
+$$x \sim y \iff x - y \in I$$
+是一个等价关系，称为环的*同余关系*（congruence relation），也记作
+$$x \equiv y \pmod{I}.$$
+这个等价关系定义的所有等价类的集合也能构成一个环，称为该环的*商环*（quotient ring），记作$R/I$。
+{: .definition}
+
+理想起到了类似整数中“因数”的作用。
+例如，考虑整数中偶数构成的双边理想，由于偶数可由2乘任何整数生成，这个理想是主理想（principal ideal），记为$2 \mathbb Z$，那么整数环关于该同余关系的商环只有两个元素：
+$$\mathbb Z/2\mathbb Z = \{ \{0,2,4,6,\dots\}, \{1,3,5,7,\cdots\} \} = \{0, 1\}.$$
+这里我们习惯上使用$0$和$1$这两个代表元来指涉整个等价类。
+
+接下来我们定义两个代数空间中的张量积。
+
+设$U,V, W$为任意三个向量空间，其中$U,V$定义在域$F$上。
+若存在一双线性映射$B$，定义为
+$$
+\begin{array}{cccc}
+B: & U \times V & \to & W \\
+& (u, v) & \mapsto & w
+\end{array}
+$$
+且满足
+$$
+\begin{multline}
+\forall h \in U \times V \to F, \quad \exists! \tilde h \in W \to F, \\
+\text{s.t.} \quad h(u, v) = \tilde h(B(u,v)),
+\end{multline}
+$$
+其中$h$是双线性形式，$\tilde h$是线性形式，
+那么就称$W$为向量空间$U,V$的张量积，记为$U \otimes V$。$B(u,v)$则记为$u \otimes v$
+{: .definition}
+
+正如上一节中提到的，我们可以使用两个线性空间的基底来构造它们的张量积。
+设空间$U, V$的基底为$B\_U, B\_V$，那么其中每个元素可写为
+$$x = \sum_{u \in B_U} x_u u, \; y = \sum_{v \in B_V} y_v v.$$
+设$h$为任意的双线性形式，有
+$$h(x,y) = \sum_{u,v} x_u y_v h(u, v).$$
+这意味着任何双线性形式的值可由其在所有基底处的取值唯一确定。
+现在定义$u \otimes v$，
+$$(u \otimes v)(x, y) = x_u y_v,$$
+而
+$$(x \otimes y)(a,b) = \sum_{u, v} x_u y_v (u \otimes v)(a,b).$$
+那么任何双线性形式均可写为
+$$h(x,y) = \sum_{u,v} (u \otimes v)(x, y) \cdot h(u, v).$$
+正如上文所述，双线性形式由其在所有基底处的取值唯一确定，因此上述分解是唯一的，满足张量积的定义，从而$(u \otimes v)$构成了$U \otimes V$的一组基底。
+这里需要注意，根据基底$B\_U, B\_V$的选择不同，空间$U \otimes V$的基底（以及空间本身）也不同，但是这些空间之间总是同构的。
+
+这个张量积的定义与上文（以及连续体力学中）所给出的张量积的定义是一致的。
+在此前，我们定义过：设$f \in \wedge^n,g \in \wedge^m$为二多线性映射（即张量），那么它们的张量积$f \otimes g \in \wedge^{n+m}$定义为
+$$f \otimes g(x_1, \dots, x_{n+m}) = f(x_1, \dots, x_n) \times g(x_{n+1}, \dots, x_{n+m}).$$
+不难发现上一段中根据基底分解的张量积定义与上一节中利用每个分量对张量积的定义有异曲同工之妙。
+
+张量积的一个特别的例子是向量空间自己的张量积：例如，欧几里得空间的对偶空间（即线性函数空间）的$k$阶张量积，就是$k$线性函数的空间。
+
+利用张量积，我们可以定义张量代数。
+
+设$V$为域$F$上的代数，那么定义其$k$阶张量幂空间为
+$$T^k (V) = V^{\otimes k} = \underbrace{V \otimes V \otimes \cdots \otimes V}_{k \, \text{次}},$$
+且约定$T^0 (V) = F.$
+该代数所有张量幂空间的直和称为该代数的*张量代数*（tensor algebra），即
+$$T(V) = \bigoplus_{k=0}^\infty T^k (V) = F \oplus V \oplus (V \otimes V) \oplus \cdots.$$
+{: .definition}
+
+承接上文关于欧几里得空间的对偶空间的张量积的说明，欧几里得空间的张量代数就是所有多线性映射组成的代数，也就是力学中常见的张量组成的代数。
+
+最后，根据理想和张量代数，我们定义外代数：
+
+设$V$为域$F$上的代数，令集合$I$为
+$$I = \left< x \otimes x  : x \in V \right>$$
+即由形如$x \otimes x$的元素生成的张量代数$TV$的双边理想。
+称代数$V$关于理想$I$的商代数为该代数的*外代数*（exterior algebra），即
+$$\bigwedge(V) = T(V) / I$$
+在其上定义楔积：
+$$\alpha \wedge \beta = \alpha \otimes \beta \pmod{I}.$$
+{: .definition}
+
+选择这个特别的理想，是为了满足楔积的*反交换性*：
+注意到由于$x \otimes x \in I$，因此
+$$x \wedge x = 0,$$
+从而
+$$0 = (x + y) \wedge (x+y) = x \wedge y + y \wedge x,$$
+即
+$$x \wedge y = - y \wedge x.$$
+
+根据这个理想，我们还可给出楔积的另一条性质：
+由于理想$I$能写为
+$$I = \left\{ \sum_i A_i (x_i \otimes x_i) B_i : x_i \in V, \; A_i, B_i \in TV \right\}$$
+且$A\_i, B\_i$根据定义能够拆分为分量的张量积，从而$I$实际上是由形如
+$$x_1 \otimes \cdots \otimes x_i \otimes x_i \otimes \cdots \otimes x_m$$
+的张量张成的子空间。
+这意味着楔积为零，当且仅当两边线性相关，这称为楔积的*非平凡性*。
+
+此外，楔积还继承了张量积的*双线性*和*结合性*（由于我们对张量积的定义，我们没有证明结合性，这是比较容易证明的）。
+这四条性质是楔积的基本性质。
 
 ### 微分形式的定义
