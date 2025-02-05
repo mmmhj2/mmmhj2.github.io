@@ -246,6 +246,19 @@ $$
 {: .definition}
 
 在张量分析中，原向量空间中的向量称为反变张量（contravariant tensor），对偶空间中的向量称为协变张量（covariant tensor）。
+这个名字来自基底变换时张量在对应基底下的值的改变。
+以向量为例，设两基底之间满足：
+$$
+\begin{bmatrix}\mathbf e_1' & \cdots & \mathbf e_n' \end{bmatrix} P = \begin{bmatrix}\mathbf e_1 & \dots & \mathbf e_n\end{bmatrix}
+$$
+那么反变张量（即列向量）的变基满足
+$$\begin{bmatrix}v_1' \\ \vdots \\ v_n'\end{bmatrix} = P \begin{bmatrix} v_1 \\ \vdots \\ v_n \end{bmatrix},$$
+而协变张量（即向量对应的数乘）满足
+$$\begin{bmatrix} \mathbf v \cdot \mathbf e_1' & \cdots & \mathbf v \cdot \mathbf e_n' \end{bmatrix} P = \begin{bmatrix} \mathbf v \cdot \mathbf e_1 & \cdots & \mathbf v \cdot \mathbf e_n \end{bmatrix}.$$
+若两组基底都是正交标准的，那么$P$是正交矩阵，而协变张量的公式则可写为
+$$\begin{bmatrix}v_1' \\ \vdots \\ v_n'\end{bmatrix}^T = \begin{bmatrix} v_1 \\ \vdots \\ v_n \end{bmatrix}^T P^{-1}.$$
+这意味着在正交标准基底下，总是有
+$$v^* = \mathbf v^T.$$
 
 我们现在只考虑有限维的实线性空间。
 如果已知任何一组原向量空间中的基底，那么则可根据这组基底给出一组对偶空间中的基底。
@@ -418,7 +431,7 @@ $$h(x,y) = \sum_{u,v} (u \otimes v)(x, y) \cdot h(u, v).$$
 这里需要注意，根据基底$B\_U, B\_V$的选择不同，空间$U \otimes V$的基底（以及空间本身）也不同，但是这些空间之间总是同构的。
 
 这个张量积的定义与上文（以及连续体力学中）所给出的张量积的定义是一致的。
-在此前，我们定义过：设$f \in \wedge^n,g \in \wedge^m$为二多线性映射（即张量），那么它们的张量积$f \otimes g \in \wedge^{n+m}$定义为
+在此前，我们定义过：设$f \in T^n,g \in T^m$为二多线性映射（即张量），那么它们的张量积$f \otimes g \in T^{n+m}$定义为
 $$f \otimes g(x_1, \dots, x_{n+m}) = f(x_1, \dots, x_n) \times g(x_{n+1}, \dots, x_{n+m}).$$
 不难发现上一段中根据基底分解的张量积定义与上一节中利用每个分量对张量积的定义有异曲同工之妙。
 
@@ -444,6 +457,7 @@ $$I = \left< x \otimes x  : x \in V \right>$$
 $$\bigwedge(V) = T(V) / I$$
 在其上定义楔积：
 $$\alpha \wedge \beta = \alpha \otimes \beta \pmod{I}.$$
+$k$阶楔积构成了该代数的一个子代数，记为$\bigwedge^k(V)$。
 {: .definition}
 
 选择这个特别的理想，是为了满足楔积的*反交换性*：
@@ -465,4 +479,83 @@ $$x_1 \otimes \cdots \otimes x_i \otimes x_i \otimes \cdots \otimes x_m$$
 此外，楔积还继承了张量积的*双线性*和*结合性*（由于我们对张量积的定义，我们没有证明结合性，这是比较容易证明的）。
 这四条性质是楔积的基本性质。
 
-### 微分形式的定义
+#### 外代数的性质
+
+我们考虑该定义与此前给出的所有楔积的性质的一致性。
+首先计算其维数。
+
+设$V$为一$n$维空间，记其基底为$\mathbf e\_i$，则其上$k$阶楔积组成的外代数的维数为$\binom{n}{k}$，而其一组基底为$\mathbf e\_i$的$k$阶楔积。
+{: .proposition}
+
+这个空间的维数与此前提过的$A^k(V)$一致，这提醒我们寻找它们之间的关系。
+
+设$A$为$V$上一至$W$代数的线性映射，要求$W$中的乘法有单位元且满足结合律，而$A$满足
+$$A(x) A(x) = 0, \forall x \in V,$$
+那么存在唯一的线性映射
+$$f: \bigwedge (V) \to W,$$
+使得
+$$A(x) = f(x), \forall x \in V.$$
+即，任何一个定义在$V$上的单位结合代数，若其中的乘法满足反对称性，那么一定存在唯一的$f$使得其中含有$f(\bigwedge(V))$。
+{: .proposition}
+
+这被称为外代数的泛性质（universal property）。
+
+利用这条性质，我们将$W$替换为$T(V)$，从而$A(x)$就是任何交错的（或反对称）的张量，满足$A(x) \otimes A(x) = 0$。
+这意味着外代数中的每一个向量都和一个反对称的张量一一对应。
+
+我们不会证明这个命题，因为其涉及到范畴论的内容，但是，我们可以给出外代数的一个等价的构造，从而说明这个问题。
+
+注意到$T^k V$是由可分解的张量
+$$v_1 \otimes v_2 \otimes \cdots \otimes v_k$$
+张成的，对可分解的张量，设$\mathcal{A}$和$\mathrm{Alt}$为：
+$$
+\begin{aligned}
+\mathcal A^k (v_1 \otimes \cdots \otimes v_k) &= \sum_{\sigma \in S_k} \mathrm{sgn}(\sigma) v_{\sigma(1)} \otimes \cdots \otimes v_{\sigma(k)} \\
+\mathrm{Alt}^k(v_1 \otimes \cdots \otimes v_k) &= \frac{1}{k!} \mathcal A^k(v_1 \otimes \cdots \otimes v_k)
+\end{aligned}
+$$
+注意这个定义与此前提到的行列式非常相似。
+
+根据定义，映射$\mathrm{Alt}^k$的像空间是$k$线性反对称映射组成的空间$A^k(V)$。
+利用$\mathrm{Alt}$，定义该空间中的乘法为：
+$$\alpha \wedge \beta = \mathrm{Alt}(\alpha \otimes \beta).$$
+对任何一系列张量，$\mathcal A^k (v\_1 \otimes \cdots \otimes v\_k)$根据定义一定是反对称的，从而该乘法也是反对称的，不难发现这种定义和此前提到的楔积的定义的思路具有很高的相似性
+。
+注意到变换$\mathcal{A}^k$的核空间正好为理想$I$与$T^k(V)$的交集，这就相当于从$T(V)$中除去了理想$I$，从而说明了这两种定义的等价性。
+这种等价性意味着这两个代数是同构的，从而每个外代数中的向量唯一对应了一个反对称的张量，且这个向量的阶数一定和张量的阶数相同。
+
+### 外代数上微分形式的定义
+
+利用外代数，我们可以给出微分形式的定义：
+
+设$U$为$\mathbb R^n$上一开集合，其对偶空间${\mathbb{R}^n}^\*$的一组基底记为
+$$\pi_1 = \dif x_1, \dots, \pi_n = \dif x_n.$$
+则其上的$1$阶微分形式是从$U$到其对偶空间的光滑映射：
+$$
+\begin{array}{cccc}
+\alpha: & U & \to & {\mathbb R^n}^* \\
+& (x_1, \cdots, x_n) & \mapsto & (f_1, \cdots, f_n)
+\end{array}
+$$
+从而可写为
+$$\alpha = \sum_{i=1}^n f_i \dif x_i.$$
+更一般地，其上的$k$阶微分形式是从$U$到$k$阶外代数$\bigwedge^k({\mathbb R^n}^\*)$的光滑映射，记为：
+$$\alpha = \sum_I f_I \dif x_I.$$
+记其在$\mathbf x \in U$处的取值为
+$$\alpha_\mathbf x = \sum_I f_I(\mathbf x) \dif x_I.$$
+$k$阶微分形式构成的空间记为$\Omega^k(U)$。
+{: .definition}
+
+由于$\mathbb R^n$实际上是一个具有内积的欧几里得空间，它和其对偶空间典范同构，从而其外代数也是典范同构的，微分形式$\alpha$也可等价地定义在$\bigwedge({\mathbb{R}^n})^\*$上，即
+$$\alpha : U \to(\bigwedge({\mathbb{R}^n}) \to \mathbb R).$$
+因此，该空间的维数与$\bigwedge^{k} (\mathbb R^n)$的维数相等，均为$\binom{n}{k}$，这与我们此前朴素的研究相符。
+更进一步的，由于外代数与反对称张量的同构，$\alpha$可作为一个协变的反对称张量场出现：
+$$\alpha : U \to A^k(\mathbb R^n).$$
+此外，考虑到张量空间是由可分解张量张成的，而在$\mathbb R^n$中线性独立的可分解张量不能超过$n$个，因此，若一个张量可被分解为更多的张量，那么其中一定由线性相关的部分，从而一定在理想$I$中，因此高于$n$阶的微分形式一定为零。
+
+令$U,V$分别为$\mathbb R^n, \mathbb R^m$上两个开集合，$\phi$为从$U$至$V$的光滑映射。设$\alpha \in \Omega^k(V)$为一微分形式，则该微分形式的拉回定义为
+$$\phi^* (\alpha)_\mathbf x (\mathbf v_1, \dots, \mathbf v_k) = \alpha_{\phi(\mathbf x)} (D\phi(\mathbf x) \mathbf v_1, \dots, D\phi(\mathbf x)\mathbf v_k).$$
+其中
+$$\phi^* (\alpha) \in \Omega^k(U).$$
+{: .definition}
+
