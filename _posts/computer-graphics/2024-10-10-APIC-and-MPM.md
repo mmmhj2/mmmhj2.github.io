@@ -103,19 +103,110 @@ APIC原作者发了两篇文章，一篇在[2015年](https://dl.acm.org/doi/pdf/
 要解决这一问题就需要一种表示方法来确保相邻粒子之间的动量差能够保持，APIC的解决方法是添加一个仿射速度矩阵$C\_p$。
 对每一个粒子$p$，我们希望表示粒子以及其领域的速度：$\mathbf{v}(\mathbf{x}) = \mathbf{v}\_p +C\_p (\mathbf{x} - \mathbf{x}\_p)$，其中$\mathbf{x}$为粒子邻域内的一个位置，可以理解为$C\_p$为速度场关于位置的导数。
 
-仿射矩阵$C\_p$将会从粒子周围的格点来估计，从直观上理解，2维情况下的该矩阵每个位置的意义如下图：
+即我们求：
+$$
+C_p = \frac {\partial \textbf{v}} {\partial \textbf{x}}
+$$
+利用权重函数，对其做一些变换，使得他们$C_p$能够从格点上的速度表示出来
+$$
+C_p = \frac {\partial \textbf{v}} {\partial w} \frac {\partial w} {\partial \textbf{x}}
+$$
+在G2P时，我们有$\textbf{v}_p \approx \sum_i w_{ip} \textbf{v}_i$，所以可以认为$\frac {\partial \textbf{v}} {\partial w} = w_{ip}$，于是：
+$$
+C_p = \sum_i \textbf{v}_i \cdot \frac {\partial w} {\partial \textbf{x}} = \sum_i \textbf{v}_i (\nabla w_{ip})^T
+$$
+
+从直观上理解，2维情况下的该矩阵每个位置的意义如下图：
 
 ![](/assets/cg/mpm02.png)
 {: .align-center}
 
-但是在实践过程中，求速度场关于位置的导数过于复杂并且低效，所以用了一种近似的方法，通过格点的速度与到粒子位移的张量积来估计：(这里以Quadratic B-Spline为例)
+通过B-Spline的一些性质，我们可以推导出$\nabla w_{ip}$：首先B-Spline满足$\sum_i w_{ip} = 1$，以及：
 $$
-C_p = \frac 4 {\Delta x^2} \sum_i w_{ip} \mathbf{v}_i (\mathbf{x}_i - \mathbf{x}_p)^T
+\sum_i w_{ip} (\textbf{x}_i - \textbf{x}_p) = 0
 $$
+等式两边对 $\textbf{x}_p$ 微分得到
+$$
+\sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T + \sum_i w_{ip} \nabla (\textbf{x}_i - \textbf{x}_p) = 0 \\
+ \sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T - \sum_i w_{ip} \cdot I= 0 \\ 
+ \sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T = I
+$$
+我们直接给出[APIC文章](https://dl.acm.org/doi/pdf/10.1145/2766996)第6页5.3节最后一段给出的答案，很容易代入上面的推导验证正确性。
+$$
+\nabla w_{ip}=w_{ip} (D_p)^{-1} (\textbf{x}_i-\textbf{x}_p) \\
+$$
+ 其中，$D_p = \sum_i w_{ip} (\textbf{x}_i - \textbf{x}_p) \cdot (\textbf{x}_i - \textbf{x}_p)^T$
 
-其中系数$\frac  4 {\Delta x^2}$是在Quadratic B-Spline插值权重生效，对于Cubic形式，系数为$\frac 3 {\Delta x^2}$。
+> 对于 $D_p$ ，在使用二次即以上的B-Spline时有特殊性质，使其在我们这个条件下一定为常量对角矩阵（Quadratic
+> B-Spline $D_p=\frac 1 4 \Delta x^2 I$，Cubic B-Spline $D_p=\frac 1 3
+> \Delta x^2
+> I$），证明过程涉及到B-Spline的矩(Moment)，极其复杂。这里我们给出其为对角矩阵的证明，但对角线上的系数，请参考更多资料（[维基百科：单变量B-Spline的矩](https://en.wikipedia.org/wiki/B-spline#Moments_of_univariate_B-splines)）
+>
+> 我们把向量展开，令$\textbf{x}= [x,y,z]^T$。由于我们使用的是三线性插值，所以： 
+> $$
+> w_{ip} = N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
+> {\Delta x}\right)N\left(\frac {z_i-z_p} {\Delta x}\right)
+> $$
+> $D_p$是一个张量积算出来的3x3矩阵，令$(D_p)_{kl}$是其第k行第l列元素，则 
+> $$
+> (D_p)_{kl} =
+> \sum_i N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
+> {\Delta x}\right)N\left(\frac {z_i-z_p} {\Delta x}\right)
+> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l 
+> $$
+> 接下来，我们以二次B-Spline（Quadratic B-Spline）为例进行证明
+>
+> 1. 若$k \neq l$， 不妨设k, l分别代表x, y轴。注意到在Quadratic B-Sline下求和枚举 i 是在一个3x3x3的立方体里面枚举网格点，我们现在将27个网格点分为9组，每组3个点的x,
+> y轴坐标是相等的，仅在z轴坐标不同。那么，每一组内求和为
+> $$
+> \begin{align} \text{Sum}&=N\left(\frac
+> {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p} {\Delta x}\right)
+> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l \sum_j
+> N\left(\frac {z_j-z_p} {\Delta x}\right) \\ &=N\left(\frac {x_i-x_p}
+> {\Delta x}\right) N\left(\frac {y_i-y_p} {\Delta x}\right)
+> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l \\
+> &=N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
+> {\Delta x}\right) (x_i - x_p) (y_i - y_p) \end{align}
+> $$
+> 然后，这9个Sum已经与z轴无关了。我们再将这9个Sum分为3组，每组的Sum保证他们涉及到的x轴相同，仅在y轴不同。那么新的3组里面，每组的和为：
+> $$
+> \text{Sum} = N\left(\frac {x_i-x_p} {\Delta x}\right) (x_i - x_p)
+> \sum_j N\left(\frac {y_j-y_p} {\Delta x}\right)  (y_j - y_p) = 0
+> $$
+> 这里用到了B-Spline的性质 $\sum_j N\left(\frac {y_j-y_p} {\Delta x}\right) 
+> (y_j - y_p) = 0$ 因此 $(D_p)_{kl} = 0 \ ,\text{if} \ k \neq l$
+> 2. 若$k = l$，不妨设k, l都代表x轴，我们将3x3x3的立方体分为3组，每组9个点的x轴坐标相等，则每组内求和为
+> $$
+> \text{Sum} = N\left(\frac {x_i-x_p} {\Delta x}\right) (x_i - x_p)^2
+> \sum_j N\left(\frac {y_i-y_p} {\Delta x}\right) N\left(\frac {z_j-z_p}
+> {\Delta x}\right) = N\left(\frac {x_i-x_p} {\Delta x}\right) (x_i -
+> x_p)^2
+> $$
+> 此时
+> $$
+> (D_p)_{kl} = \Delta x^2 \sum_i  N\left(\frac {x_i-x_p}
+> {\Delta x}\right) \left(\frac {x_i - x_p} {\Delta x}\right)^2
+> $$
+> 这个形式被称为单变量B-Spline函数的二阶矩（Moments of univariate
+> B-splines），其在二次即以上的B-Spline为常数，证明过于复杂，可以查阅相关资料（[维基百科：单变量B-Spline的矩](https://en.wikipedia.org/wiki/B-spline#Moments_of_univariate_B-splines)）
+>
+> 对于Cubic的B-Spline，我们需要对4x4x4的立方体分组，用类似上面的方法证明。
+>
+> 我们可以通过暴力展开式子，计算出Quadratic B-Spline的$(D_p)_{kk} = \frac 1 4 \Delta
+> x^2$，Cubic B-Spline的$(D_p)_{kk} = \frac 1 3 \Delta x^2$
+> 对于一次的B-Spline，对角元不是常量，而是$(D_p)_{kk} =  \left | \frac {x_i - x_p}
+> {\Delta x} \right | \left(1- \left | \frac {x_i - x_p} {\Delta x}
+> \right | \right)\Delta x^2$
 
-APIC原论文作者在[2017年的论文](https://arxiv.org/pdf/1603.06188)第20页5.6.3节进行了非常复杂的推导得出该系数。我推测作者是最初是通过实现了一个更复杂的[基础版本](https://dl.acm.org/doi/pdf/10.1145/2766996)$C\_p = B\_p \left( D\_p \right)^{-1}$，通过观察得出的一个简洁的系数版本，再去推出证明。
+综上，我们可以得出：
+$$
+C_p = \sum_i \textbf{v}_i (\nabla w_{ip})^T = \sum_i  w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T (D_p)^{-T} \\
+= 
+\begin{cases}
+\frac 4 {\Delta x^2} \sum_i w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T & \text{if use Quadratic B-Spline} \\ 
+\frac 3 {\Delta x^2} \sum_i w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T & \text{if use Cubic B-Spline} \\ 
+\end{cases}
+$$
 
 有了仿射矩阵$C\_p$后，将粒子动量传输到网格上时，就需要通过仿射矩阵计算邻域速度的形式，来计算粒子贡献给格点的速度
 
