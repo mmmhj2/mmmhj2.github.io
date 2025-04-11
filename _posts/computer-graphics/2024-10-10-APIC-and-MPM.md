@@ -105,15 +105,15 @@ APIC原作者发了两篇文章，一篇在[2015年](https://dl.acm.org/doi/pdf/
 
 即我们求：
 $$
-C_p = \frac {\partial \textbf{v}} {\partial \textbf{x}}
+C_p = \frac {\partial \mathbf{v}} {\partial \mathbf{x}}
 $$
 利用权重函数，对其做一些变换，使得他们$C_p$能够从格点上的速度表示出来
 $$
-C_p = \frac {\partial \textbf{v}} {\partial w} \frac {\partial w} {\partial \textbf{x}}
+C_p = \frac {\partial \mathbf{v}} {\partial w} \frac {\partial w} {\partial \mathbf{x}}
 $$
-在G2P时，我们有$\textbf{v}_p \approx \sum_i w_{ip} \textbf{v}_i$，所以可以认为$\frac {\partial \textbf{v}} {\partial w} = w_{ip}$，于是：
+在G2P时，我们有$\mathbf{v}_p \approx \sum_i w_{ip} \mathbf{v}_i$，所以可以认为$\frac {\partial \mathbf{v}} {\partial w} = w_{ip}$，于是：
 $$
-C_p = \sum_i \textbf{v}_i \cdot \frac {\partial w} {\partial \textbf{x}} = \sum_i \textbf{v}_i (\nabla w_{ip})^T
+C_p = \sum_i \mathbf{v}_i \cdot \frac {\partial w} {\partial \mathbf{x}} = \sum_i \mathbf{v}_i (\nabla w_{ip})^T
 $$
 
 从直观上理解，2维情况下的该矩阵每个位置的意义如下图：
@@ -123,26 +123,26 @@ $$
 
 通过B-Spline的一些性质，我们可以推导出$\nabla w_{ip}$：首先B-Spline满足$\sum_i w_{ip} = 1$，以及：
 $$
-\sum_i w_{ip} (\textbf{x}_i - \textbf{x}_p) = 0
+\sum_i w_{ip} (\mathbf{x}_i - \mathbf{x}_p) = 0
 $$
-等式两边对 $\textbf{x}_p$ 微分得到
+等式两边对 $\mathbf{x}_p$ 微分得到
 $$
-\sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T + \sum_i w_{ip} \nabla (\textbf{x}_i - \textbf{x}_p) = 0 \\
- \sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T - \sum_i w_{ip} \cdot I= 0 \\ 
- \sum_i (\textbf{x}_i - \textbf{x}_p) (\nabla w_{ip})^T = I
+\sum_i (\mathbf{x}_i - \mathbf{x}_p) (\nabla w_{ip})^T + \sum_i w_{ip} \nabla (\mathbf{x}_i - \mathbf{x}_p) = 0 \\
+ \sum_i (\mathbf{x}_i - \mathbf{x}_p) (\nabla w_{ip})^T - \sum_i w_{ip} \cdot I= 0 \\ 
+ \sum_i (\mathbf{x}_i - \mathbf{x}_p) (\nabla w_{ip})^T = I
 $$
 我们直接给出[APIC文章](https://dl.acm.org/doi/pdf/10.1145/2766996)第6页5.3节最后一段给出的答案，很容易代入上面的推导验证正确性。
 $$
-\nabla w_{ip}=w_{ip} (D_p)^{-1} (\textbf{x}_i-\textbf{x}_p) \\
+\nabla w_{ip}=w_{ip} (D_p)^{-1} (\mathbf{x}_i-\mathbf{x}_p) \\
 $$
- 其中，$D_p = \sum_i w_{ip} (\textbf{x}_i - \textbf{x}_p) \cdot (\textbf{x}_i - \textbf{x}_p)^T$
+ 其中，$D_p = \sum_i w_{ip} (\mathbf{x}_i - \mathbf{x}_p) \cdot (\mathbf{x}_i - \mathbf{x}_p)^T$
 
 > 对于 $D_p$ ，在使用二次即以上的B-Spline时有特殊性质，使其在我们这个条件下一定为常量对角矩阵（Quadratic
 > B-Spline $D_p=\frac 1 4 \Delta x^2 I$，Cubic B-Spline $D_p=\frac 1 3
 > \Delta x^2
 > I$），证明过程涉及到B-Spline的矩(Moment)，极其复杂。这里我们给出其为对角矩阵的证明，但对角线上的系数，请参考更多资料（[维基百科：单变量B-Spline的矩](https://en.wikipedia.org/wiki/B-spline#Moments_of_univariate_B-splines)）
 >
-> 我们把向量展开，令$\textbf{x}= [x,y,z]^T$。由于我们使用的是三线性插值，所以： 
+> 我们把向量展开，令$\mathbf{x}= [x,y,z]^T$。由于我们使用的是三线性插值，所以： 
 > $$
 > w_{ip} = N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
 > {\Delta x}\right)N\left(\frac {z_i-z_p} {\Delta x}\right)
@@ -152,7 +152,7 @@ $$
 > (D_p)_{kl} =
 > \sum_i N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
 > {\Delta x}\right)N\left(\frac {z_i-z_p} {\Delta x}\right)
-> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l 
+> (\mathbf{x}_i - \mathbf{x}_p)_k (\mathbf{x}_i - \mathbf{x}_p)_l 
 > $$
 > 接下来，我们以二次B-Spline（Quadratic B-Spline）为例进行证明
 >
@@ -161,10 +161,10 @@ $$
 > $$
 > \begin{align} \text{Sum}&=N\left(\frac
 > {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p} {\Delta x}\right)
-> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l \sum_j
+> (\mathbf{x}_i - \mathbf{x}_p)_k (\mathbf{x}_i - \mathbf{x}_p)_l \sum_j
 > N\left(\frac {z_j-z_p} {\Delta x}\right) \\ &=N\left(\frac {x_i-x_p}
 > {\Delta x}\right) N\left(\frac {y_i-y_p} {\Delta x}\right)
-> (\textbf{x}_i - \textbf{x}_p)_k (\textbf{x}_i - \textbf{x}_p)_l \\
+> (\mathbf{x}_i - \mathbf{x}_p)_k (\mathbf{x}_i - \mathbf{x}_p)_l \\
 > &=N\left(\frac {x_i-x_p} {\Delta x}\right) N\left(\frac {y_i-y_p}
 > {\Delta x}\right) (x_i - x_p) (y_i - y_p) \end{align}
 > $$
@@ -200,11 +200,11 @@ $$
 
 综上，我们可以得出：
 $$
-C_p = \sum_i \textbf{v}_i (\nabla w_{ip})^T = \sum_i  w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T (D_p)^{-T} \\
+C_p = \sum_i \mathbf{v}_i (\nabla w_{ip})^T = \sum_i  w_{ip}  \mathbf{v}_i  (\mathbf{x}_i-\mathbf{x}_p)^T (D_p)^{-T} \\
 = 
 \begin{cases}
-\frac 4 {\Delta x^2} \sum_i w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T & \text{if use Quadratic B-Spline} \\ 
-\frac 3 {\Delta x^2} \sum_i w_{ip}  \textbf{v}_i  (\textbf{x}_i-\textbf{x}_p)^T & \text{if use Cubic B-Spline} \\ 
+\frac 4 {\Delta x^2} \sum_i w_{ip}  \mathbf{v}_i  (\mathbf{x}_i-\mathbf{x}_p)^T & \text{if use Quadratic B-Spline} \\ 
+\frac 3 {\Delta x^2} \sum_i w_{ip}  \mathbf{v}_i  (\mathbf{x}_i-\mathbf{x}_p)^T & \text{if use Cubic B-Spline} \\ 
 \end{cases}
 $$
 
