@@ -421,3 +421,62 @@ $$
 \end{aligned}
 $$
 {: .proof}
+
+
+#### 例子：Piola 变换
+
+本节将在微分流形上证明连续体力学中用到的 Piola 变换的正确性。
+
+<small>（Piola变换）</small>设$\phi: U \to V$为一线性映射，其中$U,V \subset \mathbb R^3$。
+对定义在$V$上的张量场$\mathbf F^\phi(\mathbf x^\phi)$，其 Piola 变换定义为：
+$$\mathbf F(\mathbf x) = (\mathrm{Cof} D\phi)^T(\phi^* \circ \mathbf F^\phi)(\mathbf x) =  (\mathrm{Cof} D\phi)^T \mathbf F^\phi(\mathbf x^\phi).$$
+{: .definition}
+
+连续体力学中更常见的形式是
+$$\mathbf F(\mathbf x) = \mathbf F^\phi (\mathbf x^\phi) (\mathrm{Cof} \dif \phi),$$
+由于应力张量是对称的，这两个定义是等价的。
+另外，在三维欧氏空间中，注意到
+$$\mathrm{Cof} D \phi = (\det D \phi) (D \phi)^{-T} = J (D \phi)^{-T},$$
+这个变换还可以写成
+$$\mathbf F(\mathbf x) = J \mathbf F^\phi (\mathbf x^\phi) (D \phi)^{-T}$$
+的形式，这就是第一Piola-Kirchhoff应力张量的定义：它表示变形前（即$U$空间中）的应力张量。
+
+<small>（Piola恒等式）</small>
+$\phi: U \to V$为一线性映射，则
+$$\dif (\mathrm{Cof} D \phi) = 0.$$
+{: .proposition}
+
+<!--
+这里我们需要定义$\mathrm{Cof} D\phi$的外微分。
+由于$n$维线性空间的自同态$F$自然地关联一个一维形式和一个$n-1$维形式，即
+$$
+\begin{aligned}
+\omega_{1} &= F_1 \dif x_1 + \cdots + F_n \dif x_n \\
+\omega_{n-1} &= F_1 \dif x_2 \cdots \dif x_n + \cdots + F_n \dif x_1 \cdots \dif x_{n-1}
+\end{aligned}
+$$
+我们定义该线性映射的外微分为这个$n-1$维形式的外微分，也就是原线性映射的散度对应的$n$形式：
+$$\dif \omega_{n-1} = \sum_{i=1}^n \frac{\partial F_i}{\partial x_i} \bigwedge_{j=1}^n \dif x_j. = \nabla \cdot F \bigwedge_{i=1}^n \dif x_i$$
+这意味着该恒等式等价于
+$$\nabla \cdot (\mathrm{Cof} D \phi) = 0.$$
+-->
+
+......
+{. proof}
+
+这一条性质如何与此前介绍的广义斯托克斯定理联系起来呢？
+答案是考虑与$\mathbf F$相关的2-微分形式
+$$\star c(\mathbf F) = \mathbf F \cdot \dif \mathbf S = F_x \dif y \dif z + F_y \dif z \dif x + F_z \dif x \dif y$$
+上在任何体积$\Omega \in U$边界上的积分，应用斯托克斯公式：
+$$
+\begin{aligned}
+&\int_{\partial \Omega} \mathbf F \cdot \dif \mathbf S \\
+= & \int_\Omega \dif (\mathbf F \cdot \dif \mathbf S) \\
+= & \int_{\Omega} \dif \big((\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) \cdot \dif \mathbf S\big) \\
+= & \int_{\Omega} \big(\dif (\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) + (\phi^* \circ \mathbf F^\phi) \dif (\mathrm{Cof} D \phi) \big) \cdot \dif \mathbf S \\
+= & \int_{\Omega} \dif (\phi^* \circ \mathbf F^\phi) (\mathrm{Cof} D \phi) \cdot \dif \mathbf S \\
+= & \int_{\Omega^\phi} \dif (\mathbf F^\phi \cdot \dif \mathbf S^\phi) \\
+= & \int_{\partial \Omega^\phi} \mathbf F^\phi \cdot \dif \mathbf S^\phi
+\end{aligned}
+$$
+从而在空间$U$中体积$\Omega$的边界上的积分，与其对应的空间$V$中边界上的积分相同，这就解释了 Piola 变换的物理意义。
