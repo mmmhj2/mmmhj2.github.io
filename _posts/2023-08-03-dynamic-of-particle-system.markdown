@@ -47,6 +47,60 @@ $$\vec a_a = \vec a_e + \vec a_r + \underbrace{2 \vec \omega \times \vec v_r}_{\
 其中$\vec \omega$牵连的定轴转动的角速度矢量，一般按右手定则确定方向。
 {: .proposition}
 
+我们希望证明以上几个命题，但是不采用力学中经常使用的以下标表示坐标系的方式，因为这样较为混乱。
+借助仿射变换这一代数工具，我们可以直接将研究任意两个坐标系中的坐标显式地表示出来，然后计算它们的时间导数。
+考虑任意两个三维坐标系中的质点的坐标$\vec r$和$\vec r'$，我们有：
+$$\vec r' = \Omega \vec r + \vec x,$$
+其中$\Omega \in SO(3)$是一个正交矩阵，表示两个坐标系之间的旋转，而$\vec x \in \mathbb R^3$则表示两个坐标系之间的平移。
+我们约定$\vec r$所在的坐标系为动系，其坐标称为相对坐标。
+对时间求导，可得：
+$$\dot{\vec r'}= \dot{\Omega} \vec r + \Omega \dot{\vec r} + \dot {\vec x}.$$
+现在考虑正交矩阵对时间的导数，这实际上是一个无穷小旋转并可用李代数相关的知识研究，但这里我们提供一个比较初等的研究方式。
+由于矩阵$\Omega$正交，有
+$$\Omega^T \Omega = I.$$
+两边对时间求导，得到
+$$\dot \Omega^T \Omega + \Omega^T \dot \Omega = (\Omega^T \dot \Omega)^T + \Omega^T \dot \Omega = 0.$$
+这意味着$\Omega^T \dot \Omega$是一个斜对称矩阵。
+而向量左乘一个斜对称矩阵等价于左侧叉乘一个向量，即
+$$\exists \vec \omega, \forall \vec a, \; \Omega^T \dot \Omega \vec a = \vec \omega \times \vec a,$$
+从而
+$$\dot \Omega \vec a = \Omega (\vec \omega \times \vec a).$$
+代入原式，得到
+$$
+\begin{aligned}
+\dot {\vec r'} &= \Omega (\vec \omega \times \vec r + \dot{\vec r}) + \dot{\vec x} \\
+\vec v_a &= \underbrace{\Omega \dot{\vec r}}_{\vec v_r} + \underbrace{\Omega \vec \omega \times \vec r + \dot{\vec x}}_{\vec v_e}.
+\end{aligned}
+$$
+这就得到了
+$$\vec v_a =  \vec v_r + \vec v_e,$$
+同时也说明了$\vec \omega$的物理意义，即角速度矢量。
+再次求导，得到：
+$$\ddot{\vec r'} = \ddot \Omega \vec r + 2 \dot \Omega \dot{\vec r} + \Omega \ddot{\vec r} + \ddot{\vec x}.$$
+现在我们需要研究$\ddot \Omega$，对任何矢量$\vec a$：
+$$
+\begin{aligned}
+\ddot \Omega \vec a + \dot \Omega \dot{\vec a} &= \dot \Omega(\vec \omega \times \vec a) + \Omega (\dot{\vec \omega} \times \vec a) + \Omega (\vec \omega \times \dot{\vec a}) \\
+\ddot \Omega \vec a & = \Omega(\vec \omega \times \vec \omega \times \vec a) + \Omega(\vec \alpha \times \vec a) \\
+&= \Omega (\vec \omega \times \vec \omega + \vec \alpha) \times \vec a.
+\end{aligned}
+$$
+其中$\vec \alpha = \dot {\vec \omega}$。
+代回原式，得到
+$$\ddot{\vec r'} = \Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) + \ddot{\vec x}.$$
+这就是加速度合成的最一般表达，其中$\vec \omega \times \vec \omega \times \vec r$称为向心加速度，对应的惯性力为离心力；$\vec \alpha \times \vec r$称为欧拉加速度，对应的惯性力为欧拉力；$2 \vec \omega \times \dot {\vec r}$称为科里奥利加速度，对应的惯性力为科里奥利力。
+注意这些加速度前面均带有$\Omega$，这意味着这些加速度是在动系中计算的。
+现在考虑定轴转动这一特殊情形，有
+$$\ddot{\vec x} = 0, $$
+从而
+$$
+\begin{aligned}
+\ddot{\vec r'} &= \Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) \\
+\vec a_a &= \underbrace{2 \Omega \vec \omega \times \dot{\vec r}}_{\vec a_c} + \underbrace{\Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r)}_{\vec a_e} + \underbrace{\Omega \ddot{\vec r}}_{\vec a_r}.
+\end{aligned}
+$$
+{: .proof}
+
 现在，若假设定系为惯性系，应用牛顿第二定律，可得：
 $$m \vec a_a = \vec F \iff m (\vec a_r + \vec a_e + \vec a_c) = \vec F$$
 从而，在动系下看来，动点似乎受到了两个虚拟的力：
@@ -59,6 +113,9 @@ $$\vec F_{i,a} = \vec F_{i,r} + \vec F_e + \vec F_C$$
 
 以高中常见的定速圆周运动为例，以圆心为中心建立和动点一同旋转的参考系，在该参考系下，动点是静止且平衡的，但是外力却只有电磁力、拉力或支持力提供的向心力。
 这种平衡的原因就是牵连惯性力，在动系中进行受力分析时，纳入惯性力才能让系统平衡，这种惯性力以离心力的形式出现。
+
+容易观察到所有惯性力均与物体的质量成正比，而重力恰好也与物体的质量成正比，这意味着一个问题——重力是否也可能是一种惯性力？
+实际上，这正是广义相对论的核心：重力是四维时空中的一种惯性力。
 
 ## 质点系的动量定理
 
