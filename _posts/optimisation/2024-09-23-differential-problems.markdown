@@ -51,6 +51,28 @@ $$DJ(u)\cdot v = a(u, v) - L(v) = 0$$
 时，原式取得最小值。
 {: .proof}
 
+这些命题最终来自以下定理：
+
+<small>（Lax–Milgram）</small>
+设$\mathcal H$为一实希尔伯特空间，其内积记作$\langle\cdot,\cdot\rangle$、范数为$\Vert \cdot \Vert$。
+其中存在一双线性形式$a(\cdot, \cdot)$，在$\mathcal H \times \mathcal H$上连续并在$\mathcal H$上强制（Coercive），即：
+$$
+\begin{aligned}
+\exists c > 0, \forall (u, v) \in \mathcal H^2, &\quad \vert a(u, v) \vert \le c \Vert u \Vert \Vert v \Vert, \\
+\exists \alpha > 0, \forall u \in \mathcal H, &\quad a(u, u) \ge \alpha \Vert u \Vert^2.
+\end{aligned}
+$$
+并存在一连续线性映射$\mathcal L$，那么存在唯一的$u \in \mathcal H$，使得
+$$a(u, v) = L v, \quad \forall v \in \mathcal H.$$
+若$a$还是对称的，那么$u$还是唯一能使泛函
+$$J(v) = \frac{1}{2} a(v, v) - Lv$$
+取最小值的元素。
+{: .theorem}
+
+对欧几里得空间，其上所有双线性形式都是有界的：
+$$\vert a(u, v) \vert \le \Vert A \Vert_\infty \vert u \vert \vert v \vert.$$
+而只要该形式所有特征值的实部不为零，那么就一定是强迫的，因此正定的双线性形式一定是强迫的。
+
 ## 伽辽金法
 
 ### 近似的定义
