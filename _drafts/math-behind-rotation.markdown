@@ -95,8 +95,15 @@ $$
 & A & \mapsto &  S_A(1)
 \end{array}.
 $$
-这是一个从$\mathfrak g$的单位元附近的邻域到$G$的单位元附近邻域的微分同胚。
+这是一个从$\mathfrak g$的单位元附近的邻域到$G$的单位元附近邻域的微分同胚，且总是满足全微分方程：
+$$\frac{\mathrm d}{\mathrm d t} \exp(tA) = \exp (tA) \cdot A.$$
 {: .proposition}
+
+指数映射满足
+$$\exp(sA) \exp(tA) = \exp[(s+t)A],$$
+但是
+$$\exp(A)\exp(B) \eq \exp(A+B),$$
+不一定总是成立。$[A,B] = 0$时上式一定是成立的。
 
 可以发现，指数映射实际上是从“切线斜率”还原“曲线”的映射。
 由于这个映射是满射，因此我们说李代数中的元素可视为李群的无穷小生成元。
@@ -173,12 +180,12 @@ $$Av = \begin{pmatrix}
 -z & 0 & x \\
 y & -x & 0
 \end{pmatrix} \cdot v = \begin{pmatrix} x \\ y \\ z \end{pmatrix} \times v$$
-且该向量$\Omega$必然在反对称矩阵的不变子空间中。
+且该向量$\Omega$必然在反对称矩阵$A$的核空间中，从而在矩阵$I+\lambda A, \forall \lambda \in \mathbb R$的不变子空间中。
 这个反对称矩阵也称为$\Omega$的叉乘矩阵，记为
 $$A = [\Omega]^\times.$$
 {: .proposition}
 
-因此，向量的方向就表示了转轴（因为在反对称矩阵的不变子空间中），而长度自然就表示了旋转的强度，即转角。
+因此，向量的方向就表示了转轴（因为在反对称矩阵的核空间中），而长度自然就表示了旋转的强度，即转角。
 这种表示旋转的方法就称为旋转的轴角表示（Axis-angle representation）。
 
 既然旋转的强度由向量的长度表示，那么我们不妨只考虑“大小”为一的反对称矩阵，然后在其上乘上一个实数来表示旋转的转角。
@@ -196,7 +203,6 @@ $$v_\text{rot} = R v = v + \sin \omega (\Omega \times v) + (1 - \cos \omega) (\O
 {: .proposition}
 
 考虑反对称矩阵
-反对称矩阵
 $$K = \begin{pmatrix}
 0 & z & -y \\
 -z & 0 & x \\
@@ -236,7 +242,7 @@ $$
 \mathbf i^2 = \mathbf j^2 = \mathbf k^2 = \mathbf {ijk} = -1.
 \end{aligned}
 $$
-四元数组成了一个域，记为$\mathbb H$。
+四元数组成了一个$\mathbb R$上的四维向量空间，记为$\mathbb H$。
 {: .definition}
 
 四元数可视为虚数的扩展。
@@ -374,7 +380,16 @@ $$
 
 另外，注意李代数$\mathfrak{su}(2)$的三个生成元满足
 $$u_1 u_2 = u_3, u_2 u_3 = u_1, u_3 u_1 = u_2,$$
-和纯四元数三个基底的关系完全一致，这意味着$\mathfrak{su}(2)$中的元素实际上和纯四元数一一对应，自然，这个纯四元数正是转轴。
+和纯四元数三个基底的关系完全一致，这意味着$\mathfrak{su}(2)$中的元素实际上和纯四元数一一对应：
+$$
+v_x \mathbf i + v_y \mathbf j + v_z \mathbf k \mapsto 
+\begin{pmatrix}
+    i v_z & - v_y + iv_x \\ v_y - iv_x & - i v_z
+\end{pmatrix},
+$$
+并且这个双射还能保持李括号关系，这意味着纯四元数和$\mathfrak{su}(2)$李代数同构。
+自然，这个纯四元数正是转轴。
+
 现在考虑指数映射
 $$\exp: \mathfrak{su}(2) \to SU(2), \theta h \mapsto \exp \theta h,$$
 其中$h$是单位纯四元数：
@@ -392,9 +407,55 @@ $$h^2 = -1,$$
 $$\exp \theta h = (1 - \frac{\theta^2}{2} + \cdots) + h(\theta - \frac{\theta^3}{3!} + \cdots) = \cos \theta + h \sin \theta.$$
 {: .proof}
 
-这个命题和证明均和复数的欧拉公式非常相似，并且也给出了前文构造的旋转四元数的来源。
+这个命题和证明均和复数的欧拉公式非常相似，并且也给出了前文构造的旋转四元数的来源：这实际上就是四元数空间中的轴角表示。
+显然，共轭的单位四元数的轴角表示中的角度是相反数。
 
 最后一个问题是：公式$q v q^\*$是如何得到的？
 简单的几何的回答是，$q$并不代表旋转。
 前文提到过，$q$代表的实际上是一个二重向量或有向面积，而两个四元数相乘，不仅需要将虚部向量旋转，还需要将实部标量在复数空间旋转一次，因此为了得到需要的旋转，我们需要再乘其共轭，来将实部再旋转一次，从而消去实部来得到一个纯四元数。
-一个更加复杂的说法是这个共轭映射实际上构成了$SU(2)$到$SO(3)$的伴随表示，这也是为何四元数能够表示旋转的原因。
+根据这个思路，我们还可以构造映射
+$$v \mapsto q v q, \; v \in \mathfrak{su}(2), q \in SU(2)$$
+这个映射实际上表示了将$v$沿$\vec q\_v$轴进行反射。
+
+一个更加复杂的说法是这个共轭映射实际上构成了$SU(2)$的伴随表示。
+考虑映射：
+$$\mathrm{Ad}_q: v \mapsto q v q^*, \; q = \exp \theta h \in SU(2), h \in \mathfrak{su}(2),$$
+其在单位元（零）处的导数为
+$$\mathrm{ad}_q : h \mapsto \left. \frac{\mathrm d}{\mathrm d \theta} \right|_{\theta = 0} \exp(\theta h) \cdot v \cdot \exp(- \theta h) = h v - v h = [h,v].$$
+这个映射是$\mathfrak{su}(2)$上的自同态，而且保持李括号，因此是李代数自同态。
+这样的映射：
+$$\mathrm{Ad} : SU(2) \to (\mathfrak{su}(2) \to \mathfrak{su}(2)), q \mapsto \mathrm{Ad}_q,$$
+称为李群的伴随表示，而
+$$\mathrm{ad} : \mathfrak{su}(2) \to (\mathfrak{su}(2) \to \mathfrak{su}(2)), h \mapsto \mathrm{ad}_q,$$
+则称为李代数的伴随表示。
+
+重要的一点是$\mathrm{Ad}\_q$不仅是$\mathfrak{su}(2)$上的*自同态*，还是$SO(3)$中的*元素*，因为我们已经知道$\mathfrak{su}(2)$，即纯四元素，同构于$\mathbb R^3$，即三维空间中的向量，而这个映射$\mathrm{Ad}\_q$保持向量的长度和手性，因此一定是特殊正交变换，即旋转。
+这也是为何四元数能够表示旋转的原因：它们统一了$SO(3)$和$\mathfrak{so}(3)$、$SU(2)$和$\mathfrak{su}(2)$四个不同的代数结构。
+
+四元数表示旋转的很多性质均能从李群的伴随表示中得出，例如根据同态的性质，有
+$$\mathrm{Ad}_{q_2 q_1} = \mathrm{Ad}_{q_2} \circ \mathrm{Ad}_{q_1},$$
+这就是四元数乘法与旋转复合的关系。此外，由于$\mathrm{Ad}$是一个二对一的满射，且其核（指像为单位元，即全同映射）为
+$$\ker \mathrm{Ad} = \{ 1, -1 \},$$
+因此根据群上同态保持乘法的性质，有
+$$\mathrm{Ad}_q = \mathrm{Ad}_{-q}.$$
+
+#### 球面插值
+
+四元数的指数映射并非只是一个复杂的数学工具，而确实具有一些特别的用途，尤其是在动画插值时。
+假设我们需要在两个单位四元数$p, q \in SU(2)$之间进行插值，满足
+$$\mathrm{Slerp}(p, q; 0) = p, \; \mathrm{Slerp}(p, q; 1) = q,$$
+如何构造这个函数？
+
+考虑从$p$到$q$的变换四元数，即$qp^\*$，显然有
+$$(q p^*) p = q (p^* p) = q.$$
+由于$qp^\* \in SU(2)$，利用指数映射，我们可以将其写为：
+$$qp^* = \exp(\theta_{pq^*} h_{pq^*})$$
+这里要注意
+$$\exp(\theta_p h_p) \exp(-\theta_q h_q) \neq \exp(\theta_p h_p - \theta_q h_q)$$
+那么我们就可以构造这个映射：
+$$\mathrm{Slerp}(p,q;t) = \exp(t \theta_{pq^*} h_{pq^*}) p.$$
+这个映射就称为四元数的球面线性插值（Spherical linear interpolation）。
+我们知道，从几何意义上讲，指数映射是从“切线斜率”复原“切线”的变换，在这里，我们相当于从旋转的角速度复原了两个四元数之间的最短路径（测地线）。
+
+值得注意的是由于同一个旋转可由两个四元数$q$和$-q$表示，因此虽然球面线性插值能够复原两个四元数之间的最短路径，但是不一定能复原两个旋转之间的最短路径。
+如果$-q$相距$p$比$q$更近，那么球面线性插值形成的旋转运动就不再是最短的旋转路径。
