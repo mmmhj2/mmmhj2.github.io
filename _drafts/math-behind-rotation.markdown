@@ -102,7 +102,7 @@ $$\frac{\mathrm d}{\mathrm d t} \exp(tA) = \exp (tA) \cdot A.$$
 指数映射满足
 $$\exp(sA) \exp(tA) = \exp[(s+t)A],$$
 但是
-$$\exp(A)\exp(B) \eq \exp(A+B),$$
+$$\exp(A)\exp(B) = \exp(A+B),$$
 不一定总是成立。$[A,B] = 0$时上式一定是成立的。
 
 可以发现，指数映射实际上是从“切线斜率”还原“曲线”的映射。
@@ -134,30 +134,32 @@ $$R_x = , R_y = , R_z = .$$
 
 我们考虑三维反对称矩阵，其可由以下三个典型的生成元生成：
 $$
-L_x = \begin{bmatrix}
+L_x = \begin{pmatrix}
 0 & 0 & 0 \\
 0 & 0 & -1 \\
 0 & 1 & 0
-\end{bmatrix}, 
-L_y = \begin{bmatrix}
+\end{pmatrix}, 
+L_y = \begin{pmatrix}
 0 & 0 & 1 \\
 0 & 0 & 0 \\
 -1 & 0 & 0
-\end{bmatrix}, 
-L_z = \begin{bmatrix}
+\end{pmatrix}, 
+L_z = \begin{pmatrix}
 0 & -1 & 0 \\
 1 & 0 & 0 \\
 0 & 0 & 0
-\end{bmatrix}.
+\end{pmatrix}.
 $$
+这几个生成元的李括号为
+$$[L_x, L_y] = L_z,\ [L_y, L_z] = L_x,\ [L_z, L_x] = L_y.$$
 容易注意到由这些生成元产生的无穷小旋转，例如
 $$I + \delta t \cdot L_x,$$
 具有特别的不变子空间，即X轴。
 因此，这些无穷小旋转的生成元正是绕某一轴的旋转的生成元，从而我们可以说$\mathfrak{so}$李代数可生成绕任何轴的无穷小旋转。
-又因为左乘反对称矩阵等价于叉乘一个向量，这实际上是轴角表示的数学基础。
+又因为左乘反对称矩阵等价于叉乘一个向量，这实际上是欧拉旋转定理和轴角表示的数学基础。
 
 之前我们说明了无穷小旋转在忽略二阶小量的情况下可交换，利用这些生成元矩阵表示也能非常容易地证明这一点。
-忽略二阶小量的行为在数学上称为构造了一个 Wigner-İnönü [^wicontraction] 收缩。
+忽略二阶小量的行为可视为构造了二阶无穷小量构成的理想并取该理想的商环，或视为构造了一个 Wigner-İnönü [^wicontraction] 收缩。
 
 [^wicontraction]: 命名自 Eugene Wigner 和 Erdal İnönü。前者亦是 Wigner-Seitz 元胞的词源。后者曾任土耳其总理。
 
@@ -207,7 +209,7 @@ $$K = \begin{pmatrix}
 0 & z & -y \\
 -z & 0 & x \\
 y & -x & 0
-\end{pmatrix}, x^2 + y^2 + z^2 = 1.$$
+\end{pmatrix}, \; x^2 + y^2 + z^2 = 1.$$
 其特征多项式为
 $$\chi_K(\lambda) = - (\lambda^3 + (x^2 + y^2 + z^2) \lambda) = - \lambda(\lambda^2 + 1).$$
 根据凯莱-哈密尔顿定理，有
@@ -376,7 +378,11 @@ i & 0 \\ 0 & -i
 \end{pmatrix}.
 $$
 熟悉量子力学的读者能够发现，这些生成元正是[泡利矩阵]({% post_url quantum-mechanics/2024-04-07-quantum-rotational-moment %}#自旋算符与泡利矩阵)。
-现在，由于这$\mathfrak{so}(3)$和$\mathfrak{su}(2)$的生成元数量相等，从而维数相等，这两个空间是同构的，这也是四元数能够表示旋转的原因之一。
+现在，由于这$\mathfrak{so}(3)$和$\mathfrak{su}(2)$的生成元数量相等，从而维数相等，并且保持李括号：
+$$
+[\frac{u_1}{2}, \frac{u_2}{2}] = \frac{u_3}{2},\ [\frac{u_2}{2}, \frac{u_3}{2}] = \frac{u_1}{2},\ [\frac{u_3}{2}, \frac{u_1}{2}] = \frac{u_2}{2},
+$$
+因此两个李代数是同构的，这也是四元数能够表示旋转的原因之一。
 
 另外，注意李代数$\mathfrak{su}(2)$的三个生成元满足
 $$u_1 u_2 = u_3, u_2 u_3 = u_1, u_3 u_1 = u_2,$$
@@ -387,7 +393,7 @@ v_x \mathbf i + v_y \mathbf j + v_z \mathbf k \mapsto
     i v_z & - v_y + iv_x \\ v_y - iv_x & - i v_z
 \end{pmatrix},
 $$
-并且这个双射还能保持李括号关系，这意味着纯四元数和$\mathfrak{su}(2)$李代数同构。
+并且这个双射还能保持李括号关系，这意味着纯四元数也和$\mathfrak{su}(2)$李代数同构。
 自然，这个纯四元数正是转轴。
 
 现在考虑指数映射
@@ -395,7 +401,7 @@ $$\exp: \mathfrak{su}(2) \to SU(2), \theta h \mapsto \exp \theta h,$$
 其中$h$是单位纯四元数：
 
 李代数$\mathfrak{su}(2)$的指数映射为
-$$\exp \theta h = \cos \theta + h \sin \theta,$$
+$$\exp: \theta h \mapsto \cos \theta + h \sin \theta, \; h \in \mathfrak{su}(2), |h| = 1,$$
 其中$h$是单位纯四元数。
 {: .proposition}
 
@@ -430,14 +436,19 @@ $$\mathrm{ad} : \mathfrak{su}(2) \to (\mathfrak{su}(2) \to \mathfrak{su}(2)), h 
 则称为李代数的伴随表示。
 
 重要的一点是$\mathrm{Ad}\_q$不仅是$\mathfrak{su}(2)$上的*自同态*，还是$SO(3)$中的*元素*，因为我们已经知道$\mathfrak{su}(2)$，即纯四元素，同构于$\mathbb R^3$，即三维空间中的向量，而这个映射$\mathrm{Ad}\_q$保持向量的长度和手性，因此一定是特殊正交变换，即旋转。
-这也是为何四元数能够表示旋转的原因：它们统一了$SO(3)$和$\mathfrak{so}(3)$、$SU(2)$和$\mathfrak{su}(2)$四个不同的代数结构。
+这也是为何四元数能够表示旋转的原因——它们统一了$SO(3)$和$\mathfrak{so}(3)$、$SU(2)$和$\mathfrak{su}(2)$四个不同的代数结构：
+$$\text{纯四元数} \cong \mathfrak{su}(2) \cong \mathfrak{so}(3), \; \text{单位四元数} \cong SU(2) \xrightarrow{2:1} SO(3).$$
+$\mathfrak{so}(3)$和$\mathfrak{su}(2)$的同构可能会让人认为其李群$SO(3)$和$SU(2)$也同构——实则不然，因为李代数只表征了李群在单位元附近的情况。
+此前我们已经见到过，实际上对同一旋转，可有两个不同的四元数来表示，即$SU(2)$是$SO(3)$的双重覆盖。
 
 四元数表示旋转的很多性质均能从李群的伴随表示中得出，例如根据同态的性质，有
 $$\mathrm{Ad}_{q_2 q_1} = \mathrm{Ad}_{q_2} \circ \mathrm{Ad}_{q_1},$$
 这就是四元数乘法与旋转复合的关系。此外，由于$\mathrm{Ad}$是一个二对一的满射，且其核（指像为单位元，即全同映射）为
 $$\ker \mathrm{Ad} = \{ 1, -1 \},$$
 因此根据群上同态保持乘法的性质，有
-$$\mathrm{Ad}_q = \mathrm{Ad}_{-q}.$$
+$$\mathrm{Ad}_q = \mathrm{Ad}_{-q} \iff \mathrm{Ad}_q \equiv \mathrm{Ad}_{-q} \pmod{\pm 1},$$
+因此有
+$$SO(3) \cong SU(2) / \{\pm 1\}.$$
 
 #### 球面插值
 
@@ -449,13 +460,13 @@ $$\mathrm{Slerp}(p, q; 0) = p, \; \mathrm{Slerp}(p, q; 1) = q,$$
 考虑从$p$到$q$的变换四元数，即$qp^\*$，显然有
 $$(q p^*) p = q (p^* p) = q.$$
 由于$qp^\* \in SU(2)$，利用指数映射，我们可以将其写为：
-$$qp^* = \exp(\theta_{pq^*} h_{pq^*})$$
+$$qp^* = \exp(\theta_{pq^*} h_{pq^*}) \iff \log (qp^*) = \theta_{pq^*} h_{pq^*},$$
 这里要注意
 $$\exp(\theta_p h_p) \exp(-\theta_q h_q) \neq \exp(\theta_p h_p - \theta_q h_q)$$
 那么我们就可以构造这个映射：
 $$\mathrm{Slerp}(p,q;t) = \exp(t \theta_{pq^*} h_{pq^*}) p.$$
 这个映射就称为四元数的球面线性插值（Spherical linear interpolation）。
-我们知道，从几何意义上讲，指数映射是从“切线斜率”复原“切线”的变换，在这里，我们相当于从旋转的角速度复原了两个四元数之间的最短路径（测地线）。
+我们知道，从几何意义上讲，指数映射是从“切线斜率”复原“切线”的变换，在这里，我们相当于从旋转的角速度复原了两个四元数之间的一条路径，这条路径在任何点处的切线方向总是一致，因此是一条描述曲面上最短路径的*测地线*（Geodesic）。
 
 值得注意的是由于同一个旋转可由两个四元数$q$和$-q$表示，因此虽然球面线性插值能够复原两个四元数之间的最短路径，但是不一定能复原两个旋转之间的最短路径。
 如果$-q$相距$p$比$q$更近，那么球面线性插值形成的旋转运动就不再是最短的旋转路径。

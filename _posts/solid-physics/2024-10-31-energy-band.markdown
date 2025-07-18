@@ -228,7 +228,7 @@ $$
 $$
 {: .exampl}
 
-[^normalization]: 这里我们忽略了$\left<k\middle|k\right>$是否是归一化的这一问题。
+[^normalization]: 这里我们忽略了$\left< k \middle\vert k \right>$是否是归一化的这一问题。
 
 这里值得注意的是余弦项之前的系数$2$，这是因为在原子链中原子同时受两端的影响而产生的，在两个原子成键的情况下则不存在这个系数，如前文所示。
 
