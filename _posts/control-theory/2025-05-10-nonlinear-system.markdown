@@ -114,12 +114,39 @@ $$\frac{\partial }{\partial t} \phi(t, x_0) = f(\phi(t, x_0)),\; \phi(0, x_0) = 
 此时称$\mathcal I(x)$是使得解存在的最大区间；
 并满足
 $$\forall t, s+t \in I, \;\phi(s, \phi(t, x)) = \phi(s + t, x),$$
-则称其为该向量场的*流*（Flow）。
+即形成一个*单参数群*（One-parameter group），则称其为该向量场的*流*（Flow），有时记作
+$$\phi^t(x) = \phi(t, x).$$
 {: .definition}
 
 实际上可以证明满足第一个条件的映射一定能够满足第二个条件。
 
-向量场的流可视为向量场在一定初始条件下沿时间运动的轨迹，这和其稳定性密切相关。
+向量场的流可视为向量场在一定初始条件下沿时间运动的轨迹。
+简单的理解就是$\phi(t, x)$是向量场$f$中一点$x$在时间$t$后“流动到”的位置。
+显然，这和其稳定性密切相关。
+
+利用向量场的流，可以定义该向量场上函数的一种微分。
+
+设$V: \mathbb R^n \to \mathbb R$为一函数，$X: M \to \mathbb R^n$为一局部李普希茨连续的向量场，$\phi$为其流，那么函数在向量场上某一点$p \in M$的李导数（Lie derivative）定义为：
+$$
+(L_X V)(p) = \left. \frac{\mathrm d}{\mathrm d t} \right|_{t = 0} V (\phi(t, p)) = \lim_{t \to 0} \frac{V (\phi(t, p)) - V(p)}{t}.
+$$
+{: .definition}
+
+在向量场上的函数的导数必须依赖其流才能定义，因为一般情况下用于定义导数的哑变量$h$:
+$$f'(x) = \lim_{h\to 0} \frac{f(x+h) - f(x)}{h}$$
+在向量场上不唯一。
+
+直接应用复合函数求导公式，得到
+$$(L_X V)(p) = \left. V'(\phi(t, p)) \frac{\mathrm d}{\mathrm d t} \phi(t, p) \right|_{t=0}= V'(p) X(p) $$
+不难发现其李导数正是
+$$(L_X V)(p) = (\nabla_{X(p)} V)(p)= (\nabla V(p))^\top \cdot X(p),$$
+实际上就是沿该处向量场的方向导数。
+
+我们不会使用严谨的微分几何方法来研究这些李导数。
+在下文的用法中，我们一般考虑微分方程组
+$$\dot x_i = f_i(x)$$
+即状态方程组成的动力系统，从而考虑向量场$f$。
+在这种向量场上，李导数就是直接求导，然后将$\dot x_i$这些变量替换为$f_i(x)$。
 
 ## 李雅普诺夫稳定性
 
@@ -154,10 +181,10 @@ $$\mathcal R(x_e) = \left\{ x \in X : \sup \mathcal I(x) = \infty, \lim_{t \to \
 若存在正定的函数$V \in C^1: X \to \mathbb R$，即
 $$V(0) = 0; \;\forall x \neq 0,\; V(x) > 0,$$
 使得
-$$\nabla V^\top \cdot f(x) \le 0,$$
+$$L_f V(x) = \nabla V^\top \cdot f(x) \le 0,$$
 那么该系统的原点是**稳定的**，称$V$是一个李雅普诺夫函数；
 若
-$$\nabla V^\top \cdot f(x) < 0,$$
+$$L_f V(x) = \nabla V^\top \cdot f(x) < 0,$$
 那么该系统的原点是**渐近稳定的**，称$V$是一个*严格*李雅普诺夫函数；
 若在渐近稳定之外，还是*径向无界*的，即
 $$\lim_{\Vert x \Vert \to \infty} V(x) = \infty,$$
@@ -165,8 +192,6 @@ $$\lim_{\Vert x \Vert \to \infty} V(x) = \infty,$$
 {: .theorem}
 
 函数$V$也叫广义能量函数，因为在动力学系统中往往可通过系统的能量构造出这样的函数。
-用于判定稳定性的式子$\nabla V^\top \cdot f(x)$实际上是$V$在流动$\phi$上的李导数，因此有时也记作$\dot V$或$L\_f V$。
-我们不会使用严谨的微分几何方法来研究这些李导数，但是在这些用法中，李导数就是直接求导，然后将$\dot x_i$这些变量替换为$f_i(x)$。
 
 实践上我们往往不需要或不能证明该函数在整个状态空间负定或半负定。
 但如果其在原点的一个邻域上成立，就足以说明该系统在原点处的稳定性了。
@@ -224,7 +249,7 @@ $$\forall t \ge 0, \;L_f V(\phi(t,x)) = 0 \implies \phi(t, x) = 0,$$
 若存在正定的函数$V \in C^1: X \to \mathbb R$，即
 $$V(0) = 0; \;\forall x \neq 0,\; V(x) > 0,$$
 使得
-$$\nabla V^\top \cdot f(x) \le 0,$$
+$$L_f V(x) = \nabla V^\top \cdot f(x) \le 0,$$
 且
 $$\forall t \ge 0, \;L_f V(\phi(t,x)) = 0 \implies \phi(t, x) = 0,$$
 那么该系统是渐进稳定的。
