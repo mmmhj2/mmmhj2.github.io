@@ -21,9 +21,23 @@ categories: "理论力学"
 $$x = R \phi \iff v = \dot x = R \omega \iff a = \ddot x = R \alpha.$$
 因此质心相对定系的速度为$R\omega \vec e\_x$，加速度为$R \alpha \vec e\_x$，其中$\omega$和$\alpha$是圆周运动的加速度和角加速度，也就是刚体定轴转动的加速度和角加速度。
 接下来以质心为原点建立随刚体平动的动系，则牵连运动为直线运动，相对运动为定轴转动，简单计算即可得到$C$点相对定系的速度和加速度：
-$$\vec v_c = 0,\; \vec a_c = R \alpha \vec e_x + R \omega^2 \vec e_y = 0.$$
+$$
+\begin{aligned}
+\vec v_C &= \underbrace{\vec v_O}_\text{牵连速度} + \underbrace{(- R \omega \vec e_x)}_\text{相对速度} \\
+&= 0,\\ 
+\vec a_C &= \underbrace{\vec a_O}_\text{牵连加速度} + \underbrace{(- R \alpha \vec e_x + R \omega^2 \vec e_y)}_\text{相对加速度} \\
+&= R \alpha \vec e_x - R \alpha \vec e_x + R \omega^2 \vec e_y \\ 
+&= R \omega^2 \vec e_y.
+\end{aligned}
+$$
 这就得到了纯滚动的经典结论：
-刚体发生纯滚动时，其与地面接触点为速度瞬心；若保持匀速转动，则该点的水平加速度为零。
+刚体发生纯滚动时，其与地面接触点为速度瞬心，且该点的水平加速度为零。
+更进一步的分析指出刚体的加速度瞬心在$OC$为直径的圆上运动[^1][^2]。
+
+[^1]: 孔艳平 段淑敏. 圆轮在固定面纯滚动时加速度瞬心的轨迹分析[J]. 大学物理, 2015, 34(10): 12-12.
+
+[^2]: 鞠国兴. 也谈刚体在固定曲面上作纯滚动时接触点的加速度[J]. 大学物理, 2010, 29(9): 2-2.
+
 
 ---
 
