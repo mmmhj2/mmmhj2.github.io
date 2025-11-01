@@ -34,10 +34,11 @@ Vulkan API 提供了大量的工具用来解决宿主（Host，一般就是指 C
 </li>
 </ol>
 若$a$不先发生于$b$，且$b$也不先发生于$a$，那么称这两个事件是<em>同时发生</em>（Concurrent，也叫并发）的。
+若$a$先发生于$b$，那么也称$b$后发生于（Happens-after）$a$。
 </div>
 
 在这种定义之下，不需要给出所有进程上的时钟读数，就可以确定这个偏序关系。
-更重要的是，这个偏序关系不依赖于固定的全局时钟，而仅需要每个进程自己的事件顺序。
+更重要的是，这个偏序关系不依赖于固定的全局时钟，而仅需要每个进程自己的事件顺序——反之，这篇论文也揭示了分布式系统中不能简单通过现实的时钟来构造事件之间的全序关系。
 此外，这个偏序关系还暗含了事件之间的因果性（Causality），即只有先发生的事件才能影响后发生的事件。
 基于以上这些特点，分布式系统（以及 Vulkan 标准）中大量使用了这个专有名词。
 
@@ -69,13 +70,13 @@ Vulkan 标准中指出，所有命令执行的同步操作其实都是规定了�
 这三种操作的区别在于其作用的对象（即 scope）不同。
 标准规定：
 
-> 1. For an availability operation, the source scope is a set of (agent,reference,memory location) tuples, and the destination scope is a set of memory domains.
-> 2. For a memory domain operation, the source scope is a memory domain and the destination scope is a memory domain.
-> 3. For a visibility operation, the source scope is a set of memory domains and the destination scope is a set of (agent,reference,memory location) tuples.
+> 1. For an availability operation, the source scope is a set of (agent,reference,memory location) tuples, and the destination scope is a set of memory domains. ...... An availability operation AV that happens-after W and that includes (A,R,L) in its source scope makes (W,L)*[Write, Location]* available to the memory domains in its destination scope. 
+> 2. For a memory domain operation, the source scope is a memory domain and the destination scope is a memory domain. ...... A memory domain operation DOM that happens-after AV and for which (W,L) is available in the source scope makes (W,L) available in the destination memory domain.
+> 3. For a visibility operation, the source scope is a set of memory domains and the destination scope is a set of (agent,reference,memory location) tuples. ...... A visibility operation VIS that happens-after AV (or DOM) and for which (W,L) is available in any domain in the source scope makes (W,L) visible to all (agent,reference,L) tuples included in its destination scope.
 
 这基本上是说，可用性操作用在写内存时，使得对某个内存的写入被通知到其他域；
 而可见性操作用在读内存时，使得对某个内存的读取能够看见在某个域上的写入；
-而内存域操作则是最广泛的一种操作，可使两个域对之间共享的内存写入完全可用。
+而内存域操作则可使两个不同域对之间共享的内存写入可用。
 
 从宿主侧向设备侧的内存同步是通过`vkFlushMappedMemoryRanges`和`vkInvalidateMappedMemoryRanges`进行的，前者执行可用性操作，后者执行可见性操作，因此写入被映射到虚拟内存的设备内存时需调用前者，而读取内存时需调用后者，除非内存在创建时就是宿主一致（Host coherent）的。
 特别地，标准提到：

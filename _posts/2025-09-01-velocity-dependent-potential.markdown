@@ -84,7 +84,8 @@ $$\mathcal H = \frac{(\mathbf p - e \mathbf A)^2}{2m} + e \phi.$$
 
 注意磁矢势的选择不是唯一的，即使确定某一规范（gauge）依然如此。
 而选择不同的磁矢势，即使它们都满足某一规范，可能会改变拉格朗日量：
-$$\mathbf A' \to \mathbf A + \nabla f, \; \phi' \to \phi + \frac{\dif f}{\dif t}, \; \mathcal L' \to \mathcal L + e \frac{\dif f}{\dif t}.$$
+$$\mathbf A' \to \mathbf A + \nabla f, \; \phi' \to \phi + \frac{\dif f}{\dif t}, \; \mathcal L' \to \mathcal L + e \frac{\dif f}{\dif t},$$
+但是运动方程是规范不变的，即与选择的规范无关。
 
 ## 例子：正交电磁场中带电粒子的运动
 
@@ -102,6 +103,7 @@ $$\phi(x, y) = - E y.$$
 $$\mathbf A = \frac{1}{2} \mathbf B \times \mathbf r,$$
 其中$\mathbf r$是磁场不变的方向，代入可得
 $$\mathbf A(x, y, 0) = \frac{1}{2} B(-y, x, 0).$$
+这种磁矢势的选择有时称为对称规范。
 
 计算拉格朗日量，得到
 $$
@@ -114,6 +116,7 @@ $$
 $$\mathbf A'(x, y, 0) = B(-y, 0, 0),$$
 那么立刻就能注意到$x$是循环坐标，从而该系统的正则动量在$x$轴方向上守恒：
 $$m \dot x - q B y = 0.$$
+这个磁矢势的选择有时也叫朗道规范。
 
 现在求解全微分方程组
 $$
