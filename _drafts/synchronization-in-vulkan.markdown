@@ -86,14 +86,60 @@ Vulkan 标准中指出，所有命令执行的同步操作其实都是规定了�
 
 而其他的内存同步则是通过内存依赖（Memory dependency）进行的。
 
-### 内存依赖
+### 执行与内存依赖
+
+作为基本概念的收尾，我们讲解一下 Vulkan 标准中的执行与内存依赖。
+这些内容中的大部分概念能直接映射到 API 的接口上，因此具有特别重大的意义。
+
+首先说明一下执行依赖（Execution Dependency）。
+之前提到过执行依赖就是在两类操作间建立“先发生于”关系，而其具体执行方式如下：
+> - Let _Ops1_ and _Ops2_ be separate sets of operations.
+> - Let _Sync_ be a synchronization command.
+> - Let _Scope1st_ and _Scope2nd_ be the synchronization scopes of _Sync_.
+> - Let _ScopedOps1_ be the intersection of sets _Ops1_ and _Scope1st_.
+> - Let _ScopedOps2_ be the intersection of sets _Ops2_ and _Scope2nd_.
+> - Submitting _Ops1_, _Sync_ and _Ops2_ for execution, in that order, will result in execution dependency _ExeDep_ between _ScopedOps1_ and _ScopedOps2_.
+> - Execution dependency _ExeDep_ guarantees that _ScopedOps1_ happen-before _ScopedOps2_.
+
+这大段内容说的是：执行依赖由两组操作决定，这两组操作又是由操作类型（即 `Ops` ，比如“读”或者“写”）和操作所处的阶段（即`Scope`，比如“顶点着色器”或者“颜色输出”）的交（即`ScopedOps`，比如“顶点着色器阶段的写入”）决定的，其中一组操作一定会先发生于另一组操作。
+使操作甲先于操作乙发生，相当于建立了从操作乙到操作甲之间的依赖，执行依赖也因此得名。
+
+注意在执行依赖中提到“Submitting Ops1, Sync and Ops2 for execution, in that order...”，这意味着执行依赖必须被提交到队列中，且必须在两次操作之间提交，才能发挥作用。
+这说明执行依赖（以及内存依赖）对应着后面提到的屏障这一概念，即仅用于队列中设备端操作的同步。
+
+内存依赖（Memory dependency）则在执行依赖上附加了内存可见性和可用性操作：
+> - The first set of operations happens-before the availability operation.
+> - The availability operation happens-before the visibility operation.
+> - The visibility operation happens-before the second set of operations.
+
+内存依赖不仅在需要排序的操作之间建立了严格的序关系，还使得先发生的操作产生的内存变换能够被后发生的操作感知到。
+和执行依赖一样，内存依赖通过控制序关系，相当于建立了两个操作之间对内存数据的依赖关系，因此得名。
+在很多时候，比起思考哪个操作必须先于另一些操作发生，不如考虑哪些操作依赖于另一些操作的输出，这种视角的转变可以使很多操作变得更加易于理解。
+
+同样，宿主侧对内存的写入也会通过内存依赖自动在命令提交时进行同步：
+> When batches of command buffers are submitted to a queue via a queue submission command, it defines a memory dependency with prior host operations, and execution of command buffers submitted to the queue.
+> The first synchronization scope includes execution of vkQueueSubmit on the host and anything that happened-before it, as defined by the host memory model.
+
+
+#### 数据冒险
+Vulkan 中大部分同步操作都是通过设置内存依赖完成的，这种依赖能够解决数据冒险（Data hazard）问题。
+在流水线上，我们会考虑三种数据冒险：
+1. 写后读（Read-after-write）：试图读取仍在被写入的数据。这种冒险可通过内存依赖解决。
+2. 读后写（Write-after-read）：试图写入正在被读取的数据。这种冒险不需要内存依赖关系，因此只需要执行依赖即可。
+3. 写后写（Write-after-write）：不同程序尝试写入同一块数据。这种冒险需要内存依赖才能解决。
+
+写后写看似只需要执行依赖即可解决，但是考虑到缓存的存在，一方的写入必须要通知到另一方，因此这种数据冒险实际上需要内存可见性和可用性操作才能解决。
+
+未处理的数据冒险在 Vulkan 中视为*未定义行为*，产生的结果是未定义的。
+在足够强大或足够脆弱的硬件上，被写入队列的队首操作可能会在下一个操作开始之前就已经结束了，因此看上去所有操作就像串行发生一样，因此甚至可能不会产生任何后果。
+但是数据冒险的隐患是永远存在的。
 
 ## 流水线屏障
 
 以上这些概念如何应用到 Vulkan 同步中呢？
 我们知道，为同步 Vulkan 主要提供了几种原语：
-1. 围栏（Fences），用于在宿主侧等待设备侧操作完成；
-2. 信号量（Semaphores），用于多个队列之间的同步；
+1. 围栏（Fences），用于从队列到宿主端的依赖，通常用在宿主侧等待设备侧操作完成时；
+2. 信号量（Semaphores），用于多个队列之间的依赖，或者队列和宿主端的依赖；
 3. 事件（Events），用于单个命令缓冲和队列中的“双向”同步；
 4. 屏障（Barriers），用于单个命令缓冲和队列中的“单向”同步；
 5. 和渲染通道对象（Render pass objects），主要用于渲染中附件和帧缓冲的同步。由于动态渲染的引入，这一项现在已被弃用了。
@@ -102,6 +148,128 @@ Vulkan 标准中指出，所有命令执行的同步操作其实都是规定了�
 
 ### 内存屏障
 
+为在流水线的操作之间建立屏障，需向命令缓冲中写入屏障指令。
+较老的教程一般使用`vkCmdPipelineBarrier`函数，而 Vulkan 1.3 （或者`VK_KHR_synchronization2`扩展）引入了新的函数：
+```c
+void vkCmdPipelineBarrier2(
+    VkCommandBuffer         commandBuffer,
+    const VkDependencyInfo* pDependencyInfo);
+typedef struct VkDependencyInfo {
+    VkStructureType                  sType;
+    const void*                      pNext;
+    VkDependencyFlags                dependencyFlags;
+    uint32_t                         memoryBarrierCount;
+    const VkMemoryBarrier2*          pMemoryBarriers;
+    uint32_t                         bufferMemoryBarrierCount;
+    const VkBufferMemoryBarrier2*    pBufferMemoryBarriers;
+    uint32_t                         imageMemoryBarrierCount;
+    const VkImageMemoryBarrier2*     pImageMemoryBarriers;
+} VkDependencyInfo;
+typedef struct VkMemoryBarrier2 {
+    VkStructureType          sType;
+    const void*              pNext;
+    VkPipelineStageFlags2    srcStageMask;
+    VkAccessFlags2           srcAccessMask;
+    VkPipelineStageFlags2    dstStageMask;
+    VkAccessFlags2           dstAccessMask;
+} VkMemoryBarrier2;
+```
+利用这个函数，即可建立内存或执行依赖。
+`stcStageMask`和`srcAccessMask`标记了依赖的源，即被依赖的操作，也就是首先发生的操作；而`dstStageMask`和`dstAccessMask`则标记了依赖的目的，即后发生的操作。
+这个函数必须在源操作记录到命令缓冲之后、目的操作记录到命令缓冲操作之前写入命令缓冲中。
+
+`VkPipelineStageFlags2`表示了内存操作所在的阶段，即上文提到的`Scope`，而`VkAccessFlags2`则表示了具体的内存操作。
+内存操作与阶段的组合并非全部有效，例如写入颜色附件的操作（`VK_ACCESS_2_COLOR_ATTACHMENT_WRITE_BIT`）就只能在图形管线末端颜色输出阶段（`VK_PIPELINE_STAGE_2_COLOR_ATTACHMENT_OUTPUT_BIT`）发生。
+操作的具体含义和每个阶段的有效的操作均可在文档上查阅得知。
+
+有几个特别的管线阶段值得注意：
+- `VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT`覆盖所有管线阶段。
+- `VK_PIPELINE_STAGE_2_NONE`则表示没有任何管线阶段，这一项一般是搭配其他操作，如图像布局转变使用的。
+- `VK_PIPELINE_STAGE_2_TOP_OF_PIPE_BIT`指的是管线顶端，当位于依赖目的时，说明整个管线依赖于依赖源，从而表示所有管线阶段，而当位于依赖源时则表示无管线阶段。
+- `VK_PIPELINE_STAGE_2_BOTTOM_OF_PIPE_BIT`则与前者刚好相反，当位于依赖源时，说明整个管线都是依赖源，从而表示所有管线阶段，而当位于依赖目的时则表示无管线阶段。
+
+后两者已不再推荐使用。
+
+内存操作方面，也有几个值得注意：
+- `VK_ACCESS_2_NONE`表示无内存访问，若依赖源和目的都是此内存操作，则此时定义的是执行依赖而非内存依赖。
+- `VK_ACCESS_2_MEMORY_READ_BIT`表示所有内存读取；
+- `VK_ACCESS_2_MEMORY_WRITE_BIT`表示所有内存写入。
+
+这些标记都可以或在一起，因此依赖：
+```c
+VkMemoryBarrier2 b = {
+    .sType = /*...*/,
+    .srcStageMask = VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT,
+    .srcAccessMask = VK_ACCESS_2_MEMORY_READ_BIT | VK_ACCESS_2_MEMORY_WRITE_BIT,
+    .dstStageMask = VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT,
+    .dstAccessMask = VK_ACCESS_2_MEMORY_READ_BIT | VK_ACCESS_2_MEMORY_WRITE_BIT
+}
+```
+表示所有内存访问到所有内存访问的依赖，这种依赖可使所有之前的命令完成执行并将内存完全同步。
+
 ### 图像布局转变
 
-### 队列族所有权
+Vulkan 中所有图像都具有图像布局，以方便 GPU 对图像访问的优化。
+这主要是由于 GPU （尤其是移动端 GPU）上对图像，尤其是帧缓冲，的压缩。
+计算着色器或者光栅化着色器中的采样器可能无法读取被压缩的帧缓冲数据，因此图像的布局必须进行转变，才能在各个子系统之间共享。
+
+几个重要的布局摘录如下：
+- `VK_IMAGE_LAYOUT_UNDEFINED`: 未定义布局，图像的内容未被初始化，其中的数据不具有任何含义。
+- `VK_IMAGE_LAYOUT_GENERAL`：通用布局，该布局可用于几乎所有访问。
+- `VK_IMAGE_LAYOUT_PRESENT_SRC_KHR`：呈现用布局，该图像可被呈现至操作系统。特别地，通用布局*不能*被呈现至操作系统。
+- `VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL`：附件用布局。Vulkan 1.3 引入的颜色、深度和模板附件的通用布局。
+- `VK_IMAGE_LAYOUT_READ_ONLY_OPTIMAL`：读取用布局。Vulkan 1.3 引入的只读布局，一般用于图像采样上。该布局不能用于传送读操作。
+- `VK_IMAGE_LAYOUT_TRANSFER_SRC|DST_OPTIMAL`：传送用布局。分别用于传送源的读取和传送目标的写入。
+
+通用布局具有很多特别的用处。
+首先，这个布局是唯一能够用于图像随机访问（即作为 stroage image 访问，对应 DirectX 12 的 UAV）的布局，因此对计算着色器特别有用。
+其次，若图像是线性分块的，即创建时指定了`VK_IMAGE_TILING_LINEAR`，那么这个布局一定是线性的，这就是说能够直接从宿主端访问图像中的数据。
+若图像不是线性分块的，则必须先复制到线性资源（一般是缓冲区）中，才能从宿主端访问。
+
+当然，桌面 GPU 上，大部分图像布局基本相同。
+举例而言，尤其在英伟达显卡上，即使进行了错误的布局转换，很多渲染器依然可以正常工作，因为实际上英伟达的 Vulkan 驱动会将所有布局解释为通用布局（`VK_IMAGE_LAYOUT_GENERAL`）；Vulkan 社区中甚至有进行布局转变反而导致性能下降的[例子](https://www.reddit.com/r/vulkan/comments/1b72me6/vk_image_layout_general_driver_shenanigans/)。
+而随着硬件技术的进一步发展，区分布局不再重要，因此 Khronos 集团已提出了[新的扩展](https://www.khronos.org/blog/so-long-image-layouts-simplifying-vulkan-synchronisation)，来将所有布局统一为通用布局。
+
+为了在不同的管线阶段之间共享同一资源，必须进行布局转变，这是通过以下结构体完成的：
+```c
+typedef struct VkImageMemoryBarrier2 {
+    VkStructureType            sType;
+    const void*                pNext;
+    VkPipelineStageFlags2      srcStageMask;
+    VkAccessFlags2             srcAccessMask;
+    VkPipelineStageFlags2      dstStageMask;
+    VkAccessFlags2             dstAccessMask;
+    VkImageLayout              oldLayout;
+    VkImageLayout              newLayout;
+    uint32_t                   srcQueueFamilyIndex;
+    uint32_t                   dstQueueFamilyIndex;
+    VkImage                    image;
+    VkImageSubresourceRange    subresourceRange;
+} VkImageMemoryBarrier2;
+```
+`oldLayout`和`newLayout`分别指定了布局转换的起点和目标。
+
+图像布局转变的时机也值得一提，Vulkan 标准中指明
+> When a layout transition is specified in a memory dependency, it happens-after the availability operations in the memory dependency, and happens-before the visibility operations.
+
+因此，在进行图像布局转变的屏障指令中，指令发生的顺序如下：
+1. 依赖源操作；
+2. 内存可用性操作；
+3. 图像布局转变；
+4. 内存可见性操作；
+5. 依赖目的操作。
+
+特别注意，图像布局转变也构成对图像资源的读写，因此也必须被恰当地同步，否则也会发生数据冒险。
+
+### 其他内容
+
+这一节大致列举一些没有被上文提到的流水线屏障中的注意点。
+1. *队列族所有权转移*（Queue family ownership transfer）：
+    如果缓冲区或者图像资源被设定为被某写队列族独占（`VK_SHARING_MODE_EXCLUSIVE`），那么同时只能有一个队列族拥有该资源，其上的命令才能对该资源进行访问。
+    为在不同队列族之间转移所有权，需使用`(src|dst)QueueFamilyIndex`成员。
+    在桌面端 GPU 上，一般直接使用共享所有权绕过此问题。
+2. *子资源*（Subresource）：可以只对图像或缓冲区的一部分进行同步。
+   图像的子资源是按数组层数（array layer）和 Mipmap 层数指定的，这在运行时生成 Mipmap 时特别有用。
+3. *缓冲区同步*：内存缓冲区的同步和图像的大同小异，因此不再特别介绍。
+4. *例子*：Vulkan 社区维护了很多渲染中常见的同步的例子，可在[这里](https://docs.vulkan.org/guide/latest/synchronization_examples.html)找到。
+5. *其他同步原语*：其他同步原语也使用了依赖、流水线阶段和操作的概念，只是同步的范围不同。
