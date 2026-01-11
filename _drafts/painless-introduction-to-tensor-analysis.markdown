@@ -71,6 +71,16 @@ $$\mathbf x = \sum_{i = 1}^n \mathbf e_i x^i = \mathbf e_i x^i.$$
 而对于矩阵，由于矩阵右乘列向量仍为列向量，而左乘行向量仍为行向量，有：
 $$\mathbf x' = T^{-1} \mathbf x = {T^{-1}}_j^i \mathbf x^j.$$
 这意味着$T\_j^i$表示矩阵第$i$行第$j$列的元素。
+这就是说，矩阵具有两个“轴”，并且在一个轴上是协变的，而在另一个轴上是反变的。
+这一点实际上对任何向量空间到自身的线性变换均成立。
+考虑$f: \mathbb R^n \to \mathbb R^n$，令$y = f(x)$,有
+$$\mathbf y' = T \mathbf y = T f(\mathbf x') = T f T^{-1} \mathbf x,$$
+可以发现，$f$在坐标变换下确实同时被$T$和$T^{-1}$作用。
+
+这里我们需要区分一下几何对象及其坐标表示。
+将向量$x$写为列向量$\mathbf x$、将线性变换$f$写为矩阵$F$均是得到了某个几何对象的坐标表示。
+几何对象的存在与坐标系的选择无关，而其坐标表示则恰恰相反，与坐标系（即基底）的选择密切相关。
+之后提到张量的定义时，我们还会接触到这一区别。
 
 利用爱因斯坦求和约定，我们可以非常容易地写出更高维情况下的反变与协变。
 
@@ -83,11 +93,45 @@ $${f^i}' = T^i_j f^j.$$
 {: .proposition}
 
 在欧几里得空间这一非常特殊的内积空间之下，若我们再选择正交标准基底这一非常特别的基底，那么任何向量的对偶向量，就是其列向量的转置。
-在这种情况下，我们可以不再区分协变和反变向量
+在这种情况下，我们可以不再区分协变和反变向量。
 
 ### 微分与对偶空间
 
-#### 笛卡尔空间下的微分算子
+关于对偶空间，有一则非常有趣的事实将其与微分联系起来：
+
+表示空间$\mathbb R^n$中沿某一坐标轴方向的“微小变化”的“微元”$d x_i$，是该空间的对偶空间的一组基底。
+{: .proposition}
+
+我们不会在此做出太多的展开，因为这会涉及到大量微分几何相关的内容。
+但是下面不甚严谨的说明可能有助于建立一些直觉。
+
+考虑可微映射$f: \mathbb R^2 \to \mathbb R$，其全微分为：
+$$d f = \frac{\partial f}{\partial x} d x + \frac{\partial f}{\partial y} d y.$$
+
+现在的问题是，这个全微分到底是什么？
+我们知道，这个全微分在某一点才有意义，表示的是原函数在某一点处变化最大的方向，即：
+$$d f: \mathbb R^2 \to \mathbb R^2,\; (x,y) \mapsto df(x,y).$$
+在欧几里得几何中，若我们需要确定“方向”，那么一定需要将一个向量与另一个向量做内积，因此“方向向量”实际上是对偶空间中的向量或者“协向量”。
+因此，这个全微分实际上是从$\mathbb R^2$到其对偶空间的映射：
+$$d f = (\partial_x f, \partial_y f) \in \mathbb R^2 \to \mathbb {R^2}^\star.$$
+然后注意到
+$$\partial_x f : \mathbb R^2 \to \mathbb R,\; (x,y) \mapsto \frac{\partial f(x, y)}{\partial x}, \; \partial_x f \in \mathbb {R^2}^\star.$$
+可以说，$\partial\_x f$是“行向量”，而$d f$是“行向量”的“行向量”。
+在这个意义下，全微分的表达式可以写为：
+$$d f = (\partial_x f, \partial_y f) = \partial_x f \begin{pmatrix} 1 & 0 \end{pmatrix} + \partial_y f \begin{pmatrix} 0 & 1 \end{pmatrix},$$
+即
+$$d x = \begin{pmatrix} 1 & 0 \end{pmatrix}, d y = \begin{pmatrix} 0 & 1 \end{pmatrix},$$
+这正是对偶空间的基底。
+
+那么，既然“微元”$d x_i$是对偶空间的基底，它也应该是协变的，实际上也正是如此。
+考虑：
+$$
+d f = \frac{\partial f}{\partial \tilde x^i} d \tilde x^i = \frac{\partial f}{\partial x^j} \frac{\partial x^j}{\partial \tilde x^i} d \tilde x^i = \frac{\partial f}{\partial x^j} d x^j,
+$$
+从而
+$$\frac{\partial x^j}{\partial \tilde x^i} d \tilde x^i = T_i^j d \tilde x^i = d x^j.$$
+
+
 
 ## 张量的定义
 
