@@ -215,7 +215,8 @@ $$
 &= \frac{1}{2i} \langle \psi \vert \hat A \hat B - \hat B \hat A \vert \psi \rangle,
 \end{aligned}
 $$
-计算时注意$\langle A \rangle$、$\langle B \rangle$均是实数。
+计算时注意：
+$$\langle \psi \vert \hat A \langle B \rangle \vert \psi \rangle = \langle \psi \vert \langle A \rangle \hat B \vert \psi \rangle = \langle A \rangle \langle B \rangle.$$
 从而
 $$
 \begin{aligned}
