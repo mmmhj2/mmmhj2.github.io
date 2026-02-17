@@ -159,7 +159,7 @@ $$E' = \frac{\hbar^2}{2m} (K_x^2 + K_y^2 + K_z^2),$$
 $$E = \frac{\hbar^2}{2m} \sum_{i=1}^n (K_{x,i}^2 + K_{y,i}^2 + K_{z,i}^2).$$
 这意味着整个系统的态矢量$\vec K$位于一个$3N$维的超球面上，球面的半径为
 $$R = \sqrt{\frac{2mE}{\hbar^2}}.$$
-分别考虑半径为$R(E)$和$R(E + \delta E)$的球壳，两个体积为
+分别考虑半径为$R(E)$和$R(E + \delta E)$（$\delta E$是小量）的球壳，两个体积为
 $$
 \begin{aligned}
 V(E) &= \frac{\pi^{\frac{3N}2}}{\Gamma(\frac{3N}{2}+1)} \left( \frac{2m E}{\hbar^2}\right)^{\frac{3N}{2}} \\
@@ -167,28 +167,39 @@ V(E + \delta E) &= \frac{\pi^{3N/2}}{\Gamma(\frac{3N}{2}+1)} \left( \frac{2m (E 
 \end{aligned},
 $$
 其中$\Gamma$是伽马函数。
-两者相减，得到
+两者相减，利用广义二项式定理展开至$\delta E$的一次项，得到
 $$
-\delta V = \frac{\pi^{\frac{3N}{2}}}{\Gamma(\frac{3N}{2})} \left( \frac{\sqrt{2m}}{\hbar} \right)^{3N} E^{\frac{3N}{2}-1} \delta E.
+\delta V = \frac{\pi^{\frac{3N}{2}}}{\Gamma(\frac{3N}{2})} \left( \frac{\sqrt{2m}}{\hbar} \right)^{3N} E^{\frac{3N}{2}-1} \delta E + O(\delta E^2).
 $$
 现在我们需要计算单个状态的大小。
 观察$K\_x$，注意到每一维的单个状态占据的空间为$2\pi/L$，因此整个系统的单状态大小为
 $$V_\text{state} = \left(\frac{2\pi}{L}\right)^{3N} = \frac{(2\pi)^{3N}}{V^N}.$$
-两者相除，再除以由于粒子完全相同而重复计数的状态数$n!$（参见[麦克斯韦-玻尔兹曼近似]({% post_url statistical-physics/2024-06-10-marcocanonical-ensemble %}#麦克斯韦-玻尔兹曼近似)），即得总状态数：
-$$\Omega(E, N, V) = \frac{V^N}{N! \cdot \Gamma(\frac{3N}{2})} \frac{(2\pi mE)^{\frac{3N}{2}}}{h^{3N}} \frac{\delta E}{E}.$$
+两者相除，再除以由于粒子完全相同而重复计数的状态数$N!$（参见[麦克斯韦-玻尔兹曼近似]({% post_url statistical-physics/2024-06-10-marcocanonical-ensemble %}#麦克斯韦-玻尔兹曼近似)），即得总状态数：
+$$\Omega(E, N, V) = \frac{V^N}{\Gamma(N) \cdot \Gamma(\frac{3N}{2})} \frac{(2\pi mE)^{\frac{3N}{2}}}{h^{3N}} \frac{\delta E}{E} + O(\delta E^2).$$
 然后取对数并利用斯特灵近似：
 $$\lim_{x \to \infty} \ln \Gamma(x) = x \ln x - x + O(1),$$
 得到
 $$
+\begin{multline}
+\ln \Omega = N \ln V + \frac{3N}{2} \ln \frac{2 \pi m E}{h^2} - N \ln N \\ - \frac{3N}{2} \ln \frac{3N}{2} + \frac{5N}{2} + \ln (\frac{\delta E}{E}) + O(1)
+\end{multline}
+$$
+之前我们只是定义了小量$\delta E$，而没有说明它的取值，现在我们希望将它与$N$联系起来。
+不妨定
+$$\delta E \sim \frac{E}{N},$$
+这样，有
+$$\ln \frac{\delta E}{E} \sim \ln \frac{1}{N} \sim -\log N,$$
+从而
+$$
 \begin{aligned}
-\ln \Omega &\simeq N \ln V + \frac{3N}{2} \ln \frac{2 \pi m E}{h^2} - N \ln N \\
-& - \frac{3N}{2} \ln \frac{3N}{2} + \frac{5N}{2} + \ln (\frac{\delta E}{E})\\
-&\simeq N \ln \frac{V}{N} + \frac{3N}{2} \ln \frac{4 \pi m E}{3N h^2} + \frac{5N}{2} \\
-&= N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}N.
+\ln \Omega &= N \ln \frac{V}{N} + \frac{3N}{2} \ln \frac{4 \pi m E}{3N h^2} + \frac{5N}{2} + O(\log N)\\
+&= N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}N + O(\log N).
 \end{aligned}
 $$
 最后得到
-$$S = k_B \ln \Omega = k_B N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}k_B N.$$
+$$S = k_B \ln \Omega = k_B N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}k_B N  + O(\log N),$$
+即
+$$\boxed{\frac{S}{k_B N} = \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}}$$
 这个公式叫做萨克尔-泰特洛德公式（Sackur–Tetrode equation）。
 {: .exampl}
 
@@ -197,6 +208,7 @@ $$\frac{1}{T} = \frac{\partial S}{\partial E} = \frac{3}{2} \frac{N k_B}{E} \iff
 这和分子动理论预测的比热一致。
 我们也可以进一步求出理想气体的状态方程，有
 $$\frac{p}{T} = \frac{\partial S}{\partial V} = \frac{N k_B}{V} \iff p V = nRT.$$
+这种理想气体利用了麦克斯韦-玻尔兹曼近似，因此也叫麦克斯韦-玻尔兹曼理想气体。
 
 关于这个公式，值得一提的是萨克尔和泰特洛德两人分别提出该公式时量子力学还尚未被提出。
 泰特洛德在计算状态数量时，没有使用上面的量子力学方法，而是假设粒子的位置和动量被分散在大小为$\Delta x$和$\Delta p$的网格上。
