@@ -295,3 +295,172 @@ d2 = 0.0, d1 = 1.0;
 这样，当`d2`进行动态复制初始化时，得到的值为`d2 = 1.0`。
 若`d2`进行静态初始化，那么无论`d1`是提前还是正常动态初始化，`d2`的值都是`0.0`，因为静态初始化的值必须和完全进行动态初始化一致。
 这样，在完全符合标准的情况下，`d2`的值可能是`1.0`和`0.0`两种之一，取决于编译器如何进行提前动态初始化。
+
+### 显式生命期管理
+
+最后我们来讨论一下 C++20 引入的显式/隐式生命期问题。
+
+由于上文介绍的关于对象生命期的关系，在 C++ 标准库的各类容器中，如果发生内容的复制或移动操作，除了申请内存之外，还需要通过调用 placement new 来在新申请的内存上构造对象。
+这一操作必须执行，尽管这个对象可能是平凡可复制的（Trivally copyable），甚至就是标量类型。
+C++ 标准库提供了一系列未初始化内存管理函数来简化这一操作，包括：
+- `uninitialized_copy` 和 `uninitialized_copy_n`；
+- `uninitialized_fill` 和 `uninitialized_fill_n`；
+- （C++17）`uninitialized_move` 和 `uninitialized_move_n`；
+- （C++17）`uninitialized_default_construct`和`uninitialized_default_construct_n`；
+- （C++17）`uninitialized_value_construct` 和 `uninitialized_value_construct_n`。
+
+这些操作可以直接对未初始化的内存进行操作，免去了手动管理对象生命期的问题。
+这些函数实际上一般就是对 placement new 调用的封装。
+C++17 还引入了`destory`系列函数，相当于对析构函数的封装，可以直接摧毁对象而不释放其内存。
+
+对一些类型，调用这些 placement new 会带来性能损失，因为直接复制其对象表示的内存就能达成对象的复制。
+因此，C++ 标准中引入了隐式生命期（Implicit-lifetime）对象的概念。
+一个类类型是隐式生命期的，若其满足：
+- 是没有自定义的析构函数的聚合体，或者
+- 至少有一个平凡的合格构造函数和一个平凡的、非删除的析构函数。
+
+隐式生命期类对象和平凡可复制对象在相当大程度上是重合的，例外在于，一个没有任何平凡构造函数的类可以是平凡可复制的，但不可能具有隐式生命期。
+这种类型其实比较常见，例如标记为`final`的多态类型。
+这种类型不可能是隐式生命期的，因为多态类型不能具有平凡的构造函数，但是可能是平凡可复制的，从而允许编译器将复制优化为`memcpy`调用[^p3279]。
+（非`final`的多态类型不可能被优化为`memcpy`调用，这是因为可能发生对象切片。）
+
+[^p3279]: 标准提案 [P3279R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3279r0.html#proposal) 澄清了这些问题。
+
+隐式生命期的对象可以被直接内存操作“隐式地”创建，而不必调用 placement new。
+这种内存操作包括`std::memcpy`、`std::memmove`和`std::bit_cast`。
+这意味着如果容器中的对象均是具有隐式生命期且平凡可复制的对象，那么可以直接调用`memcpy`来进行复制，而不必使用`uninitialized_copy`了。
+实际上，在提出隐式生命期对象之前 C++ 标准库就已经在对平凡可复制的对象使用`memcpy`进行优化了，尽管这会导致对象生命期问题和未定义行为，参考 [Clang](https://github.com/llvm/llvm-project/pull/86512) 对这一问题的讨论。
+
+C++23 还引入了新的`std::start_lifetime_as`系列库函数，允许直接在已申请的内存上隐式开始对象生命周期。
+这一优化特别适用于网络数据接收等情景下：
+```cpp
+struct Data{ int d; };
+static_assert(std::is_trivially_copyable_v<Data>);
+static_assert(std::is_implicit_lifetime_v<Data>);
+
+// 标准 C++ 写法。
+Data* recv_0() {
+    void * rcvd_bytes = recv();
+    // 注意：不能使用 placement new，否则发生覆盖。
+    auto ptr = new Data();
+    std::memcpy(ptr, rcvd_bytes, sizeof(Data));
+    return ptr;
+}
+
+// 按标准为未定义行为，实际上大部分编译器能产生正确的结果。
+// C++20 后为良构的。
+Data* recv_1() {
+    void * rcvd_bytes = recv();
+    auto ptr = static_cast<Data *>(std::malloc(sizeof(Data)));
+    std::memcpy(ptr, rcvd_bytes, sizeof(Data));
+    return ptr;
+}
+
+// C++23 写法。
+// 节省一次复制。
+Data* recv_2() {
+    void * rcvd_bytes = recv();
+    return std::start_lifetime_as<Data>(rcvd_bytes);
+}
+```
+
+### 指针清洗
+
+作为 C++17 引入的底层内存管理的最后一块拼图，我们最后讲解一下`std::launder`的使用。
+这个函数定义为
+```cpp
+template< class T >
+constexpr T* launder( T* p ) noexcept;
+```
+标准给出的解释是：
+1. 内存某处有一类型为`T`（忽略`const`和`volatile`限定）且仍在生命期内的对象`x`，该对象的地址为`A`；
+2. 指针`p`指向地址`A`；
+3. 所有经过返回的指针访问的内存，均可通过`p`访问；
+
+那么该函数返回一个指向`x`的指针。
+考虑到该函数对于`x`生命期的限定，可以猜想这个函数和编译器中对对象的生命期优化有关。
+实际上，这个函数确实一般和 placement new 一同使用。
+我们马上介绍使用它的两个典型情景。
+
+---
+
+考虑以下代码：
+```cpp
+struct X { const int x; };
+union Y { X x; float f; };
+void fn_1() {
+    X x1{1};
+    // 良构：发生存储重用。
+    auto p = new (&x1) X{2};
+    std::cout << p->x ;
+}
+void fn_2() {
+    Y y1{{1}};
+    // 未定义行为。
+    auto p = new (&y1.x) X{2};
+    std::cout << p->x ;
+}
+```
+关于存储重用，可参考[此文](https://en.cppreference.com/w/cpp/language/lifetime.html#Storage_reuse)。
+总之，对于`fn_2`，编译器可能认为`const int x`不会被修改而进行常量折叠，从而导致错误的优化。
+尽管[P1971R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1971r0.html#RU007)禁止了这种优化，但是一类特别的常量仍然容易受到影响，即类中的虚函数表指针：
+```cpp
+struct Base
+{
+    virtual int transmogrify();
+};
+struct Derived : Base
+{
+    int transmogrify() override
+    {
+        new(this) Base;
+        return 2;
+    }
+};
+int Base::transmogrify()
+{
+    new(this) Derived;
+    return 1;
+}
+
+static_assert(sizeof(Derived) == sizeof(Base));
+
+int main()
+{
+    Base base;
+    int n = base.transmogrify();
+    // 未定义行为
+    // int l = base.transmogrify();
+    int m = std::launder(&base)->transmogrify(); // OK
+}
+```
+编译器可能认为所有通过`base`调用的`transmogrify()`均使用基类中定义的版本，而不从虚函数表中进行查找。
+这一优化叫做去虚拟化（Devirtualization），而`std::launder`可以避免这种优化，因此这个函数也叫去虚拟化围栏（Devirtualization fence）。
+
+---
+
+第二种情况发生在与`reinterpret_cast`同时使用时。
+考虑以下代码：
+```cpp
+ 
+int main()
+{
+    struct Y { int z; };
+    alignas(Y) std::byte s[sizeof(Y)];
+    Y* q = new(&s) Y{2};
+    // 未定义行为：std::byte 类型指针不能访问 Y 类型指针值。
+    const int f = reinterpret_cast<Y*>(&s)->z;
+    const int g = q->z; // OK
+    const int h = std::launder(reinterpret_cast<Y*>(&s))->z; // OK
+}
+```
+关于这个 UB 的细节，可以查找指针互相转换性（pointer-interconvertible）相关的资料。
+指针互相转换性的规定允许编译器使用严格类型别名之外的[别名分析](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4303.html)来进行优化，并且认为`s`指针不可能访问该地址处的`Y`变量而不发生未定义行为，因此优化掉所有访问。
+`std::launder`可以避免这种优化。
+
+目前，大部分编译器并不进行这种优化，因此这个`std::launder`的用处不大。
+若提案[P3006R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2024/p3006r1.html)被接受，那么这个`std::launder()`就不再需要了。
+
+需要注意的是`std::launder`并不影响严格别名规则。
+在上面的要求中我们可以看到`p`指向的对象`x`必须具有`T`类型，因此通过`std::launder`访问其他类型的指针仍是未定义行为。
+总之，`std::launder`的适用范围为：对象生命周期已正确开始，但指针因_优化假设_而可能指向旧对象时，发生的未定义行为可由`std::launder`消除。
