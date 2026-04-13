@@ -92,7 +92,7 @@ void fn() {
 
 正如其名，多态内存资源（PMR）使用运行时多态，即继承和虚函数，取代了原来的编译器多态。
 上文提到了模板类型系统的问题，解决这一问题的方法之一就是将模板中的`Allocator`指向一个抽象类，然后再编写各种实现，PMR 也采用了类似的思路。
-PMR 的关键在于两个类：`std::pmr::memory_resource`和`std::pmr::polymorphic_allocator`和。
+PMR 的关键在于两个类：`std::pmr::memory_resource`和`std::pmr::polymorphic_allocator`。
 
 正如其名，`std::pmr::memory_resource`是 PMR 的核心，代表了内存上抽象的内存资源。
 这是一个抽象接口类，具体的内存资源取决于其实现。
@@ -162,6 +162,7 @@ public:
 这类资源不会进行解分配，而只在析构时将所有资源一并释放。
 这种资源也叫线性分配器（Linear allocator），适用于需要大量高效分配的场景。
 需要注意，这个资源不是线程安全的。
+这个类也不是可复制的，尽管基类`memory_resource`是可复制的。
 
 上面的栈上`vector`可以这样重写：
 ```cpp
@@ -170,9 +171,9 @@ void fn() {
     auto mbr = std::pmr::monotonic_buffer_resource(
         buffer.data(),
         buffer.size(),
-        // 阻止堆上的新分配
+        // 阻止堆上的新分配。
         std::pmr::null_memory_resource()
-    );
+    );  // 纯右值强制复制消去，不调用复制构造函数。
     std::pmr::vector <int> vec(&mbr);
 }
 ```
