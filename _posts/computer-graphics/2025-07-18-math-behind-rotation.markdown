@@ -169,25 +169,49 @@ $$I + \delta t \cdot L_x,$$
 
 左乘三维反对称矩阵
 $$A = \begin{pmatrix}
-0 & z & -y \\
--z & 0 & x \\
-y & -x & 0
+0 & -z & y \\
+z & 0 & -x \\
+-y & x & 0
 \end{pmatrix}$$
 等价于叉乘向量
 $$\Omega = \begin{pmatrix} x \\ y \\ z \end{pmatrix},$$
 即
 $$Av = \begin{pmatrix}
-0 & z & -y \\
--z & 0 & x \\
-y & -x & 0
+0 & -z & y \\
+z & 0 & -x \\
+-y & x & 0
 \end{pmatrix} \cdot v = \begin{pmatrix} x \\ y \\ z \end{pmatrix} \times v$$
 且该向量$\Omega$必然在反对称矩阵$A$的核空间中，从而在矩阵$I+\lambda A, \forall \lambda \in \mathbb R$的不变子空间中。
 这个反对称矩阵也称为$\Omega$的叉乘矩阵，记为
-$$A = [\Omega]^\times.$$
+$$A = [\Omega]^\times = \hat \Omega.$$
 {: .proposition}
 
 因此，向量的方向就表示了转轴（因为在反对称矩阵的核空间中），而长度自然就表示了旋转的强度，即转角。
 这种表示旋转的方法就称为旋转的轴角表示（Axis-angle representation）。
+
+回忆之前提到的$\mathfrak{so}(3)$生成元，注意到：
+$$
+\begin{array}{ccc}
+[L_x, L_y] = L_z, & [L_y, L_z] = L_x, &  [L_z, L_x] = L_y. \\
+\vec e_x \times \vec e_y = \vec e_z, & \vec e_y \times \vec e_z = \vec e_x, & \vec e_z \times \vec e_x = \vec e_y.&
+\end{array}
+$$
+因此，映射
+$$
+\begin{array}{cccc}
+\hat \cdot: & \mathbb R^3 & \to & \mathfrak{so}(3) \\
+& \begin{pmatrix} x \\ y \\ z \end{pmatrix} & \mapsto & \begin{pmatrix}
+0 & -z & y \\
+z & 0 & -x \\
+-y & x & 0
+\end{pmatrix}
+\end{array}
+$$
+是一个“保持李括号”的双射。
+由于其保持李括号，有
+$$[\hat u, \hat v] = \widehat{u \times v}.$$
+注意到$\mathbb R^3$中的叉乘也满足李括号的性质，若利用该李括号来定义$\mathbb R^3$李代数，那么这两个李代数就是同构的。
+因此任何向量均可在李代数的意义下表示无穷小旋转，这也是物理中角速度矢量的理论依据。
 
 既然旋转的强度由向量的长度表示，那么我们不妨只考虑“大小”为一的反对称矩阵，然后在其上乘上一个实数来表示旋转的转角。
 因此接下来我们研究这种旋转表示：
@@ -205,18 +229,18 @@ $$v_\text{rot} = R v = v + \sin \omega (\Omega \times v) + (1 - \cos \omega) (\O
 
 考虑反对称矩阵
 $$K = \begin{pmatrix}
-0 & z & -y \\
--z & 0 & x \\
-y & -x & 0
+0 & -z & y \\
+z & 0 & -x \\
+-y & x & 0
 \end{pmatrix}, \; x^2 + y^2 + z^2 = 1.$$
 其特征多项式为
-$$\chi_K(\lambda) = - (\lambda^3 + (x^2 + y^2 + z^2) \lambda) = - \lambda(\lambda^2 + 1).$$
+$$\chi_K(\lambda) = (\lambda^3 + (x^2 + y^2 + z^2) \lambda) = \lambda(\lambda^2 + 1).$$
 根据凯莱-哈密尔顿定理，有
-$$\chi_K(K) = -K (K^2+1) = 0 \iff K^3 = -K.$$
+$$\chi_K(K) = K (K^2+1) = 0 \iff K^3 = -K.$$
 现在代入矩阵指数，得到
 $$
 \begin{aligned}
-\exp \omega K = & I + \omega K + \frac{1}{2} (\omega K)^2 + \frac{1}{6} (\omega K)^2 + \cdots \\
+\exp \omega K = & I + \omega K + \frac{1}{2} (\omega K)^2 + \frac{1}{6} (\omega K)^3 + \cdots \\
 = & I + (\omega - \frac{\omega^3}{3!} + \frac{\omega^5}{5!} + \cdots) K + \\
 & (\frac{\omega^2}{2!} - \frac{\omega^4}{4!} + \frac{\omega^6}{6!} + \cdots) K^2 \\
 = & I + \sin \omega \cdot K + (1 - \cos \omega) \cdot K^2,
@@ -315,7 +339,7 @@ $$\Vert p q \Vert = \Vert p \Vert \cdot \Vert q \Vert.$$
 #### 单位四元数与旋转
 
 对于某个指定的单位四元数$q$，考虑映射
-$$\mathrm{Ad}_q: v \mapsto q v q^*, \; \Re(v) = 0.$$
+$$\Psi_q: v \mapsto q v q^*, \; \Re(v) = 0.$$
 这个映射将任何向量四元数映射到另一个向量四元数中，且保持该四元数的长度不变。
 这个映射保持长度，因此显然是正交的。
 现在的问题是，这个映射是否能够对应所有旋转？除此之外，是否还能对应反射和瑕旋转？
@@ -444,27 +468,24 @@ $$\exp \theta h = (1 - \frac{\theta^2}{2} + \cdots) + h(\theta - \frac{\theta^3}
 $$v \mapsto q v q, \; v \in \mathfrak{su}(2), q \in SU(2)$$
 这个映射实际上表示了将$v$沿$\vec q\_v$轴进行反射。
 
-一个更加复杂的说法是这个共轭映射实际上构成了$SU(2)$的伴随表示。
+一个更加复杂的说法是一个特别的共轭映射。
 考虑映射：
-$$\mathrm{Ad}_q: v \mapsto q v q^*, \; q = \exp \theta h \in SU(2), h \in \mathfrak{su}(2),$$
-其在单位元（零）处的导数为
-$$\mathrm{ad}_q : h \mapsto \left. \frac{\mathrm d}{\mathrm d \theta} \right|_{\theta = 0} \exp(\theta h) \cdot v \cdot \exp(- \theta h) = h v - v h = [h,v].$$
-这个映射是$\mathfrak{su}(2)$上的自同态，而且保持李括号，因此是李代数自同态。
-这样的映射：
-$$\mathrm{Ad} : SU(2) \to (\mathfrak{su}(2) \to \mathfrak{su}(2)), q \mapsto \mathrm{Ad}_q,$$
-称为李群的伴随表示，而
-$$\mathrm{ad} : \mathfrak{su}(2) \to (\mathfrak{su}(2) \to \mathfrak{su}(2)), h \mapsto \mathrm{ad}_q,$$
-则称为李代数的伴随表示。
+$$\Psi_q: v \mapsto q v q^*, \; q = \exp \theta h \in SU(2), h \in \mathfrak{su}(2).$$
+这个映射特殊在如果将定义域限定在李群$SU(2)$上（即$v$也是单位四元数），那么$q^*$就是$q$的逆元，这个映射从而是群$SU(2)$共轭映射（Conjugation）。
+显然，这个映射还是自同构，这种自同构叫做内自同构（Inner automorphism）。
+这种特别的自同构可以嵌套复合，就像旋转的复合一样：
+$$\Psi_{q_2} (\Psi_{q_1}(v)) = \Psi_{q_2 q_1} (v).$$
+而如果将定义域限定在李代数$\mathfrak{su}(2)$上，那么有
+$$[\Psi_q(x), \Psi_q(y)] = q x y q^* - qyx q^* = \Psi_q([x,y]),$$
+因此$\Psi_q$是一个李代数同构。
+这种特别的关系在更一般的李代数中常使用伴随表示（Adjoint representation）来进行研究。
 
-重要的一点是$\mathrm{Ad}\_q$不仅是$\mathfrak{su}(2)$上的*自同态*，还是$SO(3)$中的*元素*，因为我们已经知道$\mathfrak{su}(2)$，即纯四元素，同构于$\mathbb R^3$，即三维空间中的向量，而这个映射$\mathrm{Ad}\_q$保持向量的长度和手性，因此一定是特殊正交变换，即旋转。
-这也是为何四元数能够表示旋转的原因——它们统一了$SO(3)$和$\mathfrak{so}(3)$、$SU(2)$和$\mathfrak{su}(2)$四个不同的代数结构：
+重要的一点是$\Psi\_q$不仅是$\mathfrak{su}(2)$上的*自同构*，还是$SO(3)$中的*元素*，因为我们已经知道$\mathfrak{su}(2)$，即纯四元素，同构于$\mathbb R^3$，即三维空间中的向量，而这个映射$\Psi\_q$保持向量的长度和手性，因此一定是特殊正交变换，即旋转。
+这也是四元数能够表示旋转的原因——它们统一了$SO(3)$和$\mathfrak{so}(3)$、$SU(2)$和$\mathfrak{su}(2)$四个不同的代数结构：
 $$\text{纯四元数} \cong \mathfrak{su}(2) \cong \mathfrak{so}(3), \; \text{单位四元数} \cong SU(2) \xrightarrow{2:1} SO(3).$$
 $\mathfrak{so}(3)$和$\mathfrak{su}(2)$的同构可能会让人认为其李群$SO(3)$和$SU(2)$也同构——实则不然，因为李代数只表征了李群在单位元附近的情况。
 此前我们已经见到过，实际上对同一旋转，可有两个不同的四元数来表示，即$SU(2)$是$SO(3)$的双重覆盖。
-
-四元数表示旋转的很多性质均能从李群的伴随表示中得出，例如根据同态的性质，有
-$$\mathrm{Ad}_{q_2 q_1} = \mathrm{Ad}_{q_2} \circ \mathrm{Ad}_{q_1},$$
-这就是四元数乘法与旋转复合的关系。此外，由于$\mathrm{Ad}$是一个二对一的满射，且其核（指像为单位元，即全同映射）为
+由于$\mathrm{Ad}$是一个二对一的满射，且其核（指像为单位元，即全同映射）为
 $$\ker \mathrm{Ad} = \{ 1, -1 \},$$
 因此根据群上同态保持乘法的性质，有
 $$\mathrm{Ad}_q = \mathrm{Ad}_{-q} \iff \mathrm{Ad}_q \equiv \mathrm{Ad}_{-q} \pmod{\pm 1},$$

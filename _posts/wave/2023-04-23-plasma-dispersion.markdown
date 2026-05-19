@@ -304,7 +304,8 @@ $$
 ## 任意角度入射电磁波的反射与透射
 
 我们设垂直屏幕向内为X轴，界面的方向为Y轴，建立右手直角坐标系。
-设入射电磁波在OYZ平面内，且其*在平面内偏振*，入射波所在的介质位于Z轴负半轴，其折射率为$n\_1$，透射波的为$n\_2$。
+设入射电磁波在OYZ平面内，且其*在平面内偏振*，这种偏振平行于入射面，因此也称为 P 波。
+入射波所在的介质位于Z轴负半轴，其折射率为$n\_1$，透射波的为$n\_2$。
 设入射角为$\theta\_1$，反射角为$\theta\_1^\prime$，透射角为$\theta\_2$。
 
 我们设：
@@ -357,10 +358,19 @@ $$\cos \theta_1 + \underline{r} \cos \theta_1^\prime = \underline{t} \cos \theta
 $$n_1(1-\underline{r}) = n_2 \underline{t}$$
 
 代入，即可得：
-$$\underline{r} = \frac{n_1 \cos\theta_2 - n_2 \cos\theta_1}{n_2\cos\theta_1 + n_1 \cos \theta_2}$$
+$$\underline{r} = \frac{n_1 \cos\theta_2 - n_2 \cos\theta_1}{n_1\cos\theta_2 + n_2 \cos \theta_1}$$
 这个关系称为*菲涅尔公式*。
 
-如果电场不是在平面内偏振，而是沿X轴偏振，那么反射系数有所不同。
+如果电场不是在平面内偏振，而是沿X轴偏振（垂直于入射面，称为 S 波[^senkrecht]），那么反射系数有所不同，类似的连续性计算给出：
+$$\underline{r_\text{s}} = \frac{n_1 \cos \theta_1 - n_2 \cos \theta_2}{n_1 \cos \theta_1 + n_2 \cos \theta_2}$$
+
+[^senkrecht]: 来自德语 senkrecht （垂直）的首字母。
+
+值得一提的是在有些文件中对 P 波的反射系数定义为磁场幅度之比，而非电场幅度之比。
+在这种情况下，反射系数是上文中的相反数，即
+$$
+\underline{r_\text{p}} = \frac{n_2 \cos\theta_1 - n_1 \cos\theta_2}{n_1\cos\theta_2 + n_2 \cos \theta_1}.
+$$
 
 ### 布儒斯特角
 

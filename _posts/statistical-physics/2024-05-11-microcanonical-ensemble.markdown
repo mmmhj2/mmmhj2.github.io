@@ -137,3 +137,71 @@ $$
 从而两系统温度相等。
 其余物理量的证明类似。
 {: .proof}
+
+### 例子：萨克尔-泰特洛德公式
+
+考虑能量为$E$的封闭系统，该系统仅由$N$个单原子气体粒子构成。
+单原子气体被封闭在体积为$V$的立方体盒子（无限大势阱）中。
+假设气体分子之间不发生相互作用，即该气体是理想气体，试计算其熵。<br/>
+这个系统构成微正则系综，因此需要计算所有的状态数。
+不妨设该盒子的长宽高均为$L$，满足$L^3 = V$。
+由于粒子之间不发生相互作用，我们可以单独考虑每个粒子。
+这是经典的量子力学问题，单个粒子的波函数可分离变量为
+$$\psi(\vec r) = \psi_x(x) \psi_y(y) \psi_z(z)$$
+以$x$轴为例，其通解为：
+$$\psi_x(x) = A_x \exp(i K_x x), \; K_x = \sqrt{\frac{2m E_x}{\hbar^2}}.$$
+另一方面，利用周期边界条件，可解得：
+$$K_x = \frac{2 \pi n_x}{L}, \; n_x \in \mathbb Z.$$
+这两个解都会被用到。
+对于单个粒子，其能量为
+$$E' = \frac{\hbar^2}{2m} (K_x^2 + K_y^2 + K_z^2),$$
+对于$N$个粒子，总能量为
+$$E = \frac{\hbar^2}{2m} \sum_{i=1}^n (K_{x,i}^2 + K_{y,i}^2 + K_{z,i}^2).$$
+这意味着整个系统的态矢量$\vec K$位于一个$3N$维的超球面上，球面的半径为
+$$R = \sqrt{\frac{2mE}{\hbar^2}}.$$
+分别考虑半径为$R(E)$和$R(E + \delta E)$的球壳，两个体积为
+$$
+\begin{aligned}
+V(E) &= \frac{\pi^{\frac{3N}2}}{\Gamma(\frac{3N}{2}+1)} \left( \frac{2m E}{\hbar^2}\right)^{\frac{3N}{2}} \\
+V(E + \delta E) &= \frac{\pi^{3N/2}}{\Gamma(\frac{3N}{2}+1)} \left( \frac{2m (E + \delta E)}{\hbar^2}\right)^{\frac{3N}{2}}
+\end{aligned},
+$$
+其中$\Gamma$是伽马函数。
+两者相减，得到
+$$
+\delta V = \frac{\pi^{\frac{3N}{2}}}{\Gamma(\frac{3N}{2})} \left( \frac{\sqrt{2m}}{\hbar} \right)^{3N} E^{\frac{3N}{2}-1} \delta E.
+$$
+现在我们需要计算单个状态的大小。
+观察$K\_x$，注意到每一维的单个状态占据的空间为$2\pi/L$，因此整个系统的单状态大小为
+$$V_\text{state} = \left(\frac{2\pi}{L}\right)^{3N} = \frac{(2\pi)^{3N}}{V^N}.$$
+两者相除，再除以由于粒子完全相同而重复计数的状态数$n!$（参见[麦克斯韦-玻尔兹曼近似]({% post_url statistical-physics/2024-06-10-marcocanonical-ensemble %}#麦克斯韦-玻尔兹曼近似)），即得总状态数：
+$$\Omega(E, N, V) = \frac{V^N}{N! \cdot \Gamma(\frac{3N}{2})} \frac{(2\pi mE)^{\frac{3N}{2}}}{h^{3N}} \frac{\delta E}{E}.$$
+然后取对数并利用斯特灵近似：
+$$\lim_{x \to \infty} \ln \Gamma(x) = x \ln x - x + O(1),$$
+得到
+$$
+\begin{aligned}
+\ln \Omega &\simeq N \ln V + \frac{3N}{2} \ln \frac{2 \pi m E}{h^2} - N \ln N \\
+& - \frac{3N}{2} \ln \frac{3N}{2} + \frac{5N}{2} + \ln (\frac{\delta E}{E})\\
+&\simeq N \ln \frac{V}{N} + \frac{3N}{2} \ln \frac{4 \pi m E}{3N h^2} + \frac{5N}{2} \\
+&= N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}N.
+\end{aligned}
+$$
+最后得到
+$$S = k_B \ln \Omega = k_B N \ln \frac{V}{N} \left( \frac{4 \pi m E}{3N h^2} \right)^\frac{3}{2} + \frac{5}{2}k_B N.$$
+这个公式叫做萨克尔-泰特洛德公式（Sackur–Tetrode equation）。
+{: .exampl}
+
+利用该公式，我们能求出理想气体的比热：
+$$\frac{1}{T} = \frac{\partial S}{\partial E} = \frac{3}{2} \frac{N k_B}{E} \iff C_V = \frac{3}{2} N k_B = \frac{3}{2} nR$$
+这和分子动理论预测的比热一致。
+我们也可以进一步求出理想气体的状态方程，有
+$$\frac{p}{T} = \frac{\partial S}{\partial V} = \frac{N k_B}{V} \iff p V = nRT.$$
+
+关于这个公式，值得一提的是萨克尔和泰特洛德两人分别提出该公式时量子力学还尚未被提出。
+泰特洛德在计算状态数量时，没有使用上面的量子力学方法，而是假设粒子的位置和动量被分散在大小为$\Delta x$和$\Delta p$的网格上。
+这样，状态数变为
+$$\Omega(E, N, V) = \frac{V^N}{N! \cdot \Gamma(3N/2)} \frac{2 \pi^{3N/2}}{(\Delta x \Delta p)^{3n}} (2mE)^{\frac{3N-1}{2}}.$$
+接着他设$\Delta x \Delta p = K$，然后通过实验测定了该常数的值，即
+$$\Delta x \Delta p = h.$$
+这意味着他提前发现了量子力学中量子化或分立的概念。

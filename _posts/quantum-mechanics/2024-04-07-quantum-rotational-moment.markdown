@@ -189,54 +189,54 @@ $$
 首先注意到
 $$(\lambda^2 - \mu^2) \hbar^2 = \langle \lambda^2, \mu \vert \hat L^2 - \hat L_z^2 \vert \lambda^2, \mu \rangle = \langle \lambda^2, \mu \vert \hat L_x^2 + \hat L_y^2 \vert \lambda^2, \mu \rangle \ge 0$$
 从而$\mu^2 \le \lambda^2$，因此$\mu$具有界，
-不妨设其上确界（最大值）和下确界（最小值）分别为$\mu\_\max$和$\mu\_\min$。
+不妨设其上确界（最大值）和下确界（最小值）分别为$\mu\_{\max}$和$\mu\_{\min}$。
 由于其具有最值，对最值的本征向量应用升算符和降算符必然得到零向量，这意味着
 $$
 \begin{multline}
-\hat L_+ \vert \lambda^2, \mu_\max \rangle = \vert \varnothing \rangle \\
-\implies \sqrt{\lambda^2 - \mu_\max (\mu_\max + 1)} = 0 \\
-\implies \mu_\max (\mu_\max + 1) = \lambda^2
+\hat L_+ \vert \lambda^2, \mu_{\max} \rangle = \vert \varnothing \rangle \\
+\implies \sqrt{\lambda^2 - \mu_{\max} (\mu_{\max} + 1)} = 0 \\
+\implies \mu_{\max}{} (\mu_{\max} + 1) = \lambda^2
 \end{multline}
 $$
 同理，有
-$$\mu_\min (\mu_\min - 1) = \lambda^2$$
+$$\mu_{\min} (\mu_{\min} - 1) = \lambda^2$$
 从而
 $$
 \begin{multline}
-\mu_\max (\mu_\max + 1) - \mu_\min (\mu_\min - 1) = 0 \\
-\implies (\mu_\max + \mu_\min)(\mu_\max - \mu_\min - 1) = 0
+\mu_{\max} (\mu_{\max} + 1) - \mu_{\min} (\mu_{\min} - 1) = 0 \\
+\implies (\mu_{\max} + \mu_{\min})(\mu_{\max} - \mu_{\min} - 1) = 0
 \end{multline}
 $$
 由于最大值必然大于等于最小值，因此后一项不能为零，从而
-$$\mu_\max + \mu_\min = 0$$
+$$\mu_{\max} + \mu_{\min} = 0$$
 
 最后，注意到由于所有$\mu$均可由升算符和降算符产生，而每次应用该算符会使$\mu$增加或减少一，从而使特征值增加或减少$\hbar$，因此
-$$\exists n \in \mathbb N ,\quad \mu_\min \hbar + n \hbar = \mu_\max \hbar$$
+$$\exists n \in \mathbb N ,\quad \mu_{\min} \hbar + n \hbar = \mu_{\max} \hbar$$
 从而
-$$\mu_\max = - \mu_\min = \frac n 2 \hbar, \ n \in \mathbb N$$
+$$\mu_{\max} = - \mu_{\min} = \frac n 2 \hbar, \ n \in \mathbb N$$
 
 更进一步地，注意到
 $$
 \begin{multline}
-\hat L_+ \vert \lambda^2, \mu_\max \rangle = \vert \varnothing \rangle \\
-\implies \hat L_- \hat L_+ \vert \lambda^2, \mu_\max \rangle = \vert \varnothing \rangle \\
-\implies (\hat L^2 - \hat L_z^2 - \hbar \hat L_z) \vert \lambda^2, \mu_\max \rangle = \vert \varnothing \rangle
+\hat L_+ \vert \lambda^2, \mu_{\max} \rangle = \vert \varnothing \rangle \\
+\implies \hat L_- \hat L_+ \vert \lambda^2, \mu_{\max} \rangle = \vert \varnothing \rangle \\
+\implies (\hat L^2 - \hat L_z^2 - \hbar \hat L_z) \vert \lambda^2, \mu_{\max} \rangle = \vert \varnothing \rangle
 \end{multline}
 $$
 从而
 $$
 \begin{aligned}
-\lambda^2 \hbar^2 \vert \lambda^2, \mu_\max \rangle 
-&= \hat L^2 \vert \lambda^2, \mu_\max \rangle \\
-&= (\hat L_z^2 + \hbar \hat L_z) \vert \lambda^2, \mu_\max \rangle \\
-&= \mu_\max (\mu_\max + 1) \hbar^2 \vert \lambda^2, \mu_\max \rangle \\
-\implies \lambda^2 &= \mu_\max (\mu_\max + 1)
+\lambda^2 \hbar^2 \vert \lambda^2, \mu_{\max} \rangle 
+&= \hat L^2 \vert \lambda^2, \mu_{\max} \rangle \\
+&= (\hat L_z^2 + \hbar \hat L_z) \vert \lambda^2, \mu_{\max} \rangle \\
+&= \mu_{\max} (\mu_{\max} + 1) \hbar^2 \vert \lambda^2, \mu_{\max} \rangle \\
+\implies \lambda^2 &= \mu_{\max} (\mu_{\max} + 1)
 \end{aligned}
 $$
 以上分析给出了以下命题。
 
 量子数$\mu$的最值是$\frac \hbar 2$的正整数倍，且其最值与另一个量子数$\lambda$之间存在一一对应的关系。
-因此我们可以使用$\vert \mu\_\max, \mu \rangle$来表示一个本征态。
+因此我们可以使用$\vert \mu\_{\max}, \mu \rangle$来表示一个本征态。
 {: .proposition}
 
 ### 轨动量矩
@@ -245,18 +245,18 @@ $$
 利用本征态的定义，我们有：
 $$
 \begin{multline}
-\hbar \mu \vert \mu_\max, \mu \rangle = \hat L_z \vert \mu_\max, \mu \rangle = - i \hbar \frac{\partial}{\partial \varphi} \vert\mu_\max, \mu \rangle \\
+\hbar \mu \vert \mu_{\max}, \mu \rangle = \hat L_z \vert \mu_{\max}, \mu \rangle = - i \hbar \frac{\partial}{\partial \varphi} \vert\mu_{\max}, \mu \rangle \\
 \iff \hbar \mu \psi (\theta, \varphi) = - i \hbar \frac{\partial}{\partial \varphi} \psi(\theta, \varphi)
 \end{multline}
 $$
 利用分离变量法得到这个偏微分方程的解：
-$$\psi_{\mu_\max, \mu}(\theta, \varphi) = A(\theta) e^{i \mu \varphi}$$
+$$\psi_{\mu_{\max}, \mu}(\theta, \varphi) = A(\theta) e^{i \mu \varphi}$$
 利用循环边界条件，得到
-$$\psi_{\mu_\max, \mu}(\theta, \varphi) = \psi_{\mu_\max, \mu}(\theta, \varphi + 2 \pi) \iff e^{i \mu \varphi} = e^{i \mu (\varphi + 2\pi)}$$
+$$\psi_{\mu_{\max}, \mu}(\theta, \varphi) = \psi_{\mu_{\max}, \mu}(\theta, \varphi + 2 \pi) \iff e^{i \mu \varphi} = e^{i \mu (\varphi + 2\pi)}$$
 这意味着$\mu$只能是整数。
 
 轨动量矩的量子数$\mu$只能为整数，其最值也只能为整数。
-这两个整数$\mu\_\max$和$\mu$分别称为轨量子数（orbital quantum number，也称角量子数）和磁量子数（magnetic quantum number），通常记为$l$和$m\_l$。
+这两个整数$\mu\_{\max}$和$\mu$分别称为轨量子数（orbital quantum number，也称角量子数）和磁量子数（magnetic quantum number），通常记为$l$和$m\_l$。
 {: .proposition}
 
 例如，当$l=3$时，动量矩的大小为
@@ -270,12 +270,75 @@ $$\Vert \vec L \Vert = \hbar \sqrt{l(l+1)} = 2\sqrt{3} \hbar$$
 #### 球谐函数
 
 函数
-$$Y_l^{m_l}(\theta, \varphi) = \frac{(-1)^{l+m_l}}{2^l l!} \sqrt{\frac{2l+1}{\pi} \frac{(l-m_l)!}{(l+m_l)!}} e^{i m_l \varphi} \sin^{m_l} \theta \frac{d^{l+m_l}}{d(\cos \theta)^{l+m_l}} \sin^{2l} \theta$$
-称为球谐函数（Sphere harmonic function），是算符$\hat L^2$和$\hat L\_Z$共同的特征函数。
+$$
+\begin{aligned}
+Y_l^{m_l}(\theta, \varphi) = & \frac{(-1)^{l+m_l}}{2^l l!} \sqrt{\frac{2l+1}{\pi} \frac{(l-m_l)!}{(l+m_l)!}} e^{i m_l \varphi} \\ & \sin^{m_l} \theta \frac{d^{l+m_l}}{d(\cos \theta)^{l+m_l}} \sin^{2l} \theta
+\end{aligned}
+$$
+称为球谐函数（Spherical harmonic function），是算符$\hat L^2$和$\hat L\_Z$共同的特征函数。
 {: .proposition}
 
-球谐函数实际上是球坐标下拉普拉斯方程的解，实际上也是球坐标下一组特殊函数的基底，因此具有非常重要的物理意义。
-表示论说明，球谐函数空间实际上是旋转群$\mathrm{SO}(3)$的表示。
+我们尝试寻找$\hat L^2$和$\hat L\_Z$共同的特征函数$Y$，根据定义，有：
+$$\hat L^2 Y(\theta, \varphi) = \alpha Y(\theta, \varphi), \; \hat L_z Y(\theta, \varphi) = \beta Y(\theta, \varphi).$$
+我们不妨将$Y$按照特征值编号，取
+$$\hat L^2 Y_l^m(\theta, \varphi) = l (l + 1) \hbar Y_l^m(\theta, \varphi), \; \hat L_z Y_l^m(\theta, \varphi) = m \hbar Y_l^m(\theta, \varphi),$$
+这样选定特征值是为了将求出的解和球坐标下拉普拉斯方程的特征解，即传统意义上的球谐函数对应。
+考虑到$Y$是$\hat L\_z$的特征函数，而该算符中含有对$\varphi$的偏微分，可进行分离变量，取
+$$Y_l^m(\theta, \varphi) = \Theta(\theta) \Phi(\varphi),$$
+然后代入动量矩算符的定义，得到
+$$
+\left\{
+\begin{aligned}
+\hat L_z Y & = - i \hbar \Theta \frac{\partial \Phi}{\partial \varphi} \\
+\hat L^2 Y & = \frac{\Phi}{\sin \theta} \frac{\partial}{\partial \theta} \left( \sin\theta \frac{\partial \Theta}{\partial \theta}\right) + \frac{\Theta}{\sin^2 \theta} \frac{\partial^2 \Phi}{\partial \varphi^2}
+\end{aligned}
+\right..
+$$
+利用分离变量法，这些方程都变为全微分方程，第一个方程变为：
+$$m \hbar \Theta \Phi = - i \hbar \Theta \frac{\partial \Phi}{\partial \varphi} \implies \frac{\partial \Phi}{\partial \varphi} = im \Phi$$
+这是容易求解的：
+$$\Phi = \exp(i m \varphi).$$
+将解回代入第二个方程并消去$\Phi$，得到
+$$\frac{1}{\sin \theta}\frac{\partial}{\partial \theta} \left( \sin\theta \frac{\partial \Theta}{\partial \theta}\right) - \frac{\Theta}{\sin^2 \theta} m^2 = -l (l+1) \Theta. $$
+我们首先考虑$m = 0$的情况。
+利用$u = \cos \theta$进行换元，得到
+$$\frac{\mathrm d}{\mathrm d u} \left( (1 - u^2) \frac{\mathrm d P(u)}{\mathrm d u} \right) = - l(l+1) P(u).$$
+这个全微分方程的解是一个特殊函数，称为勒让德多项式（Legendre's polynomial），记为$P\_l$。
+因此对$m = 0$的情况，有
+$$\Theta(\theta) = P_l(\cos \theta).$$
+对$m \neq 0$的情况，这个微分方程也具有一个特殊函数解，称为缔合勒让德多项式（associated Legendre's polynomial），记为$P\_l^m$。
+这两个多项式通常用以下方式表达：
+$$
+\begin{aligned}
+P_l(x) &= \frac{1}{2^l l!} \frac{d^l}{d x^l} (x^2 - 1)^l, \\
+P_l^m(x) &= (-1)^m (1 - x^2)^{m/2} \frac{d^m}{d x^m} P_l(x).
+\end{aligned}
+$$
+带回即可得到
+$$\Theta(\theta) = P_l^m(\cos \theta) = \frac{(-1)^m \sin^m \theta}{2^l l!} \frac{d^{(l + m)}}{d \cos\theta^{(l + m)}} (-\sin^2\theta)^l,$$
+整理一下符号即可得到
+$$
+\Theta(\theta) = \frac{(-1)^{l+m}}{2^l l!} \sin^{m} \theta \frac{d^{l+m}}{d(\cos \theta)^{l+m}} \sin^{2l} \theta.
+$$
+最后，由于
+$$
+\begin{aligned}
+\int_{-1}^1 P_l^m(x) P_{l'}^m(x) \,\mathrm d x &=\int_0^\pi P_l^m(\cos x) P_{l'}^m(\cos x) \sin x \,\mathrm d x \\ &= \frac{2(l+m)!}{(2l+1)(l-m)!} \delta_l^{l'}
+\end{aligned}
+$$
+而我们希望球谐函数正则化，即
+$$\int_{0}^{2\pi} \int_0^\pi Y_{l,m}^* (\theta, \varphi) Y_{l,m}(\theta, \varphi) \, \mathrm d \theta \mathrm d \varphi = 1,$$
+因此需要除以这个常数，这就完成了原式的证明。
+{: .proof}
+
+球谐函数的一个重要性质是它也是球坐标下拉普拉斯方程的特征解：
+$$r^2 \nabla^2 Y_l^m (\theta, \varphi) = - l(l+1) Y_l^m(\theta, \varphi),$$
+利用分离变量的性质，任何拉普拉斯方程在球坐标系下的解均可写为
+$$
+f(r, \theta, \varphi) = \sum_{l=0}^\infty\sum_{m = -l}^l f_l^m \cdot r^l Y_l^m(\theta, \varphi),
+$$
+其中$f\_l^m$均为常数。
+这使得球谐函数非常适合于表示球坐标系下的函数。
 
 ## 自旋算符
 
@@ -303,7 +366,7 @@ $$\mu_S = \gamma g \vec S$$
 从而总的磁矩为
 $$\mu = \gamma(\vec L + g \vec S)$$
 
-电子的自旋算符$\hat S$的轨量子数$\mu\_\max$为二分之一，因此称电子具有二分之一自旋。
+电子的自旋算符$\hat S$的轨量子数$\mu\_{\max}$为二分之一，因此称电子具有二分之一自旋。
 
 ### 自旋算符与泡利矩阵
 
