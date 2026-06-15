@@ -19,6 +19,8 @@ categories: ["量子力学"]
 这个希尔伯特空间通常是在一至三维欧几里得空间（取决于问题所研究空间的维数）上定义的勒贝格$ L^2(\mathbb R^n)$空间。
 {: .definition}
 
+根据狄拉克记号，要在空间上应用一个线性映射$A$，应当写为$A \vert x \rangle$，而要应用一个（半）双线性映射，则应当写为$\langle y \vert A \vert x \rangle$。
+
 现在的问题是，这个希尔伯特空间中的右矢和左矢之间是否构成双射？
 这就是说，给出一个左矢，是否一定能找到唯一的右矢，而给出一个右矢，又是否能找到唯一的左矢？
 若不能，那么这个表示就不是良构的。
@@ -157,43 +159,57 @@ $$\hat x \vert x \rangle = x \vert x \rangle, \; \hat p \vert p \rangle = p \ver
 我们断言任何波函数都是平面单色波的叠加。
 对$n$维情况，有
 $$
-\psi(x) = \frac{1}{(2 \pi \hbar)^{n/2}} \int_{\mathbb R^n} \tilde \psi(p) \exp \left[ \frac{i}{\hbar} p \cdot x \right] .
+\psi(x) = \frac{1}{(2 \pi \hbar)^{n/2}} \int_{\mathbb R^n} \tilde \psi(p) \exp \left[ \frac{i}{\hbar} p \cdot x \right] \;\mathrm d p.
 $$
-这正是位置空间和向量空间之间的傅里叶变换。
-我们设这个波函数的态矢为$\vert \psi \rangle$，从而有
+这正是位置空间和向量空间之间的傅里叶变换，$\psi(x)$是位置表象的波函数、$\tilde\psi(p)$是动量表象的波函数。
+我们设这个波函数的态矢为$\vert \psi \rangle$。
+取右矢量是纯约定的，原则上也可规定为左矢，只需要对应地修改下面的推导。
+从而有
 $$
-\psi(x) = \langle x \vert \psi \rangle, \; \tilde \psi(p) = \langle p \vert \tilde \psi \rangle.
+\psi(x) = \langle x \vert \psi \rangle, \; \tilde \psi(p) = \langle p \vert \psi \rangle.
 $$
+两种波函数的表征的态矢是一样的，它们只是在两个空间中的不同表征而已。
+这样上述傅里叶变换可写为
+$$
+\langle x \vert \psi \rangle =  \int_{\mathbb R^n} \frac{\exp \left[ \frac{i}{\hbar} p x \right]}{(2 \pi \hbar)^{n/2}} \langle p \vert \psi \rangle  \;\mathrm d p.
+$$
+注意根据帕塞瓦尔定理，这个变换是酉同构，因此位置表象的和动量表象的波函数的确是同构的，指的是同一个空间中的同一个波函数。
+数学上讲，可认为$\langle x \vert$和$\langle p \vert$是希尔伯特空间的“基底”，而$\vert \psi \rangle$是其中的抽象的元素，从而$\psi(x)$和$\tilde\psi(p)$都是这个元素的坐标表示。
+关于这一点的更多内容，可参看装备希尔伯特空间（Rigged Hilbert Space, RHS）和盖尔范德三重偶（Gelfand Triple）。
 
 考虑一维情况，对这个傅里叶关系两边同时对位置求导，得到
 $$
-\frac{\mathrm d \psi}{\mathrm d x} = \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathrm R} \tilde\psi(p) \frac{ip}{\hbar} \exp \left[ \frac{ipx}{\hbar} \right] \mathrm d p.
+\frac{\mathrm d \psi}{\mathrm d x} = \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathbb R} \tilde\psi(p) \frac{ip}{\hbar} \exp \left[ \frac{ipx}{\hbar} \right] \mathrm d p.
 $$
 
 现在我们希望计算$\hat p$对任何波函数的作用。
-根据谱定理，有
+我们知道算符$\hat p$是自伴的，因为其对应可观测量。
+因此，我们断言算符$\hat p$可以利用谱定理进行展开，有
 $$
-\hat p \vert \tilde\psi \rangle = \int_{\mathbb R} \hat p \vert p \rangle \cdot \langle p \vert \tilde\psi \rangle \; \mathrm d p = \int_{\mathbb R} p \vert p \rangle \cdot \tilde\psi(p) \; \mathrm d p.
+\hat p \vert \psi \rangle = \int_{\mathbb R} \hat p \vert p \rangle \cdot \langle p \vert \psi \rangle \; \mathrm d p = \int_{\mathbb R} p \vert p \rangle \cdot \tilde\psi(p) \; \mathrm d p.
 $$
-现在我们需要消去等式右侧的$\vert p \rangle$。
+这在物理上也叫做本征波函数展开。
+本征函数展开的正确性可由泛函分析严格证明，但这远远超出了本文的讨论范围。
 
-注意到
+现在我们需要消去等式右侧的$\vert p \rangle$。
+注意到利用本征波函数展开，有
 $$
 \begin{aligned}
 \langle x \vert \psi \rangle 
-&= \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathbb R} \exp \left[ \frac{i}{\hbar} p \cdot x \right] \tilde \psi(p) \; \mathrm d p \\
-&= \int_{\mathbb R} \langle x \vert p \rangle \langle p \vert \tilde \psi \rangle \; \mathrm d p,
+&= \int_{\mathbb R} \langle x \vert p \rangle \langle p \vert \psi \rangle \; \mathrm d p \\
+&= \int_{\mathbb R^n} \frac{\exp \left[ \frac{i}{\hbar} p x \right]}{\sqrt{2 \pi \hbar}} \langle p \vert \psi \rangle  \;\mathrm d p,
 \end{aligned}
 $$
 从而
 $$
 \langle x \vert p \rangle = \frac{1}{\sqrt{2\pi\hbar}} \exp \left[ \frac{i}{\hbar} p \cdot x \right].
 $$
+这个式子实际上是上述傅里叶变换的“核函数”，承担了在位置和动量空间中转换的功能。
 
-现在，将$\hat p \vert \tilde\psi \rangle$两边同时乘$\langle x \vert$，得到
+现在，将$\hat p \vert \psi \rangle$两边同时乘$\langle x \vert$，得到
 $$
 \begin{aligned}
-\langle x \vert \hat p \vert \tilde\psi \rangle 
+\langle x \vert \hat p \vert \psi \rangle 
 &= \int_{\mathbb R} p \langle x \vert p \rangle \cdot \tilde\psi(p) \; \mathrm d p \\
 &= \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathbb R} \exp \left[ \frac{i px}{\hbar} \right] p \tilde\psi(p) \; \mathrm d p. 
 \end{aligned}
@@ -201,14 +217,19 @@ $$
 
 将其与傅里叶变换的导数对比，即可得到
 $$
-\langle x \vert \hat p= i \hbar \frac{\partial}{\partial x} \langle x \vert,
+\langle x \vert \hat p \vert \psi \rangle= \frac{\hbar}{i} \frac{\mathrm d}{\mathrm d x} \psi(x) = - i \hbar \frac{\mathrm d}{\mathrm d x} \langle x \vert \psi \rangle,
 $$
-取共轭即可得到通常形式。
+注意到$\langle x \vert \hat p \vert \psi \rangle$就是将算符应用于位置表征的波函数上，写成波函数的形式，即有
+$$\hat p \psi(x) = - i \hbar \frac{\mathrm d}{\mathrm d x} \psi(x),$$
+这也叫做位置表象下的动量算符。
 
 这个推导不使用除了平面单色波叠加之外的任何假设。
 值得注意的是在单色波叠加这一假设上，我们人为规范了所有波的相位。
-如果不做这个规范，那么得出的动量算符也是不唯一的。
-关于这一规范的更多内容，可参见斯通-冯诺伊曼定理。
+改变这个约定会连带改变动量表象波函数的形式，但不改变动量算符以及任何可观测的物理预言。
+关于算符唯一性的更多内容，可参见斯通-冯诺伊曼定理。
+
+从上面的讨论我们可以看出，量子力学中很多符合直觉的结论，其严格证明其实是相当复杂的，需要高等的数学背景并使用大量泛函分析中的结论。
+因此，出于简单考虑，之后的讨论中我们将不再给出这么严格的说明了。
 
 ### 投影算符
 
@@ -223,6 +244,9 @@ $$\vert \varphi_n \rangle \langle \varphi_n \vert \psi \rangle$$
 利用矩阵乘法的结合律即可得到投影向量算子。
 注意到厄米算子的特征值构成了空间的一组基底，该算子的和就是全同映射。
 {: .proof}
+
+我们前面其实已经多次见到过投影算符了。
+在介绍简并时出现的$\vert \psi \rangle \langle \psi \vert$和动量的本征波函数展开中使用的$\vert p \rangle \langle p \vert$，其实都是投影算符。
 
 ### 对易算符
 
