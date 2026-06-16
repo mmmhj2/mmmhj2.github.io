@@ -188,6 +188,19 @@ $$\frac{\mathrm d}{\mathrm d t} \frac{\partial L}{\partial \dot q_j} - \frac{\pa
 这些广义力可以使用定义计算，也可以简单地取让广义力对应的广义坐标增大，而让其他广义坐标不变的虚位移$\delta q\_j$，然后求出所有非保守力在该方向上的虚功，则：
 $$\delta W = Q_j \delta q_j \iff Q_j = \frac{\delta W}{\delta q_j}$$
 
+#### 拉格朗日量的非唯一性
+
+对于同一个系统，只要确定广义坐标，上述定义的拉格朗日量似乎是唯一的。
+但是，从拉格朗日方程的情况上看则并非如此。
+不妨设系统的拉格朗日量为$L$，那么考虑下面这个拉格朗日量
+$$
+\tilde L(\dot q_1, \dots, \dot q_k, q_1, \dots, q_k, t) = \alpha L(\dot q_1, \dots, \dot q_k, q_1, \dots, q_k, t) + F(t), \; \alpha \neq 0
+$$
+这个拉格朗日量添加了一个只与时间$t$相关的函数，这个函数不显含任何广义坐标和速度，因此在拉格朗日方程中会被消去。
+而常数$\alpha$也可从微分方程两侧消除。
+在这个意义上，这个拉格朗日量具有相同的微分方程，因此描述了同一个系统。
+从而，系统的拉格朗日量并不是唯一的。
+
 ## 拉氏方程的首次积分
 
 现在我们希望从拉氏方程中寻找到一些守恒量。
@@ -322,6 +335,7 @@ $$\sum_{j=1}^m \left\{ Q_j - \left[ \frac{\mathrm d}{\mathrm d t} \frac{\partial
 $$\frac{\mathrm d}{\mathrm d t} \frac{\partial T}{\partial \dot q_j} - \frac{\partial T}{\partial q_j} = Q_j + \sum_i \lambda_i \frac{\partial f_i}{\partial q_j} \quad \forall j = 1,\dots,m.$$
 这种带有拉氏乘子的方程称为**第一类拉氏方程**。
 不难注意到拉氏乘子和广义力具有相同的量纲，如果选取的约束方程合适，那么其正是某一个约束对应的约束力。
+然而，值得注意的是，由于拉格朗日量的非唯一性，第一类拉氏方程解出的广义力也不是唯一的，这个广义力和牛顿力学意义上的约束力可能相差一个常数。
 
 目前已知的有关力学系统的速度的约束都是关于速度线性的，其总可以写为：
 $$\sum_{j=1}^m A_{kj}(q_1, \dots, q_m, t) \dot q_j + b_k (q_1, \dots, q_m, t) = 0, \quad k = 1, \dots, r$$
