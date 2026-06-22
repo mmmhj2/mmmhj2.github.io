@@ -398,7 +398,8 @@ $$
 \exp [ t (\left\{ \cdot, T \right\} + \left\{ \cdot, V \right\}) ] 
 = e^{t \tau_k \left\{ \cdot, T \right\}} e^{t \nu_k \left\{ \cdot, V \right\}} \cdots e^{t \tau_1 \left\{ \cdot, T \right\}} e^{t \nu_1 \left\{ \cdot, V \right\}} + \mathcal O(t^{k+1}),
 $$
-这一步应用了 Baker–Campbell–Hausdorff 公式。
+这一步应用了 Baker-Campbell-Hausdorff 公式。
+数值算法中经常利用这种展开来计算指数，从而求解微分方程，这种方法也叫做铃木-特罗特分解（Suzuki-Trotter decomposition）。
 
 注意，以上乘积中的每一项：
 $$ \exp[t \tau_i \left\{ \cdot, T \right\}] \text{ 和 } \exp[t \nu_i \left\{ \cdot, V \right\}], $$
@@ -423,7 +424,7 @@ $$
 $$
 \frac{\partial V}{\partial q} = - F, \; \frac{\partial T}{\partial p} = \frac{p}{m},
 $$
-其中$m$是质量。
+其中$F$是有势力、$m$是质量。
 此时，一个积分子步可写为
 $$
 p_i = p_{i-1} + t \nu_i F ,\; q_i = q_{i-1} + t\tau_i \frac{p_i}{m}.
@@ -434,4 +435,21 @@ v_i = v_{i-1} + t \nu_i a, \; x_i = x_{i-1} + t \tau_i v_i.
 $$
 这种积分方式在数值积分中非常常见，比如半隐式欧拉法（$k=1$）。
 对更高阶的积分方法，需要使用 BCH 公式将上面的连乘展开，然后用待定系数法使高次项的系数归零，从而计算积分系数，就像普通的数值积分里利用泰勒展开消去高阶项一样。
-Verlet 积分（$k=2$）就是典型的例子。
+
+特别地，对于二阶情况，一个常见的展开写为
+$$
+\begin{aligned}
+\exp [ t (\left\{ \cdot, T \right\} + \left\{ \cdot, V \right\}) ] 
+&=\exp [\frac{t}{2}\{ \cdot, T \}] \exp [t\{ \cdot, V \}] \exp [\frac{t}{2}\{ \cdot, T \}] + \mathcal{O}(t^3), \\
+&=\exp [\frac{t}{2}\{ \cdot, V \}] \exp [t\{ \cdot, T \}] \exp [\frac{t}{2}\{ \cdot, V \}] + \mathcal{O}(t^3),
+\end{aligned}
+$$
+即
+$$
+\begin{array}{lcccc}
+&\tau_2 = 1/2, &\nu_2 = 1, &\tau_1 = 1/2, &\nu_1 = 0 \\
+\text{或者}&\tau_2 = 0, &\nu_2 = 1/2, &\tau_1 = 1, &\nu_1 = 1/2 \\
+\end{array}
+$$
+这个特别的展开叫做二阶对称特罗特分解（Second-order symmetric Trotter decomposition）或者斯特朗裂项（Strang splitting）。
+这种积分叫做 Verlet 积分，是非常常见的数值积分方法，广泛应用于从计算物理学到游戏开发的多种领域中。
