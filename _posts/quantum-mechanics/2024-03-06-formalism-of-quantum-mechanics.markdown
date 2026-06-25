@@ -11,19 +11,28 @@ categories: ["量子力学"]
 
 ### 物理量与算子
 
-为描述物理系统的状态，在量子力学中通常使用狄拉克记号来表示希尔伯特空间中的各种元素。
+为描述物理系统的状态，在量子力学中通常使用狄拉克记号（Bra-ket notation）来表示希尔伯特空间中的各种元素。
 
-希尔伯特空间中的列向量表示物理系统的量子态，称为*右矢*（ket），记为$\vert \psi \rangle$；
-其共轭转置[^duality]称为*左矢*（bra），记为$\langle \psi \vert$。
+希尔伯特空间$H$中的向量表示物理系统的量子态，称为*右矢*（ket），记为$\vert \psi \rangle$；
+而该空间上的连续线性泛函，即其连续对偶空间$H^\star$中的向量，则称为*左矢*（bra），记为$\langle \psi \vert$。
 表示量子态的矢量简称为*态矢*。
 这个希尔伯特空间通常是在一至三维欧几里得空间（取决于问题所研究空间的维数）上定义的勒贝格$ L^2(\mathbb R^n)$空间。
 {: .definition}
 
-[^duality]: 从数学上讲，更准确的说法是“对偶”。左矢是将右矢映射到数域的线性函数，因此位于对偶空间中。
+根据狄拉克记号，要在空间上应用一个线性映射$A$，应当写为$A \vert x \rangle$，而要应用一个（半）双线性映射，则应当写为$\langle y \vert A \vert x \rangle$。
 
-利用左矢与右矢，可以非常方便地表示一些常见的运算，如内积：
-$$ (\psi, \phi) = \psi^\dagger \cdot \phi = \langle \psi \vert \phi \rangle $$
-其中$\cdot^\dagger$表示矩阵的共轭转置。
+现在的问题是，这个希尔伯特空间中的右矢和左矢之间是否构成双射？
+这就是说，给出一个左矢，是否一定能找到唯一的右矢，而给出一个右矢，又是否能找到唯一的左矢？
+若不能，那么这个表示就不是良构的。
+由于该空间装备有内积，从右矢到左矢的映射是显然的，而且一定是单射，仅需要利用内积构造这个变换：
+$$
+\Phi: H \to H^\star, \; \vert \psi \rangle \mapsto \langle \psi, \cdot \rangle.
+$$
+但是，该映射的满射性却不总是显然的。
+对于有限维的内积空间，通过验证维数相等即可证明该映射是双射，这也叫做内积空间的典范同构（canonical isomorphism）。
+但对于可积函数构成的无限维空间而言，这个结论并非显然。
+幸运的是，只要这个内积空间是完备的，那么里斯表示定理（Riesz Representation Theorem）就保证了这一点；而根据定义，希尔伯特空间就是完备的内积空间。
+
 应当注意，量子态所处的空间一般是波函数的空间，即平方可积的函数构成的希尔伯特空间，也就是上文中提到的勒贝格空间，因此其中的内积实际上是：
 $$
 \langle \psi \vert \phi \rangle = \int_{\mathbb R^n} \psi^*(\vec x) \phi(\vec x) \, \mathrm d \vec x, \quad (n = 1, 2, 3).
@@ -37,7 +46,7 @@ $$
 {: .proposition}
 
 常见的可观测量有动量和哈密顿量，即：
-$$\hat p = \frac{\hbar}{i} \nabla , \quad \hat H = - \frac{\hbar^2}{2m} \Delta + V$$
+$$\hat p = \frac{\hbar}{i} \nabla , \quad \hat H = \frac{\hat p \cdot \hat p}{2m} + V = - \frac{\hbar^2}{2m} \Delta + V$$
 哈密顿量出现在薛定谔方程中：
 $$i \hbar \frac{\partial}{\partial t} \psi (\vec r, t) = \hat H \psi (\vec r, t) = - \frac{\hbar^2}{2m}\nabla_r \psi (\vec r, t) + V \psi(\vec r, t)$$
 
@@ -48,6 +57,9 @@ $$i \hbar \frac{\partial}{\partial t} \psi (\vec r, t) = \hat H \psi (\vec r, t)
 {: .proposition}
 
 以哈密顿量为例，其特征值就是系统的能量的可能的取值。
+
+有趣的一点是以上理论并非只能应用于量子力学中，也能应用于经典力学中。
+这种方法称为经典力学的希尔伯特空间表述，其中最知名的是库普曼-冯诺依曼经典力学（Koopman-von Neumann classical mechanics）。
 
 厄米矩阵既然可以对角化，则其特征向量组成希尔伯特空间的一组基底，因此具有重要的意义——这就是问题所研究的空间的基底向量。
 若不加特殊说明，我们接下来用$\varphi\_n$来表示这些向量。
@@ -71,7 +83,7 @@ $$i \hbar \frac{\partial}{\partial t} \psi (\vec r, t) = \hat H \psi (\vec r, t)
 {: .definition}
 
 如果特征值的重数大于一，就说明一个特征值具有多个线性独立的特征向量，因此即使确定了该物理量，仍然不能确定该系统具体处于什么状态。
-这样的状态就是简并的。
+这样的状态在数学上称为退化，在物理中则称为简并。
 
 物理量在测量后为某一特征值的概率为：
 $$p_n = \sum_d \vert \langle \varphi_{n,d} \vert \psi \rangle \vert^2 = \sum_d \langle \varphi_{n,d} \vert \psi \rangle \langle \psi \vert \varphi_{n,d} \rangle$$
@@ -95,16 +107,129 @@ $$\vert \psi' \rangle = \frac{\sum_d c_{n,d} \vert \varphi_{n,d} \rangle }{\sqrt
 $$\vert \psi' \rangle = \vert \varphi_n \rangle$$
 {: .proposition}
 
-### 薛定谔方程
+### 薛定谔绘景
 
-哈密顿算符为$\hat H$的系统的量子态随时间的变化由薛定谔方程完全描述：
-$$\hat H(t) \vert \psi(t) \rangle = i \hbar \frac{d}{d t} \vert \psi(t) \rangle$$
+量子力学中描述系统随时间变化的基本假设称为量子力学的*动力学绘景*。
+根据使用的公设和研究对象的重点不同，有多种数学上等价的动力学绘景可用，这些绘景也是公设的一部分。
+在我们的研究中主要使用薛定谔绘景（Schrödinger's picture）。
+
+在薛定谔绘景中，系统的状态由态矢表示，态矢随时间流动而变化，而表示可观测量的算符则保持不变。
+在此基础上，哈密顿算符为$\hat H$的系统的量子态随时间的变化由*薛定谔方程*完全描述：
+$$\hat H \vert \psi(t) \rangle = i \hbar \frac{d}{d t} \vert \psi(t) \rangle$$
 {: .proposition}
 
 薛定谔方程还给出了概率流的表述。
+利用概率流，我们可以给出量子力学中的连续性方程。
+这个方程和薛定谔方程等价，但是具有和电磁学等其他物理学方向相同的表示形式。
+
+设$\psi(\mathbf r, t)$为满足薛定谔方程的波函数，对应的概率密度为
+$$
+\rho(\mathbf r, t) = \vert \psi(\mathbf r, t) \vert^2,
+$$
+那么满足连续性方程
+$$
+\frac{\partial}{\partial t} \rho(\mathbf r, t) + \nabla \cdot \mathbf j(\mathbf r, t) = 0
+$$
+的矢量场$\mathbf j$称为该波函数的概率流。
+{: .definition}
+
+以无自旋的自由粒子为例，其波函数的概率流为
+$$
+\mathbf j = \frac{1}{2m} \left( \psi^\star \hat p \psi - \psi \hat p \psi^\star \right) = \frac{\hbar}{m} \Im(\psi^\star \nabla \psi).
+$$
+
+在电磁场中，我们通过界面上的连续性方程求解过界面的反射和透射系数。
+利用概率流的连续性方程，我们也可以计算势垒的反射和透射系数。
 
 ## 狄拉克记号的计算
 本节主要关注狄拉克记号下的各种计算。
+
+### 算符的推导
+
+在[之前的文章中]({% post_url wave/2023-06-06-introduction-to-quantum-mechanics %}#动量的分布)，我们简单地利用直觉推导了动量算符的表达式。
+这里，我们将使用前文所述的公设进行更严谨的推导。
+
+我们考虑一维情况下的位置$\hat x$和动量$\hat p$两个算符。
+根据定义，位置和动量应该是它们的本征值，即
+$$\hat x \vert x \rangle = x \vert x \rangle, \; \hat p \vert p \rangle = p \vert p \rangle. $$
+这里$\vert x \rangle, \vert p \rangle$是不特定的特征向量（本征态）。
+这两个算符不一定共享本征态，因此这两个特征向量不一定是相等的。
+实际上，我们马上就会看到，这两个算符不共享特征空间。
+
+我们断言任何波函数都是平面单色波的叠加。
+对$n$维情况，有
+$$
+\psi(x) = \frac{1}{(2 \pi \hbar)^{n/2}} \int_{\mathbb R^n} \tilde \psi(p) \exp \left[ \frac{i}{\hbar} p \cdot x \right] \;\mathrm d p.
+$$
+这正是位置空间和向量空间之间的傅里叶变换，$\psi(x)$是位置表象的波函数、$\tilde\psi(p)$是动量表象的波函数。
+我们设这个波函数的态矢为$\vert \psi \rangle$。
+取右矢量是纯约定的，原则上也可规定为左矢，只需要对应地修改下面的推导。
+从而有
+$$
+\psi(x) = \langle x \vert \psi \rangle, \; \tilde \psi(p) = \langle p \vert \psi \rangle.
+$$
+两种波函数的表征的态矢是一样的，它们只是在两个空间中的不同表征而已。
+这样上述傅里叶变换可写为
+$$
+\langle x \vert \psi \rangle =  \int_{\mathbb R^n} \frac{\exp \left[ \frac{i}{\hbar} p x \right]}{(2 \pi \hbar)^{n/2}} \langle p \vert \psi \rangle  \;\mathrm d p.
+$$
+注意根据帕塞瓦尔定理，这个变换是酉同构，因此位置表象的和动量表象的波函数的确是同构的，指的是同一个空间中的同一个波函数。
+数学上讲，可认为$\langle x \vert$和$\langle p \vert$是希尔伯特空间的“基底”，而$\vert \psi \rangle$是其中的抽象的元素，从而$\psi(x)$和$\tilde\psi(p)$都是这个元素的坐标表示。
+关于这一点的更多内容，可参看装备希尔伯特空间（Rigged Hilbert Space, RHS）和盖尔范德三重偶（Gelfand Triple）。
+
+考虑一维情况，对这个傅里叶关系两边同时对位置求导，得到
+$$
+\frac{\mathrm d \psi}{\mathrm d x} = \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathbb R} \tilde\psi(p) \frac{ip}{\hbar} \exp \left[ \frac{ipx}{\hbar} \right] \mathrm d p.
+$$
+
+现在我们希望计算$\hat p$对任何波函数的作用。
+我们知道算符$\hat p$是自伴的，因为其对应可观测量。
+因此，我们断言算符$\hat p$可以利用谱定理进行展开，有
+$$
+\hat p \vert \psi \rangle = \int_{\mathbb R} \hat p \vert p \rangle \cdot \langle p \vert \psi \rangle \; \mathrm d p = \int_{\mathbb R} p \vert p \rangle \cdot \tilde\psi(p) \; \mathrm d p.
+$$
+这在物理上也叫做本征波函数展开。
+本征函数展开的正确性可由泛函分析严格证明，但这远远超出了本文的讨论范围。
+
+现在我们需要消去等式右侧的$\vert p \rangle$。
+注意到利用本征波函数展开，有
+$$
+\begin{aligned}
+\langle x \vert \psi \rangle 
+&= \int_{\mathbb R} \langle x \vert p \rangle \langle p \vert \psi \rangle \; \mathrm d p \\
+&= \int_{\mathbb R^n} \frac{\exp \left[ \frac{i}{\hbar} p x \right]}{\sqrt{2 \pi \hbar}} \langle p \vert \psi \rangle  \;\mathrm d p,
+\end{aligned}
+$$
+从而
+$$
+\langle x \vert p \rangle = \frac{1}{\sqrt{2\pi\hbar}} \exp \left[ \frac{i}{\hbar} p \cdot x \right].
+$$
+这个式子实际上是上述傅里叶变换的“核函数”，承担了在位置和动量空间中转换的功能。
+
+现在，将$\hat p \vert \psi \rangle$两边同时乘$\langle x \vert$，得到
+$$
+\begin{aligned}
+\langle x \vert \hat p \vert \psi \rangle 
+&= \int_{\mathbb R} p \langle x \vert p \rangle \cdot \tilde\psi(p) \; \mathrm d p \\
+&= \frac{1}{\sqrt{2\pi\hbar}} \int_{\mathbb R} \exp \left[ \frac{i px}{\hbar} \right] p \tilde\psi(p) \; \mathrm d p. 
+\end{aligned}
+$$
+
+将其与傅里叶变换的导数对比，即可得到
+$$
+\langle x \vert \hat p \vert \psi \rangle= \frac{\hbar}{i} \frac{\mathrm d}{\mathrm d x} \psi(x) = - i \hbar \frac{\mathrm d}{\mathrm d x} \langle x \vert \psi \rangle,
+$$
+注意到$\langle x \vert \hat p \vert \psi \rangle$就是将算符应用于位置表征的波函数上，写成波函数的形式，即有
+$$\hat p \psi(x) = - i \hbar \frac{\mathrm d}{\mathrm d x} \psi(x),$$
+这也叫做位置表象下的动量算符。
+
+这个推导不使用除了平面单色波叠加之外的任何假设。
+值得注意的是在单色波叠加这一假设上，我们人为规范了所有波的相位。
+改变这个约定会连带改变动量表象波函数的形式，但不改变动量算符以及任何可观测的物理预言。
+关于算符唯一性的更多内容，可参见斯通-冯诺伊曼定理。
+
+从上面的讨论我们可以看出，量子力学中很多符合直觉的结论，其严格证明其实是相当复杂的，需要高等的数学背景并使用大量泛函分析中的结论。
+因此，出于简单考虑，之后的讨论中我们将不再给出这么严格的说明了。
 
 ### 投影算符
 
@@ -119,6 +244,9 @@ $$\vert \varphi_n \rangle \langle \varphi_n \vert \psi \rangle$$
 利用矩阵乘法的结合律即可得到投影向量算子。
 注意到厄米算子的特征值构成了空间的一组基底，该算子的和就是全同映射。
 {: .proof}
+
+我们前面其实已经多次见到过投影算符了。
+在介绍简并时出现的$\vert \psi \rangle \langle \psi \vert$和动量的本征波函数展开中使用的$\vert p \rangle \langle p \vert$，其实都是投影算符。
 
 ### 对易算符
 
@@ -150,7 +278,7 @@ $$[\hat x, \hat p] = i \hbar \hat{\mathbb{1}}$$
 如果对任何一个量子态，可以通过给出这些相同特征向量的系数来完全地确定该量子态，即这些相同的特征向量构成量子态空间的一组基底，那么称这一组算符为*对易可观测量完全集*（Complete Set of Commuting Observables, CSCO）。
 {: .definition}
 
-对易的矩阵保持特征空间不变是一个线性代数中学习过的一个非常简单的定理，此处不再赘述。
+对易的矩阵保持特征空间不变是线性代数中学习过的简单定理，此处不再赘述。
 要点在于，对易可观测量完全集有何物理意义？
 
 如果一个可观测量$A$是非简并的，那么其所有特征值只对应一个特征向量，因此只需要特征值就可以确定特征向量，从而确定整个波函数。
@@ -294,4 +422,4 @@ $$m \frac{\mathrm d \langle x \rangle}{\mathrm d t} = \langle p \rangle, \frac{\
 为完全将两者对应，还需额外添加波函数的“定域性”条件：
 假设波函数集中于空间中的某一点$x\_0$，即满足
 $$\partial_x V(\langle x \rangle) \approx \langle \partial_x V(x) \rangle \approx \partial_x V(x_0),$$
-那么量子力学预测的位置和动量会和经典力学预测的一致。
+那么量子力学预测的位置和动量会和经典力学预测的大致相同。

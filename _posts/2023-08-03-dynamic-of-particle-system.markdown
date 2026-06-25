@@ -69,7 +69,7 @@ $$\dot \Omega \vec a = \Omega (\vec \omega \times \vec a).$$
 $$
 \begin{aligned}
 \dot {\vec r'} &= \Omega (\vec \omega \times \vec r + \dot{\vec r}) + \dot{\vec x} \\
-\vec v_a &= \underbrace{\Omega \dot{\vec r}}_{\vec v_r} + \underbrace{\Omega \vec \omega \times \vec r + \dot{\vec x}}_{\vec v_e}.
+\vec v_a &= \underbrace{\Omega \dot{\vec r}}_{\vec v_r} + \underbrace{\Omega (\vec \omega \times \vec r) + \dot{\vec x}}_{\vec v_e}.
 \end{aligned}
 $$
 这就得到了
@@ -81,21 +81,20 @@ $$\ddot{\vec r'} = \ddot \Omega \vec r + 2 \dot \Omega \dot{\vec r} + \Omega \dd
 $$
 \begin{aligned}
 \ddot \Omega \vec a + \dot \Omega \dot{\vec a} &= \dot \Omega(\vec \omega \times \vec a) + \Omega (\dot{\vec \omega} \times \vec a) + \Omega (\vec \omega \times \dot{\vec a}) \\
-\ddot \Omega \vec a & = \Omega(\vec \omega \times \vec \omega \times \vec a) + \Omega(\vec \alpha \times \vec a) \\
-&= \Omega (\vec \omega \times \vec \omega + \vec \alpha) \times \vec a.
+\ddot \Omega \vec a & = \Omega(\vec \omega \times (\vec \omega \times \vec a)) + \Omega(\vec \alpha \times \vec a)
 \end{aligned}
 $$
 其中$\vec \alpha = \dot {\vec \omega}$。
 代回原式，得到
-$$\ddot{\vec r'} = \Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) + \ddot{\vec x}.$$
-这就是加速度合成的最一般表达，其中$\vec \omega \times \vec \omega \times \vec r$称为向心加速度，对应的惯性力为离心力；$\vec \alpha \times \vec r$称为欧拉加速度，对应的惯性力为欧拉力；$2 \vec \omega \times \dot {\vec r}$称为科里奥利加速度，对应的惯性力为科里奥利力。
-注意这些加速度前面均带有$\Omega$，这意味着这些加速度是在动系中计算的。
+$$\ddot{\vec r'} = \Omega (\vec \omega \times (\vec \omega \times \vec r) + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) + \ddot{\vec x}.$$
+这就是加速度合成的最一般表达，其中$\vec \omega \times (\vec \omega \times \vec r)$称为向心加速度，对应的惯性力为离心力；$\vec \alpha \times \vec r$称为欧拉加速度，对应的惯性力为欧拉力；$2 \vec \omega \times \dot {\vec r}$称为科里奥利加速度，对应的惯性力为科里奥利力。
+注意这些加速度前面均带有$\Omega$，这意味着这些加速度虽然。
 现在考虑定轴转动这一特殊情形，有
 $$\ddot{\vec x} = 0, $$
 从而
 $$
 \begin{aligned}
-\ddot{\vec r'} &= \Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) \\
+\ddot{\vec r'} &= \Omega (\vec \omega \times (\vec \omega \times \vec r) + \vec \alpha \times \vec r + 2 (\vec \omega \times \dot{\vec r}) + \ddot{\vec r}) \\
 \vec a_a &= \underbrace{2 \Omega \vec \omega \times \dot{\vec r}}_{\vec a_c} + \underbrace{\Omega (\vec \omega \times \vec \omega \times \vec r + \vec \alpha \times \vec r)}_{\vec a_e} + \underbrace{\Omega \ddot{\vec r}}_{\vec a_r}.
 \end{aligned}
 $$
