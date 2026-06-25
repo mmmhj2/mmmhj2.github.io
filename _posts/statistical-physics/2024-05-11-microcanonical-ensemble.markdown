@@ -186,9 +186,9 @@ $$
 $$
 之前我们只是定义了小量$\delta E$，而没有说明它的取值，现在我们希望将它与$N$联系起来。
 不妨定
-$$\delta E \sim \frac{E}{N},$$
+$$E \gg\delta E > \frac{E}{N} \iff \delta E = O(\frac{1}{N}),$$
 这样，有
-$$\ln \frac{\delta E}{E} \sim \ln \frac{1}{N} \sim -\log N,$$
+$$\ln \frac{\delta E}{E} > \ln \frac{1}{N} = O(\log N),$$
 从而
 $$
 \begin{aligned}
@@ -215,5 +215,7 @@ $$\frac{p}{T} = \frac{\partial S}{\partial V} = \frac{N k_B}{V} \iff p V = nRT.$
 这样，状态数变为
 $$\Omega(E, N, V) = \frac{V^N}{N! \cdot \Gamma(3N/2)} \frac{2 \pi^{3N/2}}{(\Delta x \Delta p)^{3n}} (2mE)^{\frac{3N-1}{2}}.$$
 接着他设$\Delta x \Delta p = K$，然后通过实验测定了该常数的值，即
-$$\Delta x \Delta p = h.$$
+$$\Delta x \Delta p = h,$$
 这意味着他提前发现了量子力学中量子化或分立的概念。
+这个公式和海森堡最初给出的不确定性公式非常相似：
+$$\Delta x \Delta p \simeq h.$$
