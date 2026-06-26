@@ -39,9 +39,10 @@ static_assert(std::is_same_v<decltype(^^some_variable;
 对于非类型的模板参数，尽管该参数能够在编译时确定，对其使用反射运算符会导致编译错误，这是因为这样可能引入额外的表达式求值。
 为解决这个问题，可以使用`meta`库中提供的几个额外的反射函数：
 ```cpp
-consteval std::meta::info std::meta::reflect_constant(T)
-consteval std::meta::info std::meta::reflect_object(T & expr)
-consteval std::meta::info std::meta::reflect_function(T & expr)
+// namespace std::meta
+consteval info reflect_constant(T)
+consteval info reflect_object(T & expr)
+consteval info reflect_function(T & expr)
 ```
 这几个函数均被标记为`consteval`，因此它们必须在编译时得出结果。
 `reflect_function`除了在模板中使用外，还可以用来指定选择哪个函数重载。
@@ -51,13 +52,13 @@ int f(long);
 
 // 错误：无法决定选择哪个重载。
 // constexpr auto rf = ^^f;
-constexpr auto rf = std::meta::reflect_function<int(char)>(f);
+constexpr auto rf = reflect_function<int(char)>(f);
 
 template <int C>
 void some_func() {
     // 错误：无法对非类型模板参数应用反射运算符。
     // constexpr auto rf = ^^C;
-    constexpr auto rf = std::meta::reflect_constant(C);
+    constexpr auto rf = reflect_constant(C);
 }
 ```
 作为一种最特别的情况，`std::meta::info`可以被默认构造。
@@ -75,6 +76,7 @@ void some_func() {
 除了使用拼接运算符之外，若该反射表达式表示的是一个对象或者模板，还可以使用`std::meta::extract`来获取对象的值，或者使用`std::meta::substitute`来进行模板代换。
 
 在前面的介绍中我们提到的绝大部分操作都要求是编译时完成，因此，像 C++26 引入的这种反射也叫做静态反射（static reflection）。
+通过反射运算符，仅能提取编译期常量或静态期变量的信息。
 
 ### 生成类型
 
@@ -88,9 +90,154 @@ void some_func() {
 需要注意，即使使用第二种方法，我们依然只能生成聚合体，因此其中不能使用继承、成员函数、虚函数等面向对象范式。
 当然，我们可以使用复杂的代码来绕过这些限制，比如使用函数成员变量代替成员函数、手动生成虚表实现继承，但是这一功能整体依然是比较受限的。
 
+我们会在后面的例子中介绍第二种方法。
+
 ### 存储期提升
 
 之前我们介绍的所有静态反射的内容都是编译期的，但是我们有时需要在运行时使用这些编译期变量。
 比如，我们希望以字符串名打印枚举变量的值，而非打印一个整数，这时就需要将枚举类型的定义（编译期变量）变为一个字符串（运行期变量）。
 在反射出现之前，唯一能完成这一操作的语言机制是预定义宏，而利用反射则可以通过提升（promotion）操作完成。
 
+为将编译期常量提升至静态存储期，可使用以下五个函数之一：
+```cpp
+// namespace std::meta
+consteval info reflect_constant_string(R && r);
+consteval info reflect_constant_array(R && r);
+consteval const RT* define_constant_string(R && r);
+consteval span<const RT> define_constant_array(R && r);
+consteval T* define_constant_object(T && t);
+```
+这里，`R`是一个区间（`ranges::input_range`）、`RT`是区间的元素类型、`T`是任意对象类型。
+带有`reflect`的函数返回对应静态变量的`meta`信息，可通过`extract`提取其值；而带有`define`的函数直接返回静态变量本身的指针。
+
+考虑下面这个例子：
+```cpp
+constexpr std::vector<double> precompute_angles(std::size_t size) {
+    std::vector<double> angles(size);
+    for (int i{}; double& angle : angles)
+        angle = 360.0 / size * i++;
+    
+    return angles;
+}
+
+consteval std::span<const double> precompute_angles_arr(std::size_t size) {
+    std::vector<double> angles = precompute_angles(size);
+    return std::define_static_array(angles);
+}
+
+int main() {
+    // auto angles = precompute_angles(7);
+    auto angles = precompute_angles_arr(7);
+    for (double angle : angles)
+        std::print("{:.1f} ", angle);
+    std::println();
+}
+```
+这里，我们不能调用`precompute_angles(7)`。
+因为这个函数是`constexpr`函数，若其出现在编译期常量表达式中，那么这个函数会在编译期计算。
+而若在编译期求值，那么所有动态分配的内存必须在编译期计算结束前解分配。
+显然，由于返回编译期计算的`vector`，这个函数不能解分配被分配的内存，因此无法在编译期调用。
+解决方法则是使用`define_static_array()`将编译期数组提升到运行期。
+在此之前，为了将模板元编程计算出的数组或查找表提升至运行期，一般需要借助`std::integer_sequence`之类的元编程方法。
+
+## 例子
+
+这一节中我们将以几个例子展示反射特性的用途。
+
+### 枚举体和字符串
+
+一个常见的需求是实现枚举体（`enum`）和字符串之间的互相转换，这可借助反射实现。
+```cpp
+template <typename E> requires std::is_enum_v<E>
+constexpr std::string_view enum_to_string(E e) {
+    static constexpr auto enumerators = std::define_static_array(std::meta::enumerators_of(^^E));
+    template for (constexpr auto m : enumerators) {
+        if (e == [:m:]) 
+            return std::meta::identifier_of(m);
+    }
+    return "<unknown>";
+}
+
+template <typename E> requires std::is_enum_v<E>
+constexpr std::optional<E> string_to_enum(std::string_view s) {
+    static constexpr auto enumerators = std::define_static_array(std::meta::enumerators_of(^^E));
+    template for (constexpr auto m : enumerators) {
+        if (s == std::meta::identifier_of(m)) 
+            return [:m:];
+    }
+    return {};
+}
+```
+这一段代码中，`m`是枚举类型中每一项对应的`meta::info`，因此通过拼接运算符生成的就是像`Color::Red`这种枚举类型变量。
+
+代码中出现了 C++26 新增的`template for`语句，这种语句用来遍历编译期常量。
+相较于普通的`for`循环，`template for`更像是生成代码的语法糖，比如下面这段代码：
+```cpp
+template for (constexpr auto i : {1, 2}) {
+    std::print("{}", i);
+}
+```
+会被编译器替换为类似下面的代码
+```cpp
+{
+    constexpr auto RANGE = {1, 2};
+    {
+        constexpr auto I = RANGE[0];
+        std::print("{}", I);
+    }
+    {
+        constexpr auto I = RANGE[1];
+        std::print("{}", I);
+    }
+}
+```
+
+在这个例子里面，我们还是需要使用`define_static_array()`将编译期变量提升至静态期。
+这是因为`enumerators_of()`返回一个编译期的`vector`，而我们前面介绍过，编译期常量表达式在被求值时，所有进行的内存分配必须在求值结束前解分配，因此我们无法直接从其中利用`template for`取值。
+
+### 枚举体与字符串续
+
+上一节中我们介绍了枚举体和字符串转换的例子，但是该例子中，从字符串到枚举体的转换的时间复杂度较高。
+利用哈希表，我们可以把这个时间复杂度降低到$\mathcal O{1}$。
+```cpp
+template <class E> requires std::is_enum_v<E>
+constexpr auto get_enumerators() {
+    std::array <
+        std::pair<std::string_view, std::underlying_type_t<E>>,
+        std::meta::enumerators_of(^^E).size()
+    > enumerators;
+    std::ranges::copy(
+        std::meta::enumerators_of(^^E) | std::views::transform([] (auto I) constexpr {
+            return std::make_pair(
+                std::meta::identifier_of(I),
+                std::meta::extract<E>(I)
+            );
+        }),
+        enumerators.begin()
+    );
+    return enumerators;
+}
+
+template <class E> requires std::is_enum_v<E>
+auto get_enumerator_hash_map() {
+    std::unordered_map <std::string_view, std::underlying_type_t<E>> ret;
+    ret.insert_range(get_enumerators<E>());
+    return ret;
+}
+
+template <class E> requires std::is_enum_v<E>
+std::optional<E> string_to_enum(std::string_view sv) {
+    static const auto enums = get_enumerator_hash_map<E>();
+    auto itr = enums.find(sv);
+    if (itr != enums.end()) return static_cast<E>(itr->second);
+    return {};
+}
+```
+
+我们无法在编译时生成`unordered_map`，因为目前标准规定`define_static_object()`只能接受结构类型（Structual type），不接受复杂的容器类型。
+此外，G++ 目前的标准库实现中，关系容器里只有`std::flat_X`系列容器支持`constexpr`操作。
+为此，我们只能使用`static const`变量来在第一次运行时初始化这个哈希表。
+我们使用`std::array`进行静态内存分配，从而绕开了动态内存分配导致无法在编译期进行计算的问题。
+如果持久`constexpr`分配（non-transient constexpr allocation）被纳入标准，那么这些方法能简单很多。
+
+在不启动优化的情况下，对于有 50 项的枚举体，这个算法比上一个算法快五倍左右。
