@@ -174,10 +174,10 @@ $$
 \begin{aligned}
 s &= - k \sum_{E_\mathcal S} P_\mathcal S(E_\mathcal S) P_\mathcal T(E_\text{tot} - E_\mathcal S) \ln\left[P_\mathcal S(E_\mathcal S) + P_\mathcal T(E_\text{tot} - E_\mathcal S)\right] \\
 &= s_\mathcal S - \sum_{E_\mathcal S} P_\mathcal S(E_\mathcal S) s_\mathcal T(E_\text{tot} - E_\mathcal S) \\
-&= s_\mathcal S + s_\mathcal T(E_\text{tot}) - \frac{<E_\mathcal S>}{T} = s_\mathcal T(E_\text{tot}) - \frac{F_\mathcal S}{T}
+&= s_\mathcal S + s_\mathcal T(E_\text{tot}) - \frac{\langle E_\mathcal S \rangle}{T} = s_\mathcal T(E_\text{tot}) - \frac{F_\mathcal S}{T}
 \end{aligned}$$
 由于总系统为孤立系统，自发变化必使其熵增加。
-而$s\_\mathcal T$是一个常数，因此$F_\mathcal S$必然减少。
+而$s\_\mathcal T$是一个只和总能量有关的常数，因此$F_\mathcal S$必然减少。
 {: .proof}
 
 ## 例子：量子势阱与理想气体
