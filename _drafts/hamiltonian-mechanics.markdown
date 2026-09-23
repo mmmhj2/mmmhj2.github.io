@@ -215,6 +215,7 @@ $$
 如果存在这样的变换，那么这个变换应当能够保留哈密顿方程的形式。
 一方面，保留哈密顿方程的“形式”能够保证我们研究的还是同一个系统，即使哈密顿量不同；
 另一方面，如果在这种变换下存在保留不变的结构，那么意味着存在守恒量，这也是物理研究的重点。
+另外，如果将系统随时间的演化看作时间坐标的平移，可以很自然地将系统的演化视作这种变换，因此如果我们能给出这种变换的性质，就能给出系统随时间变化的性质。
 
 设有两组广义坐标$(\mathbf p, \mathbf q)$、$(\mathbf P, \mathbf Q)$和哈密顿量$\mathcal H(\mathbf p, \mathbf q, t)$、$\mathcal K(\mathbf P, \mathbf Q, t)$，
 其中$\mathbf P$和$\mathbf Q$是由可逆变换得到的：
@@ -241,28 +242,26 @@ $$
 我们总是假设$\alpha = 1$，因为可以通过缩放变换坐标来改变此常数。
 对$\alpha \neq 1$的情况，一般称为拓展正则变换（Extended canonical transformation）。
 
-
-
 最基本的生成函数具有以下四种形式之一：
 $$
 F_1(\mathbf q, \mathbf Q, t), \; F_2(\mathbf q, \mathbf P, t) - \mathbf Q \mathbf P, \; F_3(\mathbf p, \mathbf Q, t) + \mathbf q\mathbf p, \; F_4(\mathbf p, \mathbf P, t) + \mathbf q\mathbf p - \mathbf Q\mathbf P.
 $$
 其他生成函数一般都可以写成这四种生成函数的组合。
-我们以$F\_2$为例介绍从生成函数计算变换的步骤。
+我们以$F\_2$为例介绍从生成函数计算变换的步骤，令
+$$F = F_2(\mathbf q, \mathbf P, t) - \mathbf Q \mathbf P,$$
 注意到
 $$
 \begin{aligned}
 & \mathbf p \dot{\mathbf q} - \mathcal H(\mathbf p, \mathbf q, t) \\
 =\; & \mathbf P \dot{\mathbf Q} - \mathcal K(\mathbf P, \mathbf Q, t) + \frac{\mathrm d F}{\mathrm d t} \\
-=\; & \mathbf P \dot{\mathbf Q} - \mathcal K(\mathbf P, \mathbf Q, t) + \frac{\partial F}{\partial t} + \frac{\partial F}{\partial \mathbf q} \dot {\mathbf q} + \frac{\partial F}{\partial \mathbf P} \dot{\mathbf P} - \mathbf Q \dot{\mathbf P} - \dot{\mathbf Q} \mathbf P \\
-= \; & \! - \mathbf Q \dot{\mathbf P}  - \mathcal K(\mathbf P, \mathbf Q, t) + \frac{\partial F}{\partial t} + \frac{\partial F}{\partial \mathbf q} \dot {\mathbf q} + \frac{\partial F}{\partial \mathbf P} \dot{\mathbf P}.
+=\; & \mathbf P \dot{\mathbf Q} - \mathcal K(\mathbf P, \mathbf Q, t) + \frac{\partial F_2}{\partial t} + \frac{\partial F_2}{\partial \mathbf q} \dot {\mathbf q} + \frac{\partial F_2}{\partial \mathbf P} \dot{\mathbf P} - \mathbf Q \dot{\mathbf P} - \dot{\mathbf Q} \mathbf P \\
+= \; & \! - \mathbf Q \dot{\mathbf P}  - \mathcal K(\mathbf P, \mathbf Q, t) + \frac{\partial F_2}{\partial t} + \frac{\partial F_2}{\partial \mathbf q} \dot {\mathbf q} + \frac{\partial F_2}{\partial \mathbf P} \dot{\mathbf P}.
 \end{aligned}.
 $$
 由于$\mathbf q, \mathbf P$是独立变量，将系数对应，可得
 $$
-\mathbf p = \frac{\partial F}{\partial \mathbf q}, \; \mathbf Q = \frac{\partial F}{\partial \mathbf P}, \; \mathcal K = \mathcal H + \frac{\partial F}{\partial t}.
+\mathbf p = \frac{\partial F}{\partial \mathbf q}, \; \mathbf Q = \frac{\partial F}{\partial \mathbf P}, \; \mathcal K = \mathcal H + \frac{\partial F_2}{\partial t} = \mathcal H + \frac{\partial F}{\partial t}.
 $$
-
 举个例子，我们设
 $$
 F_2(q, P, t) = q P,
@@ -272,6 +271,44 @@ $$
 p = P, q = Q, \mathcal K = \mathcal H,
 $$
 这个生成函数生成了恒等变换。
+
+更一般地，可以通过计算验证，对所有四种生成函数，正则变换之后的哈密顿量都满足
+$$
+\mathcal K = \mathcal H + \frac{\partial F}{\partial t} = \mathcal H + \frac{\partial F_i}{\partial t}.
+$$
+
+
+### 正则变换的成立条件
+
+#### 辛条件
+
+从$\mathbf p, \mathbf q$到$\mathbf P, \mathbf Q$的变换是正则变换，当且仅当其满足辛条件（Symplectic condition）。
+设$J$为辛矩阵：
+$$
+J = \begin{pmatrix} 0 & I_n \\ -I_n & 0 \end{pmatrix}.
+$$
+辛条件的矩阵表示为
+$$M J M^T = J,\; M = \frac{\partial (\mathbf Q,\mathbf P)}{\partial (\mathbf q, \mathbf p)},$$
+其中$M$是这个变换的雅可比矩阵。
+{: .proposition}
+
+我们首先把正则坐标都写成向量形式，注意$p,q$的位置：
+$$
+\mathbf x = \begin{pmatrix} q_1 \\ \vdots \\ q_n \\ p_1 \\ \vdots \\ p_n \end{pmatrix}, \; \mathbf X = \begin{pmatrix} Q_1 \\ \vdots \\ Q_n \\ P_1 \\ \vdots \\ P_n \end{pmatrix},
+$$
+这样整个哈密顿方程都可以写成矩阵的形式：
+$$
+\dot{\mathbf x} = J \frac{\partial \mathcal H}{\partial \mathbf x}, \; \dot{\mathbf X} = J \frac{\partial \mathcal K}{\partial \mathbf X}.
+$$
+我们希望正则变换保持哈密顿方程的形式，即
+$$$$
+我们只考虑不显含时间的正则变换，因此，根据雅可比矩阵的定义及链式法则，有
+$$
+\dot{\mathbf x} = J M^\top \frac{\partial \mathcal H}{\partial \mathbf X}, \;
+\dot{\mathbf X} = J 
+$$
+....... TODO
+{: .proof}
 
 ### 泊松括号
 
@@ -310,20 +347,66 @@ $$
 \{ u, v \}_{\mathbf p, \mathbf q} = \{ u, v \}_{\mathbf P, \mathbf Q} = \{ u, v \}.
 $$
 因此，泊松括号是正则不变的（Canonical invariant）。
-{: .theorem}
+{: .proposition}
 
 这个定理对含时间的正则变换也有效，但是我们只处理限制正则变换的情况。
-在此之前，我们需要先证明正则变换的辛条件。
 
-#### 正则变换的辛条件
+将泊松括号写为矩阵形式：
+$$\{ u, v \}_{\mathbf p, \mathbf q} = \left( \frac{\partial u}{\partial \mathbf x} \right)^\top J \left( \frac{\partial v}{\partial \mathbf x} \right), \; \{ u, v \}_{\mathbf P, \mathbf Q} = \left( \frac{\partial u}{\partial \mathbf X} \right)^\top J \left( \frac{\partial v}{\partial \mathbf X} \right).$$
+注意到
+$$
+\left( \partial_{\mathbf X} u \right)^\top J \left( \partial_{\mathbf X} v \right) = \left( M \partial_{\mathbf x} u \right)^\top J \left( M \partial_{\mathbf x} v \right) = \left( \partial_{\mathbf x} u \right)^\top M^T J M \left( \partial_{\mathbf x}v \right),
+$$
+利用辛条件，立刻可得
+$$\{ u, v \}_{\mathbf p, \mathbf q} = \{ u, v \}_{\mathbf P, \mathbf Q}.$$
+{: .proof}
 
-$$\{ Q_i, Q_j \}_{\mathbf p, \mathbf q} = \{P_i, P_j\}_{\mathbf p, \mathbf q} = 0, \; \{Q_i, P_j\}_{\mathbf p, \mathbf q} = \delta_{ij}.$$
+根据辛条件的矩阵表示，容易发现其等价的泊松括号表示为
+$$\{ Q_i, Q_j \}_{\mathbf p, \mathbf q} = 0, \; \{P_i, P_j\}_{\mathbf p, \mathbf q} = 0, \; \{Q_i, P_j\}_{\mathbf p, \mathbf q} = \delta_{ij}.$$
+这三条等式分别对应辛矩阵$J$的左上分块、右下分块以及反对角线。
+这也可以根据泊松括号的不变性自然地得出。
 
-#### 正则变换是辛同胚
+### 正则变换与辛同胚
 
-#### 刘维尔定理
-<!--
+我们之前声称保持哈密顿方程性质的映射都是“辛同胚”，那么，自然的问题是，正则变换是辛同胚吗？
+答案是肯定的。
+
+变换是正则变换，当且仅当其保持所有无穷小的广义坐标-广义动量对围成的无穷小面积的和不变，即，当且仅当这个变换是辛同胚：
+$$
+\sum_{i=1}^n \mathrm d q_i \wedge \mathrm d p_i = \sum_{i=1}^n \mathrm d Q_i \wedge \mathrm d P_i.
+$$
+{: .theorem}
+
+我们考虑原坐标下的两个无穷小向量：
+$$
+\mathbf x = \begin{pmatrix} \mathbf q \\ \mathbf p \end{pmatrix}, d x = \begin{pmatrix} d \mathbf q \\ d \mathbf p \end{pmatrix}, \delta x = \begin{pmatrix} \delta \mathbf q \\ \delta \mathbf p \end{pmatrix}.
+$$
+这些无穷小向量两两围成的无穷小面积，记为$\omega(d x, \delta x)$，可由叉积计算：
+$$
+\omega(d x, \delta x) = \sum_{i=1}^n d q_i \delta p_i - d p_i \delta q_i = {dx}^\top J \delta x.
+$$
+根据雅可比矩阵的定义，有
+$$
+d X = M d x, \; \delta X = M \delta x,
+$$
+从而
+$$
+\omega(d X, \delta X) = {dX}^\top J \delta X = {dx}^T (M^T J M) \delta x,
+$$
+应用辛条件（这是辛条件得名的原因），直接得到
+$$
+\omega(d X, \delta X) = \omega(d x, \delta x).
+$$
+这对任何无穷小向量都成立。
+{: .proof}
+
+如果我们把这个证明的思路反转过来，可以认为哈密顿方程实际上是由这个空间的几何性质自然导出的。
+只要我们约定了，在这个空间中的“面积”是从向量坐标两两成对叉乘计算出来的，那么自然就可以从保面积映射得到正则变换，从而导出不变量，再根据不变量得出哈密顿方程。
+这就是辛几何这个方向的纯数学研究的思路。
+
 ### 正则变换与时间
+
+如同我们在正则变换一节最开头说的那样，哈密顿系统随时间的演化是一类特别的正则变换——这个正则变换是“连续”的、存在无穷小量的。
 
 假设$f(\mathbf p(t), \mathbf q(t), t)$是与哈密顿系统状态有关的函数，那么这个函数对时间的变化可写为
 $$
@@ -335,16 +418,36 @@ $$
 $$
 如果$f$不显含时间，那么有
 $$\frac{\mathrm d f}{\mathrm d t} = \{ f, \mathcal H \}.$$
-这意味着$f$实际上是一个*流*（Flow）。
-
-如果这个函数是一个守恒量，那么有
+这意味着$f$实际上是一个*流*（Flow）：
 $$
-0 = \{f, \mathcal H \} + \frac{\partial f}{\partial t},
+\forall t_1, t_2 \in \mathbb R, \; f(t_1 + t_2) = f(t_1) + \int_{t_1}^{t_2} \{f, \mathcal H\} \; \mathrm d t.
 $$
-如果它还不显含时间，则有
-$$\{ f, \mathcal H \} = 0.$$
+对无穷小时间，即
+$$
+f(t + dt) = f(t) + \{f, \mathcal H\} dt.
+$$
+这个结论导向以下命题。
 
-我们不妨假设广义坐标随时间的变化足够光滑，对其在零时间附近做幂级数展开，可得
+哈密顿系统随时间的变换是连续的正则变换，即对任何无穷小时间$dt$，变换
+$$(\mathbf q_t, \mathbf p_t) \to (\mathbf q_{t + dt}, \mathbf p_{t + dt})$$
+都是正则变换。
+{: .proposition}
+
+这个命题的物理解释是非常直观的，也可以通过作用量来证明。
+数学上，如果我们研究广义坐标本身，即有
+$$p_i(t + dt) = p_i(t) + \{p_i, \mathcal H\} dt, \; q_i(t + dt) = q_i(t) + \{q_i, \mathcal H\} dt.$$
+容易验证这个变换满足辛条件的泊松括号形式，即
+$$\{ q_{i, t+dt}, q_{j, t+dt} \} = 0, \; \{p_{i, t+dt}, p_{j, t+dt}\} = 0, \; \{q_{i, t+dt}, p_{j, t+dt}\} = \delta_{ij}.$$
+我们可以应用这样的变换“无穷多次”，来从某个时间出发得到任何时间的状态。
+因此，哈密顿量也叫做*无穷小生成元*（Infinitesimal generator）。
+{: .proof}
+
+#### 刘维尔定理
+
+#### 量子力学的联系
+
+我们还可以用指数映射来表示这一关系。
+不妨假设广义坐标随时间的变化解析，且要求哈密顿量和广义坐标均不显含时间，对其在零时间附近做幂级数展开，可得
 $$
 \begin{aligned}
 q(t) &= q(0) + t \frac{\mathrm d q}{\mathrm d t} + \frac{t^2}{2!} \frac{\mathrm d^2 q}{\mathrm d t^2} + \cdots \\
@@ -352,7 +455,46 @@ q(t) &= q(0) + t \frac{\mathrm d q}{\mathrm d t} + \frac{t^2}{2!} \frac{\mathrm 
 &= \exp \left[ - t \{ \mathcal H, \cdot \} \right] q_0.
 \end{aligned}
 $$
--->
+
+这个指数表示和量子力学中的一些方程非常相似！
+狄拉克发现，泊松括号和量子力学中的对易子有下面的关系，也叫做*正则对易关系*（Canonical commutation relation）：
+$$[\hat f, \hat g] = i \hbar \widehat{\{ f, g \}},$$
+其中，$f,g$是经典力学中的物理量，$\hat \cdot$表示对应算符。
+
+我们将这个对易关系代入上面的指数映射中，得到：
+$$
+\hat q(t) = \exp \left[ -\frac{t}{i\hbar}[\hat H, \cdot] \right] \hat q_0,
+$$
+计算可得
+$$
+\hat q(t) = \exp \left[ -\frac{\hat H t}{i \hbar} \right] \cdot \hat q_0 \cdot \exp \left[ \frac{\hat H t}{i \hbar} \right],
+$$
+这种量子力学描述称作*海森堡绘景*（Heisenberg picture），和薛定谔绘景相对应。
+
+从这里到大家最熟悉的薛定谔方程仅有一步之遥。
+令算符$U$为
+$$
+\hat U(t) = \exp \left[ - \frac{i \hat H t}{\hbar} \right],
+$$
+称为时间演化算符。
+在海森堡绘景中，态矢不随时间变化，变化的是算符；而在薛定谔绘景中，我们将这个关系反转过来，即有
+$$
+\hat q_H(t) = \hat U^\dagger \hat q_S \hat U.
+$$
+下标$H$表示海森堡绘景，$S$表示薛定谔绘景。
+显然，两个绘景是等价的，因此
+$$
+\langle \psi_H \vert \hat q_H(t) \vert \psi_H \rangle = \langle \psi_H \vert \hat U^\dagger \hat q_S \hat U \vert \psi_H \rangle = \langle \psi_S(t) \vert \hat q_S \vert \psi_S(t) \rangle,
+$$
+从而
+$$
+\vert \psi_S(t) \rangle = \hat U \vert \psi_H \rangle.
+$$
+最后将薛定谔绘景态矢时间求导，得到
+$$
+\frac{\mathrm d}{\mathrm d t} \vert \psi_S(t) \rangle = -\frac{i \hat H}{\hbar} \hat U(t) \vert \psi_H \rangle = -\frac{i \hat H}{\hbar} \vert \psi_S(t) \rangle.
+$$
+这就是薛定谔方程。
 
 ## 哈密顿方程的解
 
