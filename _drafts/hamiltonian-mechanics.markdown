@@ -126,7 +126,7 @@ $$\mathrm d U = T \mathrm d S - p \mathrm d V,$$
 
 ### 哈密顿方程
 
-通过勒让德变换，我们可以将所有关于广义坐标的函数变为关于广义速度的函数，仅需要利用勒让德变换将广义坐标替换为其共轭变量——广义动量即可。
+通过勒让德变换，我们可以将所有关于广义坐标的函数变为关于广义速度的函数，仅需要利用勒让德变换将广义坐标的微分替换为其共轭变量——广义动量即可。
 
 设系统的广义坐标为$\mathbf q \in X \subset \mathbb R^n$、广义速度为$\dot{\mathbf q}$，其拉格朗日量为
 $$\mathcal L(\mathbf q(t), \dot{\mathbf q}(t), t) = \mathcal T(\mathbf q, \dot{\mathbf q}, t) - \mathcal V(\mathbf q, \dot{\mathbf q}, t),$$
@@ -278,9 +278,7 @@ $$
 $$
 
 
-### 正则变换的成立条件
-
-#### 辛条件
+### 正则变换的辛条件
 
 从$\mathbf p, \mathbf q$到$\mathbf P, \mathbf Q$的变换是正则变换，当且仅当其满足辛条件（Symplectic condition）。
 设$J$为辛矩阵：
@@ -300,15 +298,66 @@ $$
 $$
 \dot{\mathbf x} = J \frac{\partial \mathcal H}{\partial \mathbf x}, \; \dot{\mathbf X} = J \frac{\partial \mathcal K}{\partial \mathbf X}.
 $$
-我们希望正则变换保持哈密顿方程的形式，即
-$$$$
-我们只考虑不显含时间的正则变换，因此，根据雅可比矩阵的定义及链式法则，有
+进一步地，根据正则变换的定义，有
+$$
+\dot{\mathbf X} = J \frac{\partial \mathcal K}{\partial \mathbf X} = J \frac{\partial}{\partial \mathbf X} (\mathcal H + \frac{\partial F}{\partial t}).
+$$
+我们只考虑不显含时间的正则变换。
+因此，另一方面，根据雅可比矩阵的定义及链式法则，有
 $$
 \dot{\mathbf x} = J M^\top \frac{\partial \mathcal H}{\partial \mathbf X}, \;
-\dot{\mathbf X} = J 
+\dot{\mathbf X} = M \dot{\mathbf x} + \frac{\partial X}{\partial t} = M J M^\top \frac{\partial \mathcal H}{\partial \mathbf X} + \frac{\partial \mathbf X}{\partial t}.
 $$
-....... TODO
+从而
+$$
+M J M^\top \frac{\partial \mathcal H}{\partial \mathbf X} + \frac{\partial \mathbf X}{\partial t} = J \frac{\partial}{\partial \mathbf X} (\mathcal H + \frac{\partial F}{\partial t}).
+$$
+这样，我们只需要证明
+$$
+\frac{\partial \mathbf X}{\partial t} = J \frac{\partial^2 F}{\partial \mathbf X \partial t},
+$$
+即可。
+我们可以分别计算$\mathbf Q, \mathbf P$分量。
+注意到
+$$
+\newcommand\pfrac[2]{\frac{\partial #1}{\partial #2}}
+\begin{aligned}
+\frac{\partial^2 F}{\partial \mathbf P \partial t} &= \frac{\partial (\mathcal K - \mathcal H)}{\partial \mathbf P} \\
+&= \pfrac{\mathcal K}{\mathbf P} - \pfrac{\mathcal H}{\mathbf p}\pfrac{\mathbf p}{\mathbf P} - \pfrac{\mathcal H}{\mathbf q}\pfrac{\mathbf q}{\mathbf P} - \cancel{\pfrac{t}{\mathbf P} \pfrac{\mathcal H}{t}} \\
+&= \dot{\mathbf Q} - \pfrac{\mathbf p}{\mathbf P} \dot{\mathbf q} + \pfrac{\mathbf q}{\mathbf P} \dot{\mathbf p} \\
+&= \pfrac{\mathbf Q}{t} + \pfrac{\mathbf Q}{\mathbf p} \dot{\mathbf p} + \pfrac{\mathbf Q}{\mathbf q} \dot{\mathbf q} - \pfrac{\mathbf p}{\mathbf P} \dot{\mathbf q} + \pfrac{\mathbf q}{\mathbf P} \dot{\mathbf p} \\
+&= \dot{\mathbf q} \left( \pfrac{\mathbf Q}{\mathbf q} - \pfrac{\mathbf p}{\mathbf P} \right) + \dot{\mathbf p} \left( \pfrac{\mathbf Q}{\mathbf p} + \pfrac{\mathbf q}{\mathbf P} \right) + \pfrac{\mathbf Q}{t}.
+\end{aligned}
+$$
+等式左边与$\mathbf q, \mathbf p$均无关，因此：
+$$
+\pfrac{\mathbf Q}{\mathbf q} - \pfrac{\mathbf p}{\mathbf P} = \pfrac{\mathbf Q}{\mathbf p} + \pfrac{\mathbf q}{\mathbf P} = 0 \implies \frac{\partial^2 F}{\partial \mathbf P \partial t} =  \pfrac{\mathbf Q}{t}.
+$$
+重复计算$\frac{\partial^2 F}{\partial \mathbf Q \partial t}$，可得
+$$
+\pfrac{\mathbf P}{\mathbf p} - \pfrac{\mathbf q}{\mathbf Q} = \pfrac{\mathbf P}{\mathbf q} + \pfrac{\mathbf p}{\mathbf Q} = 0 \implies \frac{\partial^2 F}{\partial \mathbf Q \partial t} = - \pfrac{\mathbf P}{t}.
+$$
+联合起来，得到
+$$
+\frac{\partial \mathbf X}{\partial t} = J \frac{\partial^2 F}{\partial \mathbf X \partial t},
+$$
+这就完成了证明。
 {: .proof}
+
+#### 热力学的联系
+
+证明中我们还得到了一些额外的关系：
+$$
+\pfrac{\mathbf Q}{\mathbf q} - \pfrac{\mathbf p}{\mathbf P} = \pfrac{\mathbf Q}{\mathbf p} + \pfrac{\mathbf q}{\mathbf P} = \pfrac{\mathbf P}{\mathbf p} - \pfrac{\mathbf q}{\mathbf Q} = \pfrac{\mathbf P}{\mathbf q} + \pfrac{\mathbf p}{\mathbf Q} = 0.
+$$
+这些关系和热力学中的[麦克斯韦关系]({% post_url thermodynmaics/2023-11-18-thermodynamic-props %}#麦克斯韦关系)非常相似。
+正如上文所述，在内能的表达式中，有
+$$\mathrm d U = T \mathrm d S - p \mathrm d V,$$
+因此，温度和熵$(T, S)$以及压强和体积$(-p, V)$都是共轭变量。
+实际上，热力学和哈密顿力学的研究内容非常类似。
+但是，在热力学中我们一般研究稳态，在这个前提下，系统受到热力学势能的额外约束，因此热力学势会作为独立变量出现在相空间中，而不像哈密顿力学中可直接由广义坐标和广义动量导出。
+因此，热力学相空间总是奇数维而非哈密顿力学中研究的偶数维。
+这种相空间的研究在数学中则称作切触几何（Contact geometry），和辛几何相对。
 
 ### 泊松括号
 
@@ -443,6 +492,29 @@ $$\{ q_{i, t+dt}, q_{j, t+dt} \} = 0, \; \{p_{i, t+dt}, p_{j, t+dt}\} = 0, \; \{
 {: .proof}
 
 #### 刘维尔定理
+
+既然我们已经知道哈密顿系统随时间的演化是正则变换，现在是时候引入哈密顿力学最知名的结论之一：刘维尔定理了。
+
+<small>(Liouville)</small> 哈密顿系统随时间的演化保持相空间的体积不变。
+{: .theorem}
+
+这就是说，如果我们选择相空间中的任何一点，并在其邻域中选择一个包裹它的足够小的控制体，将这个控制体中的每个点都进行无穷小的时间演化，那么这个新的控制体的体积和原控制体一致。
+
+这是正则变换辛条件的自然推论。
+注意到：
+$$M^\top J M = J,$$
+从而
+$$(\det M)^2 \det J = \det J \iff \det M = \pm 1.$$
+另一方面，若我们考虑$M$随时间的变化，那么有
+$$M(0) = I_{2n} \implies \det M(0) = 1.$$
+由于$M$随时间的变化一定是连续的，这就有
+$$\det M = 1.$$
+从而这个变换是保体积的。
+{: .proof}
+
+作为刘维尔定理的应用，在统计物理中，某一个状态出现的概率，即相空间的分配函数，服从刘维尔定理。
+这意味着任何哈密顿系统的指定状态，无论如何随时间变化，总是保持其出现概率不变，这个概率叫做先验概率（A priori possibility）。
+如果我们再认为这个系统是遍历（Ergodic）的，那么每个粒子总是可以经历所有状态，因此所有状态的概率必须永远相同，这就是统计物理中的等概率假设的来源。
 
 #### 量子力学的联系
 
