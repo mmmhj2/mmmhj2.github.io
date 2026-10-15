@@ -195,7 +195,7 @@ template for (constexpr auto i : {1, 2}) {
 在这个例子里面，我们还是需要使用`define_static_array()`将编译期变量提升至静态期。
 这是因为`enumerators_of()`返回一个编译期的`vector`，而我们前面介绍过，编译期常量表达式在被求值时，所有进行的内存分配必须在求值结束前解分配，因此我们无法直接从其中利用`template for`取值。
 
-### 枚举体与字符串续
+#### 枚举体续
 
 上一节中我们介绍了枚举体和字符串转换的例子，但是该例子中，从字符串到枚举体的转换的时间复杂度较高。
 利用哈希表，我们可以把这个时间复杂度降低到$\mathcal O{1}$。
@@ -241,3 +241,99 @@ std::optional<E> string_to_enum(std::string_view sv) {
 如果持久`constexpr`分配（non-transient constexpr allocation）被纳入标准，那么这些方法能简单很多。
 
 在不启动优化的情况下，对于有 50 项的枚举体，这个算法比上一个算法快五倍左右。
+
+### 自动序列化
+
+我们自然也可以用反射自动生成序列化代码，以向 JSON 序列化为例，只需要不到十行就能完成 JSON 序列化！
+```cpp
+template<class T>
+void serialize(std::ostream & out, const T & object) {
+    out << "{";
+    // 循环变量需要提升至静态存储期。
+    static constexpr auto members = std::define_static_array(
+        std::meta::nonstatic_data_members_of(^^T,
+        // unprivileged 访问权限：如同从全局命名空间进行访问，过滤私有成员。
+        std::meta::access_context::unprivileged())
+    );
+    bool first{true};
+    template for (constexpr auto m : members) {
+        out << ("," + first) << std::quoted(std::meta::identifier_of(m)) << ":" << object.[:m:];
+        first = false;
+    }
+    out << "}";
+}
+```
+
+关于 `template for` 循环变量的存储期问题，可参考提案 [p1306r4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2025/p1306r4.html#expansion-over-ranges)。
+这里，因为 `nonstatic_data_members_of` 返回的是一个 `vector`，而动态分配内存的 `vector` 不能被标记为 `constexpr`，因此我们只能将其提升至静态期，通过 `define_static_array` 将其变为 `constexpr span` 类型。
+
+关于 `("," + first)` 这个“小技巧”是十几年前参加竞赛时学会的，具体作用作为练习留给读者 :)。
+
+当然，这个实现还有很多问题，比如对于每个需要序列化的类都需要手动特化函数、不能处理嵌套等问题。
+我们可以接着修复一下这些问题。
+
+#### 序列化续
+
+下面这个版本修复了一些上文的问题。
+
+```cpp
+template<class T>
+void serialize(std::ostream &, T &&) {
+    static_assert(false, "Unimplemented type.");
+}
+
+template<class T> 
+requires std::is_arithmetic_v<std::remove_reference_t<T>>
+void serialize(std::ostream & out, T && value) {
+    out << value;
+}
+
+template<class T> 
+requires std::is_same_v<
+    const std::ostream::char_type,
+    std::remove_pointer_t<std::remove_reference_t<T>>>
+void serialize(std::ostream & out, T && str)
+    pre(str != nullptr) {
+    out << std::quoted(str);
+}
+
+/* 其他特化... */
+
+template<class T> 
+requires std::is_reference_v<T>
+    && std::is_class_v<std::remove_reference_t<T>>
+void serialize(std::ostream & out, T && object) {
+    using underlying_type = std::remove_reference_t<T>;
+    out << "{";
+    static constexpr auto members = std::define_static_array(
+        std::meta::nonstatic_data_members_of(^^underlying_type,
+        std::meta::access_context::unprivileged())
+    );
+    bool first{true};
+    template for (constexpr auto m : members) {
+        out << ("," + static_cast<std::ptrdiff_t>(first)) << std::quoted(std::meta::identifier_of(m)) << ":";
+        serialize(out, object.[:m:]);
+        first = false;
+    }
+    out << "}";
+}
+
+template <class T>
+struct Serializable {
+    void serialize(std::ostream & out) const {
+        ::serialize(out, *(static_cast<const T *>(this)));
+    }
+};
+```
+
+这里有几点需要注意：
+1. `Serializable` 使用了 CRTP 模板。
+   看起来可以使用 Deducing this (C++23) 进行替代：如果成员函数的第一个形参之前指定了 `this` 关键字的话，那么这个参数会被视作显式指定的 `this` 指针；如果这个显式的 `this` 指针还是模板类型，那么会在进行调用的时候自动推导本类的类型。
+   这个特性看起来能够替代 CRTP，但是两种方法模板实例化的时机不同，Deducing this 的实例化依然只发生在调用时，如果需要保证成员函数一定存在，那么这个方法是不适用的。
+2. 承接上一点，需要序列化的结构体必须继承这个类。
+   虽然这个类是空的，因此不影响聚合初始化，但是所有聚合初始化的第一个参数一定会被替代为默认初始化参数`{}`，因此这个集成依然不是无感的。
+   如果需要无感的实现，就不能使用继承。
+3. `pre` 契约断言。这是 C++26 引入的新语法，本质上就是更高级的、和接口整合更好的 `assert` 断言。
+   契约断言相较于传统断言的威力主要在于可以无感地加入原有的接口中，且可以动态调整断言触发的反应。
+   C++26 的标准库就使用这个断言进行了加固。
+4. 字符串的输出可以使用模板偏特化进行，而不一定需要利用概念。这里的概念实际上还会匹配单个字符的引用，导致二义性。
