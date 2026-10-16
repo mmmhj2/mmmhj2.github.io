@@ -192,12 +192,12 @@ $$\frac{\mathrm d \psi}{\mathrm d x} = \frac{1}{\sqrt{2\pi\hbar}} \int \phi(\vec
 ### 动量的分布
 
 首先从简单的方面入手，尝试计算位置的期望：
-$$<x> = \int x | \psi(x) |^2$$
+$$\langle x \rangle = \int x \vert \psi(x) \vert^2$$
 
 然后求出动量的期望：
-$$<p> = \int p | \psi(x) |^2 \mathrm d x$$
+$$\langle p \rangle = \int p \vert \psi(x) \vert^2 \mathrm d x$$
 然而，量子不确定性意味着$p$和$x$之间不存在函数关系，因此我们不能使用这个式子计算积分，我们只能使用这个式子：
-$$<p> = \int p | \phi(p) |^2 \mathrm d p = \int \phi(p)^* \, p \, \phi(p) \mathrm d p$$
+$$\langle p \rangle = \int p \vert \phi(p) \vert^2 \mathrm d p = \int \phi(p)^* \, p \, \phi(p) \mathrm d p$$
 所以我们需要找到将$\phi(p)$和$\psi(x)$关联起来的关系，即上文所述的傅里叶变换。
 
 我们尝试构造出已有的结构：
@@ -207,7 +207,7 @@ $$\int \phi(p)^* \frac{\hbar}{i} \frac{ip}{\hbar} \phi(p) \mathrm d p = \int \ps
 
 这意味着，观测一个物体的动量（即求期望），等于在其波函数的概率积分上应用一个算符$\frac{\hbar}{i} \frac{\partial}{\partial x}$。
 对于观测位置，我们也有：
-$$<x> = \int x | \psi(x) |^2 \mathrm d x = \int \psi(x)^* \, x \, \psi(x) \mathrm d x$$
+$$\langle x \rangle = \int x \vert \psi(x) \vert^2 \mathrm d x = \int \psi(x)^* \, x \, \psi(x) \mathrm d x$$
 从而相当于应用一个算符$x$。
 我们马上研究这个概念。
 
@@ -217,7 +217,7 @@ $$<x> = \int x | \psi(x) |^2 \mathrm d x = \int \psi(x)^* \, x \, \psi(x) \mathr
 可观测量是一个*厄米算符*（也称*自伴算符*），即其满足：
 $$\int \psi_1^* [\hat A \psi_2] \mathrm d x = \int [\hat A \psi_1^*] \psi_2 \mathrm d x$$
 且物理量被观测出的值，即其期望（或平均值），等于：
-$$<a>_t = \int \psi^*(\vec r, t) [\hat A \psi(\vec r, t)] \mathrm d x$$
+$$\langle a \rangle_t = \int \psi^*(\vec r, t) [\hat A \psi(\vec r, t)] \mathrm d x$$
 {: .definition}
 
 可观测量对应的物理量可能的取值正是其特征值。
@@ -232,10 +232,10 @@ $$<a>_t = \int \psi^*(\vec r, t) [\hat A \psi(\vec r, t)] \mathrm d x$$
 
 从而厄米算符表示共轭转置等于其自己的矩阵：$\hat{A}^\dagger = \hat{A}$。
 代入定义中的式子，即可发现：
-$$\psi_1^* [\hat A \psi_2] = \langle \psi_1 | \hat A \psi_2  \rangle = \langle \hat{A}^\dagger \psi_1 | \psi_2 \rangle = \langle \hat A \psi_1 | \psi_2 \rangle = [\hat A \psi_1^*] \psi_2$$
+$$\psi_1^* [\hat A \psi_2] = \langle \psi_1 \vert \hat A \psi_2  \rangle = \langle \hat{A}^\dagger \psi_1 \vert \psi_2 \rangle = \langle \hat A \psi_1 \vert \psi_2 \rangle = [\hat A \psi_1^*] \psi_2$$
 从而这两个定义是等价的。
 
-上面这个式子启发我们，内积中的尖括号与共轭转置具有非常强的对应关系，因此我们记希尔伯特空间中的一个向量为$\left\|x\right>$，其共轭转置为$\left<x\right\|=\left\|x\right>^\dagger$。
+上面这个式子启发我们，内积中的尖括号与共轭转置具有非常强的对应关系，因此我们记希尔伯特空间中的一个向量为$\left\vert x\right>$，其共轭转置为$\left<x\right\vert=\left\vert x\right>^\dagger$。
 这种表示方法就是狄拉克记号，常用于量子力学的矩阵表示之中。
 
 由于本笔记以波动物理为主，因此不使用狄拉克记号，而是继续使用上文使用的波函数表示。

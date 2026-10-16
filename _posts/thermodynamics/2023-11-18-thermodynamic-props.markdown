@@ -115,21 +115,53 @@ $$ \frac{PV_m}{RT} = 1 + \frac{B}{V_m} + \frac{C}{V_m^2} + \cdots $$
 接下来我们关心这些热力学属性之间的关系。
 首先我们引入两个偏微分恒等式：
 
-设$ z(x,y) $是可微的函数，则
-$$ \left( \frac{\partial x}{\partial z} \right)_y = \frac{1}{\left( \frac{\partial z}{\partial x} \right)_y} $$
-对性质良好的函数$ z $，我们可将$ x $变为$y,z$的函数：$ x = x(y, z) $，从而得到
-$$ \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z = \textcolor{red}{-} \left( \frac{\partial z}{\partial y} \right)_x $$
+对可微函数$y(x)$，若其在某点微分非零，那么其在该点的邻域内具有反函数$x(y)$，且两者之间的微分满足：
+$$\frac{\mathrm d y}{\mathrm d x} = \frac{1}{\mathrm d x / \mathrm d y}$$
+这叫做反函数微分法则。
 {: .proposition}
+
+对多元函数$z(x,y)$，自然的推论是，若存在函数$x = x(y,z)$、$y = y(x,z)$，则其满足
+$$\left( \frac{\partial x}{\partial z} \right)_y = \frac{1}{\left( {\partial z}/{\partial x} \right)_y}, \left( \frac{\partial y}{\partial z} \right)_x = \frac{1}{\left( {\partial z}/{\partial y} \right)_x}.$$
+这两个命题都是反函数定理自然的推论。
+
+假设$x,y,z$三个变量均在可微且性质良好的曲面$f(x,y,z) = 0$上，
+那么有
+$$ \left( \frac{\partial y}{\partial z} \right)_x \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z = \textcolor{red}{- 1} .$$
+这一关系有时叫做*三乘积法则*（Triple product rule）或*循环链式法则*（Cyclic chain rule）。
+{: .proposition}
+
+对性质良好的曲面$f(x,y,z) = 0$，根据隐函数存在性定理，在任意点的邻域内均存在可微函数：
+$$x = x(y,z),\; y = y(x,z),\; z = z(x, y).$$
+根据隐函数的微分法则，有
+$$
+\begin{aligned}
+\left( \frac{\partial x(y,z)}{\partial y} \right)_z &= - \frac{\partial f / \partial x}{\partial f / \partial y}, \\
+\left( \frac{\partial z(x,y)}{\partial x} \right)_y &= - \frac{\partial f / \partial z}{\partial f / \partial x}, \\
+\left( \frac{\partial y(x,z)}{\partial z} \right)_x &= - \frac{\partial f / \partial y}{\partial f / \partial z}
+\end{aligned},
+$$
+三者相乘，原命题即得证。
+{: .proof}
 
 注意到第二条命题和链式法则不同：设$z(x(y), k)$是一个可微的函数，且$k$与$x$无关，则
 $$ \left( \frac{\partial z}{\partial y} \right)_k = \left(  \frac{\partial z}{\partial x} \right)_k \left(  \frac{\partial x}{\partial y} \right)_k $$
-这两个命题在省略表示不变量的下标时容易混淆。
+这两个命题容易混淆。
+
+利用恰当微分的性质还可以一次给出上面两个命题的证明。
+假设$z(x,y)$是性质良好的函数，那么存在函数$x = x(y,z)$，两者取全微分并代入消去$\mathrm d x$，得到
+$$
+\left[ 1 - \left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial z} \right)_y \right] \mathrm d z = 
+\left[\left( \frac{\partial z}{\partial x} \right)_y \left( \frac{\partial x}{\partial y} \right)_z + \left( \frac{\partial z}{\partial y} \right)_x \right] \mathrm d y
+$$
+鉴于$\mathrm d z$和$\mathrm d y$的任意性，上述等式成立，仅当其系数均为零。
+令等号左边的系数等于零，即可得到反函数微分法则；
+令等号右边的系数等于零，再使用反函数微分法则替换$\partial_y z$，即可得到三乘积法则。
 
 ### 麦克斯韦关系
 
 和描述电磁场的麦克斯韦方程不同，麦克斯韦关系表示了几个热力学属性之间的偏微分关系。
 
-<small>（麦克斯韦关系，Maxwell relations）</small>
+<small>（麦克斯韦关系，Maxwell's relations）</small>
 简单可压缩热力学系统满足
 $$
     \begin{aligned}
@@ -141,6 +173,9 @@ $$
 $$
 其中$T$是温度、$P$是压强、$v$是比容、$T$是单位质量的熵。
 {: .proposition}
+
+麦克斯韦关系的重要性在于给出了能够量化地求出熵的办法。
+熵非常重要，但是没有办法直接测量，但利用麦克斯韦关系，其变化可以由其他可测量的物理量的偏微分求出。
 
 我们已经知道：
 $$ 
@@ -159,8 +194,13 @@ $$ \d a = - s \d T - P \d v, \quad \d g = - s \d T + v \d P $$
 $$ \d z = \frac{\partial z}{\partial x} \d x + \frac{\partial z}{\partial y} \d y$$
 同时
 $$ \frac{\partial^2 z}{\partial x \partial y} = \frac{\partial^2 z}{\partial y \partial x} $$
-从而，以亥姆霍次函数的微分为例，可得
-$$ \frac{\partial s}{\partial v} = \frac{\partial P}{\partial T} $$
+从而，以亥姆霍次函数的微分为例，有
+$$\frac{\partial}{\partial v} \frac{\partial a}{\partial T} = \frac{\partial}{\partial T}\frac{\partial a}{\partial v} \implies \left( \frac{\partial s}{\partial v} \right)_T = \left( \frac{\partial P}{\partial T} \right)_v.$$
+对于其他三个关系，可以通过更换热力学函数完成证明，也可以利用上文说明的两个法则进行变换。
+举例来说，利用三乘积法则，可以得到
+$$\left( \frac{\partial s}{\partial v} \right)_T = \left( \frac{\partial P}{\partial T} \right)_v = - \frac{1}{(\partial T/\partial v)_P} \cdot \frac{1}{(\partial v / \partial P)_T},$$
+移项并利用链式法则和反函数微分法则，得到
+$$\left( \frac{\partial s}{\partial P} \right)_T = - \left( \frac{\partial v}{\partial T} \right)_P.$$
 {: .proof}
 
 利用能量这一量纲可以容易地记忆麦克斯韦关系，注意到

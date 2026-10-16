@@ -36,7 +36,7 @@ $$\ln P(A \cap B) = \ln P(A) + \ln P(B)$$
 
 系统的**统计熵**（entropy）定义为
 $$S = - k \sum_{a \in A} P(a) \ln P(a)$$
-其中$k$为一常数，统计物理学中常选择玻尔兹曼常数
+其中$k$为一有量纲常量，国际单位制下称为玻尔兹曼常数
 $$k = k_B \approx 1.38 \times 10^{-23} \,\text{J/K}$$
 {: .definition}
 
@@ -44,8 +44,8 @@ $$k = k_B \approx 1.38 \times 10^{-23} \,\text{J/K}$$
 
 多个微观状态的宏观表现可能是一致的，这种情况下我们称发生了*简并*。
 
-设$E: A \to \mathbb R$ 为一函数，$E^\*$为一常数，则集合
-$$A^* = \{ a \in A \,|\,  E(a) = E^* \}$$
+设$E: A \to \mathbb R$ 为一函数（即随机变量），$E^\*$为一常数，则集合
+$$A^* = \{ a \in A \,|\,  E(a) = E^* \} = E^{-1}(E^*)$$
 表示该函数取同一值时所有微观状态的集合。
 该集合的基数称为**简并度**（Degeneracy），记为$\Omega(E^\*)$。
 {: .definition}
@@ -57,7 +57,7 @@ $$\forall a,b \in A^*, \quad P(a) = P(b)$$
 
 因此，我们可以认为系统处于某状态的概率是能量的函数，我们使用$P(E_j)$来表示这种概率。
 这样，系统的系综平均即可从由微观态表示变为由能量表示：
-$$<E> = \sum_{a \in A} E(a) \cdot P(a) = \sum_{e \in E(A)} e \cdot \Omega(e) \cdot P(e)$$
+$$\langle E \rangle = \sum_{a \in A} E(a) \cdot P(a) = \sum_{e \in E(A)} e \cdot \Omega(e) \cdot P(e)$$
 
 ### 状态密度
 
@@ -80,7 +80,8 @@ $$- \frac{\hbar^2}{2m} \frac{\mathrm d^2}{\mathrm d x^2} \psi_x(x) = E_x \psi(x)
 求解，可得
 $$\psi_x(x) = A_x \exp(i K_x x), \quad K_x = \sqrt{\frac{2m E_x}{\hbar^2}}$$
 这里利用循环边界条件，而非势阱外波函数为零的边界条件以简化计算，得到
-$$\psi_x(0) = \psi_x(L_x) \implies K_x = \frac{2 \pi n_x}{L_x}, \, n_x \in \mathbb Z$$
+$$\psi_x(0) = \psi_x(L_x) \implies K_x = \frac{2 \pi n_x}{L_x}, \, n_x \in \mathbb Z.$$
+能够证明，对于状态数或态密度的计算，使用周期边界条件和使用零边界条件的结果是一样的。
 其余两轴同理，得到波函数的解
 $$\psi(\vec r) = A \exp(i \vec K \cdot \vec r), \quad \vec K = \begin{bmatrix} \frac{2 \pi n_x}{L_x} \\ \frac{2 \pi n_y}{L_y} \\ \frac{2 \pi n_z}{L_z} \end{bmatrix}$$
 总能量为
@@ -107,7 +108,7 @@ $$\rho(E) = \frac{\mathrm d \Phi(E)}{\mathrm d E} = \frac{V}{4 \pi^2} \left( \fr
 
 平衡状态下系统的系综平均与时间平均等价，即在足够长的时间内，系统将以一定概率经历所有可能的状态。
 数学上可将该假设写为
-$$<E> = <E>_t$$
+$$\langle E \rangle = \langle E \rangle_t$$
 这一假设称为各态经历假设（Ergodic hypothesis），满足各态经历假设的系统称为遍历系统（Ergodic system）。
 {: .proposition}
 

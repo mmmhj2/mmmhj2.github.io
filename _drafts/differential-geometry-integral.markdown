@@ -443,7 +443,7 @@ $$\mathbf F(\mathbf x) = J \mathbf F^\phi (\mathbf x^\phi) (D \phi)^{-T}$$
 
 <small>（Piola恒等式）</small>
 $\phi: U \to V$为一线性映射，则
-$$\dif (\mathrm{Cof} D \phi) = 0.$$
+$$\nabla \cdot \left[(\mathrm{Cof} D \phi) X\right] = 0, \forall X \in U.$$
 {: .proposition}
 
 <!--
@@ -470,13 +470,41 @@ $$\star c(\mathbf F) = \mathbf F \cdot \dif \mathbf S = F_x \dif y \dif z + F_y 
 上在任何体积$\Omega \in U$边界上的积分，应用斯托克斯公式：
 $$
 \begin{aligned}
-&\int_{\partial \Omega} \mathbf F \cdot \dif \mathbf S \\
-= & \int_\Omega \dif (\mathbf F \cdot \dif \mathbf S) \\
+\int_{\partial \Omega} \mathbf F \cdot \dif \mathbf S = & \int_\Omega \dif (\mathbf F \cdot \dif \mathbf S) \\
 = & \int_{\Omega} \dif \big((\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) \cdot \dif \mathbf S\big) \\
+\end{aligned}
+$$
+Here we apply the product rule of exterior derivative:
+$$
+\begin{aligned}
+& \int_{\Omega} \dif \big((\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) \cdot \dif \mathbf S\big) \\
+= & \int_{\Omega} \dif \big[(\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi)\big] \cdot \dif \mathbf S \\
+& \cancel{+ \int_{\Omega} (\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) \cdot \mathcolor{red}{\dif(\dif \mathbf S)}}
+\end{aligned}
+$$
+We apply again the product rule, but notice that we are differentiating a vector-matrix multiplication:
+$$
+\begin{aligned}
+& \int_{\Omega} \dif \big[(\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi)\big] \cdot \dif \mathbf S \\
+= & \int_{\Omega} \dif \big[(\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi)\big] \cdot \dif \mathbf S \\
 = & \int_{\Omega} \big(\dif (\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) + (\phi^* \circ \mathbf F^\phi) \dif (\mathrm{Cof} D \phi) \big) \cdot \dif \mathbf S \\
 = & \int_{\Omega} \dif (\phi^* \circ \mathbf F^\phi) (\mathrm{Cof} D \phi) \cdot \dif \mathbf S \\
 = & \int_{\Omega^\phi} \dif (\mathbf F^\phi \cdot \dif \mathbf S^\phi) \\
 = & \int_{\partial \Omega^\phi} \mathbf F^\phi \cdot \dif \mathbf S^\phi
 \end{aligned}
 $$
+
+
+
+We first write out the integral on a boundary:
+$$\int_{\partial \Omega} \vec F \cdot d S = \int_{\partial \Omega} \star (\vec F \cdot d \vec x),$$
+where $\vec F \cdot d \vec x$ is just the corresponding 1-form of $\vec F$ and apply the stokes' theorem.
+$$\int_{\partial \Omega} \star (\vec F \cdot d \vec x) = \int_\Omega d \star (\vec F \cdot d \vec x) = \int_\Omega d \star [(\phi^* \circ \mathbf F^\phi)(\mathrm{Cof} D \phi) \cdot d \vec x]$$
+As the hodge star is commutative against 0-forms, we have
+$$= \int_\Omega d [(\phi^* \circ \mathbf F^\phi) (\star(\mathrm{Cof} D \phi) \cdot d \vec x)]$$
+Applying the product rule of exterior derivatives,
+$$= \int_\Omega [d(\phi^* \circ \mathbf F^\phi)] (\star(\mathrm{Cof} D \phi) \cdot d \vec x) + \underbrace{(\phi^* \circ \mathbf F^\phi) \cdot d(\star(\mathrm{Cof} D \phi) \cdot d \vec x)}_{\text{Cancelled due to Piola identity}}$$
+Thanks to the commutativity of $d$, $\phi^*$ and $\star$, we finally have
+$$\int_\Omega \phi^* d \star \vec F^\phi \cdot d \vec{x^\phi} = \int_{\partial \Omega^\phi} F^{\phi} \cdot d S^\phi$$
+
 从而在空间$U$中体积$\Omega$的边界上的积分，与其对应的空间$V$中边界上的积分相同，这就解释了 Piola 变换的物理意义。
