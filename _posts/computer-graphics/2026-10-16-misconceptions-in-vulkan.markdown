@@ -15,7 +15,7 @@ categories: ["计算机图形学"]
 传统图形 API（尤其是 OpenGL 的立即模式）按以下方式执行工作：
 CPU 发出指令，GPU 立即执行，同时 CPU 等待 GPU 完成执行，然后发出下一条指令。
 显然，这种方法效率很低，主要来自两大问题：
-1. 大量工作必须来回切换并重新准备，导致效率下降，更新的 API 引入了 Draw List (OpenGL) / Command List (Direct3D) / Command Buffer (Vulkan) 来解决这个问题；
+1. 大量工作必须来回切换并重新准备，导致效率下降，更新的 API 引入了 Display List (OpenGL) / Command List (Direct3D) / Command Buffer (Vulkan) 来解决这个问题；
 2. CPU 和 GPU 完全无法并行，即使使用了 Command Buffer，由于 CPU 无法写入 GPU 正在读取的 Command Buffer，两者之中任何时刻只有一个能工作，另一个的算力完全浪费，这就是 FIF 机制希望解决的问题。
 
 FIF 通过提前向 GPU 提交工作来完成这一点：CPU 提前完成几帧的处理并提交工作，GPU 完成其中一帧并开始处理下一帧之后，不再需要已完成的 Command Buffer。
@@ -25,7 +25,7 @@ FIF 通过提前向 GPU 提交工作来完成这一点：CPU 提前完成几帧�
 早期的 Vulkan 教程中，这里特别令人困惑。
 教程中认为，如果向 GPU 提交了三帧的工作，那么这三帧可以完全并发：第一帧的渲染结束之前，第三帧就可以开始。
 这样的实现方式理论上可以最大限度地提高 GPU 的利用率，但是会带来很多问题[^fif]：
-1. 处理对大量资源的大量并发无疑是非常困难的，尤其是在 GPU 这种无法通过 CPU 直接控制的设备上；
+1. 处理对大量资源的高并发访问无疑是非常困难的，尤其是在 GPU 这种无法通过 CPU 直接控制的设备上；
 2. 处理这种并发的常见手段是复制资源（我们下面会讨论这个问题），而复制高分辨率、高色深的帧缓冲会给内存带来极大的压力；
 3. GPU 利用率的提高不一定会提高执行效率，如果后发生的帧和先发生的帧抢占资源，那么帧时延反而会上升。
 
@@ -62,14 +62,14 @@ GPU |    |     F1     |    F2    |    F3    |    F1    | ...
 - 需动态更新的贴图。
 
 以下资源则一般不需要重复分配：
-- 渲染目标（深度和颜色附件）；
+- 渲染目标（深度和颜色附件；除交换链图像之外）；
 - 仅上传一次的贴图；
 
 交换链的帧缓冲图像数量则是另一个问题，我们会在下面的交换链专题进行讨论。
 
 重复一遍：这些资源到底是否需要重复分配依然是和同步方案相关的。
 以 UBO 为例，通常情况下这种经常更新的 UBO 会使用宿主可见且一致（`HOST_VISIBLE_BIT` 和 `HOST_COHERENT_BIT`）的内存，这种情况下除了 `vkQueueSubmit`的[隐式同步保证](https://docs.vulkan.org/spec/latest/chapters/synchronization.html#synchronization-submission-host-writes)之外不再进行任何同步，因此如果不进行复制，很可能写入正在被 GPU 独占读取的内容。
-反之，对于仅上传一次的贴图，一遍则使用暂存缓冲区和缓冲区复制进行上传，通过内存屏障保证完成上传之前不会进行读取，因此不需要进行复制。
+反之，对于仅上传一次的贴图，一般则使用暂存缓冲区和缓冲区复制进行上传，通过内存屏障保证完成上传之前不会进行读取，因此不需要进行复制。
 
 如果你愿意使用其他手段保证资源仅有一个独占访问，那么也可以不重复分配资源。
 以 SSBO 回读为例，考虑以下两种情况。
@@ -100,7 +100,7 @@ SSBO WR ─┬─> SSBO RD   ║
 ### 交换链索引
 
 上文中我们提到了应用程序要通过 `vkAcquireNextImageKHR` 从 Vulkan 得到当前帧可用的交换链图像序号，这个序号作为交换链图像的索引指定了该帧的帧缓冲。
-这个索引非常容易和多帧并行的帧序号混淆：FIF 的帧序号通常确定性地每帧加一然后取模；而 `AcquireNextImage` 获得的图像序号是操作系统随意返回的，任何在当前帧*可能*未被占用的交换链图像都可能被返回。
+这个索引非常容易和多帧并行的帧序号混淆：FIF 的帧序号通常确定性地每帧加一然后取模；而 `AcquireNextImage` 获得的图像序号是呈现引擎随意返回的，任何在当前帧*可能*未被占用的交换链图像都可能被返回。
 这里说可能，是因为交换链图像实际可用的时机是通过该函数的信号量和栅栏确定的，该函数返回时呈现引擎可能依然在读取该图像。
 
 FIF 的帧序号和这个图像序号因此是完全无关的，图像序号只在操作交换链时使用。
@@ -108,7 +108,7 @@ FIF 的帧序号和这个图像序号因此是完全无关的，图像序号只�
 因此，如果交换链中的帧缓冲数量小于 FIF 的最大并行帧数，那么本应在 CPU 上并行的帧会被阻塞在 `AcquireNextImage` 上。
 因此，一般来说要求交换链中的图像数量不小于 FIF 的数量。
 对一般的应用程序，通常选择这两个数量都是 2 或者 3。
-有些程序将这两种情况称为双缓冲和三缓冲，但这实际上和 OpenGL 的双缓冲（`glutSwapBuffers` etc.）实现完全不同。
+有些程序将这两种情况称为双缓冲和三缓冲，但这实际上和 OpenGL 的双缓冲（`glutSwapBuffers` 等）实现完全不同。
 
 ### 信号量重用
 
@@ -121,14 +121,14 @@ std::array<VkSemaphore, kFramesInFlight> imageAvailable, renderFinished;
 while (!quit) {
     WaitForFences(currentFrame);
     vkAcquireNextImageKHR(
-        signal imageAvailable[currentFrame]
+        signal imageAvailable[currentFrame],
         &swapChainImageIndex
     );
     
     /* ...... */
 
     vkQueueSubmit(
-        wait imageAvailableSemaphore[currentFrame],
+        wait imageAvailable[currentFrame],
         signal renderFinished[currentFrame]
     );
     /* VUID-vkQueueSubmit-pSignalSemaphores-00067 */
@@ -150,14 +150,14 @@ std::vector<VkSemaphore> renderFinished;
 while (!quit) {
     WaitForFences(currentFrame);
     vkAcquireNextImageKHR(
-        signal imageAvailable[currentFrame]
+        signal imageAvailable[currentFrame],
         &swapChainImageIndex
     );
     
     /* ...... */
 
     vkQueueSubmit(
-        wait imageAvailableSemaphore[currentFrame],
+        wait imageAvailable[currentFrame],
         signal renderFinished[swapChainImageIndex]
     );
     vkQueuePresentKHR(wait renderFinished[swapChainImageIndex]);
@@ -169,9 +169,9 @@ while (!quit) {
 
 ### 垂直同步
 
-如果尝试对简单的 Vulkan 程序进行性能刨析，很大可能会发现大量的时间花费在 `vkAcquireNextImageKHR` 和 `vkQueuePresentKHR` 两个函数上。
+如果尝试对简单的 Vulkan 程序进行性能剖析，很大可能会发现大量的时间花费在 `vkAcquireNextImageKHR` 和 `vkQueuePresentKHR` 两个函数上。
 这个现象非常有可能是垂直同步导致的。
-然而，乍一看上去 Vulkan 中并没有任何选项可以*直接*控制垂直同步。
+然而，乍一看 Vulkan 中并没有任何选项可以*直接*控制垂直同步。
 Vulkan 的 WSI 对垂直同步的控制实际上是通过 `VkPresentModeKHR` 枚举体控制的。
 枚举体的主要选项如下：
 
@@ -180,7 +180,7 @@ Vulkan 的 WSI 对垂直同步的控制实际上是通过 `VkPresentModeKHR` 枚
 - `VK_PRESENT_MODE_FIFO_KHR`：交换链视为队列，每次发生垂直同步（Vertical blanking）时取出最先进队的图像并呈现。相当于启用垂直同步。不产生撕裂，但延迟较高。
 - `VK_PRESENT_MODE_FIFO_RELAXED_KHR`：和 `VK_PRESENT_MODE_FIFO_KHR` 相同，但如果提交过晚错过了垂直同步时机，则立刻呈现。
 
-Vulkan 标准保证 `VK_PRESENT_MODE_IMMEDIATE_KHR` 一定受支持，绝大部分显卡驱动也支持 `VK_PRESENT_MODE_FIFO_KHR`。
+Vulkan 标准保证 `VK_PRESENT_MODE_FIFO_KHR` 一定受支持，绝大部分桌面端显卡驱动也支持 `VK_PRESENT_MODE_IMMEDIATE_KHR`，移动端显卡则通常支持 `VK_PRESENT_MODE_MAILBOX_KHR`。
 
 还有一种可能会导致 `vkAcquireNextImageKHR` 和 `vkQueuePresentKHR` 两个函数花费过量时间：
 有独显的笔记本的呈现通常是由核显负责的，如果不启用独显直通，则所有呈现图像要重新写入主存，这也会导致大量延迟。
@@ -195,7 +195,7 @@ Vulkan 标准保证 `VK_PRESENT_MODE_IMMEDIATE_KHR` 一定受支持，绝大部�
 默认情况下 Vulkan 只支持 `VK_COLOR_SPACE_SRGB_NONLINEAR_KHR` 颜色空间，即已经经过 Gamma 校正的 sRGB 空间。
 这就是说无论图像的格式是什么，图像中的纹素总是会被解释为在非线性 sRGB 颜色空间中。
 
-这意味着如果申请了 UNorm 格式的交换链图像，那么 GPU 不会在写入时自动执行从线性空间（着色器总是运行在线性空间）到 sRGB Gamma 空间的 Gamma 校正。
+这意味着如果申请了 Unorm 格式的交换链图像，那么 GPU 不会在写入时自动执行从线性空间（着色器基本总是运行在线性空间）到 sRGB Gamma 空间的 Gamma 校正。
 这种情况下几乎一定会缺少 Gamma 校正，导致图像发黑。
 
 另一个常见的情况是启用 `VK_EXT_swapchain_colorspace` 扩展之后的 `VK_COLOR_SPACE_PASS_THROUGH_EXT`。
