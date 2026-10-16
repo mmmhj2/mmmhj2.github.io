@@ -458,9 +458,9 @@ $$
 对于线性映射，特别的一点是，只要保证这个映射的核空间只包含零，那么就可以确保这个映射是单射。
 借助这个思路，我们可以构造线性变换的伪逆。
 
-设$f: E \to F$为一线性变换，$f|\_{{\ker f}^\perp}$表示将其定义域限制在核空间的正交子空间上产生的单射，那么映射
+设$f: E \to F$为一线性变换，$f|\_{ {\ker f}^\perp}$表示将其定义域限制在核空间的正交子空间上产生的单射，那么映射
 $$
-f^\dagger (u) = f|_{{\ker f}^\perp} \circ p_{{\ker f}^\perp} (u),
+f^\dagger (u) = f|_{ {\ker f}^\perp} \circ p_{ {\ker f}^\perp} (u),
 $$
 称为这个映射的*伪逆*（Pseudo-inverse），也叫*穆尔-彭罗斯广义逆*（Moore–Penrose pseudoinverse）。
 {: .definition}

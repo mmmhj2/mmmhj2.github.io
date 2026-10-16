@@ -395,7 +395,7 @@ void fn_1() {
     std::cout << p->x ;
 }
 void fn_2() {
-    Y y1{{1}};
+    Y y1{ {1} };
     // 未定义行为。
     auto p = new (&y1.x) X{2};
     std::cout << p->x ;
