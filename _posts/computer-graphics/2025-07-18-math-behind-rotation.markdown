@@ -137,8 +137,7 @@ $$
 & A & \mapsto &  S_A(1)
 \end{array}.
 $$
-这是一个从$\mathfrak g$的单位元附近的邻域到$G$的单位元附近邻域的微分同胚，且总是满足全微分方程：
-$$\frac{\mathrm d}{\mathrm d t} \exp(tA) = \exp (tA) \cdot A.$$
+这是一个从$\mathfrak g$的单位元附近的邻域到$G$的单位元附近邻域的微分同胚。
 {: .proposition}
 
 指数映射满足
@@ -158,6 +157,74 @@ $$\exp(A)\exp(B) = \exp(A+B),$$
 $$\exp X = I + X + \frac{1}{2} X^2 + \frac{1}{6} X^3 + \cdots,$$
 根据凯莱-哈密顿定理，由于其特征多项式一定是零化多项式，因此方阵的指数映射实际上一定是有限次数的多项式，且次数最高等于矩阵的大小减一。
 因此，对三维空间中的旋转矩阵，其和对应的反对称矩阵之间一定满足一个二次关系，这个关系实际上就是罗德里格斯旋转公式。
+
+#### 指数映射与流
+
+上文中我们仅仅引入了指数映射的概念，这对于关于旋转的讨论已经足够了。
+对于还想更进一步的读者，这一小节中我们将简单介绍指数映射是如何和微分方程联系起来的，对这一联系不感兴趣的读者则可以跳过。
+
+如果之前接触过[“流”的概念]({% post_url control-theory/2025-05-10-nonlinear-system %}#流映射)，那么不难发现指数映射和流的相关性。
+上文提出的映射$S\_A$，如果再加入一个变量$x \in G$，那么就可以构造出一个流：
+$$
+\begin{array}{cccc}
+\phi_A(x, t): & G \times \mathbb R& \to & G \\
+& (x, t) & \mapsto & x S_A(t)
+\end{array}.
+$$
+
+我们再说明一个指数映射的性质：
+$$\exp(tA) = S_{tA}(1) = S_A(t),$$
+由于映射 $S_A$ 对任何矩阵 $A$ 都是唯一的，仅需要验证映射 $S_A(t\cdot s)$ 在零处的导数为 $tA$，即可说明 $S_A(ts) = S_{tA}(s)$，从而完成证明。
+
+这就意味着流也可以写为
+$$
+\phi_A(x,t) = x S_A(t) = x \exp(tA).
+$$
+注意这个映射对任何元素$A$都是唯一的，因此，李代数上的每一个元素$A$和通过李代数自身的结构确定了一个微分方程，即
+$$\frac{\mathrm d}{\mathrm d t} \exp(tA) = \exp (tA) \cdot A \iff \frac{\mathrm d}{\mathrm d t} S_A(t) = S_A(t) \cdot A.$$
+
+指数映射总是满足微分方程：
+$$\frac{\mathrm d}{\mathrm d t} \exp(tA) = \exp (tA) \cdot A = A \cdot \exp (tA).$$
+{: .proposition}
+
+下面这个证明只考虑矩阵群，注意 $X$ 和 $\exp(tX)$ 始终是可交换的。
+我们知道
+$$S_X(t+s) = S_X(t) \cdot S_X(s),$$
+左右两侧同时对$s$求导，然后置$s = 0$，对左边，有
+$$
+\left. \frac{\mathrm d}{\mathrm d s} S_X(t+s) \right\vert_{s=0} = S'_X(t),
+$$
+对右边，则有
+$$
+\left. \frac{\mathrm d}{\mathrm d s} S_X(t) S_X(s) \right\vert_{s=0} = S_X(t) S'_X(0) = S_X(t) \cdot X.
+$$
+从而
+$$S'_X(t) = S_X(t) \cdot X.$$
+交换$s, t$即可得到
+$$S'_X(s) = X \cdot S_X(s).$$
+对于更一般的李群，这个证明存在一些问题：
+我们设$g = \exp(tA)$，那么有
+$$
+\frac{\mathrm d}{\mathrm d t} \exp(tA) \in T_g G, \; \exp(tA) \in G, \; A \in T_e G,
+$$
+这三个元素完全不在一个空间里面，因此这个等式的运算都是没有良定义的！
+解决这个问题的推广方法是将点乘看作“平移”运算。
+把左乘看作左平移，右乘看作右平移，即
+$$ S_X(t) \cdot S_X(s) = L_g(S_X(s)), \; S_X(s) \cdot S_X(t) = R_g(S_X(s)), $$
+这样，在求导时，这些平移会自动变成切空间的平移：
+$$
+d L_g: T_e G \to T_g G, \; d R_g: T_e G \to T_g G,
+$$
+微分方程也变为
+$$
+\frac{\mathrm d}{\mathrm d t} \exp(tA) = dL_g (A) = dR_g (A),
+$$
+从而将元素 $A$ 从单位元的切空间 $T\_e G$ 平移到 $\exp(tA)$ 的切空间 $T\_g G$ 里。
+{: .proof}
+
+根据上面的命题，我们不妨说，李代数的元素 $A$ 定义了[^representation]一个微分方程$\dot x = A x$，而指数映射则给出了这个微分方程的解$S\_A(t)$。
+
+[^representation]: 更严谨地说，元素$A$定义了微分方程的“形式”，而实际的微分方程是这个形式在实数空间中的“表示”。
 
 ## 旋转的表示
 
