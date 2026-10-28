@@ -350,7 +350,7 @@ $$
 $$
 \pfrac{\mathbf Q}{\mathbf q} - \pfrac{\mathbf p}{\mathbf P} = \pfrac{\mathbf Q}{\mathbf p} + \pfrac{\mathbf q}{\mathbf P} = \pfrac{\mathbf P}{\mathbf p} - \pfrac{\mathbf q}{\mathbf Q} = \pfrac{\mathbf P}{\mathbf q} + \pfrac{\mathbf p}{\mathbf Q} = 0.
 $$
-这些关系和热力学中的[麦克斯韦关系]({% post_url thermodynmaics/2023-11-18-thermodynamic-props %}#麦克斯韦关系)非常相似。
+这些关系和热力学中的[麦克斯韦关系]({% post_url thermodynamics/2023-11-18-thermodynamic-props %}#麦克斯韦关系)非常相似。
 正如上文所述，在内能的表达式中，有
 $$\mathrm d U = T \mathrm d S - p \mathrm d V,$$
 因此，温度和熵$(T, S)$以及压强和体积$(-p, V)$都是共轭变量。
